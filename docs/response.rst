@@ -1,5 +1,5 @@
 Response
 ========
 
-.. autoclass:: pynetbox.core.response.Record
+.. autoclass:: pynautobot.core.response.Record
   :members:

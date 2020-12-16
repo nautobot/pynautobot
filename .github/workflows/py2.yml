@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Install pynetbox and testing packages.
+      - name: Install pynautobot and testing packages.
         run: pip install . mock
 
       - name: Run Tests

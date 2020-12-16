@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# pynetbox documentation build configuration file, created by
+# pynautobot documentation build configuration file, created by
 # sphinx-quickstart on Thu Apr  6 22:31:03 2017.
 #
 # This file is execfile()d with the current directory set to its
@@ -47,15 +47,15 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"pynetbox"
-copyright = u"2017, DigitalOcean"
-author = u"Zach Moody"
+project = "pynautobot"
+copyright = "TBD"  # "2017, DigitalOcean"
+author = "TBD"  # "Zach Moody"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 # The full version, including alpha/beta/rc tags.
-release = get_distribution("pynetbox").version
+release = get_distribution("pynautobot").version
 #
 # The short X.Y version.
 version = ".".join(release.split(".")[:2])
@@ -104,7 +104,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "pynetboxdoc"
+htmlhelp_basename = "pynautobotdoc"
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -128,7 +128,13 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "pynetbox.tex", u"pynetbox Documentation", u"Zach Moody", "manual"),
+    (
+        master_doc,
+        "pynautobot.tex",
+        "pynautobot Documentation",
+        "TBD",
+        "manual",
+    ),  # "Zach Moody", "manual"),
 ]
 
 
@@ -136,7 +142,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "pynetbox", u"pynetbox Documentation", [author], 1)]
+man_pages = [(master_doc, "pynautobot", "pynautobot Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output -------------------------------------------
@@ -147,11 +153,11 @@ man_pages = [(master_doc, "pynetbox", u"pynetbox Documentation", [author], 1)]
 texinfo_documents = [
     (
         master_doc,
-        "pynetbox",
-        u"pynetbox Documentation",
+        "pynautobot",
+        "pynautobot Documentation",
         author,
-        "pynetbox",
-        "A python library for NetBox.",
+        "pynautobot",
+        "A python library for Nautobot.",
         "Miscellaneous",
     ),
 ]

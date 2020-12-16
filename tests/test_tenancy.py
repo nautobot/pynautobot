@@ -1,7 +1,7 @@
 import unittest
 import six
 
-import pynetbox
+import pynautobot
 from .util import Response
 
 if six.PY3:
@@ -10,7 +10,7 @@ else:
     from mock import patch
 
 
-api = pynetbox.api("http://localhost:8000",)
+api = pynautobot.api("http://localhost:8000",)
 
 nb = api.tenancy
 
@@ -20,7 +20,7 @@ HEADERS = {"accept": "application/json;"}
 class Generic(object):
     class Tests(unittest.TestCase):
         name = ""
-        ret = pynetbox.core.response.Record
+        ret = pynautobot.core.response.Record
         app = "tenancy"
 
         def test_get_all(self):

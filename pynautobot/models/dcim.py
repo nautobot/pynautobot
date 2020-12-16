@@ -15,11 +15,11 @@ limitations under the License.
 """
 from six.moves.urllib.parse import urlsplit
 
-from pynetbox.core.query import Request
-from pynetbox.core.response import Record, JsonField
-from pynetbox.core.endpoint import RODetailEndpoint
-from pynetbox.models.ipam import IpAddresses
-from pynetbox.models.circuits import Circuits
+from pynautobot.core.query import Request
+from pynautobot.core.response import Record, JsonField
+from pynautobot.core.endpoint import RODetailEndpoint
+from pynautobot.models.ipam import IpAddresses
+from pynautobot.models.circuits import Circuits
 
 
 class TraceableRecord(Record):
@@ -72,7 +72,7 @@ class DeviceTypes(Record):
 class Devices(Record):
     """Devices Object
 
-        Represents a device response from netbox.
+        Represents a device response from nautobot.
 
         Attributes:
             primary_ip, ip4, ip6 (list): Tells __init__ in Record() to
@@ -193,7 +193,7 @@ class Racks(Record):
 
         Returns a DetailEndpoint object that is the interface for
         viewing response from the elevation endpoint updated in
-        Netbox version 2.8.
+        Nautobot version 2.8.
 
         :returns: :py:class:`.DetailEndpoint`
 
@@ -210,7 +210,7 @@ class Racks(Record):
 class Termination(Record):
     def __str__(self):
         # hacky check to see if we're a circuit termination to
-        # avoid another call to NetBox because of a non-existent attr
+        # avoid another call to Nautobot because of a non-existent attr
         # in self.name
         if "circuit" in str(self.url):
             return self.circuit.cid

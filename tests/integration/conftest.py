@@ -7,12 +7,12 @@ import yaml
 
 import atexit
 import faker as _faker
-import pynetbox
+import pynautobot
 import pytest
 import requests
 
 
-DOCKER_PROJECT_PREFIX = "pytest_pynetbox"
+DOCKER_PROJECT_PREFIX = "pytest_pynautobot"
 DEVICETYPE_LIBRARY_OBJECTS = [
     "A10/TH6430.yaml",
     "APC/AP8868.yaml",
@@ -51,8 +51,8 @@ def get_netbox_docker_version_tag(netbox_version):
     major, minor = netbox_version.major, netbox_version.minor
 
     tag = "release"  # default
-    if (major, minor) == (2, 8):
-        tag = "0.24.1"
+    if (major, minor) == (2, 9):
+        tag = "0.26.2"
     elif (major, minor) == (2, 8):
         tag = "0.24.1"
     elif (major, minor) == (2, 7):
@@ -490,14 +490,22 @@ def netbox_service(
     netbox_integration_version = request.param
 
     # `port_for` takes a container port and returns the corresponding host port
-    port = docker_services.port_for(
-        "netbox_v%s_nginx" % str(netbox_integration_version).replace(".", "_"), 8080
-    )
+    try:
+        port = docker_services.port_for(
+            "netbox_v%s_nginx" % str(netbox_integration_version).replace(".", "_"),
+            8080,
+        )
+    except:
+        port = docker_services.port_for(
+            "netbox_v%s_netbox" % str(netbox_integration_version).replace(".", "_"),
+            8080,
+        )
+
     url = "http://{}:{}".format(docker_ip, port)
     docker_services.wait_until_responsive(
         timeout=300.0, pause=1, check=lambda: netbox_is_responsive(url)
     )
-    nb_api = pynetbox.api(url, token="0123456789abcdef0123456789abcdef01234567")
+    nb_api = pynautobot.api(url, token="0123456789abcdef0123456789abcdef01234567")
     populate_netbox_object_types(
         nb_api=nb_api,
         devicetype_library_repo_dirpath=devicetype_library_repo_dirpath,

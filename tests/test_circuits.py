@@ -2,14 +2,14 @@ import unittest
 import six
 
 from .util import Response
-import pynetbox
+import pynautobot
 
 if six.PY3:
     from unittest.mock import patch
 else:
     from mock import patch
 
-api = pynetbox.api("http://localhost:8000",)
+api = pynautobot.api("http://localhost:8000",)
 
 nb = api.circuits
 
@@ -19,7 +19,7 @@ HEADERS = {"accept": "application/json;"}
 class Generic(object):
     class Tests(unittest.TestCase):
         name = ""
-        ret = pynetbox.core.response.Record
+        ret = pynautobot.core.response.Record
         app = "circuits"
 
         def test_get_all(self):

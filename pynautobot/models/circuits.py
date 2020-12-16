@@ -13,9 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from pynetbox.core.response import Record
+from pynautobot.core.response import Record
 
 
-class Users(Record):
+class Circuits(Record):
     def __str__(self):
-        return self.username
+        return self.cid
+
+
+class CircuitTerminations(Record):
+    def __str__(self):
+        return self.circuit.cid

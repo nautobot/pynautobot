@@ -3,7 +3,7 @@ import json
 
 import six
 
-import pynetbox
+import pynautobot
 from .util import Response
 
 if six.PY3:
@@ -12,7 +12,7 @@ else:
     from mock import patch
 
 
-api = pynetbox.api("http://localhost:8000", token="abc123",)
+api = pynautobot.api("http://localhost:8000", token="abc123",)
 
 nb = api.ipam
 
@@ -31,7 +31,7 @@ class Generic(object):
     class Tests(unittest.TestCase):
         name = ""
         name_singular = None
-        ret = pynetbox.core.response.Record
+        ret = pynautobot.core.response.Record
         app = "ipam"
 
         def test_get_all(self):
@@ -161,7 +161,7 @@ class PrefixTestCase(Generic.Tests):
             json=create_parms,
         )
         self.assertTrue(ret)
-        self.assertTrue(isinstance(ret, pynetbox.models.ipam.IpAddresses))
+        self.assertTrue(isinstance(ret, pynautobot.models.ipam.IpAddresses))
 
     @patch(
         "requests.sessions.Session.get",
@@ -200,7 +200,7 @@ class PrefixTestCase(Generic.Tests):
             json=create_parms,
         )
         self.assertTrue(ret)
-        self.assertTrue(isinstance(ret[0], pynetbox.models.ipam.Prefixes))
+        self.assertTrue(isinstance(ret[0], pynautobot.models.ipam.Prefixes))
 
 
 class IPAddressTestCase(Generic.Tests):

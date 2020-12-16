@@ -1,7 +1,7 @@
 import unittest
 import six
 
-import pynetbox
+import pynautobot
 from .util import Response
 
 if six.PY3:
@@ -33,7 +33,7 @@ class ApiTestCase(unittest.TestCase):
         return_value=Response(fixture="api/get_session_key.json"),
     )
     def test_get(self, *_):
-        api = pynetbox.api(host, **def_kwargs)
+        api = pynautobot.api(host, **def_kwargs)
         self.assertTrue(api)
 
     @patch(
@@ -41,7 +41,7 @@ class ApiTestCase(unittest.TestCase):
         return_value=Response(fixture="api/get_session_key.json"),
     )
     def test_sanitize_url(self, *_):
-        api = pynetbox.api("http://localhost:8000/", **def_kwargs)
+        api = pynautobot.api("http://localhost:8000/", **def_kwargs)
         self.assertTrue(api)
         self.assertEqual(api.base_url, "http://localhost:8000/api")
 
@@ -55,7 +55,7 @@ class ApiVersionTestCase(unittest.TestCase):
         "requests.sessions.Session.get", return_value=ResponseHeadersWithVersion(),
     )
     def test_api_version(self, *_):
-        api = pynetbox.api(host,)
+        api = pynautobot.api(host,)
         self.assertEqual(api.version, "1.999")
 
     class ResponseHeadersWithoutVersion:
@@ -66,7 +66,7 @@ class ApiVersionTestCase(unittest.TestCase):
         "requests.sessions.Session.get", return_value=ResponseHeadersWithoutVersion(),
     )
     def test_api_version_not_found(self, *_):
-        api = pynetbox.api(host,)
+        api = pynautobot.api(host,)
         self.assertEqual(api.version, "")
 
 
@@ -83,5 +83,5 @@ class ApiStatusTestCase(unittest.TestCase):
         "requests.sessions.Session.get", return_value=ResponseWithStatus(),
     )
     def test_api_status(self, *_):
-        api = pynetbox.api(host,)
+        api = pynautobot.api(host,)
         self.assertEqual(api.status()["netbox-version"], "0.9.9")

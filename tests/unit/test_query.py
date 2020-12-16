@@ -2,7 +2,7 @@ import unittest
 
 import six
 
-from pynetbox.core.query import Request
+from pynautobot.core.query import Request
 
 if six.PY3:
     from unittest.mock import patch, Mock, call

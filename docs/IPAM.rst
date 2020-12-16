@@ -1,5 +1,5 @@
 IPAM
 ========
 
-.. autoclass:: pynetbox.models.ipam.Prefixes
+.. autoclass:: pynautobot.models.ipam.Prefixes
   :members:

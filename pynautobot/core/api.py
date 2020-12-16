@@ -17,12 +17,12 @@ import sys
 
 import requests
 
-from pynetbox.core.query import Request
-from pynetbox.core.app import App, PluginsApp
+from pynautobot.core.query import Request
+from pynautobot.core.app import App, PluginsApp
 
 
 class Api(object):
-    """The API object is the point of entry to pynetbox.
+    """The API object is the point of entry to pynautobot.
 
     After instantiating the Api() with the appropriate named arguments
     you can specify which app and endpoint you wish to interact with.
@@ -47,9 +47,9 @@ class Api(object):
                 retires, and timeouts.
                 See `custom sessions <advanced.html#custom-sessions>`__ for more info.
 
-    :param str url: The base URL to the instance of NetBox you
+    :param str url: The base URL to the instance of Nautobot you
         wish to connect to.
-    :param str token: Your NetBox token.
+    :param str token: Your Nautobot token.
     :param str,optional private_key_file: The path to your private
         key file.
     :param str,optional private_key: Your private key.
@@ -60,8 +60,8 @@ class Api(object):
     :raises AttributeError: If app doesn't exist.
     :Examples:
 
-    >>> import pynetbox
-    >>> nb = pynetbox.api(
+    >>> import pynautobot
+    >>> nb = pynautobot.api(
     ...     'http://localhost:8000',
     ...     private_key_file='/path/to/private-key.pem',
     ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
@@ -85,7 +85,7 @@ class Api(object):
         self.http_session = requests.Session()
         if threading and sys.version_info.major == 2:
             raise NotImplementedError(
-                "Threaded pynetbox calls not supported                 in Python 2"
+                "Threaded pynautobot calls not supported                 in Python 2"
             )
         self.threading = threading
 
@@ -106,16 +106,16 @@ class Api(object):
 
     @property
     def version(self):
-        """Gets the API version of NetBox.
+        """Gets the API version of Nautobot.
 
-        Can be used to check the NetBox API version if there are
+        Can be used to check the Nautobot API version if there are
         version-dependent features or syntaxes in the API.
 
         :Returns: Version number as a string.
         :Example:
 
-        >>> import pynetbox
-        >>> nb = pynetbox.api(
+        >>> import pynautobot
+        >>> nb = pynautobot.api(
         ...     'http://localhost:8000',
         ...     private_key_file='/path/to/private-key.pem',
         ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
@@ -137,8 +137,8 @@ class Api(object):
         :Returns: dict
         :Example:
 
-        >>> import pynetbox
-        >>> nb = pynetbox.api(
+        >>> import pynautobot
+        >>> nb = pynautobot.api(
         ...     'http://localhost:8000',
         ...     private_key_file='/path/to/private-key.pem',
         ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
@@ -152,11 +152,11 @@ class Api(object):
         ).get_openapi()
 
     def status(self):
-        """Gets the status information from NetBox.
+        """Gets the status information from Nautobot.
 
-        Available in NetBox 2.10.0 or newer.
+        Available in Nautobot 2.10.0 or newer.
 
-        :Returns: Dictionary as returned by NetBox.
+        :Returns: Dictionary as returned by Nautobot.
         :Raises: :py:class:`.RequestError` if the request is not successful.
         :Example:
 
@@ -173,7 +173,7 @@ class Api(object):
                             'rest_framework': '3.12.2',
                             'taggit': '1.3.0',
                             'timezone_field': '4.0'},
-         'netbox-version': '2.10.2',
+         'nautobot-version': '2.10.2',
          'plugins': {},
          'python-version': '3.7.3',
          'rq-workers-running': 1}

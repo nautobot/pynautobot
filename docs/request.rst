@@ -1,11 +1,11 @@
 Request
 ========
 
-.. autoclass:: pynetbox.core.query.RequestError
+.. autoclass:: pynautobot.core.query.RequestError
   :members:
 
-.. autoclass:: pynetbox.core.query.ContentError
+.. autoclass:: pynautobot.core.query.ContentError
   :members:
 
-.. autoclass:: pynetbox.core.query.AllocationError
+.. autoclass:: pynautobot.core.query.AllocationError
   :members:

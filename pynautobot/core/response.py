@@ -16,10 +16,10 @@ limitations under the License.
 import copy
 from collections import OrderedDict
 
-import pynetbox.core.app
+import pynautobot.core.app
 from six.moves.urllib.parse import urlsplit
-from pynetbox.core.query import Request
-from pynetbox.core.util import Hashabledict
+from pynautobot.core.query import Request
+from pynautobot.core.util import Hashabledict
 
 
 # List of fields that are lists but should be treated as sets.
@@ -46,7 +46,7 @@ def get_return(lookup, return_fields=None):
         else:
             if hasattr(lookup, i):
                 # check if this is a "choices" field record
-                # from a NetBox 2.7 server.
+                # from a Nautobot 2.7 server.
                 if sorted(dict(lookup)) == sorted(["id", "value", "label"]):
                     return getattr(lookup, "value")
                 return getattr(lookup, i)
@@ -71,14 +71,14 @@ class JsonField(object):
 
 
 class Record(object):
-    """Create python objects from netbox API responses.
+    """Create python objects from nautobot API responses.
 
-    Creates an object from a NetBox response passed as `values`.
+    Creates an object from a Nautobot response passed as `values`.
     Nested dicts that represent other endpoints are also turned
     into Record objects. All fields are then assigned to the
     object's attributes. If a missing attr is requested
     (e.g. requesting a field that's only present on a full response on
-    a Record made from a nested response) the pynetbox will make a
+    a Record made from a nested response) the pynautobot will make a
     request for the full object and return the requsted value.
 
     :examples:
@@ -292,7 +292,7 @@ class Record(object):
             app, name = split_url_path[3:5]
         else:
             app, name = split_url_path[2:4]
-        return getattr(pynetbox.core.app.App(self.api, app), name)
+        return getattr(pynautobot.core.app.App(self.api, app), name)
 
     def full_details(self):
         """Queries the hyperlinked endpoint if 'url' is defined.
@@ -320,7 +320,7 @@ class Record(object):
         """Serializes an object
 
         Pulls all the attributes in an object and creates a dict that
-        can be turned into the json that netbox is expecting.
+        can be turned into the json that nautobot is expecting.
 
         If an attribute's value is a ``Record`` type it's replaced with
         the ``id`` field of that object.

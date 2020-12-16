@@ -2,7 +2,7 @@ import unittest
 
 import six
 
-from pynetbox.core.endpoint import Endpoint
+from pynautobot.core.endpoint import Endpoint
 
 if six.PY3:
     from unittest.mock import patch, Mock, call
@@ -12,7 +12,7 @@ else:
 
 class EndPointTestCase(unittest.TestCase):
     def test_filter(self):
-        with patch("pynetbox.core.query.Request.get", return_value=Mock()) as mock:
+        with patch("pynautobot.core.query.Request.get", return_value=Mock()) as mock:
             api = Mock(base_url="http://localhost:8000/api")
             app = Mock(name="test")
             mock.return_value = [{"id": 123}, {"id": 321}]
@@ -37,7 +37,9 @@ class EndPointTestCase(unittest.TestCase):
             test_obj.filter(id=1)
 
     def test_choices(self):
-        with patch("pynetbox.core.query.Request.options", return_value=Mock()) as mock:
+        with patch(
+            "pynautobot.core.query.Request.options", return_value=Mock()
+        ) as mock:
             api = Mock(base_url="http://localhost:8000/api")
             app = Mock(name="test")
             mock.return_value = {

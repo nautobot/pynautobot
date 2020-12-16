@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from pynetbox.core.response import Record
-from pynetbox.core.endpoint import DetailEndpoint
+from pynautobot.core.response import Record
+from pynautobot.core.endpoint import DetailEndpoint
 
 
 class IpAddresses(Record):
@@ -64,7 +64,7 @@ class Prefixes(Record):
         Returns a DetailEndpoint object that is the interface for
         viewing and creating prefixes inside a parent prefix.
 
-        Very similar to :py:meth:`~pynetbox.ipam.Prefixes.available_ips`
+        Very similar to :py:meth:`~pynautobot.ipam.Prefixes.available_ips`
         , except that dict (or list of dicts) passed to ``.create()``
         needs to have a ``prefix_length`` key/value specifed.
 

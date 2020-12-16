@@ -1,7 +1,7 @@
 import unittest
 import six
 
-import pynetbox
+import pynautobot
 from .util import Response
 
 if six.PY3:
@@ -10,7 +10,7 @@ else:
     from mock import patch
 
 
-api = pynetbox.api("http://localhost:8000", token="abc123",)
+api = pynautobot.api("http://localhost:8000", token="abc123",)
 
 nb = api.dcim
 
@@ -23,7 +23,7 @@ HEADERS = {
 class Generic(object):
     class Tests(unittest.TestCase):
         name = ""
-        ret = pynetbox.core.response.Record
+        ret = pynautobot.core.response.Record
         app = "dcim"
 
         def test_get_all(self):
@@ -143,8 +143,8 @@ class DeviceTestCase(Generic.Tests):
         ret = getattr(nb, self.name).get(1)
         self.assertTrue(ret)
         self.assertTrue(isinstance(ret, self.ret))
-        self.assertTrue(isinstance(ret.primary_ip, pynetbox.models.ipam.IpAddresses))
-        self.assertTrue(isinstance(ret.primary_ip4, pynetbox.models.ipam.IpAddresses))
+        self.assertTrue(isinstance(ret.primary_ip, pynautobot.models.ipam.IpAddresses))
+        self.assertTrue(isinstance(ret.primary_ip4, pynautobot.models.ipam.IpAddresses))
         self.assertTrue(isinstance(ret.config_context, dict))
         self.assertTrue(isinstance(ret.custom_fields, dict))
         self.assertTrue(isinstance(ret.local_context_data, dict))
@@ -358,7 +358,7 @@ class RackTestCase(Generic.Tests):
             headers=HEADERS,
         )
         self.assertTrue(ret)
-        self.assertTrue(isinstance(ret[0].device, pynetbox.models.dcim.Devices))
+        self.assertTrue(isinstance(ret[0].device, pynautobot.models.dcim.Devices))
 
     @patch(
         "requests.sessions.Session.get",
@@ -377,7 +377,7 @@ class RackTestCase(Generic.Tests):
             headers=HEADERS,
         )
         self.assertTrue(ret)
-        self.assertTrue(isinstance(ret[0].device, pynetbox.models.dcim.Devices))
+        self.assertTrue(isinstance(ret[0].device, pynautobot.models.dcim.Devices))
 
 
 class RackRoleTestCase(Generic.Tests):

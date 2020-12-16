@@ -2,7 +2,7 @@ import unittest
 
 import six
 
-from pynetbox.core.response import Record
+from pynautobot.core.response import Record
 
 if six.PY3:
     from unittest.mock import Mock

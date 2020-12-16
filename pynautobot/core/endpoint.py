@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from pynetbox.core.query import Request, RequestError
-from pynetbox.core.response import Record
+from pynautobot.core.query import Request, RequestError
+from pynautobot.core.response import Record
 
 RESERVED_KWARGS = ("id", "pk", "limit", "offset")
 
@@ -26,7 +26,7 @@ def response_loader(req, return_obj, endpoint):
 
 
 class Endpoint(object):
-    """Represent actions available on endpoints in the Netbox API.
+    """Represent actions available on endpoints in the Nautobot API.
 
     Takes ``name`` and ``app`` passed from App() and builds the correct
     url to make queries to and the proper Response object to return
@@ -39,7 +39,7 @@ class Endpoint(object):
 
     .. note::
 
-        In order to call NetBox endpoints with dashes in their
+        In order to call Nautobot endpoints with dashes in their
         names you should convert the dash to an underscore.
         (E.g. querying the ip-addresses endpoint is done with
         ``nb.ipam.ip_addresses.all()``.)
@@ -234,7 +234,7 @@ class Endpoint(object):
 
         Allows for the creation of new objects on an endpoint. Named
         arguments are converted to json properties, and a single object
-        is created. NetBox's bulk creation capabilities can be used by
+        is created. Nautobot's bulk creation capabilities can be used by
         passing a list of dictionaries as the first argument.
 
         .. note:
@@ -254,7 +254,7 @@ class Endpoint(object):
         Creating an object on the `devices` endpoint you can lookup a
         device_role's name with:
 
-        >>> netbox.dcim.devices.create(
+        >>> nautobot.dcim.devices.create(
         ...    name='test',
         ...    device_role=1,
         ... )
@@ -294,13 +294,13 @@ class Endpoint(object):
 
         The returned dict is also saved in the endpoint object (in
         ``_choices`` attribute) so that later calls will return the same data
-        without recurring requests to NetBox. When using ``.choices()`` in
-        long-running applications, consider restarting them whenever NetBox is
+        without recurring requests to Nautobot. When using ``.choices()`` in
+        long-running applications, consider restarting them whenever Nautobot is
         upgraded, to prevent using stale choices data.
 
         :Returns: Dict containing the available choices.
 
-        :Example (from NetBox 2.8.x):
+        :Example (from Nautobot 2.8.x):
 
         >>> from pprint import pprint
         >>> pprint(nb.ipam.ip_addresses.choices())
@@ -412,7 +412,7 @@ class DetailEndpoint(object):
     def list(self, **kwargs):
         r"""The view operation for a detail endpoint
 
-        Returns the response from NetBox for a detail endpoint.
+        Returns the response from Nautobot for a detail endpoint.
 
         :args \**kwargs: key/value pairs that get converted into url
             parameters when passed to the endpoint.
@@ -420,7 +420,7 @@ class DetailEndpoint(object):
             ``.../?method=get_facts``.
 
         :returns: A dictionary or list of dictionaries retrieved from
-            NetBox.
+            Nautobot.
         """
         req = Request(**self.request_kwargs).get(add_params=kwargs)
 
@@ -431,7 +431,7 @@ class DetailEndpoint(object):
     def create(self, data=None):
         """The write operation for a detail endpoint.
 
-        Creates objects on a detail endpoint in NetBox.
+        Creates objects on a detail endpoint in Nautobot.
 
         :arg dict/list,optional data: A dictionary containing the
             key/value pair of the items you're creating on the parent
@@ -439,7 +439,7 @@ class DetailEndpoint(object):
             item with default values.
 
         :returns: A dictionary or list of dictionaries its created in
-            NetBox.
+            Nautobot.
         """
         data = data or {}
         req = Request(**self.request_kwargs).post(data)

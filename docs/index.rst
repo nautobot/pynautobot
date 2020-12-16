@@ -14,13 +14,13 @@ Instantiate the :py:class:`.Api`. Use the methods available on :py:class:`.Endpo
 API
 ===
 
-.. autoclass:: pynetbox.core.api.Api
+.. autoclass:: pynautobot.core.api.Api
   :members:
 
 App
 ===
 
-.. autoclass:: pynetbox.core.app.App
+.. autoclass:: pynautobot.core.app.App
   :members:
 
 Indices and tables

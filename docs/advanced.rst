@@ -6,15 +6,15 @@ Custom sessions can be used to modify the default HTTP behavior. Below are a few
 Headers
 *******
 
-To set a custom header on all requests. These headers are automatically merged with headers pynetbox sets itself.
+To set a custom header on all requests. These headers are automatically merged with headers pynautobot sets itself.
 
 :Example:
 
->>> import pynetbox
+>>> import pynautobot
 >>> import requests
 >>> session = requests.Session()
 >>> session.headers = {"mycustomheader": "test"}
->>> nb = pynetbox.api(
+>>> nb = pynautobot.api(
 ...     'http://localhost:8000',
 ...     private_key_file='/path/to/private-key.pem',
 ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
@@ -29,11 +29,11 @@ To disable SSL verification. See `the docs <https://requests.readthedocs.io/en/s
 
 :Example:
 
->>> import pynetbox
+>>> import pynautobot
 >>> import requests
 >>> session = requests.Session()
 >>> session.verify = False
->>> nb = pynetbox.api(
+>>> nb = pynautobot.api(
 ...     'http://localhost:8000',
 ...     private_key_file='/path/to/private-key.pem',
 ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
@@ -66,7 +66,7 @@ Setting timeouts requires the use of Adapters.
     session.mount("http://", adapter)
     session.mount("https://", adapter)
 
-    nb = pynetbox.api(
+    nb = pynautobot.api(
         'http://localhost:8000',
         private_key_file='/path/to/private-key.pem',
         token='d6f4e314a5b5fefd164995169f28ae32d987704f'

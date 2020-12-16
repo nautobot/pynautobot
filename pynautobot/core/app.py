@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from pynetbox.core.endpoint import Endpoint
-from pynetbox.core.query import Request
-from pynetbox.models import dcim, ipam, virtualization, circuits, extras, users
+from pynautobot.core.endpoint import Endpoint
+from pynautobot.core.query import Request
+from pynautobot.models import dcim, ipam, virtualization, circuits, extras, users
 
 
 class App(object):
-    """ Represents apps in NetBox.
+    """ Represents apps in Nautobot.
 
     Calls to attributes are returned as Endpoint objects.
 
@@ -74,11 +74,11 @@ class App(object):
 
         .. note::
 
-            This method is deprecated and only works with NetBox version 2.7.x
+            This method is deprecated and only works with Nautobot version 2.7.x
             or older. The ``choices()`` method in :py:class:`.Endpoint` is
-            compatible with all NetBox versions.
+            compatible with all Nautobot versions.
 
-        :Returns: Raw response from NetBox's _choices endpoint.
+        :Returns: Raw response from Nautobot's _choices endpoint.
         """
         if self._choices:
             return self._choices
@@ -95,7 +95,7 @@ class App(object):
     def custom_choices(self):
         """ Returns _custom_field_choices response from app
 
-        :Returns: Raw response from NetBox's _custom_field_choices endpoint.
+        :Returns: Raw response from Nautobot's _custom_field_choices endpoint.
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
         :Example:
 
@@ -114,7 +114,7 @@ class App(object):
     def config(self):
         """ Returns config response from app
 
-        :Returns: Raw response from NetBox's config endpoint.
+        :Returns: Raw response from Nautobot's config endpoint.
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
         :Example:
 
@@ -154,7 +154,7 @@ class PluginsApp(object):
     def installed_plugins(self):
         """ Returns raw response with installed plugins
 
-        :returns: Raw response NetBox's installed plugins.
+        :returns: Raw response Nautobot's installed plugins.
         :Example:
 
         >>> nb.plugins.installed_plugins()
@@ -162,7 +162,7 @@ class PluginsApp(object):
             'name': 'test_plugin', 
             'package': 'test_plugin', 
             'author': 'Dmitry', 
-            'description': 'Netbox test plugin', 
+            'description': 'Nautobot test plugin', 
             'verison': '0.10'
         }]
         """
