@@ -32,9 +32,7 @@ class Generic(object):
                 self.assertTrue(isinstance(ret, list))
                 self.assertTrue(isinstance(ret[0], self.ret))
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/".format(
-                        self.app, self.name.replace("_", "-")
-                    ),
+                    "http://localhost:8000/api/{}/{}/".format(self.app, self.name.replace("_", "-")),
                     params={},
                     json=None,
                     headers=HEADERS,
@@ -50,9 +48,7 @@ class Generic(object):
                 self.assertTrue(isinstance(ret, list))
                 self.assertTrue(isinstance(ret[0], self.ret))
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/".format(
-                        self.app, self.name.replace("_", "-")
-                    ),
+                    "http://localhost:8000/api/{}/{}/".format(self.app, self.name.replace("_", "-")),
                     params={"name": "test"},
                     json=None,
                     headers=HEADERS,
@@ -61,17 +57,13 @@ class Generic(object):
         def test_get(self):
             with patch(
                 "requests.sessions.Session.get",
-                return_value=Response(
-                    fixture="{}/{}.json".format(self.app, self.name[:-1])
-                ),
+                return_value=Response(fixture="{}/{}.json".format(self.app, self.name[:-1])),
             ) as mock:
                 ret = getattr(nb, self.name).get(1)
                 self.assertTrue(ret)
                 self.assertTrue(isinstance(ret, self.ret))
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/1/".format(
-                        self.app, self.name.replace("_", "-")
-                    ),
+                    "http://localhost:8000/api/{}/{}/1/".format(self.app, self.name.replace("_", "-")),
                     params={},
                     json=None,
                     headers=HEADERS,
@@ -82,8 +74,7 @@ class CircuitsTestCase(Generic.Tests):
     name = "circuits"
 
     @patch(
-        "requests.sessions.Session.get",
-        return_value=Response(fixture="circuits/circuit.json"),
+        "requests.sessions.Session.get", return_value=Response(fixture="circuits/circuit.json"),
     )
     def test_repr(self, _):
         test = nb.circuits.get(1)
@@ -102,8 +93,7 @@ class CircuitTerminationsTestCase(Generic.Tests):
     name = "circuit_terminations"
 
     @patch(
-        "requests.sessions.Session.get",
-        return_value=Response(fixture="circuits/circuit_termination.json"),
+        "requests.sessions.Session.get", return_value=Response(fixture="circuits/circuit_termination.json"),
     )
     def test_repr(self, _):
         test = nb.circuit_terminations.get(1)

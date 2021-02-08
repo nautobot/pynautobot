@@ -97,9 +97,7 @@ todo_include_todos = False
 # so a file named "default.css" will overwrite the builtin "default.css".
 # html_static_path = ['_static']
 
-html_sidebars = {
-    "**": ["globaltoc.html", "relations.html", "sourcelink.html", "searchbox.html"]
-}
+html_sidebars = {"**": ["globaltoc.html", "relations.html", "sourcelink.html", "searchbox.html"]}
 
 # -- Options for HTMLHelp output ------------------------------------------
 
@@ -128,13 +126,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (
-        master_doc,
-        "pynautobot.tex",
-        "pynautobot Documentation",
-        "TBD",
-        "manual",
-    ),  # "Zach Moody", "manual"),
+    (master_doc, "pynautobot.tex", "pynautobot Documentation", "TBD", "manual",),  # "Zach Moody", "manual"),
 ]
 
 

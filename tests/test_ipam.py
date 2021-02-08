@@ -1,5 +1,4 @@
 import unittest
-import json
 
 import six
 
@@ -44,9 +43,7 @@ class Generic(object):
                 self.assertTrue(isinstance(ret, list))
                 self.assertTrue(isinstance(ret[0], self.ret))
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/".format(
-                        self.app, self.name.replace("_", "-")
-                    ),
+                    "http://localhost:8000/api/{}/{}/".format(self.app, self.name.replace("_", "-")),
                     params={},
                     json=None,
                     headers=HEADERS,
@@ -62,9 +59,7 @@ class Generic(object):
                 self.assertTrue(isinstance(ret, list))
                 self.assertTrue(isinstance(ret[0], self.ret))
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/".format(
-                        self.app, self.name.replace("_", "-")
-                    ),
+                    "http://localhost:8000/api/{}/{}/".format(self.app, self.name.replace("_", "-")),
                     params={"name": "test"},
                     json=None,
                     headers=HEADERS,
@@ -73,11 +68,7 @@ class Generic(object):
         def test_get(self):
             with patch(
                 "requests.sessions.Session.get",
-                return_value=Response(
-                    fixture="{}/{}.json".format(
-                        self.app, self.name_singular or self.name[:-1]
-                    )
-                ),
+                return_value=Response(fixture="{}/{}.json".format(self.app, self.name_singular or self.name[:-1])),
             ) as mock:
                 ret = getattr(nb, self.name).get(1)
                 self.assertTrue(ret)
@@ -85,9 +76,7 @@ class Generic(object):
                 self.assertTrue(isinstance(dict(ret), dict))
                 self.assertTrue(isinstance(str(ret), str))
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/1/".format(
-                        self.app, self.name.replace("_", "-")
-                    ),
+                    "http://localhost:8000/api/{}/{}/1/".format(self.app, self.name.replace("_", "-")),
                     params={},
                     json=None,
                     headers=HEADERS,
@@ -99,8 +88,7 @@ class PrefixTestCase(Generic.Tests):
     name_singular = "prefix"
 
     @patch(
-        "requests.sessions.Session.get",
-        return_value=Response(fixture="ipam/prefix.json"),
+        "requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"),
     )
     def test_modify(self, *_):
         ret = nb.prefixes.get(1)
@@ -111,12 +99,10 @@ class PrefixTestCase(Generic.Tests):
         self.assertEqual(ret_serialized["prefix"], "10.1.2.0/24")
 
     @patch(
-        "requests.sessions.Session.put",
-        return_value=Response(fixture="ipam/prefix.json"),
+        "requests.sessions.Session.put", return_value=Response(fixture="ipam/prefix.json"),
     )
     @patch(
-        "requests.sessions.Session.get",
-        return_value=Response(fixture="ipam/prefix.json"),
+        "requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"),
     )
     def test_idempotence(self, *_):
         ret = nb.prefixes.get(1)
@@ -125,30 +111,22 @@ class PrefixTestCase(Generic.Tests):
 
     @patch(
         "requests.sessions.Session.get",
-        side_effect=[
-            Response(fixture="ipam/prefix.json"),
-            Response(fixture="ipam/available-ips.json"),
-        ],
+        side_effect=[Response(fixture="ipam/prefix.json"), Response(fixture="ipam/available-ips.json")],
     )
     def test_get_available_ips(self, mock):
         pfx = nb.prefixes.get(1)
         ret = pfx.available_ips.list()
         mock.assert_called_with(
-            "http://localhost:8000/api/ipam/prefixes/1/available-ips/",
-            params={},
-            json=None,
-            headers=HEADERS,
+            "http://localhost:8000/api/ipam/prefixes/1/available-ips/", params={}, json=None, headers=HEADERS,
         )
         self.assertTrue(ret)
         self.assertEqual(len(ret), 3)
 
     @patch(
-        "requests.sessions.Session.post",
-        return_value=Response(fixture="ipam/available-ips-post.json"),
+        "requests.sessions.Session.post", return_value=Response(fixture="ipam/available-ips-post.json"),
     )
     @patch(
-        "requests.sessions.Session.get",
-        return_value=Response(fixture="ipam/prefix.json"),
+        "requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"),
     )
     def test_create_available_ips(self, _, post):
         create_parms = dict(status=2,)
@@ -165,29 +143,21 @@ class PrefixTestCase(Generic.Tests):
 
     @patch(
         "requests.sessions.Session.get",
-        side_effect=[
-            Response(fixture="ipam/prefix.json"),
-            Response(fixture="ipam/available-prefixes.json"),
-        ],
+        side_effect=[Response(fixture="ipam/prefix.json"), Response(fixture="ipam/available-prefixes.json")],
     )
     def test_get_available_prefixes(self, mock):
         pfx = nb.prefixes.get(1)
         ret = pfx.available_prefixes.list()
         mock.assert_called_with(
-            "http://localhost:8000/api/ipam/prefixes/1/available-prefixes/",
-            params={},
-            json=None,
-            headers=HEADERS,
+            "http://localhost:8000/api/ipam/prefixes/1/available-prefixes/", params={}, json=None, headers=HEADERS,
         )
         self.assertTrue(ret)
 
     @patch(
-        "requests.sessions.Session.post",
-        return_value=Response(fixture="ipam/available-prefixes-post.json"),
+        "requests.sessions.Session.post", return_value=Response(fixture="ipam/available-prefixes-post.json"),
     )
     @patch(
-        "requests.sessions.Session.get",
-        return_value=Response(fixture="ipam/prefix.json"),
+        "requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"),
     )
     def test_create_available_prefixes(self, _, post):
         create_parms = dict(prefix_length=30,)
@@ -208,8 +178,7 @@ class IPAddressTestCase(Generic.Tests):
     name_singular = "ip_address"
 
     @patch(
-        "requests.sessions.Session.get",
-        return_value=Response(fixture="ipam/ip_address.json"),
+        "requests.sessions.Session.get", return_value=Response(fixture="ipam/ip_address.json"),
     )
     def test_modify(self, *_):
         ret = nb.prefixes.get(1)
@@ -238,19 +207,13 @@ class VlanTestCase(Generic.Tests):
 
     @patch(
         "requests.sessions.Session.get",
-        side_effect=[
-            Response(fixture="ipam/vlan.json"),
-            Response(fixture="dcim/interface.json"),
-        ],
+        side_effect=[Response(fixture="ipam/vlan.json"), Response(fixture="dcim/interface.json")],
     )
     def test_vlan_in_interface(self, mock):
         vlan = nb.vlans.get(3)
         interface = api.dcim.interfaces.get(1)
         mock.assert_called_with(
-            "http://localhost:8000/api/dcim/interfaces/1/",
-            params={},
-            json=None,
-            headers=HEADERS,
+            "http://localhost:8000/api/dcim/interfaces/1/", params={}, json=None, headers=HEADERS,
         )
         self.assertEqual(vlan.vid, interface.tagged_vlans[0].vid)
         self.assertEqual(vlan.id, interface.tagged_vlans[0].id)

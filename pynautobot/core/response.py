@@ -58,9 +58,7 @@ def get_return(lookup, return_fields=None):
 
 
 def flatten_custom(custom_dict):
-    return {
-        k: v if not isinstance(v, dict) else v["value"] for k, v in custom_dict.items()
-    }
+    return {k: v if not isinstance(v, dict) else v["value"] for k, v in custom_dict.items()}
 
 
 class JsonField(object):
@@ -169,11 +167,7 @@ class Record(object):
         self._init_cache = []
         self.api = api
         self.default_ret = Record
-        self.endpoint = (
-            self._endpoint_from_url(values["url"])
-            if values and "url" in values
-            else endpoint
-        )
+        self.endpoint = self._endpoint_from_url(values["url"]) if values and "url" in values else endpoint
         if values:
             self._parse_values(values)
 
@@ -200,9 +194,7 @@ class Record(object):
             cur_attr = getattr(self, i)
             if isinstance(cur_attr, Record):
                 yield i, dict(cur_attr)
-            elif isinstance(cur_attr, list) and all(
-                isinstance(i, Record) for i in cur_attr
-            ):
+            elif isinstance(cur_attr, list) and all(isinstance(i, Record) for i in cur_attr):
                 yield i, [dict(x) for x in cur_attr]
             else:
                 yield i, cur_attr
@@ -258,9 +250,7 @@ class Record(object):
         for k, v in values.items():
             if isinstance(v, dict):
                 lookup = getattr(self.__class__, k, None)
-                if k in ["custom_fields", "local_context_data"] or hasattr(
-                    lookup, "_json_field"
-                ):
+                if k in ["custom_fields", "local_context_data"] or hasattr(lookup, "_json_field"):
                     self._add_cache((k, v.copy()))
                     setattr(self, k, v)
                     continue
@@ -349,12 +339,9 @@ class Record(object):
                     current_val = getattr(current_val, "serialize")(nested=True)
 
                 if isinstance(current_val, list):
-                    current_val = [
-                        v.id if isinstance(v, Record) else v for v in current_val
-                    ]
+                    current_val = [v.id if isinstance(v, Record) else v for v in current_val]
                     if i in LIST_AS_SET and (
-                        all([isinstance(v, str) for v in current_val])
-                        or all([isinstance(v, int) for v in current_val])
+                        all([isinstance(v, str) for v in current_val]) or all([isinstance(v, int) for v in current_val])
                     ):
                         current_val = list(OrderedDict.fromkeys(current_val))
                 ret[i] = current_val
@@ -369,9 +356,7 @@ class Record(object):
             return k, v
 
         current = Hashabledict({fmt_dict(k, v) for k, v in self.serialize().items()})
-        init = Hashabledict(
-            {fmt_dict(k, v) for k, v in self.serialize(init=True).items()}
-        )
+        init = Hashabledict({fmt_dict(k, v) for k, v in self.serialize(init=True).items()})
         return set([i[0] for i in set(current.items()) ^ set(init.items())])
 
     def save(self):

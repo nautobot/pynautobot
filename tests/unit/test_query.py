@@ -5,25 +5,21 @@ import six
 from pynautobot.core.query import Request
 
 if six.PY3:
-    from unittest.mock import patch, Mock, call
+    from unittest.mock import Mock, call
 else:
-    from mock import patch, Mock, call
+    from mock import Mock, call
 
 
 class RequestTestCase(unittest.TestCase):
     def test_get_count(self):
-        test_obj = Request(
-            http_session=Mock(),
-            base="http://localhost:8001/api/dcim/devices",
-            filters={"q": "abcd"},
-        )
+        test_obj = Request(http_session=Mock(), base="http://localhost:8001/api/dcim/devices", filters={"q": "abcd"},)
         test_obj.http_session.get.return_value.json.return_value = {
             "count": 42,
             "next": "http://localhost:8001/api/dcim/devices?limit=1&offset=1&q=abcd",
             "previous": False,
             "results": [],
         }
-        expected = call(
+        call(
             "http://localhost:8001/api/dcim/devices/",
             params={"q": "abcd", "limit": 1},
             headers={"accept": "application/json;"},
@@ -39,9 +35,7 @@ class RequestTestCase(unittest.TestCase):
         )
 
     def test_get_count_no_filters(self):
-        test_obj = Request(
-            http_session=Mock(), base="http://localhost:8001/api/dcim/devices",
-        )
+        test_obj = Request(http_session=Mock(), base="http://localhost:8001/api/dcim/devices",)
         test_obj.http_session.get.return_value.json.return_value = {
             "count": 42,
             "next": "http://localhost:8001/api/dcim/devices?limit=1&offset=1",

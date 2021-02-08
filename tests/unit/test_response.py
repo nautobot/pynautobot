@@ -79,11 +79,7 @@ class RecordTestCase(unittest.TestCase):
     def test_serialize_dict_tag_set(self):
         test_values = {
             "id": 123,
-            "tags": [
-                {"id": 1, "name": "foo",},
-                {"id": 2, "name": "bar",},
-                {"id": 3, "name": "baz",},
-            ],
+            "tags": [{"id": 1, "name": "foo"}, {"id": 2, "name": "bar"}, {"id": 3, "name": "baz"}],
         }
         test = Record(test_values, None, None).serialize()
         self.assertEqual(len(test["tags"]), 3)
@@ -104,9 +100,7 @@ class RecordTestCase(unittest.TestCase):
         test.nested_dict = 1
         test.string_field = "foobaz"
         test.local_context_data["data"].append("two")
-        self.assertEqual(
-            test._diff(), {"tags", "nested_dict", "string_field", "local_context_data"}
-        )
+        self.assertEqual(test._diff(), {"tags", "nested_dict", "string_field", "local_context_data"})
 
     def test_diff_append_records_list(self):
         test_values = {
@@ -161,7 +155,7 @@ class RecordTestCase(unittest.TestCase):
     def test_choices_idempotence_prev27(self):
         test_values = {
             "id": 123,
-            "choices_test": {"value": 1, "label": "test",},
+            "choices_test": {"value": 1, "label": "test"},
         }
         test = Record(test_values, None, None)
         test.choices_test = 1
@@ -170,7 +164,7 @@ class RecordTestCase(unittest.TestCase):
     def test_choices_idempotence_v27(self):
         test_values = {
             "id": 123,
-            "choices_test": {"value": "test", "label": "test", "id": 1,},
+            "choices_test": {"value": "test", "label": "test", "id": 1},
         }
         test = Record(test_values, None, None)
         test.choices_test = "test"
@@ -179,7 +173,7 @@ class RecordTestCase(unittest.TestCase):
     def test_choices_idempotence_v28(self):
         test_values = {
             "id": 123,
-            "choices_test": {"value": "test", "label": "test",},
+            "choices_test": {"value": "test", "label": "test"},
         }
         test = Record(test_values, None, None)
         test.choices_test = "test"
@@ -235,8 +229,7 @@ class RecordTestCase(unittest.TestCase):
         test.child.name = "test321"
         test.child.save()
         self.assertEqual(
-            app.http_session.patch.call_args[0][0],
-            "http://localhost:8080/api/test-app/test-endpoint/321/",
+            app.http_session.patch.call_args[0][0], "http://localhost:8080/api/test-app/test-endpoint/321/",
         )
 
     def test_nested_write_with_directory_in_base_url(self):
@@ -261,21 +254,14 @@ class RecordTestCase(unittest.TestCase):
         test.child.name = "test321"
         test.child.save()
         self.assertEqual(
-            app.http_session.patch.call_args[0][0],
-            "http://localhost:8080/testing/api/test-app/test-endpoint/321/",
+            app.http_session.patch.call_args[0][0], "http://localhost:8080/testing/api/test-app/test-endpoint/321/",
         )
 
     def test_endpoint_from_url(self):
         api = Mock()
         api.base_url = "http://localhost:8080/api"
         test = Record(
-            {
-                "id": 123,
-                "name": "test",
-                "url": "http://localhost:8080/api/test-app/test-endpoint/1/",
-            },
-            api,
-            None,
+            {"id": 123, "name": "test", "url": "http://localhost:8080/api/test-app/test-endpoint/1/"}, api, None,
         )
         ret = test._endpoint_from_url(test.url)
         self.assertEqual(ret.name, "test-endpoint")
@@ -284,11 +270,7 @@ class RecordTestCase(unittest.TestCase):
         api = Mock()
         api.base_url = "http://localhost:8080/testing/api"
         test = Record(
-            {
-                "id": 123,
-                "name": "test",
-                "url": "http://localhost:8080/testing/api/test-app/test-endpoint/1/",
-            },
+            {"id": 123, "name": "test", "url": "http://localhost:8080/testing/api/test-app/test-endpoint/1/"},
             api,
             None,
         )
@@ -299,11 +281,7 @@ class RecordTestCase(unittest.TestCase):
         api = Mock()
         api.base_url = "http://localhost:8080/api"
         test = Record(
-            {
-                "id": 123,
-                "name": "test",
-                "url": "http://localhost:8080/api/plugins/test-app/test-endpoint/1/",
-            },
+            {"id": 123, "name": "test", "url": "http://localhost:8080/api/plugins/test-app/test-endpoint/1/"},
             api,
             None,
         )
@@ -314,11 +292,7 @@ class RecordTestCase(unittest.TestCase):
         api = Mock()
         api.base_url = "http://localhost:8080/testing/api"
         test = Record(
-            {
-                "id": 123,
-                "name": "test",
-                "url": "http://localhost:8080/testing/api/plugins/test-app/test-endpoint/1/",
-            },
+            {"id": 123, "name": "test", "url": "http://localhost:8080/testing/api/plugins/test-app/test-endpoint/1/"},
             api,
             None,
         )

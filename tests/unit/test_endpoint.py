@@ -5,9 +5,9 @@ import six
 from pynautobot.core.endpoint import Endpoint
 
 if six.PY3:
-    from unittest.mock import patch, Mock, call
+    from unittest.mock import patch, Mock
 else:
-    from mock import patch, Mock, call
+    from mock import patch, Mock
 
 
 class EndPointTestCase(unittest.TestCase):
@@ -37,9 +37,7 @@ class EndPointTestCase(unittest.TestCase):
             test_obj.filter(id=1)
 
     def test_choices(self):
-        with patch(
-            "pynautobot.core.query.Request.options", return_value=Mock()
-        ) as mock:
+        with patch("pynautobot.core.query.Request.options", return_value=Mock()) as mock:
             api = Mock(base_url="http://localhost:8000/api")
             app = Mock(name="test")
             mock.return_value = {

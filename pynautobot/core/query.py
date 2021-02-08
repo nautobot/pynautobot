@@ -50,16 +50,12 @@ class RequestError(Exception):
             message = "The requested url: {} could not be found.".format(req.url)
         else:
             try:
-                message = "The request failed with code {} {}: {}".format(
-                    req.status_code, req.reason, req.json()
-                )
+                message = "The request failed with code {} {}: {}".format(req.status_code, req.reason, req.json())
             except ValueError:
                 message = (
                     "The request failed with code {} {} but more specific "
                     "details were not returned in json. Check the Nautobot Logs "
-                    "or investigate this exception's error attribute.".format(
-                        req.status_code, req.reason
-                    )
+                    "or investigate this exception's error attribute.".format(req.status_code, req.reason)
                 )
 
         super(RequestError, self).__init__(message)
@@ -99,10 +95,7 @@ class ContentError(Exception):
     def __init__(self, message):
         req = message
 
-        message = (
-            "The server returned invalid (non-json) data. Maybe not "
-            "a Nautobot server?"
-        )
+        message = "The server returned invalid (non-json) data. Maybe not " "a Nautobot server?"
 
         super(ContentError, self).__init__(message)
         self.req = req
@@ -165,10 +158,7 @@ class Request(object):
         headers = {
             "Content-Type": "application/json;",
         }
-        req = self.http_session.get(
-            "{}docs/?format=openapi".format(self.normalize_url(self.base)),
-            headers=headers,
-        )
+        req = self.http_session.get("{}docs/?format=openapi".format(self.normalize_url(self.base)), headers=headers,)
         if req.ok:
             return req.json()
         else:
@@ -227,9 +217,7 @@ class Request(object):
         headers = {"Content-Type": "application/json;"}
         if self.token:
             headers["authorization"] = "Token {}".format(self.token)
-        req = self.http_session.get(
-            "{}status/".format(self.normalize_url(self.base)), headers=headers,
-        )
+        req = self.http_session.get("{}status/".format(self.normalize_url(self.base)), headers=headers,)
         if req.ok:
             return req.json()
         else:
@@ -261,9 +249,7 @@ class Request(object):
             if add_params:
                 params.update(add_params)
 
-        req = getattr(self.http_session, verb)(
-            url_override or self.url, headers=headers, params=params, json=data
-        )
+        req = getattr(self.http_session, verb)(url_override or self.url, headers=headers, params=params, json=data)
 
         if req.status_code == 204 and verb == "post":
             raise AllocationError(req)
@@ -285,9 +271,7 @@ class Request(object):
         with cf.ThreadPoolExecutor(max_workers=4) as pool:
             for offset in page_offsets:
                 new_params = {"offset": offset, "limit": page_size}
-                futures_to_results.append(
-                    pool.submit(self._make_call, add_params=new_params)
-                )
+                futures_to_results.append(pool.submit(self._make_call, add_params=new_params))
 
             for future in cf.as_completed(futures_to_results):
                 result = future.result()
@@ -316,12 +300,7 @@ class Request(object):
                     # passed in here because results from detail routes aren't
                     # paginated, thus far.
                     if first_run:
-                        req = self._make_call(
-                            add_params={
-                                "limit": req["count"],
-                                "offset": len(req["results"]),
-                            }
-                        )
+                        req = self._make_call(add_params={"limit": req["count"], "offset": len(req["results"])})
                     else:
                         req = self._make_call(url_override=req["next"])
                     first_run = False
@@ -340,9 +319,7 @@ class Request(object):
                 if req.get("next"):
                     page_size = len(req["results"])
                     pages = calc_pages(page_size, req["count"])
-                    page_offsets = [
-                        increment * page_size for increment in range(1, pages)
-                    ]
+                    page_offsets = [increment * page_size for increment in range(1, pages)]
                     if pages == 1:
                         req = self._make_call(url_override=req.get("next"))
                         ret.extend(req["results"])

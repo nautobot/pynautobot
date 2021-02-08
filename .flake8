@@ -1,0 +1,5 @@
+[flake8]
+# E501: Line length is enforced by Black, so flake8 doesn't need to check it
+# W503: Black disagrees with this rule, as does PEP 8; Black wins
+# E203: Black disagrees with this rule; Black wins
+ignore = E501, W503, E203

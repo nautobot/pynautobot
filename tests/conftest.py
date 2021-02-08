@@ -38,6 +38,5 @@ def pytest_configure(config):
     """
     # verify the netbox versions parse correctly and split them
     config.option.netbox_versions = [
-        version.Version(version_string)
-        for version_string in config.option.netbox_versions.split(",")
+        version.Version(version_string) for version_string in config.option.netbox_versions.split(",")
     ]

@@ -29,16 +29,14 @@ endpoints = {
 
 class ApiTestCase(unittest.TestCase):
     @patch(
-        "requests.sessions.Session.post",
-        return_value=Response(fixture="api/get_session_key.json"),
+        "requests.sessions.Session.post", return_value=Response(fixture="api/get_session_key.json"),
     )
     def test_get(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         self.assertTrue(api)
 
     @patch(
-        "requests.sessions.Session.post",
-        return_value=Response(fixture="api/get_session_key.json"),
+        "requests.sessions.Session.post", return_value=Response(fixture="api/get_session_key.json"),
     )
     def test_sanitize_url(self, *_):
         api = pynautobot.api("http://localhost:8000/", **def_kwargs)

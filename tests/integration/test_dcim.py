@@ -9,9 +9,7 @@ class TestSimpleServerRackingAndConnecting:
     def site(self, netbox_service, faker):
         """Verify we can create a site."""
         site_name = faker.city()
-        site = netbox_service["api"].dcim.sites.create(
-            name=site_name, slug=site_name.lower().replace(" ", "_")
-        )
+        site = netbox_service["api"].dcim.sites.create(name=site_name, slug=site_name.lower().replace(" ", "_"))
         assert site
 
         return site
@@ -74,19 +72,13 @@ class TestSimpleServerRackingAndConnecting:
 
     def test_racking_server(self, server, data_leafs, mgmt_leaf, rack):
         """Verify we can rack the server."""
-        assert server.update(
-            {"rack": rack.id, "face": "front", "position": rack.u_height - 4}
-        )
+        assert server.update({"rack": rack.id, "face": "front", "position": rack.u_height - 4})
 
         # connect the mgmt iface
-        server_mgmt_iface = server.api.dcim.interfaces.get(
-            device_id=server.id, mgmt_only=True, cabled=False
-        )
+        server_mgmt_iface = server.api.dcim.interfaces.get(device_id=server.id, mgmt_only=True, cabled=False)
         assert server_mgmt_iface
 
-        mleaf_iface = mgmt_leaf.api.dcim.interfaces.filter(
-            mgmt_only=False, cabled=False
-        )[0]
+        mleaf_iface = mgmt_leaf.api.dcim.interfaces.filter(mgmt_only=False, cabled=False)[0]
         cable = server.api.dcim.cables.create(
             termination_a_type="dcim.interface",
             termination_a_id=server_mgmt_iface.id,
@@ -95,20 +87,14 @@ class TestSimpleServerRackingAndConnecting:
         )
 
         # connect the data ifaces in a bond
-        server_data_ifaces = server.api.dcim.interfaces.filter(
-            device_id=server.id, mgmt_only=False
-        )[:2]
+        server_data_ifaces = server.api.dcim.interfaces.filter(device_id=server.id, mgmt_only=False)[:2]
         assert len(server_data_ifaces) == 2
 
-        bond_iface = server.api.dcim.interfaces.create(
-            device=server.id, name="bond0", type="lag"
-        )
+        bond_iface = server.api.dcim.interfaces.create(device=server.id, name="bond0", type="lag")
         assert bond_iface
 
         for server_data_iface, data_leaf in zip(server_data_ifaces, data_leafs):
-            dleaf_iface = data_leaf.api.dcim.interfaces.filter(
-                device_id=data_leaf.id, mgmt_only=False, cabled=False
-            )[0]
+            dleaf_iface = data_leaf.api.dcim.interfaces.filter(device_id=data_leaf.id, mgmt_only=False, cabled=False)[0]
             cable = server.api.dcim.cables.create(
                 termination_a_type="dcim.interface",
                 termination_a_id=server_data_iface.id,
@@ -123,17 +109,13 @@ class TestSimpleServerRackingAndConnecting:
         server = server.api.dcim.devices.get(server.id)
 
         # check the cable traces
-        for iface in server.api.dcim.interfaces.filter(
-            device_id=server.id, cabled=True
-        ):
+        for iface in server.api.dcim.interfaces.filter(device_id=server.id, cabled=True):
             trace = iface.trace()
             assert len(trace) == 1
             local_iface, cable, remote_iface = trace[0]
 
             assert local_iface.device.id == server.id
-            assert remote_iface.device.id in [dleaf_iface.id] + [
-                data_leaf.id for data_leaf in data_leafs
-            ]
+            assert remote_iface.device.id in [dleaf_iface.id] + [data_leaf.id for data_leaf in data_leafs]
 
         # check that it's racked properly
         assert server.rack.id == rack.id

@@ -73,9 +73,7 @@ class Api(object):
         self, url, token=None, private_key=None, private_key_file=None, threading=False,
     ):
         if private_key and private_key_file:
-            raise ValueError(
-                '"private_key" and "private_key_file" cannot be used together.'
-            )
+            raise ValueError('"private_key" and "private_key_file" cannot be used together.')
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
         self.token = token
         self.private_key = private_key
@@ -84,9 +82,7 @@ class Api(object):
         self.session_key = None
         self.http_session = requests.Session()
         if threading and sys.version_info.major == 2:
-            raise NotImplementedError(
-                "Threaded pynautobot calls not supported                 in Python 2"
-            )
+            raise NotImplementedError("Threaded pynautobot calls not supported                 in Python 2")
         self.threading = threading
 
         if self.private_key_file:
@@ -124,9 +120,7 @@ class Api(object):
         '2.6'
         >>>
         """
-        version = Request(
-            base=self.base_url, http_session=self.http_session,
-        ).get_version()
+        version = Request(base=self.base_url, http_session=self.http_session,).get_version()
         return version
 
     def openapi(self):
@@ -147,9 +141,7 @@ class Api(object):
         {...}
         >>>
         """
-        return Request(
-            base=self.base_url, http_session=self.http_session,
-        ).get_openapi()
+        return Request(base=self.base_url, http_session=self.http_session,).get_openapi()
 
     def status(self):
         """Gets the status information from Nautobot.
@@ -179,7 +171,5 @@ class Api(object):
          'rq-workers-running': 1}
         >>>
         """
-        status = Request(
-            base=self.base_url, token=self.token, http_session=self.http_session,
-        ).get_status()
+        status = Request(base=self.base_url, token=self.token, http_session=self.http_session,).get_status()
         return status

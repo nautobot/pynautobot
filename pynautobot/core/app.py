@@ -159,10 +159,10 @@ class PluginsApp(object):
 
         >>> nb.plugins.installed_plugins()
         [{
-            'name': 'test_plugin', 
-            'package': 'test_plugin', 
-            'author': 'Dmitry', 
-            'description': 'Nautobot test plugin', 
+            'name': 'test_plugin',
+            'package': 'test_plugin',
+            'author': 'Dmitry',
+            'description': 'Nautobot test plugin',
             'verison': '0.10'
         }]
         """

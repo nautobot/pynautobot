@@ -1,6 +1,5 @@
 """Tests for the pytest-docker integration."""
 
-import pytest
 from packaging import version
 
 

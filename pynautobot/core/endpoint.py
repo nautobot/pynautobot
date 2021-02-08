@@ -53,9 +53,7 @@ class Endpoint(object):
         self.base_url = api.base_url
         self.token = api.token
         self.session_key = api.session_key
-        self.url = "{base_url}/{app}/{endpoint}".format(
-            base_url=self.base_url, app=app.name, endpoint=self.name,
-        )
+        self.url = "{base_url}/{app}/{endpoint}".format(base_url=self.base_url, app=app.name, endpoint=self.name,)
         self._choices = None
 
     def _lookup_ret_obj(self, name, model):
@@ -148,11 +146,7 @@ class Endpoint(object):
             return None
 
         req = Request(
-            key=key,
-            base=self.url,
-            token=self.token,
-            session_key=self.session_key,
-            http_session=self.api.http_session,
+            key=key, base=self.url, token=self.token, session_key=self.session_key, http_session=self.api.http_session,
         )
 
         try:
@@ -213,10 +207,7 @@ class Endpoint(object):
         if not kwargs:
             raise ValueError("filter must be passed kwargs. Perhaps use all() instead.")
         if any(i in RESERVED_KWARGS for i in kwargs):
-            raise ValueError(
-                "A reserved {} kwarg was passed. Please remove it "
-                "try again.".format(RESERVED_KWARGS)
-            )
+            raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
 
         req = Request(
             filters=kwargs,
@@ -281,10 +272,7 @@ class Endpoint(object):
         """
 
         req = Request(
-            base=self.url,
-            token=self.token,
-            session_key=self.session_key,
-            http_session=self.api.http_session,
+            base=self.url, token=self.token, session_key=self.session_key, http_session=self.api.http_session,
         ).post(args[0] if args else kwargs)
 
         return response_loader(req, self.return_obj, self)
@@ -322,17 +310,12 @@ class Endpoint(object):
             return self._choices
 
         req = Request(
-            base=self.url,
-            token=self.api.token,
-            private_key=self.api.private_key,
-            http_session=self.api.http_session,
+            base=self.url, token=self.api.token, private_key=self.api.private_key, http_session=self.api.http_session,
         ).options()
         try:
             post_data = req["actions"]["POST"]
         except KeyError:
-            raise ValueError(
-                "Unexpected format in the OPTIONS response at {}".format(self.url)
-            )
+            raise ValueError("Unexpected format in the OPTIONS response at {}".format(self.url))
         self._choices = {}
         for prop in post_data:
             if "choices" in post_data[prop]:
@@ -375,10 +358,7 @@ class Endpoint(object):
             kwargs.update({"q": args[0]})
 
         if any(i in RESERVED_KWARGS for i in kwargs):
-            raise ValueError(
-                "A reserved {} kwarg was passed. Please remove it "
-                "try again.".format(RESERVED_KWARGS)
-            )
+            raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
 
         ret = Request(
             filters=kwargs,
