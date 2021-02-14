@@ -1,5 +1,8 @@
+import pytest
 from packaging import version
 
+from pynautobot.core.api import Api
+from pynautobot.core.graphql import GraphQLQuery
 
 DEFAULT_NETBOX_VERSIONS = "2.7, 2.8, 2.9, 2.10"
 
@@ -40,3 +43,16 @@ def pytest_configure(config):
     config.option.netbox_versions = [
         version.Version(version_string) for version_string in config.option.netbox_versions.split(",")
     ]
+
+
+@pytest.fixture
+def pynautobot_api():
+    """Factory to create pynautobot api instance."""
+    return Api(url="https://mocknautobot.example.com", token="1234567890abcdefg")
+
+
+@pytest.fixture
+def graphql_test_class(pynautobot_api):
+    """Factory to create test class to be used as base."""
+    test_class = GraphQLQuery(pynautobot_api)
+    return test_class

@@ -19,6 +19,7 @@ import requests
 
 from pynautobot.core.query import Request
 from pynautobot.core.app import App, PluginsApp
+from pynautobot.core.graphql import GraphQLQuery
 
 
 class Api(object):
@@ -76,6 +77,7 @@ class Api(object):
             raise ValueError('"private_key" and "private_key_file" cannot be used together.')
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
         self.token = token
+        self.headers = {"Authorization": f"Token {self.token}"}
         self.private_key = private_key
         self.private_key_file = private_key_file
         self.base_url = base_url
@@ -99,6 +101,7 @@ class Api(object):
         self.virtualization = App(self, "virtualization")
         self.users = App(self, "users")
         self.plugins = PluginsApp(self)
+        self.graphql = GraphQLQuery(self)
 
     @property
     def version(self):
