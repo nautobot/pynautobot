@@ -8,15 +8,13 @@ keywords = ["Nautobot"]
 classifiers = [
   "Intended Audience :: Developers",
   "Development Status :: 5 - Production/Stable",
-  "Programming Language :: Python :: 2",
-  "Programming Language :: Python :: 2.7",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.6",
 ]
 repository = "https://github.com/networktocode-llc/pynautobot"
 
 [tool.poetry.dependencies]
-python = "^2.7 || ^3.6"
+python = "^3.6"
 requests = "^2.20.0"
 
 [tool.poetry.dev-dependencies]

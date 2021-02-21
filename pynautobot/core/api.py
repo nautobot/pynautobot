@@ -71,8 +71,6 @@ class Api(object):
         self.headers = {"Authorization": f"Token {self.token}"}
         self.base_url = base_url
         self.http_session = requests.Session()
-        if threading and sys.version_info.major == 2:
-            raise NotImplementedError("Threaded pynautobot calls not supported in Python 2")
         self.threading = threading
 
         self.dcim = App(self, "dcim")
