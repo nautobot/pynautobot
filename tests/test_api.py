@@ -13,7 +13,6 @@ host = "http://localhost:8000"
 
 def_kwargs = {
     "token": "abc123",
-    "private_key_file": "tests/fixtures/api/get_session_key.json",
 }
 
 # Keys are app names, values are arbitrarily selected endpoints
@@ -28,16 +27,12 @@ endpoints = {
 
 
 class ApiTestCase(unittest.TestCase):
-    @patch(
-        "requests.sessions.Session.post", return_value=Response(fixture="api/get_session_key.json"),
-    )
+    @patch("requests.sessions.Session.post",)
     def test_get(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         self.assertTrue(api)
 
-    @patch(
-        "requests.sessions.Session.post", return_value=Response(fixture="api/get_session_key.json"),
-    )
+    @patch("requests.sessions.Session.post",)
     def test_sanitize_url(self, *_):
         api = pynautobot.api("http://localhost:8000/", **def_kwargs)
         self.assertTrue(api)

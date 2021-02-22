@@ -17,7 +17,7 @@ import copy
 from collections import OrderedDict
 
 import pynautobot.core.app
-from six.moves.urllib.parse import urlsplit
+from requests.utils import urlparse
 from pynautobot.core.query import Request
 from pynautobot.core.util import Hashabledict
 
@@ -236,7 +236,7 @@ class Record(object):
             self._init_cache.append((key, get_return(value)))
 
     def _parse_values(self, values):
-        """ Parses values init arg.
+        """Parses values init arg.
 
         Parses values dict at init and sets object attributes with the
         values within.
@@ -270,8 +270,8 @@ class Record(object):
             setattr(self, k, v)
 
     def _endpoint_from_url(self, url):
-        url_path = urlsplit(url).path
-        base_url_path_parts = urlsplit(self.api.base_url).path.split("/")
+        url_path = urlparse(url).path
+        base_url_path_parts = urlparse(self.api.base_url).path.split("/")
         if len(base_url_path_parts) > 2:
             # There are some extra directories in the path, remove them from url
             extra_path = "/".join(base_url_path_parts[:-1])
@@ -295,12 +295,7 @@ class Record(object):
         :returns: True
         """
         if self.url:
-            req = Request(
-                base=self.url,
-                token=self.api.token,
-                session_key=self.api.session_key,
-                http_session=self.api.http_session,
-            )
+            req = Request(base=self.url, token=self.api.token, http_session=self.api.http_session,)
             self._parse_values(req.get())
             self.has_details = True
             return True
@@ -381,11 +376,7 @@ class Record(object):
             if diff:
                 serialized = self.serialize()
                 req = Request(
-                    key=self.id,
-                    base=self.endpoint.url,
-                    token=self.api.token,
-                    session_key=self.api.session_key,
-                    http_session=self.api.http_session,
+                    key=self.id, base=self.endpoint.url, token=self.api.token, http_session=self.api.http_session,
                 )
                 if req.patch({i: serialized[i] for i in diff}):
                     return True
@@ -428,11 +419,5 @@ class Record(object):
         True
         >>>
         """
-        req = Request(
-            key=self.id,
-            base=self.endpoint.url,
-            token=self.api.token,
-            session_key=self.api.session_key,
-            http_session=self.api.http_session,
-        )
+        req = Request(key=self.id, base=self.endpoint.url, token=self.api.token, http_session=self.api.http_session,)
         return True if req.delete() else False

@@ -32,7 +32,6 @@ class Api(object):
         * dcim
         * ipam
         * circuits
-        * secrets
         * tenancy
         * extras
         * virtualization
@@ -51,51 +50,34 @@ class Api(object):
     :param str url: The base URL to the instance of Nautobot you
         wish to connect to.
     :param str token: Your Nautobot token.
-    :param str,optional private_key_file: The path to your private
-        key file.
-    :param str,optional private_key: Your private key.
     :param bool,optional threading: Set to True to use threading in ``.all()``
         and ``.filter()`` requests.
-    :raises ValueError: If *private_key* and *private_key_file* are both
-        specified.
     :raises AttributeError: If app doesn't exist.
     :Examples:
 
     >>> import pynautobot
     >>> nb = pynautobot.api(
     ...     'http://localhost:8000',
-    ...     private_key_file='/path/to/private-key.pem',
     ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
     ... )
     >>> nb.dcim.devices.all()
     """
 
     def __init__(
-        self, url, token=None, private_key=None, private_key_file=None, threading=False,
+        self, url, token=None, threading=False,
     ):
-        if private_key and private_key_file:
-            raise ValueError('"private_key" and "private_key_file" cannot be used together.')
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
         self.token = token
         self.headers = {"Authorization": f"Token {self.token}"}
-        self.private_key = private_key
-        self.private_key_file = private_key_file
         self.base_url = base_url
-        self.session_key = None
         self.http_session = requests.Session()
         if threading and sys.version_info.major == 2:
-            raise NotImplementedError("Threaded pynautobot calls not supported                 in Python 2")
+            raise NotImplementedError("Threaded pynautobot calls not supported in Python 2")
         self.threading = threading
-
-        if self.private_key_file:
-            with open(self.private_key_file, "r") as kf:
-                private_key = kf.read()
-                self.private_key = private_key
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")
         self.circuits = App(self, "circuits")
-        self.secrets = App(self, "secrets")
         self.tenancy = App(self, "tenancy")
         self.extras = App(self, "extras")
         self.virtualization = App(self, "virtualization")
@@ -116,11 +98,10 @@ class Api(object):
         >>> import pynautobot
         >>> nb = pynautobot.api(
         ...     'http://localhost:8000',
-        ...     private_key_file='/path/to/private-key.pem',
         ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
         ... )
         >>> nb.version
-        '2.6'
+        '1.0'
         >>>
         """
         version = Request(base=self.base_url, http_session=self.http_session,).get_version()
@@ -137,7 +118,6 @@ class Api(object):
         >>> import pynautobot
         >>> nb = pynautobot.api(
         ...     'http://localhost:8000',
-        ...     private_key_file='/path/to/private-key.pem',
         ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
         ... )
         >>> nb.openapi()
@@ -168,7 +148,7 @@ class Api(object):
                             'rest_framework': '3.12.2',
                             'taggit': '1.3.0',
                             'timezone_field': '4.0'},
-         'nautobot-version': '2.10.2',
+         'nautobot-version': '1.0.0',
          'plugins': {},
          'python-version': '3.7.3',
          'rq-workers-running': 1}

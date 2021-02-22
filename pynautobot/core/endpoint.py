@@ -52,7 +52,6 @@ class Endpoint(object):
         self.api = api
         self.base_url = api.base_url
         self.token = api.token
-        self.session_key = api.session_key
         self.url = "{base_url}/{app}/{endpoint}".format(base_url=self.base_url, app=app.name, endpoint=self.name,)
         self._choices = None
 
@@ -91,7 +90,6 @@ class Endpoint(object):
         req = Request(
             base="{}/".format(self.url),
             token=self.token,
-            session_key=self.session_key,
             http_session=self.api.http_session,
             threading=self.api.threading,
         )
@@ -145,9 +143,7 @@ class Endpoint(object):
                     return filter_lookup[0]
             return None
 
-        req = Request(
-            key=key, base=self.url, token=self.token, session_key=self.session_key, http_session=self.api.http_session,
-        )
+        req = Request(key=key, base=self.url, token=self.token, http_session=self.api.http_session,)
 
         try:
             resp = req.get()
@@ -213,7 +209,6 @@ class Endpoint(object):
             filters=kwargs,
             base=self.url,
             token=self.token,
-            session_key=self.session_key,
             http_session=self.api.http_session,
             threading=self.api.threading,
         )
@@ -271,14 +266,14 @@ class Endpoint(object):
         ... ])
         """
 
-        req = Request(
-            base=self.url, token=self.token, session_key=self.session_key, http_session=self.api.http_session,
-        ).post(args[0] if args else kwargs)
+        req = Request(base=self.url, token=self.token, http_session=self.api.http_session,).post(
+            args[0] if args else kwargs
+        )
 
         return response_loader(req, self.return_obj, self)
 
     def choices(self):
-        """ Returns all choices from the endpoint.
+        """Returns all choices from the endpoint.
 
         The returned dict is also saved in the endpoint object (in
         ``_choices`` attribute) so that later calls will return the same data
@@ -309,9 +304,7 @@ class Endpoint(object):
         if self._choices:
             return self._choices
 
-        req = Request(
-            base=self.url, token=self.api.token, private_key=self.api.private_key, http_session=self.api.http_session,
-        ).options()
+        req = Request(base=self.url, token=self.api.token, http_session=self.api.http_session,).options()
         try:
             post_data = req["actions"]["POST"]
         except KeyError:
@@ -360,13 +353,7 @@ class Endpoint(object):
         if any(i in RESERVED_KWARGS for i in kwargs):
             raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
 
-        ret = Request(
-            filters=kwargs,
-            base=self.url,
-            token=self.token,
-            session_key=self.session_key,
-            http_session=self.api.http_session,
-        )
+        ret = Request(filters=kwargs, base=self.url, token=self.token, http_session=self.api.http_session,)
 
         return ret.get_count()
 
@@ -382,12 +369,7 @@ class DetailEndpoint(object):
         self.parent_obj = parent_obj
         self.custom_return = custom_return
         self.url = "{}/{}/{}/".format(parent_obj.endpoint.url, parent_obj.id, name)
-        self.request_kwargs = dict(
-            base=self.url,
-            token=parent_obj.api.token,
-            session_key=parent_obj.api.session_key,
-            http_session=parent_obj.api.http_session,
-        )
+        self.request_kwargs = dict(base=self.url, token=parent_obj.api.token, http_session=parent_obj.api.http_session,)
 
     def list(self, **kwargs):
         r"""The view operation for a detail endpoint

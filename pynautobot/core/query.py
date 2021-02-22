@@ -18,7 +18,6 @@ try:
 except ImportError:
     pass
 import json
-from six.moves.urllib.parse import urlencode
 
 
 def calc_pages(limit, count):
@@ -115,20 +114,10 @@ class Request(object):
         correlate to the filters a given endpoint accepts.
         In (e.g. /api/dcim/devices/?name='test') 'name': 'test'
         would be in the filters dict.
-    :param private_key: (str, optional) The user's private key as a
-        string.
     """
 
     def __init__(
-        self,
-        base,
-        http_session,
-        filters=None,
-        key=None,
-        token=None,
-        private_key=None,
-        session_key=None,
-        threading=False,
+        self, base, http_session, filters=None, key=None, token=None, threading=False,
     ):
         """
         Instantiates a new Request object
@@ -140,15 +129,11 @@ class Request(object):
                 In (e.g. /api/dcim/devices/?name='test') 'name': 'test'
                 would be in the filters dict.
             key (int, optional): database id of the item being queried.
-            private_key (string, optional): The user's private key as a
-                string.
         """
         self.base = self.normalize_url(base)
         self.filters = filters
         self.key = key
         self.token = token
-        self.private_key = private_key
-        self.session_key = session_key
         self.http_session = http_session
         self.url = self.base if not key else "{}{}/".format(self.base, key)
         self.threading = threading
@@ -165,7 +150,7 @@ class Request(object):
             raise RequestError(req)
 
     def get_version(self):
-        """ Gets the API version of Nautobot.
+        """Gets the API version of Nautobot.
 
         Issues a GET request to the base URL to read the API version from the
         response headers.
@@ -183,33 +168,8 @@ class Request(object):
         else:
             raise RequestError(req)
 
-    def get_session_key(self):
-        """Requests session key
-
-        Issues a GET request to the `get-session-key` endpoint for
-        subsequent use in requests from the `secrets` endpoint.
-
-        :Returns: String containing session key.
-        """
-        req = self.http_session.post(
-            "{}secrets/get-session-key/?preserve_key=True".format(self.base),
-            headers={
-                "accept": "application/json",
-                "authorization": "Token {}".format(self.token),
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            data=urlencode({"private_key": self.private_key.strip("\n")}),
-        )
-        if req.ok:
-            try:
-                return req.json()["session_key"]
-            except json.JSONDecodeError:
-                raise ContentError(req)
-        else:
-            raise RequestError(req)
-
     def get_status(self):
-        """ Gets the status from /api/status/ endpoint in Nautobot.
+        """Gets the status from /api/status/ endpoint in Nautobot.
 
         :Returns: Dictionary as returned by Nautobot.
         :Raises: RequestError if request is not successful.
@@ -224,8 +184,7 @@ class Request(object):
             raise RequestError(req)
 
     def normalize_url(self, url):
-        """ Builds a url for POST actions.
-        """
+        """Builds a url for POST actions."""
         if url[-1] != "/":
             return "{}/".format(url)
 
@@ -239,8 +198,6 @@ class Request(object):
 
         if self.token:
             headers["authorization"] = "Token {}".format(self.token)
-        if self.session_key:
-            headers["X-Session-Key"] = self.session_key
 
         params = {}
         if not url_override:
@@ -338,8 +295,7 @@ class Request(object):
     def put(self, data):
         """Makes PUT request.
 
-        Makes a PUT request to Nautobot's API. Adds the session key to
-        headers if the `private_key` attribute was populated.
+        Makes a PUT request to Nautobot's API.
 
         :param data: (dict) Contains a dict that will be turned into a
             json object and sent to the API.
@@ -352,8 +308,7 @@ class Request(object):
     def post(self, data):
         """Makes POST request.
 
-        Makes a POST request to Nautobot's API. Adds the session key to
-        headers if the `private_key` attribute was populated.
+        Makes a POST request to Nautobot's API.
 
         :param data: (dict) Contains a dict that will be turned into a
             json object and sent to the API.

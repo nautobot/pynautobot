@@ -19,7 +19,7 @@ from pynautobot.models import dcim, ipam, virtualization, circuits, extras, user
 
 
 class App(object):
-    """ Represents apps in Nautobot.
+    """Represents apps in Nautobot.
 
     Calls to attributes are returned as Endpoint objects.
 
@@ -54,23 +54,10 @@ class App(object):
         self._setmodel()
 
     def __getattr__(self, name):
-        if name == "secrets":
-            self._set_session_key()
         return Endpoint(self.api, self, name, model=self.model)
 
-    def _set_session_key(self):
-        if getattr(self.api, "session_key"):
-            return
-        if self.api.token and self.api.private_key:
-            self.api.session_key = Request(
-                base=self.api.base_url,
-                token=self.api.token,
-                private_key=self.api.private_key,
-                http_session=self.api.http_session,
-            ).get_session_key()
-
     def choices(self):
-        """ Returns _choices response from App
+        """Returns _choices response from App
 
         .. note::
 
@@ -86,14 +73,13 @@ class App(object):
         self._choices = Request(
             base="{}/{}/_choices/".format(self.api.base_url, self.name),
             token=self.api.token,
-            private_key=self.api.private_key,
             http_session=self.api.http_session,
         ).get()
 
         return self._choices
 
     def custom_choices(self):
-        """ Returns _custom_field_choices response from app
+        """Returns _custom_field_choices response from app
 
         :Returns: Raw response from Nautobot's _custom_field_choices endpoint.
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
@@ -106,13 +92,12 @@ class App(object):
         custom_field_choices = Request(
             base="{}/{}/_custom_field_choices/".format(self.api.base_url, self.name,),
             token=self.api.token,
-            private_key=self.api.private_key,
             http_session=self.api.http_session,
         ).get()
         return custom_field_choices
 
     def config(self):
-        """ Returns config response from app
+        """Returns config response from app
 
         :Returns: Raw response from Nautobot's config endpoint.
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
@@ -130,7 +115,6 @@ class App(object):
         config = Request(
             base="{}/{}/config/".format(self.api.base_url, self.name,),
             token=self.api.token,
-            private_key=self.api.private_key,
             http_session=self.api.http_session,
         ).get()
         return config
@@ -152,7 +136,7 @@ class PluginsApp(object):
         return App(self.api, "plugins/{}".format(name))
 
     def installed_plugins(self):
-        """ Returns raw response with installed plugins
+        """Returns raw response with installed plugins
 
         :returns: Raw response Nautobot's installed plugins.
         :Example:
@@ -169,7 +153,6 @@ class PluginsApp(object):
         installed_plugins = Request(
             base="{}/plugins/installed-plugins".format(self.api.base_url,),
             token=self.api.token,
-            private_key=self.api.private_key,
             http_session=self.api.http_session,
         ).get()
         return installed_plugins
