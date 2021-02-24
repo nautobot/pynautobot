@@ -1,0 +1,34 @@
+---
+stages:
+  - lint
+  - test
+
+if: type IN (pull_request)
+language: python
+services:
+  - "docker"
+
+env:
+  matrix:
+    - "PYTHON_VER=3.6"
+    - "PYTHON_VER=3.7"
+    - "PYTHON_VER=3.8"
+    - "PYTHON_VER=3.9"
+
+before_script:
+  # To be added later
+  # - pip install invoke poetry toml
+  # - invoke build-image --nocache
+  - pip3 install poetry
+  - poetry install
+
+script:
+  - pytest -v
+
+jobs:
+  include:
+    - stage: lint
+      before_script:
+        - pip install black==19.10b0
+      script:
+        - black --diff --check .

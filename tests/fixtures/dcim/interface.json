@@ -1,0 +1,67 @@
+{
+    "id": 1,
+    "device": {
+        "id": 2,
+        "url": "http://localhost:8000/api/dcim/devices/2/",
+        "name": "test1-core1",
+        "display_name": "test1-core1"
+    },
+    "name": "et-0/0/0",
+    "form_factor": {
+        "value": 1400,
+        "label": "QSFP+ (40GE)"
+    },
+    "enabled": true,
+    "lag": {
+        "id": 223,
+        "url": "http://localhost:8000/api/dcim/interfaces/223/",
+        "name": "ae0"
+    },
+    "mtu": null,
+    "mac_address": null,
+    "mgmt_only": false,
+    "description": "",
+    "is_connected": true,
+    "connected_endpoint": {
+        "id": 1,
+        "url": "http://localhost:8000/api/dcim/interfaces/1/",
+        "device": {
+            "id": 1,
+            "url": "http://localhost:8000/api/dcim/devices/1/",
+            "name": "tst-endpoint",
+            "display_name": "tst-endpoint"
+        },
+        "name": "eth0",
+        "cable": 1
+    },
+    "connection_status": {
+        "value": true,
+        "label": "Connected"
+    },
+    "cable": {
+        "id": 1,
+        "url": "http://localhost:8000/api/dcim/cables/1/",
+        "label": ""
+    },
+    "mode": {
+        "value": "tagged",
+        "label": "Tagged",
+        "id": 200
+    },
+    "untagged_vlan": {
+        "id": 2,
+        "url": "http://localhost:8000/api/ipam/vlans/792/",
+        "vid": 2069,
+        "name": "v2069",
+        "display_name": "2069 (v2069)"
+    },
+    "tagged_vlans": [
+        {
+            "id": 3,
+            "url": "http://localhost:8000/api/ipam/vlans/248/",
+            "vid": 1210,
+            "name": "v1210",
+            "display_name": "1210 (v1210)"
+        }
+    ]
+}
