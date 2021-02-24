@@ -12,6 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+This file has been modified by NetworktoCode, LLC.
 """
 from pynautobot.core.endpoint import Endpoint
 from pynautobot.core.query import Request
@@ -28,12 +30,6 @@ class App(object):
         if requested endpoint doesn't exist.
     """
 
-    def __init__(self, api, name):
-        self.api = api
-        self.name = name
-        self._choices = None
-        self._setmodel()
-
     models = {
         "dcim": dcim,
         "ipam": ipam,
@@ -42,6 +38,12 @@ class App(object):
         "extras": extras,
         "users": users,
     }
+
+    def __init__(self, api, name):
+        self.api = api
+        self.name = name
+        self._choices = None
+        self._setmodel()
 
     def _setmodel(self):
         self.model = App.models[self.name] if self.name in App.models else None

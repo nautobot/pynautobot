@@ -3,7 +3,7 @@
 # pynautobot documentation build configuration file, created by
 # sphinx-quickstart on Thu Apr  6 22:31:03 2017.
 #
-# This file is execfile()d with the current directory set to its
+# This file is executed with the current directory set to its
 # containing dir.
 #
 # Note that not all possible configuration values are present in this
@@ -32,7 +32,21 @@ sys.path.insert(0, os.path.abspath("../"))
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc"]
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.napoleon", "sphinx.ext.autosectionlabel", "sphinx.ext.todo"]
+# autosummary_generate = True
+# autosummary_generate_overwrite = True
+autodoc_default_options = {
+    # "exclude-members": "__weakref__",
+    # "ignore-module-all": ,
+    # "imported-members": ,
+    # "inherited-members": ,
+    "members": True,
+    # "member-order": "bysource",
+    # "private-members": ,
+    "show-inheritance": True,
+    "special-members": "__init__",
+    "undoc-members": True,
+}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -49,7 +63,7 @@ master_doc = "index"
 # General information about the project.
 project = "pynautobot"
 copyright = "TBD"  # "2017, DigitalOcean"
-author = "TBD"  # "Zach Moody"
+author = "Network to Code"  # "Zach Moody"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -76,8 +90,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 pygments_style = "sphinx"
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
-
+todo_include_todos = True
 
 # -- Options for HTML output ----------------------------------------------
 
@@ -97,7 +110,7 @@ todo_include_todos = False
 # so a file named "default.css" will overwrite the builtin "default.css".
 # html_static_path = ['_static']
 
-html_sidebars = {"**": ["globaltoc.html", "relations.html", "sourcelink.html", "searchbox.html"]}
+html_sidebars = {"**": ["globaltoc.html", "relations.html", "searchbox.html"]}
 
 # -- Options for HTMLHelp output ------------------------------------------
 
@@ -126,7 +139,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "pynautobot.tex", "pynautobot Documentation", "TBD", "manual",),  # "Zach Moody", "manual"),
+    (master_doc, "pynautobot.tex", "pynautobot Documentation", "Network to Code", "manual",),
 ]
 
 
@@ -153,3 +166,10 @@ texinfo_documents = [
         "Miscellaneous",
     ),
 ]
+
+
+def setup(app):
+    from sphinx.ext.autodoc import cut_lines
+
+    # skip the copyright lines in every module docstring
+    app.connect("autodoc-process-docstring", cut_lines(pre=17, what=["module"]))

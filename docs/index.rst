@@ -1,27 +1,19 @@
+**************************************
+Welcome to pynautobot's Documentation!
+**************************************
+
+Pynautobot is an SDK for the `Nautobot <https://nautobot.readthedocs.io/>`_ API.
+This library was initially developed as a fork of `pynetbox <https://pynetbox.readthedocs.io/>`_,
+in order to extend support for features unique to Nautobot.
+Pynetbox was originally developed by Zach Moody at DigitalOcean and the NetBox Community.
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
 
-   endpoint
-   response
-   request
-   IPAM
+   basic/index
+   advanced/index
+   api/index
 
-TL;DR
-=====
-Instantiate the :py:class:`.Api`. Use the methods available on :py:class:`.Endpoint` to return :py:class:`.Record` objects. 
-
-API
-===
-
-.. autoclass:: pynautobot.core.api.Api
-  :members:
-
-App
-===
-
-.. autoclass:: pynautobot.core.app.App
-  :members:
 
 Indices and tables
 ==================

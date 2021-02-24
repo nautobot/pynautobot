@@ -7,7 +7,7 @@ class GraphQLException(Exception):
         """GraphQL Exception handling.
 
         Args:
-            response (Exception): Exception from the request 
+            response (Exception): Exception from the request
         """
         self.json = graph_err.response.json()
         self.status_code = graph_err.response.status_code
@@ -66,17 +66,48 @@ class GraphQLQuery:
                 - When unknown error is passed in, please open an issue so this can be addressed.
 
         Examples:
-            >>> try:
-            ...   response.raise_for_status()
-            ... except Exception as e:
-            ...   variable = e
-            ... 
-            >>> variable
-            >>> variable.response.json()
-            {'errors': [{'message': 'Cannot query field "nae" on type "DeviceType". Did you mean "name" or "face"?', 'locations': [{'line': 4, 'column': 5}]}]}
+            >>> query = '''
+            ... query {
+            ...   sites {
+            ...     id
+            ...     name
+            ...     region {
+            ...       name
+            ...     }
+            ...   }
+            ... }
+            ... '''
+            >>> nautobot.graphql.query(query=query)
+            GraphQLRecord(json={'data': {'sites': [{'id': '2cfbc91e-361f-4129-9db6-bc21a6f88d38', 'name': 'ams', 'region': {'name': 'Netherlands'}}, {'id': '7ef021de-eb21-4403-8438-0e722c0f4b44', 'name': 'atl', 'region': {'name': 'United States'}}]}}, status_code=200)
 
-            >>> variable.response.status_code
-            400
+            >>> query = '''
+            ... query {
+            ...   sites (name: "den") {
+            ...     id
+            ...     name
+            ...     region {
+            ...       name
+            ...     }
+            ...   }
+            ... }
+            ... '''
+            >>> nautobot.graphql.query(query=query)
+            GraphQLRecord(json={'data': {'sites': [{'id': '45399b54-47f9-4eec-86e3-47352e103b1b', 'name': 'den', 'region': {'name': 'United States'}}]}}, status_code=200)
+
+            >>> variables = {"site_name": "den"}
+            >>> query = '''
+            ... query ($site_name:String!) {
+            ...   sites (name: $site_name) {
+            ...     id
+            ...     name
+            ...     region {
+            ...       name
+            ...     }
+            ...   }
+            ... }
+            ... '''
+            >>> nautobot.graphql.query(query=query, variables=variables)
+            GraphQLRecord(json={'data': {'sites': [{'id': '45399b54-47f9-4eec-86e3-47352e103b1b', 'name': 'den', 'region': {'name': 'United States'}}]}}, status_code=200)
 
         Returns:
             GraphQLRecord: Response of the API call

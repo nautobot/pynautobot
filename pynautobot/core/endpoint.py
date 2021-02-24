@@ -12,6 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+This file has been modified by NetworktoCode, LLC.
 """
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
@@ -376,10 +378,9 @@ class DetailEndpoint(object):
 
         Returns the response from Nautobot for a detail endpoint.
 
-        :args \**kwargs: key/value pairs that get converted into url
-            parameters when passed to the endpoint.
-            E.g. ``.list(method='get_facts')`` would be converted to
-            ``.../?method=get_facts``.
+        Args:
+            **kwargs: key/value pairs that get converted into url parameters when passed to the endpoint.
+                E.g. ``.list(method='get_facts')`` would be converted to ``.../?method=get_facts``.
 
         :returns: A dictionary or list of dictionaries retrieved from
             Nautobot.

@@ -1,47 +1,102 @@
-# Pynautobot
-Python API client library for [Nautobot](https://github.com/nautobot-community/nautobot).
+![pynautobot](docs/nautobot_logo.svg "Nautobot logo")
 
+# Pynautobot [![build main](https://travis-ci.com/nautobot/pynautobot.svg?branch=main)](https://travis-ci.com/nautobot/pynautobot)
+Python API client library for [Nautobot](https://github.com/nautobot/nautobot).
+
+> Pynautobot was initially developed as a fork of [pynetbox](https://github.com/digitalocean/pynetbox/).
+  Pynetbox was originally developed by Zach Moody at DigitalOcean and the NetBox Community.
+
+
+The complete documentation for pynautobot can be found at [Read the Docs](https://pynautobot.readthedocs.io/en/stable/).
+
+Questions? Comments? Join us in the **#nautobot** Slack channel on [Network to Code](https://networktocode.slack.com)!
 
 ## Installation
 
-To install run `pip install pynautobot`.
+You can install via [pip](#using-pip) or [poetry](#using-poetry)
 
-Alternatively, you can clone the repo and run `python setup.py install`.
+### Using pip
+
+```shell
+$ pip install pynautobot
+...
+```
+
+### Using poetry
+
+```shell
+$ git clone https://github.com/nautobot/pynautobot.git
+...
+$ pip install poetry
+...
+$ poetry shell
+Virtual environment already activated: /home/user/pynautobot/.venv
+$ poetry install
+...
+```
 
 
 ## Quick Start
 
-The full pynautobot API is documented on [Read the Docs](http://pynautobot.readthedocs.io/en/latest/), but the following should be enough to get started using it.
+A short introduction is provided here; the full documention for pynautobot is at [Read the Docs](http://pynautobot.readthedocs.io/).
 
-To begin, import pynautobot and instantiate the API.
+To begin, import pynautobot and instantiate an `Api` object, passing the `url` and `token`.
 
-```
+```python
 import pynautobot
-nb = pynautobot.api(
-    'http://localhost:8000',
-    token='d6f4e314a5b5fefd164995169f28ae32d987704f'
+nautobot = pynautobot.api(
+    url="http://localhost:8000",
+    token="d6f4e314a5b5fefd164995169f28ae32d987704f",
 )
 ```
 
-The first argument the .api() method takes is the Nautobot URL. There are a handful of named arguments you can provide, but in most cases none are required to simply pull data. In order to write, the `token` argument should to be provided.
+The Api object provides access to the Apps in Nautobot.
+The Apps provide access to the Models and the field data stored in Nautobot.
+Pynautobot uses the `Endpoint` class to represent Models.
+For example, here is how to access **Devices** stored in Nautobot:
 
+```python
+devices = nautobot.dcim.devices
+devices
+<pynautobot.core.endpoint.Endpoint object at 0x7fe801e62fa0>
+```
 
 ## Queries
 
-The pynautobot API is setup so that Nautobot's apps are attributes of the `.api()` object, and in turn those apps have attribute representing each endpoint. Each endpoint has a handful of verbs available to carry out actions on the endpoint. For example, in order to query all the objects in the devices endpoint you would do the following:
+Pynautobot provides several ways to retrieve objects from Nautobot.
+Only the `get()` method is show here.
+To continue from the example above, the `Endpoint` object returned will be used to `get`
+the device named _hq-access-01_.
 
+```python
+switch = devices.get(nam="hq-access-01")
 ```
-nb.dcim.devices.all()
-[test1-leaf1, test1-leaf2]
+
+The object returned from the `get()` method is an implementation of the `Record` class.
+This object provides access to the field data from Nautobot.
+
+```python
+switch.id
+'6929b68d-8f87-4470-8377-e7fdc933a2bb'
+switch.name
+'hq-access-01'
+switch.site
+hq
 ```
 
 ### Threading
 
-pynautobot supports multithreaded calls (in Python 3 only) for `.filter()` and `.all()` queries. It is **highly recommended** you have `MAX_PAGE_SIZE` in your Nautobot install set to anything *except* `0` or `None`. The default value of `1000` is usually a good value to use. To enable threading, add `threading=True` parameter to the `.api`:
+Pynautobot supports multithreaded calls for `.filter()` and `.all()` queries. It is **highly recommended** you have `MAX_PAGE_SIZE` in your Nautobot install set to anything *except* `0` or `None`. The default value of `1000` is usually a good value to use. To enable threading, add `threading=True` parameter when instantiating the `Api` object:
 
 ```python
-nb = pynautobot.api(
-    'http://localhost:8000',
+nautobot = pynautobot.api(
+    url="http://localhost:8000",
+    token="d6f4e314a5b5fefd164995169f28ae32d987704f",
     threading=True,
 )
 ```
+
+## Related projects
+
+Please see [our wiki](https://github.com/nautobot/nautobot/wiki/Related-Projects)
+for a list of relevant community projects.
