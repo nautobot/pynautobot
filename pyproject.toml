@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "pynautobot"
-version = "1.1.0-alpha.0"
-description = "Nautbot API client library"
-authors = ["Network to Code, LLC <info@networktocode.com>", "Zach Moody <zmood@do.co>"]
+version = "1.0.1"
+description = "Nautobot API client library"
+authors = ["Network to Code, LLC <opensource@networktocode.com>"]
+readme = "README.md"
 license = "Apache-2.0"
 keywords = ["Nautobot"]
 classifiers = [
@@ -11,7 +12,9 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.6",
 ]
-repository = "https://github.com/networktocode-llc/pynautobot"
+repository = "https://github.com/nautobot/pynautobot"
+homepage = "https://nautobot.com"
+documentation = "https://pynautobot.readthedocs.io"
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -32,6 +35,7 @@ toml = "0.10.1"
 flake8 = "^3.8.3"
 faker = {version="^6.0", python="^3.6"}
 attrs = "^20.3.0"
+Sphinx = "^3.5.1"
 
 [tool.black]
 line-length = 120
