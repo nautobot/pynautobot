@@ -1,5 +1,6 @@
 # Pynautobot
 Python API client library for [Nautobot](https://github.com/nautobot-community/nautobot).
+Pynautobot is a fork of pynetbox, developed to add functionality specific to Nautobot.
 
 
 ## Installation
