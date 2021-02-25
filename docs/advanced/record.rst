@@ -32,7 +32,7 @@ Instead of accessing the device and only receiving the name, you can use the :py
    import json
    >>> print(json.dumps(dev1.serialize(), indent=4))
    {
-       "id": 102,
+       "id": "ea354978-471a-45a2-a438-92cfc046df0b",
        "url": "http://localhost:8000/api/dcim/devices/102/",
        "name": "hq-access-01",
        "display_name": "hq-access-01",
@@ -71,15 +71,15 @@ We need to cast to a dictionary to see the actual sub keys.
 
    >>> print(json.dumps(dict(dev1), indent=4))
    {
-       "id": 102,
+       "id": "2d7c20dc-78a8-44af-961b-56d418c14bea",
        "url": "http://localhost:8000/api/dcim/devices/102/",
        "name": "hq-access-01",
        "display_name": "hq-access-01",
        "device_type": {
-           "id": 2,
+           "id": "100fa8e8-381b-4f25-b2cd-10c99cdef523",
            "url": "http://localhost:8000/api/dcim/device-types/2/",
            "manufacturer": {
-               "id": 1,
+               "id": "e14f5b2b-bf5f-449f-b089-495b73657cf5",
                "url": "http://localhost:8000/api/dcim/manufacturers/1/",
                "name": "Cisco",
                "slug": "cisco"
@@ -89,7 +89,7 @@ We need to cast to a dictionary to see the actual sub keys.
            "display_name": "Cisco c9300-48"
        },
        "device_role": {
-           "id": 2,
+           "id": "022d3ff6-b08d-4380-9daa-8e16c6fed5ec",
            "url": "http://localhost:8000/api/dcim/device-roles/2/",
            "name": "Access",
            "slug": "access"
@@ -99,7 +99,7 @@ We need to cast to a dictionary to see the actual sub keys.
        "serial": "",
        "asset_tag": null,
        "site": {
-           "id": 2,
+           "id": "09df769c-af34-45f8-950a-94c268d48464",
            "url": "http://localhost:8000/api/dcim/sites/2/",
            "name": "HQ",
            "slug": "hq"

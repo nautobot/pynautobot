@@ -2,7 +2,7 @@
 Quickstart Guide
 ****************
 
-The pynautobot package is a SDK for retrieving and managing data in Nautobot.
+The pynautobot package is a Python SDK for retrieving and managing data in Nautobot.
 The following demonstrates how to connect to and interact with the Nautobot REST API.
 
 .. rubric:: Terminology
@@ -22,7 +22,37 @@ uses the term *endpoint*. However, in order to maintain the link to the "real" i
 the term *model* is used more frequently.
 
 
-Creating a pynautobot Instance
+Installing Pynautobot
+=====================
+
+You can install using either :ref:`pip <Pip Install>` or :ref:`poetry <Poetry Install>`
+
+Pip Install
+-----------
+
+.. code-block:: sh
+
+    $ pip install pynautobot
+    ...
+
+
+Poetry Install
+--------------
+
+.. code-block:: sh
+
+    $ git clone https://github.com/nautobot/pynautobot.git
+    ...
+    $ cd pynautobot
+    $ pip install poetry
+    ...
+    $ poetry shell
+    Virtual environment already activated: /home/user/pynautobot/.venv
+    $ poetry install
+    ...
+
+
+Creating a Pynautobot Instance
 ==============================
 
 To start using pynautobot, instantiate an :py:class:`~pynautobot.core.api.Api` object,
@@ -30,7 +60,7 @@ passing in the proper URL and a valid Token.
 The code sample below assumes that the token has been stored as an environment variable,
 and uses the builtin :py:mod:`os` module to retrieve it.
 
-.. code-block::
+.. code-block:: python
 
     import os
 
@@ -62,7 +92,7 @@ The core apps are:
 * virtualization
 * users
 
-.. code-block::
+.. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
 
@@ -102,7 +132,7 @@ however, the models are created upon attribute access.
 The code sample below shows that models do not exist in the ``nautobot.dcim`` attribute dict,
 but the ``devices`` model is still accessible from it.
 
-.. code-block::
+.. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
 
@@ -133,7 +163,7 @@ In order to access these Models, the names should be joined with an underscore (
 The above example of *Device Roles* would use ``device_roles``.
 Pynautobot will automatically convert the underscore into a hyphen for access to the API endpoint.
 
-.. code-block::
+.. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
 
@@ -169,7 +199,7 @@ Creating Records
 New Records can be created using a model's :py:meth:`~pynautobot.core.endpoint.Endpoint.create` method.
 All fields supported by the Model can be passed into the method, and every required field must be passed.
 
-.. code-block::
+.. code-block:: python
 
     nautobot = api(url=url, token=token)
     device_roles = nautobot.dcim.device_roles
@@ -188,7 +218,7 @@ and a representative :py:class:`~pynautobot.core.response.Record` object is retu
 This record object has attributes for each field in Nautobot.
 The following code block is a continuation of the previous one.
 
-.. code-block::
+.. code-block:: python
 
     >>> # Show that fields passed to the create method
     >>> # are accessible attributes with expected values
@@ -202,7 +232,7 @@ The following code block is a continuation of the previous one.
     >>> access_role.description
     ''
     >>> access_role.id
-    3
+    '6929b68d-8f87-4470-8377-e7fdc933a2bb'
 
 
 Retrieving Records
@@ -213,7 +243,7 @@ The :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method can be used to retr
 The most common way to use this method is to pass keyword arguments mapping the record's field with its value,
 such as ``slug="access-switch"``.
 
-.. code-block::
+.. code-block:: python
 
     nautobot = api(url=url, token=token)
     device_roles = nautobot.dcim.device_roles
@@ -227,7 +257,7 @@ such as ``slug="access-switch"``.
 The :py:class:`~pynautobot.core.response.Record` object returned by the ``get`` method is
 the same as what is returned in the above ``create`` method.
 
-.. code-block::
+.. code-block:: python
 
     >>> access_role.name
     'Access Switch'
@@ -237,11 +267,11 @@ the same as what is returned in the above ``create`` method.
     ''
     >>> # Show that the primary key has the same value from create object
     >>> access_role.id
-    3
+    '6929b68d-8f87-4470-8377-e7fdc933a2bb'
 
 The :py:meth:`~pynautobot.core.endpoint.Endpoint.all` method is useful for retrieving all Records of the Model.
 
-.. code-block::
+.. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
     >>> device_roles = nautobot.dcim.device_roles
@@ -255,9 +285,9 @@ The :py:meth:`~pynautobot.core.endpoint.Endpoint.all` method is useful for retri
     >>> for role in all_device_roles:
     ...     print(f"Device Role {role.name} has an ID of: {role.id}")
     ... 
-    Device Role Spine has an ID of: 1
-    Device Role Leaf has an ID of: 2
-    Device Role Access Switch has an ID of: 3
+    Device Role Spine has an ID of: 6929b68d-8f87-4470-8377-e7fdc933a2bb
+    Device Role Leaf has an ID of: 749396ff-692b-448e-9c98-b24f4c7fcb3d
+    Device Role Access Switch has an ID of: 6928e7b4-f68e-4b69-bff5-9575c950f713
 
 .. warning::
 
@@ -274,7 +304,7 @@ This method accepts a dict of field/value mappings (Ex: {"description": "Provide
 A boolean is returned to indicate whether updates were made to the Record.
 The below example shows retrieving a record using the ``get`` method, and then updating its fields.
 
-.. code-block::
+.. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
     >>> device_roles = nautobot.dcim.device_roles
@@ -313,7 +343,7 @@ the :py:meth:`~pynautobot.core.response.Record.delete` method on a record object
 This method attempts to delete the Record from the database,
 and will return a boolean to indicate whether or not it was successful.
 
-.. code-block::
+.. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
     >>> device_roles = nautobot.dcim.device_roles

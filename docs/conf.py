@@ -63,7 +63,7 @@ master_doc = "index"
 # General information about the project.
 project = "pynautobot"
 copyright = "TBD"  # "2017, DigitalOcean"
-author = "TBD"  # "Zach Moody"
+author = "Network to Code"  # "Zach Moody"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -139,7 +139,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "pynautobot.tex", "pynautobot Documentation", "TBD", "manual",),  # "Zach Moody", "manual"),
+    (master_doc, "pynautobot.tex", "pynautobot Documentation", "Network to Code", "manual",),
 ]
 
 

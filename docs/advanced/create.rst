@@ -255,7 +255,7 @@ The messages in the exceptions provide context to identify what the exact issue 
     The request failed with code 400 Bad Request:
     {
       'device_type': [
-        'Related object not found using the provided numeric ID: 40'
+        'Related object not found using the provided numeric ID: 2302f2a1-2ed4-4ac9-a43a-285c95190071'
       ]
     }
 

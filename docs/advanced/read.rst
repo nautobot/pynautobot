@@ -19,7 +19,7 @@ Another way to retrieve a **record** is by passing in the value of the PK, which
 
 .. code-block:: python
 
-    >>> dev = nautobot.dcim.devices.get(1)
+    >>> dev = nautobot.dcim.devices.get('2302f2a1-2ed4-4ac9-a43a-285c95190071')
     >>> dev.name
     'hq-access-01'
     >>> dev.status
