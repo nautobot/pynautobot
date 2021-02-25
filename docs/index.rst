@@ -10,7 +10,7 @@ Pynetbox was originally developed by Zach Moody at DigitalOcean and the NetBox C
 .. toctree::
    :maxdepth: 3
 
-   basic
+   basic/index
    advanced/index
    api/index
 

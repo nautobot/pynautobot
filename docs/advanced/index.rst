@@ -9,7 +9,6 @@ Following the discussion of CRUD operations, other common uses are covered.
 
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
 
    create
    read
@@ -17,11 +16,3 @@ Following the discussion of CRUD operations, other common uses are covered.
    record
    session
    graphql
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
