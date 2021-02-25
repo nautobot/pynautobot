@@ -1,13 +1,12 @@
-
 Retrieving Objects From Nautobot
 ================================
 
-The :py:class:`~pynautobot.core.endpoint.Endpoint` provides three methods
+The :py:class:`~pynautobot.core.endpoint.Endpoint` class provides three methods
 for retrieving :py:class:`~pynautobot.core.response.Record` objects from Nautobot.
 
-* The :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method is used to get a single **record**.
-* The :py:meth:`~pynautobot.core.endpoint.Endpoint.filter` method will return a list of **records**.
-* The :py:meth:`~pynautobot.core.endpoint.Endpoint.all` method will return all **records** for the Model.
+* The :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method is used to get a single Record.
+* The :py:meth:`~pynautobot.core.endpoint.Endpoint.filter` method will return a list of Records.
+* The :py:meth:`~pynautobot.core.endpoint.Endpoint.all` method will return all Records for the Model.
 
 
 Using the Get Method
@@ -15,7 +14,8 @@ Using the Get Method
 
 The :ref:`Retrieving Records` sections shows how to use the
 :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method by passing in keyword arguments.
-Another way to retrieve a **record** is by passing in the value of the PK, which is the ID for most objects.
+Another way to retrieve a :ref:`Record <Terminology>` is by passing in the value of the PK,
+which is the ID for most objects.
 
 .. code-block:: python
 
@@ -30,11 +30,12 @@ Another way to retrieve a **record** is by passing in the value of the PK, which
     Access
 
 .. note::
-   If no entries have been created for the model, or if the first entry has been deleted,
-   then the :py:class:`~pynautobot.core.endpoint.Endpoint.get` method will return ``None`` in the above example.
+   If an entry with the specified value for the PK does not exist,
+   then ``None`` in the above example.
 
-When using the ``get`` method with keyword arguments, the keyword arguments must match only a single **record**.
-If multiple **records** are matched, then a ``ValueError`` is raised.
+When using the :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method
+with keyword arguments, the keyword arguments must match only a single Record.
+If multiple Records are matched, then a ``ValueError`` is raised.
 
 .. code-block:: python
 
@@ -49,11 +50,13 @@ If multiple **records** are matched, then a ``ValueError`` is raised.
 Using the Filter Method
 -----------------------
 
-The error message from the previous example suggests to use the :py:meth:`~pynautobot.core.endpoint.Endpoint.filter` method.
-Using this method will return a list of :py:class:`~pynautobot.core.response.Record` instances; one for each matching **record**.
-The ``filter`` method also supports:
+The error message from the previous example suggests to use the
+:py:meth:`~pynautobot.core.endpoint.Endpoint.filter` method.
+Using this method will return a list of :py:class:`~pynautobot.core.response.Record`
+instances; one for each matching **record**.
+This method also supports:
 
-* filtering a single field with multiple values
+* filtering a single :ref:`field <Terminology>` with multiple values
 * filtering based on custom fields
 * filtering with lookup expressions
 
@@ -61,9 +64,11 @@ The ``filter`` method also supports:
 Basic Usage
 ^^^^^^^^^^^
 
-The simplest usage of the :py:meth:`~pynautobot.core.endpoint.Endpoint.filter` method is to pass keyword arguments with single values.
-The previous example raised an exception using the :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method,
-but will return all matches using ``filter``.
+The simplest usage of the :py:meth:`~pynautobot.core.endpoint.Endpoint.filter`
+method is to pass keyword arguments with single values.
+The previous example raised an exception using the
+:py:meth:`~pynautobot.core.endpoint.Endpoint.get` method,
+but will return all matches using :py:meth:`~pynautobot.core.endpoint.Endpoint.filter`.
 
 .. code-block:: python
 
@@ -85,8 +90,9 @@ but will return all matches using ``filter``.
 Filtering with OR logic
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``filter`` method allows using an **OR** condition by passing in a list of values to match against the field.
-The example below gets all devices located in either **site** `hq` or `dc`.
+The :py:meth:`~pynautobot.core.endpoint.Endpoint.filter` method allows
+using an **OR** condition by passing in a list of values to match against the field.
+The example below gets all devices located in either *Site* ``hq`` or ``dc``.
 
 .. code-block:: python
 
@@ -113,9 +119,11 @@ The example below gets all devices located in either **site** `hq` or `dc`.
 Filtering based on a Custom Field
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Nautobot provides **Custom Fields** as a way of extending a Model's fields.
+Nautobot provides `Custom Fields <https://nautobot.readthedocs.io/en/latest/additional-features/custom-fields/>`_
+as a way of extending a :ref:`Model's <Terminology>` fields.
 These fields can be referenced in the API by appending `cf_` to the field's name.
-The below example has a custom field named **owner**, which is used to filter the devices.
+The below example has a custom field named **owner**, which is used to filter the devices
+by passing the ``cf_owner`` keyword argument.
 
 .. code-block:: python
 
@@ -131,14 +139,20 @@ The below example has a custom field named **owner**, which is used to filter th
 Filtering with Lookup Expressions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Nautobot API uses **Lookup Expressions** to filter using something other than the exact matches that have been used so far.
+The Nautobot API uses `Lookup Expressions <https://nautobot.readthedocs.io/en/latest/rest-api/filtering/#lookup-expressions>`_
+to filter using something other than the exact matches that have been used so far.
 There are several expressions that can be used; they generally cover things like:
-greater than, less than, not equal, starts with, contains, and case insensitivity.
-The details can be found on the `Nautobot docs <https://nautobot.readthedocs.io/en/latest/rest-api/filtering/#lookup-expressions>`_.
 
-The example below shows how use negation with ``__n``.
+* greater than
+* less than
+* not equal
+* starts with
+* contains
+* case insensitivity
+
+The example below shows how use negation with *__n*.
 From the previous examples, there are 100 devices total, and 25 are located in either the `dc` or `hq` site.
-Getting the negation of these sites returns 75 devices.
+Using ``site__n`` to get the negation of these sites returns 75 devices.
 
 .. code-block::
 
@@ -169,7 +183,8 @@ This will return a list of all :py:class:`~pynautobot.core.response.Record` obje
     Active
 
 .. tip::
-  Both ``filter`` and ``all`` can use threading by passing in ``use_threading=True`` when instantiating the ``api`` object.
+  Both ``filter`` and ``all`` can use threading by passing
+  in ``use_threading=True`` when instantiating the ``api`` object.
 
 The following two pages cover interacting with the returned :py:class:`~pynautobot.core.response.Record` objects.
 The next page covers additional Update operations, which is followed by a discussion of other features and methods.

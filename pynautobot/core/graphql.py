@@ -7,7 +7,7 @@ class GraphQLException(Exception):
         """GraphQL Exception handling.
 
         Args:
-            response (Exception): Exception from the request
+            graph_err (Exception): Exception from the request
         """
         self.json = graph_err.response.json()
         self.status_code = graph_err.response.status_code

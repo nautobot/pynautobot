@@ -8,7 +8,7 @@ in order to extend support for features unique to Nautobot.
 Pynetbox was originally developed by Zach Moody at DigitalOcean and the NetBox Community.
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    basic/index
    advanced/index
@@ -20,4 +20,3 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`

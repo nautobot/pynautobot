@@ -21,6 +21,7 @@ documentation = "https://pynautobot.readthedocs.io"
 [tool.poetry.dependencies]
 python = "^3.6"
 requests = "^2.20.0"
+Sphinx = "^3.5.1"
 
 [tool.poetry.dev-dependencies]
 pytest = {version="^5.4.1", python="^3.6"}
@@ -37,7 +38,9 @@ toml = "0.10.1"
 flake8 = "^3.8.3"
 faker = {version="^6.0", python="^3.6"}
 attrs = "^20.3.0"
-Sphinx = "^3.5.1"
+
+[tool.poetry.extras]
+docs = ["sphinx"]
 
 [tool.black]
 line-length = 120

@@ -1,10 +1,9 @@
 Deleting Records
 ----------------
 
-Lastly, deleting a Record from a Model is done by calling
-the :py:meth:`~pynautobot.core.response.Record.delete` method on a record object.
-This method attempts to delete the Record from the database,
-and will return a boolean to indicate whether or not it was successful.
+Lastly, deleting a Record from the Nautobot database is done by calling
+the :py:meth:`~pynautobot.core.response.Record.delete` method on a Record object.
+This method will return a boolean to indicate whether or not the Record was successfully deleted.
 
 .. code-block:: python
 
@@ -16,6 +15,7 @@ and will return a boolean to indicate whether or not it was successful.
 
     >>> # Show deleting the Record
     >>> access_role.delete()
+    True
 
     >>> # Show that the "access-switch" Device Role was deleted
     >>> device_roles.get(slug="access-switch")
