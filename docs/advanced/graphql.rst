@@ -107,7 +107,7 @@ This example is the same as the previous one, except the site name is now derive
     ... """
 
     >>> # Use the query method with variables
-    >>> graphql_response = nautobot.graphql.query(query=query)
+    >>> graphql_response = nautobot.graphql.query(query=query, variables=variables)
     >>> graphql_response
     GraphQLRecord(json={'data': {'sites': [{'id': '45399b54-47f9-4eec-86e3-47352e103b1b', 'name': 'den', 'region': {'name': 'United States'}}]}}, status_code=200)
 
@@ -133,7 +133,7 @@ This example shows accessing data from the previous query.
     ...   }
     ... }
     ... """
-    >>> graphql_response = nautobot.graphql.query(query=query)
+    >>> graphql_response = nautobot.graphql.query(query=query, variables=variables)
     >>> graphql_response.json
     {
       'data': {
