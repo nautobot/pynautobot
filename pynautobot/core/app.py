@@ -81,9 +81,9 @@ class App(object):
         return self._choices
 
     def custom_choices(self):
-        """Returns _custom_field_choices response from app
+        """Returns custom-fields response from app
 
-        :Returns: Raw response from Nautobot's _custom_field_choices endpoint.
+        :Returns: Raw response from Nautobot's custom-fields endpoint.
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
         :Example:
 
@@ -91,12 +91,12 @@ class App(object):
         {'Testfield1': {'Testvalue2': 2, 'Testvalue1': 1},
          'Testfield2': {'Othervalue2': 4, 'Othervalue1': 3}}
         """
-        custom_field_choices = Request(
-            base="{}/{}/_custom_field_choices/".format(self.api.base_url, self.name,),
+        custom_fields = Request(
+            base="{}/{}/custom-fields/".format(self.api.base_url, self.name,),
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
-        return custom_field_choices
+        return custom_fields
 
     def config(self):
         """Returns config response from app
