@@ -27,3 +27,8 @@ class ObjectChanges(Record):
 
     def __str__(self):
         return self.request_id
+
+
+class CustomFieldChoices(Record):
+    def __str__(self):
+        return self.value
