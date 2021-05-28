@@ -148,7 +148,10 @@ class RackReservations(Record):
 
 class VirtualChassis(Record):
     def __str__(self):
-        return self.master.display_name
+        if self.master is None:
+            return self.name
+        else:
+            return self.master.display_name
 
 
 class RUs(Record):
