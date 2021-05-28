@@ -151,7 +151,7 @@ class VirtualChassis(Record):
         if self.master is None:
             return self.name
         else:
-            return self.master.display_name
+            return self.master.name
 
 
 class RUs(Record):
