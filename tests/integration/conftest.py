@@ -379,10 +379,10 @@ def netbox_service(
 
     # `port_for` takes a container port and returns the corresponding host port
     try:
-        port = docker_services.port_for("netbox_v%s_nginx" % str(netbox_integration_version).replace(".", "_"), 8080,)
+        port = docker_services.port_for("netbox_v%s_nginx" % str(netbox_integration_version).replace(".", "_"), 8000,)
     # This throws a bare exception to we have to catch this.
     except:  # noqa: E722
-        port = docker_services.port_for("netbox_v%s_netbox" % str(netbox_integration_version).replace(".", "_"), 8080,)
+        port = docker_services.port_for("development_nautobot_1" % str(netbox_integration_version).replace(".", "_"), 8000,)
 
     url = "http://{}:{}".format(docker_ip, port)
     docker_services.wait_until_responsive(timeout=300.0, pause=1, check=lambda: netbox_is_responsive(url))

@@ -41,6 +41,10 @@ PWD = os.getcwd()
 # Local or Docker execution provide "local" to run locally without docker execution
 INVOKE_LOCAL = is_truthy(os.getenv("INVOKE_LOCAL", False))  # pylint: disable=W1508
 
+@task
+def start(context):
+    return context.run("docker-compose -f development/docker-compose.yml up -d")
+
 
 def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
     """Wrapper to run the invoke task commands.
