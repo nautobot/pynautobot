@@ -6,35 +6,36 @@ class TestSimpleServerRackingAndConnecting:
     """Verify we can create, rack, and connect a server."""
 
     @pytest.fixture
-    def site(self, netbox_service, faker):
+    def site(self, nb_client):
         """Verify we can create a site."""
-        site_name = faker.city()
-        site = netbox_service["api"].dcim.sites.create(name=site_name, slug=site_name.lower().replace(" ", "_"))
+        site_name = "MSP"
+        site = nb_client.dcim.sites.create(name=site_name, slug=site_name.lower().replace(" ", "_"), status="active")
         assert site
 
         return site
 
     @pytest.fixture
-    def rack(self, site, faker):
+    def rack(self, site):
         """Verify we can create a rack device."""
-        rack = site.api.dcim.racks.create(name="rack1", site=site.id)
+        rack = site.api.dcim.racks.create(name="rack1", site=site.id, status="active")
         assert rack
 
         return rack
 
     @pytest.fixture
-    def data_leafs(self, rack, faker):
+    def data_leafs(self, rack):
         """Verify we can create data leaf switch devices."""
         devices = []
         for i in [1, 2]:
             device = rack.api.dcim.devices.create(
-                name="access_switch%s." % i + faker.domain_name(),
+                name=f"access_switch{i}.networktocode.com",
                 device_type={"slug": "dcs-7050tx3-48c8"},
                 device_role={"name": "Leaf Switch"},
                 site=rack.site.id,
                 rack=rack.id,
                 face="rear",
                 position=rack.u_height - i,
+                status="active",
             )
             assert device
             devices.append(device)
@@ -42,29 +43,31 @@ class TestSimpleServerRackingAndConnecting:
         return devices
 
     @pytest.fixture
-    def mgmt_leaf(self, rack, faker):
+    def mgmt_leaf(self, rack):
         """Verify we can create data leaf switch devices."""
         device = rack.api.dcim.devices.create(
-            name="mgmt_switch1." + faker.domain_name(),
+            name="mgmt_switch1.networktocode.com",
             device_type={"slug": "dcs-7010t-48"},
             device_role={"name": "Leaf Switch"},
             site=rack.site.id,
             rack=rack.id,
             face="rear",
             position=rack.u_height - 3,
+            status="active",
         )
         assert device
 
         return device
 
     @pytest.fixture
-    def server(self, site, faker):
+    def server(self, site):
         """Verify we can create a server device."""
         device = site.api.dcim.devices.create(
-            name=faker.hostname(),
+            name="server.networktocode.com",
             device_type={"slug": "dell_poweredge_r640"},
             device_role={"name": "Server"},
             site=site.id,
+            status="active",
         )
         assert device
 
@@ -84,6 +87,7 @@ class TestSimpleServerRackingAndConnecting:
             termination_a_id=server_mgmt_iface.id,
             termination_b_type="dcim.interface",
             termination_b_id=mleaf_iface.id,
+            status="connected",
         )
 
         # connect the data ifaces in a bond
@@ -100,6 +104,7 @@ class TestSimpleServerRackingAndConnecting:
                 termination_a_id=server_data_iface.id,
                 termination_b_type="dcim.interface",
                 termination_b_id=dleaf_iface.id,
+                status="connected",
             )
             assert cable
 
