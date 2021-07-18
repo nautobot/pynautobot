@@ -28,6 +28,8 @@ before_script:
   # - invoke build-image --nocache
   - pip3 install poetry
   - poetry install
+  - invoke start
+  - timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)" != "200" ]]; do echo "waiting for Nautobot"; sleep 5; done' || false
 
 script:
   - pytest -v
