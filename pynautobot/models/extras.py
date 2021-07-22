@@ -33,6 +33,7 @@ class CustomFieldChoices(Record):
     def __str__(self):
         return self.value
 
+
 class JobResults(Record):
     data = JsonField
 
