@@ -36,4 +36,3 @@ class CustomFieldChoices(Record):
 
 class JobResults(Record):
     data = JsonField
-
