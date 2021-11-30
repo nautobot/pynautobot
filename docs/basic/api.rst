@@ -12,10 +12,11 @@ and uses the builtin :py:mod:`os` module to retrieve it.
 
     from pynautobot import api
 
-    url = "https://nautobot.networktocode.com"
+    url = "https://demo.nautobot.com"
 
     # Retrieve token from system environment variable
-    token = os.environ["NAUTOBOT_TOKEN"]
+    # token = os.environ["NAUTOBOT_TOKEN"]
+    token = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     nautobot = api(url=url, token=token)
 
 .. tip::
@@ -89,19 +90,19 @@ but the ``devices`` Model is still accessible from it.
     >>> # Show that the devices attribute does not exist on the dcim object
     >>> nautobot.dcim.__dict__
     {
-        'api': <pytnautobot.core.api.Api object at 0x7fb9c20dbfa0>,
+        'api': <pynautobot.core.api.Api object at 0x7fb9c20dbfa0>,
         'name': 'dcim',
         '_choices': None,
-        'model': <module 'pytnautobot.models.dcim'
+        'model': <module 'pynautobot.models.dcim'
     }
 
     >>> # Show that the devices attribute is accessible and
-    >>> # is an Endpoint objectcorresponding to the Devices Model
+    >>> # is an Endpoint object corresponding to the Devices Model
     >>> devices = nautobot.dcim.devices
     >>> devices
     <pynautobot.core.endpoint.Endpoint object at 0x7fb9c1b4c0a0>
     >>> devices.url
-    'https://nautobot.networktocode.com/api/dcim/devices'
+    'https://demo.nautobot.com/api/dcim/devices'
 
 .. note::
 
@@ -122,7 +123,7 @@ Pynautobot will automatically convert the underscore into a hyphen for access to
 
     >>> # Show that the URL converts the underscore to a hyphen
     >>> device_roles.url
-    'https://nautobot.networktocode.com/api/dcim/device-roles'
+    'https://demo.nautobot.com/api/dcim/device-roles'
 
 .. note::
 
