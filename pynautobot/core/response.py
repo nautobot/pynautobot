@@ -332,6 +332,8 @@ class Record(object):
             current_val = getattr(self, i) if not init else init_vals.get(i)
             if i == "custom_fields":
                 ret[i] = flatten_custom(current_val)
+            elif i == "constraints":  # just pass constraints as it is (a JSON string)
+                ret[i] = current_val
             else:
                 if isinstance(current_val, Record):
                     current_val = getattr(current_val, "serialize")(nested=True)
