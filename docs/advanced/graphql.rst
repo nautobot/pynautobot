@@ -10,10 +10,11 @@ initial setup as detailed in :ref:`Creating a pynautobot Instance`.
 
     from pynautobot import api
 
-    url = "https://nautobot.networktocode.com"
+    url = "https://demo.nautobot.com"
 
     # Retrieve token from system environment variable
-    token = os.environ["NAUTOBOT_TOKEN"]
+    # token = os.environ["NAUTOBOT_TOKEN"]
+    token = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     nautobot = api(url=url, token=token)
 
 An instance of :py:class:`~pynautobot.core.graphql.GraphQLQuery` is assigned

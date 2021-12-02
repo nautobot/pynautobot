@@ -280,8 +280,9 @@ class Record(object):
             url_path = url_path[len(extra_path) :]
         split_url_path = url_path.split("/")
         if split_url_path[2] == "plugins":
-            # Skip plugins from the path
-            app, name = split_url_path[3:5]
+            # Keep plugins in app path
+            app = "/".join(split_url_path[2:4])
+            name = split_url_path[4]
         else:
             app, name = split_url_path[2:4]
         return getattr(pynautobot.core.app.App(self.api, app), name)
@@ -331,6 +332,8 @@ class Record(object):
             current_val = getattr(self, i) if not init else init_vals.get(i)
             if i == "custom_fields":
                 ret[i] = flatten_custom(current_val)
+            elif i == "constraints":  # just pass constraints as it is (a JSON string)
+                ret[i] = current_val
             else:
                 if isinstance(current_val, Record):
                     current_val = getattr(current_val, "serialize")(nested=True)

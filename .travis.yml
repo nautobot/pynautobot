@@ -13,10 +13,14 @@ services:
 
 env:
   matrix:
-    - "PYTHON_VER=3.6"
-    - "PYTHON_VER=3.7"
-    - "PYTHON_VER=3.8"
-    - "PYTHON_VER=3.9"
+    - PYTHON_VER: "3.6"
+      NAUTOBOT_VER: "1.0.3"
+    - PYTHON_VER: "3.7"
+      NAUTOBOT_VER: "1.0.3"
+    - PYTHON_VER: "3.8"
+      NAUTOBOT_VER: "1.0.3"
+    - PYTHON_VER: "3.9"
+      NAUTOBOT_VER: "1.0.3"
 
 before_script:
   # To be added later
@@ -24,6 +28,8 @@ before_script:
   # - invoke build-image --nocache
   - pip3 install poetry
   - poetry install
+  - invoke start
+  - timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)" != "200" ]]; do echo "waiting for Nautobot"; sleep 5; done' || false
 
 script:
   - pytest -v

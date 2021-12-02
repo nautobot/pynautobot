@@ -2,7 +2,7 @@
 
 [tool.poetry]
 name = "pynautobot"
-version = "1.0.2"
+version = "1.0.4"
 description = "Nautobot API client library"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 readme = "README.md"
@@ -36,7 +36,6 @@ bandit = "^1.6.2"
 invoke = "^1.4.1"
 toml = "0.10.1"
 flake8 = "^3.8.3"
-faker = {version="^6.0", python="^3.6"}
 attrs = "^20.3.0"
 
 [tool.poetry.extras]
