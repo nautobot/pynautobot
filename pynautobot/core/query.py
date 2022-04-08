@@ -119,7 +119,7 @@ class Request(object):
     """
 
     def __init__(
-        self, base, http_session, filters=None, key=None, token=None, threading=False,
+        self, base, http_session, filters=None, key=None, token=None, threading=False, api_version=None,
     ):
         """
         Instantiates a new Request object
@@ -131,6 +131,7 @@ class Request(object):
                 In (e.g. /api/dcim/devices/?name='test') 'name': 'test'
                 would be in the filters dict.
             key (int, optional): database id of the item being queried.
+            api_version (str, optional): Set to overide the default Nautobot Rest API Version.
         """
         self.base = self.normalize_url(base)
         self.filters = filters
@@ -139,12 +140,17 @@ class Request(object):
         self.http_session = http_session
         self.url = self.base if not key else "{}{}/".format(self.base, key)
         self.threading = threading
+        self.api_version = api_version
 
     def get_openapi(self):
         """ Gets the OpenAPI Spec """
         headers = {
             "Content-Type": "application/json;",
         }
+
+        if self.api_version:
+            headers["accept"] = f"application/json; version={self.api_version}"
+
         req = self.http_session.get("{}docs/?format=openapi".format(self.normalize_url(self.base)), headers=headers,)
         if req.ok:
             return req.json()
@@ -161,10 +167,12 @@ class Request(object):
         :Returns: Version number as a string. Empty string if version is not
         present in the headers.
         """
-        headers = {
-            "Content-Type": "application/json;",
-        }
+        headers = {"Content-Type": "application/json;"}
+        if self.api_version:
+            headers["accept"] = f"application/json; version={self.api_version}"
+
         req = self.http_session.get(self.normalize_url(self.base), headers=headers,)
+
         if req.ok:
             return req.headers.get("API-Version", "")
         else:
@@ -179,6 +187,10 @@ class Request(object):
         headers = {"Content-Type": "application/json;"}
         if self.token:
             headers["authorization"] = "Token {}".format(self.token)
+
+        if self.api_version:
+            headers["accept"] = f"application/json; version={self.api_version}"
+
         req = self.http_session.get("{}status/".format(self.normalize_url(self.base)), headers=headers,)
         if req.ok:
             return req.json()
@@ -200,6 +212,9 @@ class Request(object):
 
         if self.token:
             headers["authorization"] = "Token {}".format(self.token)
+
+        if self.api_version:
+            headers["accept"] = f"application/json; version={self.api_version}"
 
         params = {}
         if not url_override:

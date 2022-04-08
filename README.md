@@ -96,6 +96,31 @@ nautobot = pynautobot.api(
 )
 ```
 
+### Versioning
+
+Used for Nautobot Rest API versioning. Versioning can be controlled globally by setting `api_version` on initialization of the `API` class and/or for a specific request e.g (`list()`, `get()`, `create()` etc.) by setting an optional `api_version` parameter.
+
+__Global versioning__
+```python
+import pynautobot
+nautobot = pynautobot.api(
+    url="http://localhost:8000",
+    token="d6f4e314a5b5fefd164995169f28ae32d987704f",
+    api_version="1.3
+)
+```
+
+__Request specific versioning__
+```python
+import pynautobot
+nautobot = pynautobot.api(
+  url="http://localhost:8000", token="d6f4e314a5b5fefd164995169f28ae32d987704f",
+)
+tags = nautobot.extras.tags
+tags.create(name="Tag", slug="tag", api_version="1.2",)
+tags.list(api_version="1.3",)
+```
+
 ## Related projects
 
 Please see [our wiki](https://github.com/nautobot/nautobot/wiki/Related-Projects)

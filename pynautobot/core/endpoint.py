@@ -76,10 +76,13 @@ class Endpoint(object):
             ret = Record
         return ret
 
-    def all(self):
+    def all(self, api_version=None):
         """Queries the 'ListView' of a given endpoint.
 
         Returns all objects from an endpoint.
+        
+        :arg str, optional api_version: Overide default or globally set Nautobot Rest API 
+            version for this(all) request.
 
         :Returns: List of :py:class:`.Record` objects.
 
@@ -89,16 +92,19 @@ class Endpoint(object):
         [test1-a3-oobsw2, test1-a3-oobsw3, test1-a3-oobsw4]
         >>>
         """
+
+        api_version = api_version or self.api.api_version
         req = Request(
             base="{}/".format(self.url),
             token=self.token,
             http_session=self.api.http_session,
             threading=self.api.threading,
+            api_version=api_version,
         )
 
         return response_loader(req.get(), self.return_obj, self)
 
-    def get(self, *args, **kwargs):
+    def get(self, api_version=None, *args, **kwargs):
         r"""Queries the DetailsView of a given endpoint.
 
         :arg int,optional key: id for the item to be
@@ -107,6 +113,9 @@ class Endpoint(object):
         :arg str,optional \**kwargs: Accepts the same keyword args as
             filter(). Any search argument the endpoint accepts can
             be added as a keyword arg.
+        
+        :arg str, optional api_version: Overide default or globally set Nautobot Rest API 
+            version for this(get) request.
 
         :returns: A single :py:class:`.Record` object or None
 
@@ -145,7 +154,11 @@ class Endpoint(object):
                     return filter_lookup[0]
             return None
 
-        req = Request(key=key, base=self.url, token=self.token, http_session=self.api.http_session,)
+        api_version = api_version or self.api.api_version
+
+        req = Request(
+            key=key, base=self.url, token=self.token, http_session=self.api.http_session, api_version=api_version,
+        )
 
         try:
             resp = req.get()
@@ -157,7 +170,7 @@ class Endpoint(object):
 
         return response_loader(resp, self.return_obj, self)
 
-    def filter(self, *args, **kwargs):
+    def filter(self, api_version=None, *args, **kwargs):
         r"""Queries the 'ListView' of a given endpoint.
 
         Takes named arguments that match the usable filters on a
@@ -168,6 +181,8 @@ class Endpoint(object):
             accepted on given endpoint.
         :arg str,optional \**kwargs: Any search argument the
             endpoint accepts can be added as a keyword arg.
+        :arg str, optional api_version: Overide default or globally set 
+            Nautobot Rest API version for this(filter) request.
 
         :Returns: A list of :py:class:`.Record` objects.
 
@@ -207,17 +222,19 @@ class Endpoint(object):
         if any(i in RESERVED_KWARGS for i in kwargs):
             raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
 
+        api_version = api_version or self.api.api_version
         req = Request(
             filters=kwargs,
             base=self.url,
             token=self.token,
             http_session=self.api.http_session,
             threading=self.api.threading,
+            api_version=api_version,
         )
 
         return response_loader(req.get(), self.return_obj, self)
 
-    def create(self, *args, **kwargs):
+    def create(self, api_version=None, *args, **kwargs):
         r"""Creates an object on an endpoint.
 
         Allows for the creation of new objects on an endpoint. Named
@@ -233,6 +250,8 @@ class Endpoint(object):
             properties of the objects to be created.
         :arg str \**kwargs: key/value strings representing
             properties on a json object.
+        :arg str, optional api_version: Overide default or globally set 
+            Nautobot Rest API version for this(create) request.
 
         :returns: A list or single :py:class:`.Record` object depending
             on whether a bulk creation was requested.
@@ -268,13 +287,15 @@ class Endpoint(object):
         ... ])
         """
 
-        req = Request(base=self.url, token=self.token, http_session=self.api.http_session,).post(
-            args[0] if args else kwargs
-        )
+        api_version = api_version or self.api.api_version
+
+        req = Request(
+            base=self.url, token=self.token, http_session=self.api.http_session, api_version=api_version,
+        ).post(args[0] if args else kwargs)
 
         return response_loader(req, self.return_obj, self)
 
-    def choices(self):
+    def choices(self, api_version=None):
         """Returns all choices from the endpoint.
 
         The returned dict is also saved in the endpoint object (in
@@ -282,6 +303,9 @@ class Endpoint(object):
         without recurring requests to Nautobot. When using ``.choices()`` in
         long-running applications, consider restarting them whenever Nautobot is
         upgraded, to prevent using stale choices data.
+        
+        :arg str, optional api_version: Overide default or globally set 
+            Nautobot Rest API version for this(choices) request.
 
         :Returns: Dict containing the available choices.
 
@@ -306,7 +330,11 @@ class Endpoint(object):
         if self._choices:
             return self._choices
 
-        req = Request(base=self.url, token=self.api.token, http_session=self.api.http_session,).options()
+        api_version = api_version or self.api.api_version
+
+        req = Request(
+            base=self.url, token=self.api.token, http_session=self.api.http_session, api_version=api_version,
+        ).options()
         try:
             post_data = req["actions"]["POST"]
         except KeyError:
@@ -318,7 +346,7 @@ class Endpoint(object):
 
         return self._choices
 
-    def count(self, *args, **kwargs):
+    def count(self, api_version=None, *args, **kwargs):
         r"""Returns the count of objects in a query.
 
         Takes named arguments that match the usable filters on a
@@ -331,6 +359,8 @@ class Endpoint(object):
             accepted on given endpoint.
         :arg str,optional \**kwargs: Any search argument the
             endpoint accepts can be added as a keyword arg.
+        :arg str, optional api_version: Overide default or globally set 
+            Nautobot Rest API version for this(count) request.
 
         :Returns: Integer with count of objects returns by query.
 
@@ -355,7 +385,11 @@ class Endpoint(object):
         if any(i in RESERVED_KWARGS for i in kwargs):
             raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
 
-        ret = Request(filters=kwargs, base=self.url, token=self.token, http_session=self.api.http_session,)
+        api_version = api_version or self.api.api_version
+
+        ret = Request(
+            filters=kwargs, base=self.url, token=self.token, http_session=self.api.http_session, api_version=api_version
+        )
 
         return ret.get_count()
 
@@ -371,27 +405,36 @@ class DetailEndpoint(object):
         self.parent_obj = parent_obj
         self.custom_return = custom_return
         self.url = "{}/{}/{}/".format(parent_obj.endpoint.url, parent_obj.id, name)
-        self.request_kwargs = dict(base=self.url, token=parent_obj.api.token, http_session=parent_obj.api.http_session,)
 
-    def list(self, **kwargs):
+        self.request_kwargs = dict(
+            base=self.url,
+            token=parent_obj.api.token,
+            http_session=parent_obj.api.http_session,
+        )
+
+    def list(self, api_version=None, **kwargs):
         r"""The view operation for a detail endpoint
 
         Returns the response from Nautobot for a detail endpoint.
 
         Args:
+            api_version str, optional: Overide default or globally set Nautobot Rest API version for this(list) request.
             **kwargs: key/value pairs that get converted into url parameters when passed to the endpoint.
                 E.g. ``.list(method='get_facts')`` would be converted to ``.../?method=get_facts``.
 
         :returns: A dictionary or list of dictionaries retrieved from
             Nautobot.
         """
+        if api_version:
+            self.request_kwargs["api_version"] = api_version
+        
         req = Request(**self.request_kwargs).get(add_params=kwargs)
 
         if self.custom_return:
             return response_loader(req, self.custom_return, self.parent_obj.endpoint)
         return req
 
-    def create(self, data=None):
+    def create(self, data=None, api_version=None):
         """The write operation for a detail endpoint.
 
         Creates objects on a detail endpoint in Nautobot.
@@ -400,11 +443,16 @@ class DetailEndpoint(object):
             key/value pair of the items you're creating on the parent
             object. Defaults to empty dict which will create a single
             item with default values.
+        :args api_version str, optional: Overide default or globally set 
+            Nautobot Rest API version for this(create) request.
 
         :returns: A dictionary or list of dictionaries its created in
             Nautobot.
         """
         data = data or {}
+        if api_version:
+            self.request_kwargs["api_version"] = api_version
+            
         req = Request(**self.request_kwargs).post(data)
         if self.custom_return:
             return response_loader(req, self.custom_return, self.parent_obj.endpoint)
