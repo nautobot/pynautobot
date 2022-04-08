@@ -106,7 +106,7 @@ import pynautobot
 nautobot = pynautobot.api(
     url="http://localhost:8000",
     token="d6f4e314a5b5fefd164995169f28ae32d987704f",
-    api_version="1.3
+    api_version="1.3"
 )
 ```
 

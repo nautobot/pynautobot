@@ -131,7 +131,7 @@ class Request(object):
                 In (e.g. /api/dcim/devices/?name='test') 'name': 'test'
                 would be in the filters dict.
             key (int, optional): database id of the item being queried.
-            api_version (str, optional): Set to overide the default Nautobot Rest API Version.
+            api_version (str, optional): Set to override the default Nautobot REST API Version.
         """
         self.base = self.normalize_url(base)
         self.filters = filters

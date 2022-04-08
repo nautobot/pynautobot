@@ -54,8 +54,8 @@ class Api(object):
     :param str token: Your Nautobot token.
     :param bool,optional threading: Set to True to use threading in ``.all()``
         and ``.filter()`` requests.
-    :param str, optional api_version: Set to overide the default Nautobot Rest API Version
-        for all request.
+    :param str,optional api_version: Set to override the default Nautobot REST API Version
+        for all requests.
     :raises AttributeError: If app doesn't exist.
     :Examples:
 
