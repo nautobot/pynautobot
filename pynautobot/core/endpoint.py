@@ -104,7 +104,7 @@ class Endpoint(object):
 
         return response_loader(req.get(), self.return_obj, self)
 
-    def get(self, api_version=None, *args, **kwargs):
+    def get(self, *args, **kwargs):
         r"""Queries the DetailsView of a given endpoint.
 
         :arg int,optional key: id for the item to be
@@ -141,6 +141,9 @@ class Endpoint(object):
         except IndexError:
             key = None
 
+        is_api_version = kwargs.pop("api_version") if kwargs.get("api_version") else None
+        api_version = is_api_version or self.api.api_version
+
         if not key:
             filter_lookup = self.filter(**kwargs)
             if filter_lookup:
@@ -153,8 +156,6 @@ class Endpoint(object):
                 else:
                     return filter_lookup[0]
             return None
-
-        api_version = api_version or self.api.api_version
 
         req = Request(
             key=key, base=self.url, token=self.token, http_session=self.api.http_session, api_version=api_version,
@@ -406,11 +407,7 @@ class DetailEndpoint(object):
         self.custom_return = custom_return
         self.url = "{}/{}/{}/".format(parent_obj.endpoint.url, parent_obj.id, name)
 
-        self.request_kwargs = dict(
-            base=self.url,
-            token=parent_obj.api.token,
-            http_session=parent_obj.api.http_session,
-        )
+        self.request_kwargs = dict(base=self.url, token=parent_obj.api.token, http_session=parent_obj.api.http_session,)
 
     def list(self, api_version=None, **kwargs):
         r"""The view operation for a detail endpoint
@@ -426,7 +423,7 @@ class DetailEndpoint(object):
             Nautobot.
         """
         api_version = api_version or self.parent_obj.api.api_version
-        
+
         req = Request(api_version=api_version, **self.request_kwargs).get(add_params=kwargs)
 
         if self.custom_return:
@@ -450,7 +447,7 @@ class DetailEndpoint(object):
         """
         data = data or {}
         api_version = api_version or self.parent_obj.api.api_version
-            
+
         req = Request(api_version=api_version, **self.request_kwargs).post(data)
         if self.custom_return:
             return response_loader(req, self.custom_return, self.parent_obj.endpoint)
