@@ -62,6 +62,14 @@ def devicetype_library_repo_dirpath(git_toplevel):
             stdout=subp.PIPE,
             stderr=subp.PIPE,
         )
+    
+    # Checkout to a commit hash that is compatibility with pynautobot
+    subp.check_call(
+        ["git", "checkout", "-b", "newbranch", "9ead65a5b9b400ea601c245eb6505b496dedc1fa"],
+        cwd=repo_fpath,
+        stdout=subp.PIPE,
+        stderr=subp.PIPE,
+    )
 
     return repo_fpath
 
@@ -136,7 +144,7 @@ def nb_client(docker_ip, devicetype_library_repo_dirpath):
     """Setup the nb_client and import necessary data.
     """
 
-    url = "http://{}:{}".format(docker_ip, 8000)
+    url = "http://{}:{}".format(docker_ip, 8080)
     nb_api = pynautobot.api(url, token="0123456789abcdef0123456789abcdef01234567")
     populate_nautobot_object_types(nb_api=nb_api, devicetype_library_repo_dirpath=devicetype_library_repo_dirpath)
 
