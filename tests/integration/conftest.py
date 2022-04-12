@@ -65,7 +65,7 @@ def devicetype_library_repo_dirpath(git_toplevel):
 
     # Checkout to a commit hash that is compatibility with pynautobot
     subp.check_call(
-        ["git", "checkout", "-b", "newbranch", "9ead65a5b9b400ea601c245eb6505b496dedc1fa"],
+        ["git", "checkout", "9ead65a5b9b400ea601c245eb6505b496dedc1fa"],
         cwd=repo_fpath,
         stdout=subp.PIPE,
         stderr=subp.PIPE,
