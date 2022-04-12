@@ -144,7 +144,7 @@ def nb_client(docker_ip, devicetype_library_repo_dirpath):
     """Setup the nb_client and import necessary data.
     """
 
-    url = "http://{}:{}".format(docker_ip, 8080)
+    url = "http://{}:{}".format(docker_ip, 8000)
     nb_api = pynautobot.api(url, token="0123456789abcdef0123456789abcdef01234567")
     populate_nautobot_object_types(nb_api=nb_api, devicetype_library_repo_dirpath=devicetype_library_repo_dirpath)
 
