@@ -52,6 +52,8 @@ class Api(object):
     :param str token: Your Nautobot token.
     :param bool,optional threading: Set to True to use threading in ``.all()``
         and ``.filter()`` requests.
+    :param str,optional api_version: Set to override the default Nautobot REST API Version
+        for all requests.
     :raises AttributeError: If app doesn't exist.
     :Examples:
 
@@ -64,7 +66,7 @@ class Api(object):
     """
 
     def __init__(
-        self, url, token=None, threading=False,
+        self, url, token=None, threading=False, api_version=None,
     ):
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
         self.token = token
@@ -72,6 +74,7 @@ class Api(object):
         self.base_url = base_url
         self.http_session = requests.Session()
         self.threading = threading
+        self.api_version = api_version
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")
@@ -102,7 +105,9 @@ class Api(object):
         '1.0'
         >>>
         """
-        version = Request(base=self.base_url, http_session=self.http_session,).get_version()
+        version = Request(
+            base=self.base_url, http_session=self.http_session, api_version=self.api_version
+        ).get_version()
         return version
 
     def openapi(self):
@@ -122,7 +127,7 @@ class Api(object):
         {...}
         >>>
         """
-        return Request(base=self.base_url, http_session=self.http_session,).get_openapi()
+        return Request(base=self.base_url, http_session=self.http_session, api_version=self.api_version,).get_openapi()
 
     def status(self):
         """Gets the status information from Nautobot.
@@ -152,5 +157,7 @@ class Api(object):
          'rq-workers-running': 1}
         >>>
         """
-        status = Request(base=self.base_url, token=self.token, http_session=self.http_session,).get_status()
+        status = Request(
+            base=self.base_url, token=self.token, http_session=self.http_session, api_version=self.api_version,
+        ).get_status()
         return status

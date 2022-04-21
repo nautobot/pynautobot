@@ -63,6 +63,14 @@ def devicetype_library_repo_dirpath(git_toplevel):
             stderr=subp.PIPE,
         )
 
+    # Checkout to a commit hash that is compatibility with pynautobot
+    subp.check_call(
+        ["git", "checkout", "9ead65a5b9b400ea601c245eb6505b496dedc1fa"],
+        cwd=repo_fpath,
+        stdout=subp.PIPE,
+        stderr=subp.PIPE,
+    )
+
     return repo_fpath
 
 

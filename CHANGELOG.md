@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.0
+
+(#36) Add api_version argument [@timizuoebideri1]
+
 ## v1.0.4
 
 (#28) Fix Contraints String Serialization [@david-kn]
