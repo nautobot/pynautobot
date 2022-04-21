@@ -3,3 +3,4 @@
 # W503: Black disagrees with this rule, as does PEP 8; Black wins
 # E203: Black disagrees with this rule; Black wins
 ignore = E501, W503, E203
+exclude = .devicetype-library

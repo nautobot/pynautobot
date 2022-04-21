@@ -25,7 +25,7 @@ from pynautobot.core.util import Hashabledict
 
 
 # List of fields that are lists but should be treated as sets.
-LIST_AS_SET = ("tags", "tagged_vlans")
+LIST_AS_SET = ("tags", "tagged_vlans", "nat_outside")
 
 
 def get_return(lookup, return_fields=None):
@@ -169,7 +169,12 @@ class Record(object):
         self._init_cache = []
         self.api = api
         self.default_ret = Record
-        self.endpoint = self._endpoint_from_url(values["url"]) if values and "url" in values else endpoint
+        self.endpoint = self._endpoint_from_url(values["url"]) if "url" in values else endpoint
+
+        # Return a custom Record if available on the endpoint (IpAddresses)
+        if self.endpoint and self.endpoint.return_obj:
+            self.default_ret = self.endpoint.return_obj
+
         if values:
             self._parse_values(values)
 

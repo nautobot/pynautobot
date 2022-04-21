@@ -241,6 +241,6 @@ def tests(context, local=INVOKE_LOCAL):
     # pydocstyle(context, local)
     bandit(context, local)
     # Skipping due to some issues, but at least linting, etc. is working
-    # pytest(context, local)
+    pytest(context, local)
 
     print("All tests have passed!")

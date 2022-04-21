@@ -2,7 +2,6 @@ import unittest
 import six
 
 import pynautobot
-from .util import Response
 
 if six.PY3:
     from unittest.mock import patch

@@ -204,9 +204,6 @@ query ($device: String!) {
             "status_code": 200,
         }
     ]
-    expected_response = {
-        "data": {"devices": [{"name": "grb-rtr01", "id": 1, "primary_ip4": {"address": "192.0.2.10/32"}}]}
-    }
     with requests_mock.Mocker() as mock:
         load_api_calls(mock, api_calls)
         with pytest.raises(TypeError) as err:
@@ -240,7 +237,7 @@ query ($device: String!) {
     expected_response = {"data": {"devices": []}}
     with requests_mock.Mocker() as mock:
         load_api_calls(mock, api_calls)
-        query_result = graphql_test_class.query(query=query_str, variables=None)
+        query_result = graphql_test_class.query(query=query_str, variables=variables)
 
     assert isinstance(query_result, GraphQLRecord)
     assert query_result.json == expected_response
@@ -295,7 +292,7 @@ query {
         err.value.body
         == b'{"query": "\\nquery {\\n  test {\\n    name\\n    id\\n    primary_ip4 {\\n      address\\n    }\\n  }\\n}\\n", "variables": null}'
     )
-    assert err.value.reason == None
+    assert err.value.reason is None
     assert err.value.json == expected_response
 
 
@@ -358,5 +355,5 @@ query {
     assert err.value.body == (
         b'{"query": "\\nquery {\\n  devices {\\n    nae\\n    id\\n    primary_ip4 {\\n        address\\n    }\\n  }\\n  sites {\\n    nme\\n    id\\n  }\\n}\\n", "variables": null}'
     )
-    assert err.value.reason == None
+    assert err.value.reason is None
     assert err.value.json == expected_response
