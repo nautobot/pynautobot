@@ -15,8 +15,6 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
-import sys
-
 import requests
 
 from pynautobot.core.query import Request

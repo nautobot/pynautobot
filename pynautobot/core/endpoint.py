@@ -70,7 +70,7 @@ class Endpoint(object):
         :Returns: Record (obj)
         """
         if model:
-            name = name.title().replace("_", "")
+            name = name.title().replace("_", "").replace("-", "")
             ret = getattr(model, name, Record)
         else:
             ret = Record
