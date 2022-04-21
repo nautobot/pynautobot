@@ -168,8 +168,13 @@ class Record(object):
         self._full_cache = []
         self._init_cache = []
         self.api = api
-        self.endpoint = self._endpoint_from_url(values["url"]) if values and "url" in values else endpoint
-        self.default_ret = self.endpoint.return_obj or endpoint
+        self.default_ret = Record
+        self.endpoint = self._endpoint_from_url(values["url"]) if "url" in values else endpoint
+
+        # Return a custom Record if available on the endpoint (IpAddresses)
+        if self.endpoint and self.endpoint.return_obj:
+            self.default_ret = self.endpoint.return_obj
+
         if values:
             self._parse_values(values)
 

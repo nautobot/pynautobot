@@ -28,7 +28,7 @@ before_script:
   # - invoke build-image --nocache
   - "pip3 install poetry"
   - "poetry install"
-  - "invoke start"
+  - "poetry run invoke start"
   - timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)" != "200" ]]; do echo "waiting for Nautobot"; sleep 5; done' || false # yamllint disable-line rule:quoted-strings
 
 script:
@@ -36,11 +36,9 @@ script:
 
 jobs:
   include:
-    - stage: "lint"
-      before_script:
-        - "pip install black==19.10b0"
+    - stage: "tests"
       script:
-        - "black --diff --check ."
+        - "INVOKE_LOCAL=true poetry run invoke tests"
 
     - stage: "deploy-github"
       before_script:

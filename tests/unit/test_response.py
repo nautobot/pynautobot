@@ -3,6 +3,9 @@ import unittest
 import six
 
 from pynautobot.core.response import Record
+from pynautobot.core.endpoint import Endpoint
+from pynautobot.models.ipam import IpAddresses
+from pynautobot.core.app import App
 
 if six.PY3:
     from unittest.mock import Mock
@@ -213,6 +216,7 @@ class RecordTestCase(unittest.TestCase):
         app.base_url = "http://localhost:8080/api"
         endpoint = Mock()
         endpoint.name = "test-endpoint"
+        endpoint.return_obj = Record
         test = Record(
             {
                 "id": 123,
@@ -238,6 +242,7 @@ class RecordTestCase(unittest.TestCase):
         app.base_url = "http://localhost:8080/testing/api"
         endpoint = Mock()
         endpoint.name = "test-endpoint"
+        endpoint.return_obj = Record
         test = Record(
             {
                 "id": 123,
@@ -320,3 +325,14 @@ class RecordTestCase(unittest.TestCase):
         ]
         test = Record({"id": 123, "tags": test_tags}, None, None).serialize()
         self.assertEqual(test["tags"], test_tags)
+
+    def test_custom_return_object_ip_addresses(self):
+        """Validate the proper default_ret is provided for IpAddresses custom record."""
+        api = Mock()
+        api.base_url = "http://localhost:8080/api"
+        app = App(api, "ipam")
+        endpoint = Endpoint(api, app, "ip_addresses")
+        test = Record(
+            {"id": 123, "name": "test", "url": "http://localhost:8080/api/ipam/ip-addresses/1/"}, api, endpoint,
+        )
+        assert test.default_ret == IpAddresses
