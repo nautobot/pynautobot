@@ -141,5 +141,5 @@ class TestSimpleServerRackingAndConnecting:
             site=site.id,
             status="active",
         )
-        assert str(device_no_name) == f"Arista dcs-7050tx3-48c8 ({device_no_name['id']})"
+        assert str(device_no_name) == f"Arista DCS-7050TX3-48C8 ({device_no_name['id']})"
         assert str(device_w_name) == "im a real boy"
