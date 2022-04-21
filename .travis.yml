@@ -1,13 +1,13 @@
 ---
 stages:
-  - lint
-  - test
+  - "lint"
+  - "test"
   - name: "deploy-github"
     if: "tag IS present"
   - name: "deploy-pypi"
     if: "tag IS present"
 
-language: python
+language: "python"
 services:
   - "docker"
 
@@ -26,21 +26,21 @@ before_script:
   # To be added later
   # - pip install invoke poetry toml
   # - invoke build-image --nocache
-  - pip3 install poetry
-  - poetry install
-  - invoke start
-  - timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)" != "200" ]]; do echo "waiting for Nautobot"; sleep 5; done' || false
+  - "pip3 install poetry"
+  - "poetry install"
+  - "invoke start"
+  - timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)" != "200" ]]; do echo "waiting for Nautobot"; sleep 5; done' || false # yamllint disable-line rule:quoted-strings
 
 script:
-  - pytest -v
+  - "pytest -v"
 
 jobs:
   include:
-    - stage: lint
+    - stage: "lint"
       before_script:
-        - pip install black==19.10b0
+        - "pip install black==19.10b0"
       script:
-        - black --diff --check .
+        - "black --diff --check ."
 
     - stage: "deploy-github"
       before_script:
@@ -54,7 +54,7 @@ jobs:
         file_glob: true
         file: "dist/*"
         skip_cleanup: true
-        on:
+        on: # yamllint disable-line rule:truthy
           all_branches: true
 
     - stage: "deploy-pypi"

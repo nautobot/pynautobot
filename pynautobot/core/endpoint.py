@@ -80,8 +80,8 @@ class Endpoint(object):
         """Queries the 'ListView' of a given endpoint.
 
         Returns all objects from an endpoint.
-        
-        :arg str,optional api_version: Override default or globally-set Nautobot REST API 
+
+        :arg str,optional api_version: Override default or globally-set Nautobot REST API
             version for this single request.
 
         :Returns: List of :py:class:`.Record` objects.
@@ -113,8 +113,8 @@ class Endpoint(object):
         :arg str,optional \**kwargs: Accepts the same keyword args as
             filter(). Any search argument the endpoint accepts can
             be added as a keyword arg.
-        
-        :arg str,optional api_version: Override default or globally-set Nautobot REST API 
+
+        :arg str,optional api_version: Override default or globally-set Nautobot REST API
             version for this single request.
 
         :returns: A single :py:class:`.Record` object or None
@@ -182,7 +182,7 @@ class Endpoint(object):
             accepted on given endpoint.
         :arg str,optional \**kwargs: Any search argument the
             endpoint accepts can be added as a keyword arg.
-        :arg str,optional api_version: Override default or globally-set 
+        :arg str,optional api_version: Override default or globally-set
             Nautobot REST API version for this single request.
 
         :Returns: A list of :py:class:`.Record` objects.
@@ -251,7 +251,7 @@ class Endpoint(object):
             properties of the objects to be created.
         :arg str \**kwargs: key/value strings representing
             properties on a json object.
-        :arg str,optional api_version: Override default or globally-set 
+        :arg str,optional api_version: Override default or globally-set
             Nautobot REST API version for this single request.
 
         :returns: A list or single :py:class:`.Record` object depending
@@ -304,8 +304,8 @@ class Endpoint(object):
         without recurring requests to Nautobot. When using ``.choices()`` in
         long-running applications, consider restarting them whenever Nautobot is
         upgraded, to prevent using stale choices data.
-        
-        :arg str,optional api_version: Override default or globally-set 
+
+        :arg str,optional api_version: Override default or globally-set
             Nautobot REST API version for this single request.
 
         :Returns: Dict containing the available choices.
@@ -360,7 +360,7 @@ class Endpoint(object):
             accepted on given endpoint.
         :arg str,optional \**kwargs: Any search argument the
             endpoint accepts can be added as a keyword arg.
-        :arg str,optional api_version: Override default or globally-set 
+        :arg str,optional api_version: Override default or globally-set
             Nautobot REST API version for this single request.
 
         :Returns: Integer with count of objects returns by query.
@@ -439,7 +439,7 @@ class DetailEndpoint(object):
             key/value pair of the items you're creating on the parent
             object. Defaults to empty dict which will create a single
             item with default values.
-        :args str,optional api_version: Override default or globally set 
+        :args str,optional api_version: Override default or globally set
             Nautobot REST API version for this single request.
 
         :returns: A dictionary or list of dictionaries its created in
