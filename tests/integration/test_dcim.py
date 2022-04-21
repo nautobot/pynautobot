@@ -124,3 +124,21 @@ class TestSimpleServerRackingAndConnecting:
 
         # check that it's racked properly
         assert server.rack.id == rack.id
+
+    def test_string_represention(self, nb_client, site):
+        """Validate two device objects return the proper string when casting to string."""
+        device_no_name = nb_client.dcim.devices.create(
+            device_type={"slug": "dcs-7050tx3-48c8"},
+            device_role={"name": "Leaf Switch"},
+            site=site.id,
+            status="active",
+        )
+        device_w_name = nb_client.dcim.devices.create(
+            name="im a real boy",
+            device_type={"slug": "dcs-7050tx3-48c8"},
+            device_role={"name": "Leaf Switch"},
+            site=site.id,
+            status="active",
+        )
+        assert str(device_no_name) == f"Arista dcs-7050tx3-48c8 ({device_no_name['id']})"
+        assert str(device_w_name) == "im a real boy"
