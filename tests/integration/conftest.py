@@ -54,7 +54,6 @@ def devicetype_library_repo_dirpath(git_toplevel):
     repo_fpath = os.path.join(git_toplevel, ".devicetype-library")
     if os.path.isdir(repo_fpath):
         subp.check_call(["git", "fetch"], cwd=repo_fpath, stdout=subp.PIPE, stderr=subp.PIPE)
-        subp.check_call(["git", "pull"], cwd=repo_fpath, stdout=subp.PIPE, stderr=subp.PIPE)
     else:
         subp.check_call(
             ["git", "clone", "https://github.com/netbox-community/devicetype-library", repo_fpath],

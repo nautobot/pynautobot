@@ -1,13 +1,7 @@
 import unittest
-
-import six
+from unittest.mock import patch, Mock
 
 from pynautobot.core.endpoint import Endpoint
-
-if six.PY3:
-    from unittest.mock import patch, Mock
-else:
-    from mock import patch, Mock
 
 
 @patch("pynautobot.core.endpoint.response_loader")

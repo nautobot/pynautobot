@@ -1,5 +1,5 @@
 {
-    "id": 1,
+    "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
     "device": {
         "id": 2,
         "url": "http://localhost:8000/api/dcim/devices/2/",
@@ -57,7 +57,7 @@
     },
     "tagged_vlans": [
         {
-            "id": 3,
+            "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
             "url": "http://localhost:8000/api/ipam/vlans/248/",
             "vid": 1210,
             "name": "v1210",

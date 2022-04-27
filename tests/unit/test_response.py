@@ -1,16 +1,10 @@
 import unittest
-
-import six
+from unittest.mock import Mock
 
 from pynautobot.core.response import Record
 from pynautobot.core.endpoint import Endpoint
 from pynautobot.models.ipam import IpAddresses
 from pynautobot.core.app import App
-
-if six.PY3:
-    from unittest.mock import Mock
-else:
-    from mock import Mock
 
 
 class RecordTestCase(unittest.TestCase):
