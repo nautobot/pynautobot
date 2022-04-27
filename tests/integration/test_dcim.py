@@ -1,6 +1,17 @@
 import pytest
 
 
+def test_create_manufacturer(nb_client):
+    cisco_manu = {"name": "Cisco", "slug": "cisco"}
+    cisco = nb_client.dcim.manufacturers.create(cisco_manu)
+    juniper_manu = {"name": "Juniper", "slug": "juniper"}
+    juniper = nb_client.dcim.manufacturers.create(**juniper_manu)
+    demo = nb_client.dcim.manufacturers.create(name="Demo", slug="demo")
+    assert cisco
+    assert juniper
+    assert demo
+
+
 class TestSimpleServerRackingAndConnecting:
 
     """Verify we can create, rack, and connect a server."""
@@ -143,3 +154,30 @@ class TestSimpleServerRackingAndConnecting:
         )
         assert str(device_no_name) == f"Arista DCS-7050TX3-48C8 ({device_no_name['id']})"
         assert str(device_w_name) == "im a real boy"
+
+    def test_fetching_vc_success(self, nb_client):
+        """Validate nb_client.dcim.virtual_chassis.all() fetches successfully and has the correct data."""
+        site = nb_client.dcim.sites.get(slug="msp")
+        dev1 = nb_client.dcim.devices.create(
+            name="dev-1",
+            device_type={"slug": "dcs-7050tx3-48c8"},
+            device_role={"name": "Leaf Switch"},
+            site=site.id,
+            status="active",
+        )
+        vc = nb_client.dcim.virtual_chassis.create(name="VC1", master=dev1.id)
+        nb_client.dcim.devices.create(
+            name="dev-2",
+            device_type={"slug": "dcs-7050tx3-48c8"},
+            device_role={"name": "Leaf Switch"},
+            site=site.id,
+            status="active",
+            virtual_chassis=vc.id,
+            vc_position=2,
+        )
+        all_vcs = nb_client.dcim.virtual_chassis.all()
+        vc1 = all_vcs[0]
+        assert len(all_vcs) == 1
+        assert vc1.member_count == 2
+        assert vc1.master.name == dev1.name
+        assert vc1.master.id == dev1.id

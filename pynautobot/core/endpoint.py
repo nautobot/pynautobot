@@ -171,7 +171,7 @@ class Endpoint(object):
 
         return response_loader(resp, self.return_obj, self)
 
-    def filter(self, api_version=None, *args, **kwargs):
+    def filter(self, *args, api_version=None, **kwargs):
         r"""Queries the 'ListView' of a given endpoint.
 
         Takes named arguments that match the usable filters on a
@@ -235,7 +235,7 @@ class Endpoint(object):
 
         return response_loader(req.get(), self.return_obj, self)
 
-    def create(self, api_version=None, *args, **kwargs):
+    def create(self, *args, api_version=None, **kwargs):
         r"""Creates an object on an endpoint.
 
         Allows for the creation of new objects on an endpoint. Named
@@ -347,7 +347,7 @@ class Endpoint(object):
 
         return self._choices
 
-    def count(self, api_version=None, *args, **kwargs):
+    def count(self, *args, api_version=None, **kwargs):
         r"""Returns the count of objects in a query.
 
         Takes named arguments that match the usable filters on a
