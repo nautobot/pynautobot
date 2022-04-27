@@ -2,6 +2,13 @@
 
 ## v1.1.0
 
+### Bug Fixes
+
+(#44) Incorrect method signatures for new `api_version` argument causing data to be set as `api_version`.
+(#46) Incorrect attribute (**display_name**) set for VirtualChassis in `__str__` method of record. Changed to **display**.
+
+## v1.1.0
+
 (#36) Add api_version argument [@timizuoebideri1]
 
 ## v1.0.4
