@@ -18,6 +18,10 @@ HEADERS = {
     "accept": "application/json;",
     "authorization": "Token abc123",
 }
+POST_HEADERS = {
+    "Content-Type": "application/json;",
+    "authorization": "Token abc123",
+}
 
 
 class Generic(object):
@@ -25,6 +29,15 @@ class Generic(object):
         name = ""
         ret = pynautobot.core.response.Record
         app = "dcim"
+        uuid = "5b39ba88-e5ab-4be2-89f5-5a016473b53c"
+
+        @property
+        def bulk_uri(self):
+            return f"http://localhost:8000/api/{self.app}/{self.name.replace('_', '-')}/"
+
+        @property
+        def detail_uri(self):
+            return f"http://localhost:8000/api/{self.app}/{self.name.replace('_', '-')}/{self.uuid}/"
 
         def test_get_all(self):
             with patch(
@@ -36,10 +49,7 @@ class Generic(object):
                 self.assertTrue(isinstance(ret, list))
                 self.assertTrue(isinstance(ret[0], self.ret))
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/".format(self.app, self.name.replace("_", "-")),
-                    params={},
-                    json=None,
-                    headers=HEADERS,
+                    self.bulk_uri, params={}, json=None, headers=HEADERS,
                 )
 
         def test_filter(self):
@@ -52,10 +62,7 @@ class Generic(object):
                 self.assertTrue(isinstance(ret, list))
                 self.assertTrue(isinstance(ret[0], self.ret))
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/".format(self.app, self.name.replace("_", "-")),
-                    params={"name": "test"},
-                    json=None,
-                    headers=HEADERS,
+                    self.bulk_uri, params={"name": "test"}, json=None, headers=HEADERS,
                 )
 
         def test_get(self):
@@ -63,16 +70,13 @@ class Generic(object):
                 "requests.sessions.Session.get",
                 return_value=Response(fixture="{}/{}.json".format(self.app, self.name[:-1])),
             ) as mock:
-                ret = getattr(nb, self.name).get(1)
+                ret = getattr(nb, self.name).get(self.uuid)
                 self.assertTrue(ret)
                 self.assertTrue(isinstance(ret, self.ret))
                 self.assertTrue(isinstance(str(ret), str))
                 self.assertTrue(isinstance(dict(ret), dict))
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/1/".format(self.app, self.name.replace("_", "-")),
-                    params={},
-                    json=None,
-                    headers=HEADERS,
+                    self.detail_uri, params={}, json=None, headers=HEADERS,
                 )
 
         def test_delete(self):
@@ -80,19 +84,14 @@ class Generic(object):
                 "requests.sessions.Session.get",
                 return_value=Response(fixture="{}/{}.json".format(self.app, self.name[:-1])),
             ) as mock, patch("requests.sessions.Session.delete") as delete:
-                ret = getattr(nb, self.name).get(1)
+                ret = getattr(nb, self.name).get(self.uuid)
+                self.assertEqual(self.uuid, ret.id)
                 self.assertTrue(ret.delete())
                 mock.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/1/".format(self.app, self.name.replace("_", "-")),
-                    params={},
-                    json=None,
-                    headers=HEADERS,
+                    self.detail_uri, params={}, json=None, headers=HEADERS,
                 )
                 delete.assert_called_with(
-                    "http://localhost:8000/api/{}/{}/1/".format(self.app, self.name.replace("_", "-")),
-                    params={},
-                    json=None,
-                    headers=HEADERS,
+                    self.detail_uri, params={}, json=None, headers=HEADERS,
                 )
 
         def test_diff(self):
@@ -100,7 +99,7 @@ class Generic(object):
                 "requests.sessions.Session.get",
                 return_value=Response(fixture="{}/{}.json".format(self.app, self.name[:-1])),
             ):
-                ret = getattr(nb, self.name).get(1)
+                ret = getattr(nb, self.name).get(self.uuid)
                 self.assertTrue(ret)
                 self.assertEqual(ret._diff(), set())
 
@@ -109,7 +108,7 @@ class Generic(object):
                 "requests.sessions.Session.get",
                 return_value=Response(fixture="{}/{}.json".format(self.app, self.name[:-1])),
             ):
-                ret = getattr(nb, self.name).get(1)
+                ret = getattr(nb, self.name).get(self.uuid)
                 self.assertTrue(ret)
                 self.assertTrue(ret.serialize())
 
@@ -121,7 +120,7 @@ class DeviceTestCase(Generic.Tests):
         "requests.sessions.Session.get", return_value=Response(fixture="dcim/device.json"),
     )
     def test_get(self, mock):
-        ret = getattr(nb, self.name).get(1)
+        ret = getattr(nb, self.name).get(self.uuid)
         self.assertTrue(ret)
         self.assertTrue(isinstance(ret, self.ret))
         self.assertTrue(isinstance(ret.primary_ip, pynautobot.models.ipam.IpAddresses))
@@ -130,10 +129,7 @@ class DeviceTestCase(Generic.Tests):
         self.assertTrue(isinstance(ret.custom_fields, dict))
         self.assertTrue(isinstance(ret.local_context_data, dict))
         mock.assert_called_with(
-            "http://localhost:8000/api/{}/{}/1/".format(self.app, self.name.replace("_", "-")),
-            params={},
-            json=None,
-            headers=HEADERS,
+            self.detail_uri, params={}, json=None, headers=HEADERS,
         )
 
     @patch(
@@ -145,17 +141,14 @@ class DeviceTestCase(Generic.Tests):
         self.assertTrue(isinstance(ret, list))
         self.assertTrue(isinstance(ret[0], self.ret))
         mock.assert_called_with(
-            "http://localhost:8000/api/{}/{}/".format(self.app, self.name.replace("_", "-")),
-            params={"role": ["test", "test1"], "site": "TEST#1"},
-            json=None,
-            headers=HEADERS,
+            self.bulk_uri, params={"role": ["test", "test1"], "site": "TEST#1"}, json=None, headers=HEADERS,
         )
 
     @patch(
         "requests.sessions.Session.get", return_value=Response(fixture="dcim/device.json"),
     )
     def test_modify(self, *_):
-        ret = nb.devices.get(1)
+        ret = nb.devices.get(self.uuid)
         ret.serial = "123123123123"
         ret_serialized = ret.serialize()
         self.assertTrue(ret_serialized)
@@ -165,7 +158,7 @@ class DeviceTestCase(Generic.Tests):
     @patch(
         "requests.sessions.Session.post", return_value=Response(fixture="dcim/device.json"),
     )
-    def test_create(self, *_):
+    def test_create(self, mock):
         data = {
             "name": "test-device",
             "site": 1,
@@ -174,11 +167,14 @@ class DeviceTestCase(Generic.Tests):
         }
         ret = nb.devices.create(**data)
         self.assertTrue(ret)
+        mock.assert_called_with(
+            self.bulk_uri, headers=POST_HEADERS, params={}, json=data,
+        )
 
     @patch(
         "requests.sessions.Session.post", return_value=Response(fixture="dcim/device_bulk_create.json"),
     )
-    def test_create_device_bulk(self, *_):
+    def test_create_device_bulk(self, mock):
         data = [
             {"name": "test-device", "site": 1, "device_type": 1, "device_role": 1},
             {"name": "test-device1", "site": 1, "device_type": 1, "device_role": 1},
@@ -186,6 +182,9 @@ class DeviceTestCase(Generic.Tests):
         ret = nb.devices.create(data)
         self.assertTrue(ret)
         self.assertTrue(len(ret), 2)
+        mock.assert_called_with(
+            self.bulk_uri, headers=POST_HEADERS, params={}, json=data,
+        )
 
     @patch(
         "requests.sessions.Session.get",
@@ -195,7 +194,7 @@ class DeviceTestCase(Generic.Tests):
         """Test that automatic recursion works, and that nested items
         are converted to Response() objects.
         """
-        ret = getattr(nb, self.name).get(1)
+        ret = getattr(nb, self.name).get(self.uuid)
         self.assertTrue(ret)
         self.assertTrue(isinstance(ret, self.ret))
         self.assertTrue(isinstance(ret.rack.role, self.ret))
@@ -205,13 +204,10 @@ class DeviceTestCase(Generic.Tests):
         side_effect=[Response(fixture="dcim/device.json"), Response(fixture="dcim/napalm.json")],
     )
     def test_get_napalm(self, mock):
-        test = nb.devices.get(1)
+        test = nb.devices.get(self.uuid)
         ret = test.napalm.list(method="get_facts")
         mock.assert_called_with(
-            "http://localhost:8000/api/dcim/devices/1/napalm/",
-            params={"method": "get_facts"},
-            json=None,
-            headers=HEADERS,
+            f"{self.detail_uri}napalm/", params={"method": "get_facts"}, json=None, headers=HEADERS,
         )
         self.assertTrue(ret)
         self.assertTrue(ret["get_facts"])
@@ -226,7 +222,7 @@ class SiteTestCase(Generic.Tests):
     def test_modify_custom(self, *_):
         """Test modifying a custom field.
         """
-        ret = getattr(nb, self.name).get(1)
+        ret = getattr(nb, self.name).get(self.uuid)
         ret.custom_fields["test_custom"] = "Testing"
         self.assertEqual(ret._diff(), {"custom_fields"})
         self.assertTrue(ret.serialize())
@@ -238,7 +234,7 @@ class SiteTestCase(Generic.Tests):
     def test_custom_selection_serializer(self, _):
         """Tests serializer with custom selection fields.
         """
-        ret = getattr(nb, self.name).get(1)
+        ret = getattr(nb, self.name).get(self.uuid)
         ret.custom_fields["test_custom"] = "Testing"
         test = ret.serialize()
         self.assertEqual(test["custom_fields"]["test_selection"], 2)
@@ -246,10 +242,13 @@ class SiteTestCase(Generic.Tests):
     @patch(
         "requests.sessions.Session.post", return_value=Response(fixture="dcim/site.json"),
     )
-    def test_create(self, *_):
+    def test_create(self, mock):
         data = {"name": "TEST1", "custom_fields": {"test_custom": "Testing"}}
         ret = nb.sites.create(**data)
         self.assertTrue(ret)
+        mock.assert_called_with(
+            self.bulk_uri, headers=POST_HEADERS, params={}, json=data,
+        )
 
 
 class InterfaceTestCase(Generic.Tests):
@@ -259,7 +258,7 @@ class InterfaceTestCase(Generic.Tests):
         "requests.sessions.Session.get", return_value=Response(fixture="dcim/interface.json"),
     )
     def test_modify(self, *_):
-        ret = nb.interfaces.get(1)
+        ret = nb.interfaces.get(self.uuid)
         ret.description = "Testing"
         ret_serialized = ret.serialize()
         self.assertTrue(ret)
@@ -280,10 +279,7 @@ class InterfaceTestCase(Generic.Tests):
         self.assertTrue(isinstance(ret[0], self.ret))
         self.assertEqual(len(ret), 71)
         mock.assert_called_with(
-            "http://localhost:8000/api/dcim/interfaces/",
-            params={"limit": 221, "offset": 50},
-            json=None,
-            headers=HEADERS,
+            self.bulk_uri, params={"limit": 221, "offset": 50}, json=None, headers=HEADERS,
         )
 
     @patch(
@@ -291,7 +287,7 @@ class InterfaceTestCase(Generic.Tests):
         side_effect=[Response(fixture="dcim/interface.json"), Response(fixture="dcim/interface_trace.json")],
     )
     def test_trace(self, mock):
-        ret = nb.interfaces.get(1)
+        ret = nb.interfaces.get(self.uuid)
         trace = ret.trace()
         self.assertTrue(len(trace) == 3)
         for hop in trace:
@@ -306,10 +302,10 @@ class RackTestCase(Generic.Tests):
         side_effect=[Response(fixture="dcim/rack.json"), Response(fixture="dcim/rack_u.json")],
     )
     def test_get_units(self, mock):
-        test = nb.racks.get(1)
+        test = nb.racks.get(self.uuid)
         ret = test.units.list()
         mock.assert_called_with(
-            "http://localhost:8000/api/dcim/racks/1/units/", params={}, json=None, headers=HEADERS,
+            f"{self.detail_uri}units/", params={}, json=None, headers=HEADERS,
         )
         self.assertTrue(ret)
         self.assertTrue(isinstance(ret[0].device, pynautobot.models.dcim.Devices))
@@ -319,10 +315,10 @@ class RackTestCase(Generic.Tests):
         side_effect=[Response(fixture="dcim/rack.json"), Response(fixture="dcim/rack_u.json")],
     )
     def test_get_elevation(self, mock):
-        test = nb.racks.get(1)
+        test = nb.racks.get(self.uuid)
         ret = test.elevation.list()
         mock.assert_called_with(
-            "http://localhost:8000/api/dcim/racks/1/elevation/", params={}, json=None, headers=HEADERS,
+            f"{self.detail_uri}elevation/", params={}, json=None, headers=HEADERS,
         )
         self.assertTrue(ret)
         self.assertTrue(isinstance(ret[0].device, pynautobot.models.dcim.Devices))
@@ -438,7 +434,7 @@ class CablesTestCase(Generic.Tests):
     def test_get_circuit(self):
         response_obj = Response(
             content={
-                "id": 1,
+                "id": self.uuid,
                 "termination_a_type": "circuits.circuittermination",
                 "termination_a_id": 1,
                 "termination_a": {
@@ -474,14 +470,11 @@ class CablesTestCase(Generic.Tests):
             }
         )
         with patch("requests.sessions.Session.get", return_value=response_obj,) as mock:
-            ret = getattr(nb, self.name).get(1)
+            ret = getattr(nb, self.name).get(self.uuid)
             self.assertTrue(ret)
             self.assertTrue(isinstance(ret, self.ret))
             self.assertTrue(isinstance(str(ret), str))
             self.assertTrue(isinstance(dict(ret), dict))
             mock.assert_called_with(
-                "http://localhost:8000/api/{}/{}/1/".format(self.app, self.name.replace("_", "-")),
-                headers=HEADERS,
-                params={},
-                json=None,
+                self.detail_uri, headers=HEADERS, params={}, json=None,
             )

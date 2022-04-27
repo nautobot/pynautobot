@@ -1,5 +1,5 @@
 {
-    "id": 1,
+    "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
     "manufacturer": {
         "id": 1,
         "url": "http://localhost:8000/api/dcim/manufacturers/1/",
