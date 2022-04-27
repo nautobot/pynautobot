@@ -3,10 +3,10 @@ import pytest
 
 def test_create_manufacturer(nb_client):
     cisco_manu = {"name": "Cisco", "slug": "cisco"}
-    cisco = nb_client.dcim.manufacturers(cisco_manu)
+    cisco = nb_client.dcim.manufacturers.create(cisco_manu)
     juniper_manu = {"name": "Juniper", "slug": "juniper"}
-    juniper = nb_client.dcim.manufacturers(**juniper_manu)
-    demo = nb_client.dcim.manufacturers(name="Demo", slug="demo")
+    juniper = nb_client.dcim.manufacturers.create(**juniper_manu)
+    demo = nb_client.dcim.manufacturers.create(tename="Demo", slug="demo")
     assert cisco
     assert juniper
     assert demo
