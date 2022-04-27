@@ -1,12 +1,7 @@
 import unittest
-import six
+from unittest.mock import patch
 
 import pynautobot
-
-if six.PY3:
-    from unittest.mock import patch
-else:
-    from mock import patch
 
 host = "http://localhost:8000"
 
