@@ -1,10 +1,11 @@
 Retrieving Records
 ------------------
 
-Pynautobot's model objects also provide mechanisms to retrieve the Records stored in the Nautobot database.
-The :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method can be used to retrieve a single record.
-The most common way to use this method is to pass keyword arguments mapping the record's field with its value,
-such as ``slug="access-switch"``.
+Pynautobot's :py:class:`<pynautobot.core.endpoint.Endpoint>` objects also provide mechanisms
+to retrieve the :py:class:`Records <pynautobot.core.response.Record>` stored in the Nautobot database.
+The :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method can be used to retrieve a single :ref:`Record <Terminology>`.
+The most common way to use this method is to pass keyword arguments mapping the
+Record's :ref:`fields <Terminology>` with its value, such as ``slug="access-switch"``.
 
 .. code-block:: python
 
@@ -17,8 +18,9 @@ such as ``slug="access-switch"``.
 .. note::
    Multiple keyword arguments can be supplied if needed to uniquely identify a single entry.
 
-The :py:class:`~pynautobot.core.response.Record` object returned by the ``get`` method is
-the same as what is returned in :ref:`Creating Records` by the :py:meth:`~pynautobot.core.endpoint.Endpoint.create` method.
+The :py:class:`~pynautobot.core.response.Record` object returned by the
+:py:meth:`~pynautobot.core.endpoint.Endpoint.get` method is the same object that was returned
+from the :py:meth:`~pynautobot.core.endpoint.Endpoint.create` method in :ref:`Creating Records`.
 
 .. code-block:: python
 
@@ -32,7 +34,8 @@ the same as what is returned in :ref:`Creating Records` by the :py:meth:`~pynaut
     >>> access_role.id
     '6929b68d-8f87-4470-8377-e7fdc933a2bb'
 
-The :py:meth:`~pynautobot.core.endpoint.Endpoint.all` method is useful for retrieving all Records of the Model.
+The :py:meth:`~pynautobot.core.endpoint.Endpoint.all` method is useful
+for retrieving all Records of the :ref:`Model <Terminology>`.
 
 .. code-block:: python
 

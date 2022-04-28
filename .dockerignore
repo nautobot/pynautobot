@@ -7,3 +7,4 @@ Dockerfile
 docker-compose.yml
 .env
 docs/_build
+.devicetype-library

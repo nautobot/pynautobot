@@ -1,7 +1,8 @@
 Gathering Data from GraphQL Endpoint
 ====================================
 
-Using pynautobot to make GraphQL queries against Nautobot has the same initial setup as detailed in :ref:`Creating a pynautobot Instance`. 
+Using pynautobot to make GraphQL queries against Nautobot has the same
+initial setup as detailed in :ref:`Creating a pynautobot Instance`. 
 
 .. code-block:: python
 
@@ -9,22 +10,28 @@ Using pynautobot to make GraphQL queries against Nautobot has the same initial s
 
     from pynautobot import api
 
-    url = "https://nautobot.networktocode.com"
+    url = "https://demo.nautobot.com"
 
     # Retrieve token from system environment variable
-    token = os.environ["NAUTOBOT_TOKEN"]
+    # token = os.environ["NAUTOBOT_TOKEN"]
+    token = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     nautobot = api(url=url, token=token)
 
-An instance of :py:class:`~pynautobot.core.graphql.GraphQLQuery` is assigned to the above `nautobot` object upon initialization.
-The :py:meth:`~pynautobot.core.graphql.GraphQLQuery.query` method is used to perform queries against Nautobot's GraphQL endpoint.
+An instance of :py:class:`~pynautobot.core.graphql.GraphQLQuery` is assigned
+to the above ``nautobot`` object upon initialization.
+The :py:meth:`~pynautobot.core.graphql.GraphQLQuery.query` method is used to
+perform queries against Nautobot's GraphQL endpoint.
 
 
 Making a GraphQL Query
 ----------------------
 
-The :py:meth:`~pynautobot.core.graphql.GraphQLQuery.query` method requires that a **query** string is passed into it.
-The method retuns a :py:class:`~pynautobot.core.graphql.GraphQLRecord` object as discussed in :ref:`The GraphQLRecord Object`
-This example demonstrates how to fetch the `id`, `name`, and `region name` for all **sites**.
+The :py:meth:`~pynautobot.core.graphql.GraphQLQuery.query` method requires
+that a query string is passed into it.
+The method retuns a :py:class:`~pynautobot.core.graphql.GraphQLRecord` object
+as discussed in :ref:`The GraphQLRecord Object` section.
+
+This example demonstrates how to fetch the `id`, `name`, and `region name` for all *Sites*.
 
 .. code-block:: python
 
@@ -47,7 +54,7 @@ This example demonstrates how to fetch the `id`, `name`, and `region name` for a
     >>> # Show that a GraphQLRecord is returned
     GraphQLRecord(json={'data': {'sites': [{'id': '2cfbc91e-361f-4129-9db6-bc21a6f88d38', 'name': 'ams', ..., status_code=200)
 
-The next example performs the same query, but restricts it to only the `den` site.
+The next example performs the same query, but restricts it to only the ``den`` site.
 
 .. code-block:: python
 
@@ -69,7 +76,8 @@ The next example performs the same query, but restricts it to only the `den` sit
 
 .. tip::
 
-   Nautobot's `GraphQL documentation <https://nautobot.readthedocs.io/en/latest/additional-features/graphql/>`_  provides a summary of making queries.
+   Nautobot's `GraphQL documentation <https://nautobot.readthedocs.io/en/latest/additional-features/graphql/>`_ 
+   provides a summary of making queries.
 
    Nautobot's browsable API also provides a `graphiql` interface to aid in developing query strings at `/graphql/` 
 
@@ -100,7 +108,7 @@ This example is the same as the previous one, except the site name is now derive
     ... """
 
     >>> # Use the query method with variables
-    >>> graphql_response = nautobot.graphql.query(query=query)
+    >>> graphql_response = nautobot.graphql.query(query=query, variables=variables)
     >>> graphql_response
     GraphQLRecord(json={'data': {'sites': [{'id': '45399b54-47f9-4eec-86e3-47352e103b1b', 'name': 'den', 'region': {'name': 'United States'}}]}}, status_code=200)
 
@@ -126,7 +134,7 @@ This example shows accessing data from the previous query.
     ...   }
     ... }
     ... """
-    >>> graphql_response = nautobot.graphql.query(query=query)
+    >>> graphql_response = nautobot.graphql.query(query=query, variables=variables)
     >>> graphql_response.json
     {
       'data': {

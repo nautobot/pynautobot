@@ -25,7 +25,7 @@ from pynautobot.core.util import Hashabledict
 
 
 # List of fields that are lists but should be treated as sets.
-LIST_AS_SET = ("tags", "tagged_vlans")
+LIST_AS_SET = ("tags", "tagged_vlans", "nat_outside")
 
 
 def get_return(lookup, return_fields=None):
@@ -169,7 +169,12 @@ class Record(object):
         self._init_cache = []
         self.api = api
         self.default_ret = Record
-        self.endpoint = self._endpoint_from_url(values["url"]) if values and "url" in values else endpoint
+        self.endpoint = self._endpoint_from_url(values["url"]) if "url" in values else endpoint
+
+        # Return a custom Record if available on the endpoint (IpAddresses)
+        if self.endpoint and self.endpoint.return_obj:
+            self.default_ret = self.endpoint.return_obj
+
         if values:
             self._parse_values(values)
 
@@ -205,7 +210,7 @@ class Record(object):
         return dict(self)[k]
 
     def __str__(self):
-        return getattr(self, "name", None) or getattr(self, "label", None) or ""
+        return getattr(self, "display", "")
 
     def __repr__(self):
         return str(self)
@@ -280,8 +285,9 @@ class Record(object):
             url_path = url_path[len(extra_path) :]
         split_url_path = url_path.split("/")
         if split_url_path[2] == "plugins":
-            # Skip plugins from the path
-            app, name = split_url_path[3:5]
+            # Keep plugins in app path
+            app = "/".join(split_url_path[2:4])
+            name = split_url_path[4]
         else:
             app, name = split_url_path[2:4]
         return getattr(pynautobot.core.app.App(self.api, app), name)
@@ -331,6 +337,8 @@ class Record(object):
             current_val = getattr(self, i) if not init else init_vals.get(i)
             if i == "custom_fields":
                 ret[i] = flatten_custom(current_val)
+            elif i == "constraints":  # just pass constraints as it is (a JSON string)
+                ret[i] = current_val
             else:
                 if isinstance(current_val, Record):
                     current_val = getattr(current_val, "serialize")(nested=True)

@@ -14,7 +14,7 @@ A few examples are provided below:
 Headers
 -------
 
-Adding or updating headers can be done by updating the ``headers`` dictionary on the ``http_response`` object.
+Adding or updating headers is done by updating the ``headers`` dictionary on the ``http_response`` object.
 The example below shows how to update a Token if it has been cycled.
 
 .. code-block:: python
@@ -29,7 +29,7 @@ The example below shows how to update a Token if it has been cycled.
     new_token = f"Token {os.environ['NEW_NAUTOBOT_TOKEN']}"
 
     # Update Session object with new header
-    nautobot.http_session["Authorization"] = new_token
+    nautobot.http_session.headers["Authorization"] = new_token
 
 
 SSL Verification

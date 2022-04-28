@@ -2,11 +2,12 @@ Updating Objects
 ================
 
 The :ref:`Updating Records` section shows how to use the
-:py:meth:`~pynautobot.core.response.Record.update` method to update fields.
+:py:meth:`~pynautobot.core.response.Record.update` method to update :ref:`fields <Terminology>`.
 Another way to accomplish update operations is to update the
 :py:class:`~pynautobot.core.response.Record` object's attributes,
 and call the :py:meth:`~pynautobot.core.response.Record.save` method.
-The main difference with this approach is that changes are not synced to Nautobot until the ``save`` method is called.
+The main difference with this approach is that changes are not synced
+to Nautobot until the :py:meth:`~pynautobot.core.response.Record.save` method is called.
 
 
 Modifying a Record by Attribute Updates
@@ -14,7 +15,7 @@ Modifying a Record by Attribute Updates
 
 The below example will:
 
-* make updates to a **device**
+* make updates to a *Device*
 * show that updates haven't synced to Nautobot before saving.
 * show that updates are synced after calling the save method.
 
@@ -49,9 +50,11 @@ Errors with updates
 
 Since the Update operation behaves similarly to the Create operation,
 performing an update can have the some of the same errors.
-The two examples below are the same issues outlined in :ref:`The Data Sent Does Not Adhere to the Database Schema`.
+The two examples below are the same issues outlined
+in :ref:`The Data Sent Does Not Adhere to the Database Schema`.
 
-The first example uses the :py:meth:`~pynautobot.core.response.Record.update` method and returns an exception immediately.
+The first example uses the :py:meth:`~pynautobot.core.response.Record.update`
+method and returns an exception immediately.
 The second example modifies the objects ``position`` attribute,
 and the exception is not raised until the :py:meth:`~pynautobot.core.response.Record.save` method is called.
 
@@ -106,7 +109,8 @@ Atomic
 One important feature of the Nautobot API is that **updates** are Atomic.
 If any of the fields being updated causes an error, then all updates are aborted.
 The following example updates the ``face`` and ``position`` fields.
-An error is raised for the ``position`` field, and fetching the object from Nautobot shows that ``face`` has also been left unchanged.
+An error is raised for the ``position`` field,
+and fetching the object from Nautobot shows that ``face`` has also been left unchanged.
 
 .. code-block:: python
 

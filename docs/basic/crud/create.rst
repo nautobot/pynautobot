@@ -1,8 +1,8 @@
-Creating Records
-----------------
+Creating a Record
+-----------------
 
-New Records can be created using a model's :py:meth:`~pynautobot.core.endpoint.Endpoint.create` method.
-All fields supported by the Model can be passed into the method, and every required field must be passed.
+New :ref:`Records <Terminology>` can be created using an Endpoint's :py:meth:`~pynautobot.core.endpoint.Endpoint.create` method.
+All fields supported by the Model in Nautobot can be passed into the method, and every required field must be passed.
 
 .. code-block:: python
 
@@ -18,9 +18,9 @@ All fields supported by the Model can be passed into the method, and every requi
     # Create a new Record in the Device Roles Model.
     access_role = device_roles.create(**access_role_config)
 
-Creating an entry adds a new Record into the Nautobot database,
+The :py:meth:`~pynautobot.core.endpoint.Endpoint.create` method adds a new Record into the Nautobot database,
 and a representative :py:class:`~pynautobot.core.response.Record` object is returned.
-This record object has attributes for each field in Nautobot.
+This record object has attributes for each :ref:`field <Terminology>` in the database table.
 The following code block is a continuation of the previous one.
 
 .. code-block:: python

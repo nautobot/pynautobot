@@ -1,11 +1,12 @@
 Updating Records
 ----------------
 
-Modifying the data in a Record is accomplished by using a record object's
+Modifying the data in a :ref:`Record <Terminology>` is accomplished by using a Record's
 :py:meth:`~pynautobot.core.response.Record.update` method.
-This method accepts a dict of field/value mappings (Ex: {"description": "Provides access to end hosts"}).
+This method accepts a dictionary of field/value mappings (Ex: {"description": "Provides access to end hosts"}).
 A boolean is returned to indicate whether updates were made to the Record.
-The below example shows retrieving a record using the ``get`` method, and then updating its fields.
+The below example shows retrieving a record using the :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method,
+and then updating :ref:`fields <Terminology>` in the returned :py:class:`Record <pynautobot.core.response.Record>` object.
 
 .. code-block:: python
 

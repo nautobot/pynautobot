@@ -1,20 +1,26 @@
-Creating Objects
+Creating Records
 ================
 
-The :ref:`Creating Records` section provides an example of creating a single
-:py:class:`~pynautobot.core.response.Record` of an object without any foreign key relationships.
-Several Models have foreign key relationships, and defining these relationships are required when creating a new **Record**.
-This section demonstrates workflows and payloads for creating **records** with foreign key relationships.
-Pynautobot also provides the ability to create multiple **records** with a single method call.
+The :ref:`Creating a Record` section provides an example of creating a single
+:py:class:`~pynautobot.core.response.Record` for a :ref:`Model <Terminology>` without any foreign key relationships.
+Additionally, some :ref:`fields <Terminology>` are an enum type, which limits the acceptable values to a set of `choices`.
+
+This section demonstrates workflows for:
+
+1. Creating :ref:`Records <Terminology>` with enum fields and foreign key relationships.
+2. Creating multiple Records with a single method call.
+
 Finally, some common errors are shown, and the Exceptions that are then raised by these errors.
 
 
 Obtaining Choices
 -----------------
 
-For fields of a Model that are *enum* type, :py:class:`~pynautobot.core.endpoint.Endpoint` objects
-have a :py:meth:`~pynautobot.core.endpoint.Endpoint.choices` method to provide a mapping of *enum* fields
-to their list of acceptable choices. The ``status`` field used on the Device Model is an example of an *enum*.
+For fields that are enum type, Endpoint objects have a :py:meth:`~pynautobot.core.endpoint.Endpoint.choices`
+method to provide a mapping of enum fields to their list of acceptable choices.
+The examples used in the document revolve around creating a new Device Record.
+Creating a *Device* requires specifying the ``status`` field, which is an example of an enum.
+Below demonstrates how to view the list of available choices for Device Status.
 
 .. code-block:: python
 
@@ -25,7 +31,7 @@ to their list of acceptable choices. The ``status`` field used on the Device Mod
     token = os.environ["NAUTOBOT_TOKEN"]
     nautobot = api(url=url, token=token)
 
-    # Get the choices for enum fields for the devices' endpoint
+    # Get the choices for enum fields for the devices endpoint
     nautobot.dcim.devices.choices()
     {
         'face': [
@@ -46,55 +52,42 @@ to their list of acceptable choices. The ``status`` field used on the Device Mod
           {
               'value': 'maintenance',
               'display_name': 'Maintenance'
-          }
+          },
           {
               'value': 'staged',
               'display_name': 'Staged'
           }
         ]
     }
-    nautobot.ipam.ip_addresses.choices()
-    {
-        'role': [
-            {
-                'value': 'loopback',
-                'display_name': 'Loopback',
-            },
-            {
-                'value': 'vip',
-                'display_name': 'VIP'
-            }
-        ]
-    }
 
-    # Accessing entries from choices
-    nautobot.ipam.ip_addresses.choices()['role'][0]
-    {'display_name': 'Loopback', 'value': 'loopback'}
+    # Accessing entries from choices for the status field
+    device_status_choices = nautobot.dcim.devices.choices()['status']
+    device_status_choices[0]
+    {'value': 'active', 'display_name': 'Active'}
 
 .. tip::
   The list of available status choices is configurable, so the output will vary between implementations.
 
 .. warning::
   In order to avoid repeated calls to Nautobot, ``choices`` are cached on the Endpoint object. It is advisable to
-  either create new **Endpoint** objects or delete the ``_choices`` attribute on Endpoints whenever the Nautobot
-  system is upgraded.
+  either create new Endpoint objects or delete the ``_choices`` attribute on Endpoints periodically.
 
 
 Creating Objects with Foreign Key Relationships
 -----------------------------------------------
 
-Creating a Device in Nautobot requires specifying a relation to: **Device Type**, **Device Role**, **Site**, and **Status**.
-This can be accomplished by providing the Primary Key (**PK**), which is an UUID string or a dictionary with key/value pairs that make the object unique.
+Creating a Device in Nautobot requires the following :ref:`fields <Terminology>` to specify a foreign key relationship:
 
-**For these four fields**: 
+  * Device Type
+  * Device Role
+  * Site
 
-  * ``device_type``, ``device_role``, and ``site`` accept either the PK or a dictionary.
-  * ``status`` accepts either a string from the value key or a dictionary as explained :ref:`above<Obtaining Choices>`.
+This can be accomplished by providing the Primary Key (**PK**),
+which is an UUID string or a dictionary with key/value pairs that make the object unique.
 
-.. note:: The difference between specifying the different types is due to ``status`` being an **enum** object and the others being foreign key relationships as discussed above.
-
-The first example provides a workflow for obtaining the IDs of the foreign key relationships by using the :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method from the
-**Endpoint** object and then referencing the ID from those objects to create a new device.
+The first example provides a workflow for obtaining the IDs of the foreign key relationships
+by using the :py:meth:`~pynautobot.core.endpoint.Endpoint.get` method from the
+Endpoint object, and then referencing the ``id`` of those objects to create a new *Device*.
 
 .. code-block:: python
 
@@ -120,7 +113,13 @@ The first example provides a workflow for obtaining the IDs of the foreign key r
     '2021-01-01'
 
 The above works, but it requires three :py:meth:`~pynautobot.core.endpoint.Endpoint.get` calls.
-The next example demonstrates a simpler interface for creating a device by passing dictionary objects instead of using the primary key.
+The next example demonstrates a simpler interface for creating a device
+by passing dictionary objects instead of using the Primary Key.
+The dictionaries passed for these fields use key/value pairs
+to lookup the Record with matching field/value pairs in the related Model.
+
+The *Device Type*, *Device Role*, and *Site* Models all have a ``slug``
+field that can be used to lookup a specific Record.
 
 .. code-block:: python
 
@@ -145,7 +144,8 @@ The next example demonstrates a simpler interface for creating a device by passi
 Creating Multiple Objects
 -------------------------
 
-It is also possible to create multiple Records of the same Model in a single call to :py:meth:`~pynautobot.core.endpoint.Endpoint.create`.
+It is also possible to create multiple :py:class:`Records <pynautobot.core.response.Record>`
+of the same Model in a single :py:meth:`~pynautobot.core.endpoint.Endpoint.create` call.
 This is done by passing a list of dictionaries instead of keyword arguments.
 
 .. code-block:: python
@@ -192,11 +192,15 @@ This is done by passing a list of dictionaries instead of keyword arguments.
 Common Errors
 -------------
 
-When creating new Records with pynautobot, there are three common types of errors:
+When creating new :py:class:`Records <pynautobot.core.response.Record>` with pynautobot,
+there are three common types of errors:
 
 * :ref:`Missing a Required Field`
 * :ref:`Unable to Resolve a Reference to a Foreign Key Relationship`
 * :ref:`The Data Sent Does Not Adhere to the Database Schema`
+
+.. note::
+   The messages in the Exceptions provide context to identify the exact issue that causes the failure.
 
 
 Missing a Required Field
@@ -204,9 +208,9 @@ Missing a Required Field
 
 A :py:exc:`~pynautobot.core.query.RequestError` is raised when a required field is not passed to the
 :py:meth:`~pynautobot.core.endpoint.Endpoint.create` method.
-Creating a new **device** requires passing the ``name``, ``device_type``, ``device_role``, ``site``, and ``status`` fields.
-The below example demonstrates passing only ``name`` and ``status`` when creating a **device**;
-as expected, an exception is raised indicating that ``device_type``, ``device_role``, and ``site`` are also required fields.
+Creating a new *Device* requires passing the ``name``, ``device_type``, ``device_role``, ``site``, and ``status`` fields.
+The below example demonstrates passing only ``name`` and ``status`` when creating a *Device*;
+as expected, an Exception is raised indicating that ``device_type``, ``device_role``, and ``site`` are also required fields.
 
 .. code-block:: python
 
@@ -232,19 +236,18 @@ Another reason that a :py:exc:`~pynautobot.core.query.RequestError`
 could be raised is for passing in foreign key fields that cannot be resolved.
 There are two reasons that can cause a foreign key to not be found:
 
-1. The **record** referenced in the **model** of the foreign key does not exist.
-2. The **model** of the foreign key has multiple **records** matching the constraints.
+1. The Record referenced by the foreign key does not exist in the related Model.
+2. The related Model has multiple Records matching the constraints specified in the field/value dictionary.
 
-The first two examples below make a reference to a non-existent ``device_type``: one uses ID, and the other uses keyword arguments.
-The final example uses keyword arguments for ``device_type`` that match multiple **device types** in the database.
-The messages in the exceptions provide context to identify what the exact issue that causes the failure.
+The first two examples below make a reference to a non-existent ``device_type``:
+one uses the Primary Key, and the other uses a dictionary to lookup the Record in the related *Device Type* Model.
 
 .. code-block:: python
 
     >>> # Attempt to create device with non-existent device type ID
     >>> hq_access_5 = devices.create(
     ...     name="hq-access-05",
-    ...     device_type=40,
+    ...     device_type='2302f2a1-2ed4-4ac9-a43a-285c95190071',
     ...     device_role={"slug": "access"},
     ...     site={"slug": "hq"},
     ...     status="active",
@@ -280,6 +283,8 @@ The messages in the exceptions provide context to identify what the exact issue 
       ]
     }
 
+The final example uses a dictionary for ``device_type`` that matches multiple *Device Types* in the database.
+
 .. code-block:: python
 
     >>> # Non-unique data passed in for Foreign Key field
@@ -311,12 +316,15 @@ The examples below show:
 1. Passing an invalid type.
 2. Passing a valid type that does not adhere to the defined constraints.
 
-In the examples below, the ``position`` field of a **device** is used to demonstrate these errors.
-The ``position`` field is a reference to the rack units it is mounted into.
-This field uses an `int` type, and has the constraints:
+In the examples below, the ``position`` field of a *Device* is used to demonstrate these errors.
+The ``position`` field is a reference to the rack units it is mounted into in the related *Rack* Record.
+The ``rack`` referenced in the examples is a 42U rack, which means it supports rack units 1-42.
+This field uses an integer type, and has the following constraints:
 
-* The rack units assigned must exist in the rack (a 42U rack must use an integer between 1 and 42).
+* The rack units assigned must exist in the *Rack* Record.
 * The rack units assigned must not be occupied by an existing device.
+
+The first example passes a string instead of an integer.
 
 .. code-block:: python
 
@@ -338,6 +346,8 @@ This field uses an `int` type, and has the constraints:
     {
       'position': ['A valid integer is required.']
     }
+
+The last example specifies a rack unit higher than what is supported by *Rack* Record.
 
 .. code-block:: python
 

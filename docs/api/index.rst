@@ -14,10 +14,3 @@ The models package contains specific implementations of the :py:class:`~pynautob
 
    core/index
    models/index
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

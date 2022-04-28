@@ -12,10 +12,11 @@ and uses the builtin :py:mod:`os` module to retrieve it.
 
     from pynautobot import api
 
-    url = "https://nautobot.networktocode.com"
+    url = "https://demo.nautobot.com"
 
     # Retrieve token from system environment variable
-    token = os.environ["NAUTOBOT_TOKEN"]
+    # token = os.environ["NAUTOBOT_TOKEN"]
+    token = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     nautobot = api(url=url, token=token)
 
 .. tip::
@@ -27,8 +28,10 @@ Nautobot Info and Apps
 ======================
 
 The nautobot object returned above is the main entrypoint to interact with the Nautobot REST API.
-This object provides access to general information about the Nautobot system, and the core Apps and Plugins.
-The core apps are:
+This object provides access to general information about the Nautobot system,
+and the core :ref:`Apps <Terminology>` and :ref:`Plugins <Terminology>`.
+
+The core Apps are:
 
 * dcim
 * ipam
@@ -63,20 +66,22 @@ The core apps are:
     >>> nautobot.dcim
     <pynautobot.core.app.App object at 0x7fbd42870fa0>
 
-The main purpose of :py:class:`~pynautobot.core.app.App` objects is to provide access to the models
-contained within each app and their data.
+The main purpose of :py:class:`~pynautobot.core.app.App` objects is to provide access
+to :ref:`Models <Terminology>` and their data.
 
 
 Models
 ======
 
-Pynautobot app objects will treat all unknown attributes as API endpoints that correspond to Models contained within the App.
-For example, the DCIM App contains several Models, such as: *Devices*, *Platforms*, and *Device Roles*.
-The pynautobot :py:attr:`~pynautobot.api.Api.dcim` app does not provide attributes to represent these models,
-however, the models are created upon attribute access.
+Pynautobot :py:class:`~pynautobot.core.app.App` objects will treat all unknown attributes
+as :py:class:`Endpoints <pynautobot.core.endpoint.Endpoint>`.
+The :py:class:`~pynautobot.core.endpoint.Endpoint` class is used to represent Models in Nautobot.
+For example, the Nautobot DCIM App contains Models, such as: *Devices*, *Platforms*, and *Device Roles*.
+The pynautobot ``dcim`` :py:class:`~pynautobot.core.app.App` does not provide attributes to represent these Models,
+however, :py:class:`~pynautobot.core.endpoint.Endpoint` objects are created upon attribute access.
 
-The code sample below shows that models do not exist in the ``nautobot.dcim`` attribute dict,
-but the ``devices`` model is still accessible from it.
+The code sample below shows that Models do not exist in the ``nautobot.dcim`` attribute dictionary,
+but the ``devices`` Model is still accessible from it.
 
 .. code-block:: python
 
@@ -85,29 +90,29 @@ but the ``devices`` model is still accessible from it.
     >>> # Show that the devices attribute does not exist on the dcim object
     >>> nautobot.dcim.__dict__
     {
-        'api': <pytnautobot.core.api.Api object at 0x7fb9c20dbfa0>,
+        'api': <pynautobot.core.api.Api object at 0x7fb9c20dbfa0>,
         'name': 'dcim',
         '_choices': None,
-        'model': <module 'pytnautobot.models.dcim'
+        'model': <module 'pynautobot.models.dcim'
     }
 
     >>> # Show that the devices attribute is accessible and
-    >>> # is an Endpoint objectcorresponding to the Devices Model
+    >>> # is an Endpoint object corresponding to the Devices Model
     >>> devices = nautobot.dcim.devices
     >>> devices
     <pynautobot.core.endpoint.Endpoint object at 0x7fb9c1b4c0a0>
     >>> devices.url
-    'https://nautobot.networktocode.com/api/dcim/devices'
+    'https://demo.nautobot.com/api/dcim/devices'
 
 .. note::
 
-   Since models are evaluated lazily, using the builtin ``dir`` and ``help`` functions
-   on the apps will not provide any information regarding the available models.
+   Since Models are evaluated lazily, using the builtin ``dir`` and ``help`` functions
+   on the Apps will not provide any information regarding the available Models.
 
-Some Models have names that contain more than a single word.
-In order to access these Models, the names should be joined with an underscore ( **_** ).
+Some Models in Nautobot have names that contain more than a single word.
+In order to access these Models, the names should be joined with an underscore.
 The above example of *Device Roles* would use ``device_roles``.
-Pynautobot will automatically convert the underscore into a hyphen for access to the API endpoint.
+Pynautobot will automatically convert the underscore into a hyphen for access to the Nautobot API endpoint.
 
 .. code-block:: python
 
@@ -118,12 +123,12 @@ Pynautobot will automatically convert the underscore into a hyphen for access to
 
     >>> # Show that the URL converts the underscore to a hyphen
     >>> device_roles.url
-    'https://nautobot.networktocode.com/api/dcim/device-roles'
+    'https://demo.nautobot.com/api/dcim/device-roles'
 
 .. note::
 
    Attributes are not checked against the Nautobot API,
-   so misspelled or non-existent models will not raise an Exception
+   so misspelled or non-existent Models will not raise an Exception
    until a CRUD operation is attempted on the returned object.
 
    For example, calling ``nautobot.dcim.device`` (missing the trailing **s**)

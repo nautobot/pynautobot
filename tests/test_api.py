@@ -1,13 +1,7 @@
 import unittest
-import six
+from unittest.mock import patch
 
 import pynautobot
-from .util import Response
-
-if six.PY3:
-    from unittest.mock import patch
-else:
-    from mock import patch
 
 host = "http://localhost:8000"
 
@@ -69,7 +63,7 @@ class ApiStatusTestCase(unittest.TestCase):
 
         def json(self):
             return {
-                "netbox-version": "0.9.9",
+                "nautobot-version": "1.3.2",
             }
 
     @patch(
@@ -77,4 +71,4 @@ class ApiStatusTestCase(unittest.TestCase):
     )
     def test_api_status(self, *_):
         api = pynautobot.api(host,)
-        self.assertEqual(api.status()["netbox-version"], "0.9.9")
+        self.assertEqual(api.status()["nautobot-version"], "1.3.2")

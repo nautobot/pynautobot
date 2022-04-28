@@ -5,24 +5,34 @@ Quickstart Guide
 The pynautobot package is a Python SDK for retrieving and managing data in Nautobot.
 The following demonstrates how to connect to and interact with the Nautobot REST API.
 
-.. rubric:: Terminology
+Terminology
+===========
 
-Nautobot consists of Apps (IPAM, DCIM, etc.),
-and each App contains Models (IP Addresses, Devices, etc.) for storing data in a database.
-The pynautobot SDK contains objects that represent these Apps and Models, so for clarity in this documentation,
-these terms will be capitalized when referring to the "real" objects in Nautobot,
-and lowercased when referring to the representative object in pynautobot.
+**Apps:** The root level interfaces in Nautobot (IPAM, DCIM, etc.).
+Apps are represented by the :py:class:`~pynautobot.core.app.App` class.
 
-.. note::
-   Links to the pynautobot classes will still be capitalized.
+**Models:** The second level interfaces in Nautobot (IP Addresses Devices, etc.).
+Models correspond to tables in the Nautobot database, are represented by the :py:class:`~pynautobot.core.endpoint.Endpoint` class.
 
-In pynautobot, Models are represented by a more generic object called :py:class:`~pynautobot.core.endpoint.Endpoint`.
-Some examples will show this object when examining models, and consequently some discussion around the example also
-uses the term *endpoint*. However, in order to maintain the link to the "real" implementation in Nautobot,
-the term *model* is used more frequently.
+**Endpoint:** The class that represents `Models`.
+
+**Records:** The rows associated with a Model's database table. Records hold the data stored in Nautobot.
+Records are represented by the :py:class:`~pynautobot.core.response.Record` class.
+
+**Entries:** See `Records`.
+
+**Fields:** The column names associated with a Model's database table.
+:py:class:`~pynautobot.core.endpoint.Endpoint` objects use these as keyword arguments for some methods.
+:py:class:`~pynautobot.core.response.Record` objects use these as attribute names.
+
+**Plugins:** Additional `Apps` added added to the Nautobot deployment that are external to provided Nautobot package.
+
+
+Guide
+=====
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    install
    api

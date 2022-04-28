@@ -1,13 +1,7 @@
 import unittest
-
-import six
+from unittest.mock import Mock, call
 
 from pynautobot.core.query import Request
-
-if six.PY3:
-    from unittest.mock import Mock, call
-else:
-    from mock import Mock, call
 
 
 class RequestTestCase(unittest.TestCase):
