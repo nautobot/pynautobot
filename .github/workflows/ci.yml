@@ -27,7 +27,7 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
       - name: "Install CICD dependencies"
-        run: "pip install -U pip && pip install invoke poetry"
+        run: "pip install -U pip && pip install poetry"
       - name: "Install project dependencies via Poetry"
         run: "poetry install"
       - name: "Start containers"
