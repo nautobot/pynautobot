@@ -26,7 +26,8 @@ class IpAddresses(Record):
 
 class Prefixes(Record):
     def __str__(self):
-        return str(self.prefix)
+        ret = self.prefix if hasattr(self, 'prefix') else self.display
+        return str(ret)
 
     @property
     def available_ips(self):
