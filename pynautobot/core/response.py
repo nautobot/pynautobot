@@ -26,6 +26,7 @@ from pynautobot.core.util import Hashabledict
 
 # List of fields that are lists but should be treated as sets.
 LIST_AS_SET = ("tags", "tagged_vlans", "nat_outside")
+IGNORE_DEFAULT_RETURN = {"tags"}
 
 
 def get_return(lookup, return_fields=None):
@@ -249,9 +250,9 @@ class Record(object):
         values within.
         """
 
-        def list_parser(list_item):
+        def list_parser(list_item, record_class):
             if isinstance(list_item, dict):
-                return self.default_ret(list_item, self.api, self.endpoint)
+                return record_class(list_item, self.api, self.endpoint)
             return list_item
 
         for k, v in values.items():
@@ -268,7 +269,8 @@ class Record(object):
                 self._add_cache((k, v))
 
             elif isinstance(v, list):
-                v = [list_parser(i) for i in v]
+                record_class = self.default_ret if k not in IGNORE_DEFAULT_RETURN else Record
+                v = [list_parser(i, record_class) for i in v]
                 to_cache = list(v)
                 self._add_cache((k, to_cache))
 
