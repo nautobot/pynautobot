@@ -171,10 +171,6 @@ class Record(object):
         self.default_ret = Record
         self.endpoint = self._endpoint_from_url(values["url"]) if "url" in values else endpoint
 
-        # Return a custom Record if available on the endpoint (IpAddresses)
-        if self.endpoint and self.endpoint.return_obj:
-            self.default_ret = self.endpoint.return_obj
-
         if values:
             self._parse_values(values)
 
