@@ -397,7 +397,7 @@ class Endpoint(object):
     def run(self, *args, api_version=None, **kwargs):
         r"""Runs a job based on the class_path provided to the job.
 
-        Takes a kwarg of `class_path` to specify the job that should be run.
+        Takes a kwarg of `class_path` or `job_id` to specify the job that should be run.
 
         :arg str,optional \*args: Freeform search string that's
             accepted on given endpoint.
