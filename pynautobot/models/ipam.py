@@ -30,7 +30,7 @@ class Prefixes(Record):
 
     @property
     def available_ips(self):
-        """ Represents the ``available-ips`` detail endpoint.
+        """Represents the ``available-ips`` detail endpoint.
 
         Returns a DetailEndpoint object that is the interface for
         viewing and creating IP addresses inside a prefix.
@@ -61,7 +61,7 @@ class Prefixes(Record):
 
     @property
     def available_prefixes(self):
-        """ Represents the ``available-prefixes`` detail endpoint.
+        """Represents the ``available-prefixes`` detail endpoint.
 
         Returns a DetailEndpoint object that is the interface for
         viewing and creating prefixes inside a parent prefix.

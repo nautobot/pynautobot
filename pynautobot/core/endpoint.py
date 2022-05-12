@@ -394,6 +394,56 @@ class Endpoint(object):
 
         return ret.get_count()
 
+    def run(self, *args, api_version=None, **kwargs):
+        r"""Runs a job based on the class_path provided to the job.
+
+        Takes a kwarg of `class_path` to specify the job that should be run.
+
+        :arg str,optional \*args: Freeform search string that's
+            accepted on given endpoint.
+        :arg str,optional \**kwargs: Any search argument the
+            endpoint accepts can be added as a keyword arg.
+        :arg str,optional api_version: Override default or globally-set
+            Nautobot REST API version for this single request.
+
+        :Returns: Job details: job_result object uuid found at `obj.result.id`.
+
+        :Examples:
+
+        To return a count of objects matching a named argument filter.
+
+        >>> nb.extras.jobs.run(
+                class_path="local/data_quality/VerifyHostnames",
+                data={"hostname_regex": ".*"},
+                commit=True,
+            )
+
+        >>>
+        """
+
+        if "jobs" not in self.url:
+            raise ValueError('The "run" method can only be executed against the "jobs" app.')
+
+        api_version = api_version or self.api.api_version or self.api.version
+
+        # Check Nautobot Version as API version can be `None`.  Job run endpoints changed in 1.3.
+        if float(api_version) < 1.3:
+            if not kwargs.get("class_path"):
+                raise ValueError(
+                    'Keyword Argument "class_path" is required to run a job in Nautobot APIv1.2 and older.'
+                )
+            job_run_url = f"{self.url}/{kwargs['class_path']}/run/"
+        else:
+            if not kwargs.get("job_id"):
+                raise ValueError('Keyword Argument "job_id" is required to run a job in Nautobot APIv1.3 and newer.')
+            job_run_url = f"{self.url}/{kwargs['job_id']}/run/"
+
+        req = Request(
+            base=job_run_url, token=self.token, http_session=self.api.http_session, api_version=api_version,
+        ).post(args[0] if args else kwargs)
+
+        return response_loader(req, self.return_obj, self)
+
 
 class DetailEndpoint(object):
     """Enables read/write Operations on detail endpoints.

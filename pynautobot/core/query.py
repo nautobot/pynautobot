@@ -23,7 +23,7 @@ import json
 
 
 def calc_pages(limit, count):
-    """ Calculate number of pages required for full results set. """
+    """Calculate number of pages required for full results set."""
     return int(count / limit) + (limit % count > 0)
 
 
@@ -143,7 +143,7 @@ class Request(object):
         self.api_version = api_version
 
     def get_openapi(self):
-        """ Gets the OpenAPI Spec """
+        """Gets the OpenAPI Spec"""
         headers = {
             "Content-Type": "application/json;",
         }
