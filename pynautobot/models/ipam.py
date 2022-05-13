@@ -26,7 +26,7 @@ class IpAddresses(Record):
 
 class Prefixes(Record):
     def __str__(self):
-        ret = self.prefix if hasattr(self, 'prefix') else self.display
+        ret = self.prefix if hasattr(self, "prefix") else self.display
         return str(ret)
 
     @property
