@@ -13,7 +13,7 @@ def test_ip_address_nat_inside_outside_correct_objects(nb_client):
 
 
 def test_prefixes_successfully_stringify_tags(nb_client):
-    """Validate nat_inside and nat_outside both return IpAddress Record objects."""
+    """Validate prefix will properly stringify the tags attribute and they are Record objects."""
     tag = nb_client.extras.tags.create(name="production", slug="production")
     prefix = nb_client.ipam.prefixes.create(prefix="192.0.2.0/24", status="active", tags=[tag.id])
 
