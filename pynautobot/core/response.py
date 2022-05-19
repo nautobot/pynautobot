@@ -206,7 +206,7 @@ class Record(object):
         return dict(self)[k]
 
     def __str__(self):
-        return getattr(self, "display", "")
+        return getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or ""
 
     def __repr__(self):
         return str(self)
