@@ -23,5 +23,15 @@
     },
     "is_pool": false,
     "description": "",
-    "custom_fields": {}
+    "custom_fields": {},
+    "tags": [
+        {
+            "id": "5d4c7b55-7d61-43bf-9e0e-1fd0f1b417fb",
+            "url": "http://127.0.0.1:8080/api/extras/tags/5d4c7b55-7d61-43bf-9e0e-1fd0f1b417fb/",
+            "name": "DUH",
+            "slug": "duh",
+            "color": "9e9e9e",
+            "display": "DUH"
+        }
+    ]
 }

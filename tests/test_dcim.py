@@ -15,8 +15,8 @@ class DeviceTestCase(Generic.Tests):
     def test_get(self, mock):
         ret = self.endpoint.get(self.uuid)
         self.assertIsInstance(ret, self.ret)
-        self.assertIsInstance(ret.primary_ip, pynautobot.models.ipam.IpAddresses)
-        self.assertIsInstance(ret.primary_ip4, pynautobot.models.ipam.IpAddresses)
+        self.assertIsInstance(ret.primary_ip, pynautobot.core.response.Record)
+        self.assertIsInstance(ret.primary_ip4, pynautobot.core.response.Record)
         self.assertIsInstance(ret.config_context, dict)
         self.assertIsInstance(ret.custom_fields, dict)
         self.assertIsInstance(ret.local_context_data, dict)

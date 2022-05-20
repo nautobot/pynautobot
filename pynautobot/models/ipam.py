@@ -19,15 +19,7 @@ from pynautobot.core.response import Record
 from pynautobot.core.endpoint import DetailEndpoint
 
 
-class IpAddresses(Record):
-    def __str__(self):
-        return str(self.address)
-
-
 class Prefixes(Record):
-    def __str__(self):
-        return str(self.prefix)
-
     @property
     def available_ips(self):
         """ Represents the ``available-ips`` detail endpoint.
@@ -57,7 +49,9 @@ class Prefixes(Record):
         >>> len(create)
         2
         """
-        return DetailEndpoint(self, "available-ips", custom_return=IpAddresses)
+        # Setting to Record even though it isn't custom due to the function just returning a dictionary
+        # if no custom_return is passed in
+        return DetailEndpoint(self, "available-ips", custom_return=Record)
 
     @property
     def available_prefixes(self):
@@ -89,8 +83,3 @@ class Prefixes(Record):
 
         """
         return DetailEndpoint(self, "available-prefixes", custom_return=Prefixes)
-
-
-class Aggregates(Record):
-    def __str__(self):
-        return str(self.prefix)

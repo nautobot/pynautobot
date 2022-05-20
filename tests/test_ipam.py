@@ -19,6 +19,8 @@ class PrefixTestCase(Generic.Tests):
         self.assertTrue(ret_serialized)
         self.assertEqual(ret._diff(), {"prefix"})
         self.assertEqual(ret_serialized["prefix"], "10.1.2.0/24")
+        self.assertTrue(ret.tags)
+        self.assertIsInstance(ret.tags[0], pynautobot.core.response.Record)
 
     @patch("requests.sessions.Session.put", return_value=Response(fixture="ipam/prefix.json"))
     @patch("requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"))
@@ -46,7 +48,7 @@ class PrefixTestCase(Generic.Tests):
         ret = pfx.available_ips.create(create_parms)
         post.assert_called_with(f"{self.detail_uri}available-ips/", params={}, headers=POST_HEADERS, json=create_parms)
         self.assertTrue(ret)
-        self.assertTrue(isinstance(ret, pynautobot.models.ipam.IpAddresses))
+        self.assertIsInstance(ret, pynautobot.core.response.Record)
 
     @patch(
         "requests.sessions.Session.get",

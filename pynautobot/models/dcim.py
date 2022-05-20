@@ -20,7 +20,6 @@ from requests.utils import urlparse
 from pynautobot.core.query import Request
 from pynautobot.core.response import Record, JsonField
 from pynautobot.core.endpoint import RODetailEndpoint
-from pynautobot.models.ipam import IpAddresses
 from pynautobot.models.circuits import Circuits
 
 
@@ -81,9 +80,6 @@ class Devices(Record):
 
     has_details = True
     device_type = DeviceTypes
-    primary_ip = IpAddresses
-    primary_ip4 = IpAddresses
-    primary_ip6 = IpAddresses
     local_context_data = JsonField
     config_context = JsonField
 

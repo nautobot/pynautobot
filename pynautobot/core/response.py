@@ -171,10 +171,6 @@ class Record(object):
         self.default_ret = Record
         self.endpoint = self._endpoint_from_url(values["url"]) if "url" in values else endpoint
 
-        # Return a custom Record if available on the endpoint (IpAddresses)
-        if self.endpoint and self.endpoint.return_obj:
-            self.default_ret = self.endpoint.return_obj
-
         if values:
             self._parse_values(values)
 
@@ -210,7 +206,7 @@ class Record(object):
         return dict(self)[k]
 
     def __str__(self):
-        return getattr(self, "display", "")
+        return getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or ""
 
     def __repr__(self):
         return str(self)
