@@ -20,7 +20,6 @@ from requests.utils import urlparse
 from pynautobot.core.query import Request
 from pynautobot.core.response import Record, JsonField
 from pynautobot.core.endpoint import RODetailEndpoint
-from pynautobot.models.circuits import Circuits
 
 
 class TraceableRecord(Record):
@@ -212,7 +211,6 @@ class Termination(Record):
         return self.name
 
     device = Devices
-    circuit = Circuits
 
 
 class Cables(Record):

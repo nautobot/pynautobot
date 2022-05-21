@@ -18,11 +18,6 @@ This file has been modified by NetworktoCode, LLC.
 from pynautobot.core.response import Record
 
 
-class Circuits(Record):
-    def __str__(self):
-        return self.cid
-
-
 class CircuitTerminations(Record):
     def __str__(self):
         return self.circuit.cid

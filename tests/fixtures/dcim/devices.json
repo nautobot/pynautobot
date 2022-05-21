@@ -1,680 +1,442 @@
 {
-    "count": 11,
+    "count": 3,
     "next": null,
     "previous": null,
     "results": [
         {
-            "id": 2,
-            "name": "test1-core1",
-            "display_name": "test1-core1",
+            "id": "48e78077-cfbc-4057-89fa-d1459123fdea",
+            "url": "https://demo.nautobot.com/api/dcim/devices/48e78077-cfbc-4057-89fa-d1459123fdea/",
+            "name": "ams01-dist-01",
             "device_type": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/device-types/2/",
+                "id": "539941b6-7085-44ca-9b31-1b88374a2d9e",
+                "url": "https://demo.nautobot.com/api/dcim/device-types/539941b6-7085-44ca-9b31-1b88374a2d9e/",
                 "manufacturer": {
-                    "id": 1,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/1/",
-                    "name": "Juniper",
-                    "slug": "juniper"
+                    "id": "14a630d1-4602-4bb9-b88b-813cf83ba950",
+                    "url": "https://demo.nautobot.com/api/dcim/manufacturers/14a630d1-4602-4bb9-b88b-813cf83ba950/",
+                    "name": "Cisco",
+                    "slug": "cisco",
+                    "display": "Cisco"
                 },
-                "model": "EX9214",
-                "slug": "ex9214"
+                "model": "Catalyst 6509-E",
+                "slug": "catalyst-6509-e",
+                "display": "Cisco Catalyst 6509-E"
             },
             "device_role": {
-                "id": 3,
-                "url": "http://localhost:8000/api/dcim/device-roles/3/",
-                "name": "Core Switch",
-                "slug": "core-switch"
+                "id": "309cfcf7-6f43-4ecc-9710-3f6e194732de",
+                "url": "https://demo.nautobot.com/api/dcim/device-roles/309cfcf7-6f43-4ecc-9710-3f6e194732de/",
+                "name": "distribution",
+                "slug": "distribution",
+                "display": "distribution"
             },
-            "tenant": null,
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
             "platform": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/platforms/1/",
-                "name": "Juniper Junos",
-                "slug": "juniper-junos"
+                "id": "68514e7b-36cd-4fe4-8f63-a8ecee3f0106",
+                "url": "https://demo.nautobot.com/api/dcim/platforms/68514e7b-36cd-4fe4-8f63-a8ecee3f0106/",
+                "name": "Cisco IOS",
+                "slug": "cisco_ios",
+                "display": "Cisco IOS"
             },
             "serial": "",
             "asset_tag": null,
             "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
+                "id": "cc966ae0-c17e-4901-953f-51b85c283948",
+                "url": "https://demo.nautobot.com/api/dcim/sites/cc966ae0-c17e-4901-953f-51b85c283948/",
+                "name": "AMS01",
+                "slug": "ams01",
+                "display": "AMS01"
             },
-            "rack": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/racks/1/",
-                "name": "A1R1",
-                "display_name": "A1R1 (T23A01)"
-            },
-            "position": 17,
-            "face": {
-                "value": 0,
-                "label": "Front"
-            },
-            "parent_device": null,
-            "status": {
-                "value": true,
-                "label": "Active"
-            },
-            "primary_ip": {
-                "id": 5,
-                "url": "http://localhost:8000/api/ipam/ip-addresses/5/",
-                "family": 4,
-                "address": "10.0.254.1/24"
-            },
-            "primary_ip4": {
-                "id": 5,
-                "url": "http://localhost:8000/api/ipam/ip-addresses/5/",
-                "family": 4,
-                "address": "10.0.254.1/24"
-            },
-            "primary_ip6": null,
-            "comments": "",
-            "custom_fields": {}
-        },
-        {
-            "id": 8,
-            "name": "test1-core2",
-            "display_name": "test1-core2",
-            "device_type": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/device-types/2/",
-                "manufacturer": {
-                    "id": 1,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/1/",
-                    "name": "Juniper",
-                    "slug": "juniper"
-                },
-                "model": "EX9214",
-                "slug": "ex9214"
-            },
-            "device_role": {
-                "id": 3,
-                "url": "http://localhost:8000/api/dcim/device-roles/3/",
-                "name": "Core Switch",
-                "slug": "core-switch"
-            },
-            "tenant": null,
-            "platform": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/platforms/1/",
-                "name": "Juniper Junos",
-                "slug": "juniper-junos"
-            },
-            "serial": "67856734534",
-            "asset_tag": null,
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
-            },
-            "rack": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/racks/2/",
-                "name": "A1R2",
-                "display_name": "A1R2 (T24A01)"
-            },
-            "position": 17,
-            "face": {
-                "value": 0,
-                "label": "Front"
-            },
-            "parent_device": null,
-            "status": {
-                "value": true,
-                "label": "Active"
-            },
-            "primary_ip": {
-                "id": 19,
-                "url": "http://localhost:8000/api/ipam/ip-addresses/19/",
-                "family": 4,
-                "address": "10.0.254.2/32"
-            },
-            "primary_ip4": {
-                "id": 19,
-                "url": "http://localhost:8000/api/ipam/ip-addresses/19/",
-                "family": 4,
-                "address": "10.0.254.2/32"
-            },
-            "primary_ip6": null,
-            "comments": "",
-            "custom_fields": {}
-        },
-        {
-            "id": 1,
-            "name": "test1-edge1",
-            "display_name": "test1-edge1",
-            "device_type": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/device-types/1/",
-                "manufacturer": {
-                    "id": 1,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/1/",
-                    "name": "Juniper",
-                    "slug": "juniper"
-                },
-                "model": "MX960",
-                "slug": "mx960"
-            },
-            "device_role": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/device-roles/1/",
-                "name": "Router",
-                "slug": "router"
-            },
-            "tenant": null,
-            "platform": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/platforms/1/",
-                "name": "Juniper Junos",
-                "slug": "juniper-junos"
-            },
-            "serial": "5555555555",
-            "asset_tag": null,
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
-            },
-            "rack": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/racks/1/",
-                "name": "A1R1",
-                "display_name": "A1R1 (T23A01)"
-            },
-            "position": 1,
-            "face": {
-                "value": 0,
-                "label": "Front"
-            },
-            "parent_device": null,
-            "status": {
-                "value": true,
-                "label": "Active"
-            },
-            "primary_ip": {
-                "id": 1,
-                "url": "http://localhost:8000/api/ipam/ip-addresses/1/",
-                "family": 4,
-                "address": "10.0.255.1/32"
-            },
-            "primary_ip4": {
-                "id": 1,
-                "url": "http://localhost:8000/api/ipam/ip-addresses/1/",
-                "family": 4,
-                "address": "10.0.255.1/32"
-            },
-            "primary_ip6": null,
-            "comments": "",
-            "custom_fields": {}
-        },
-        {
-            "id": 7,
-            "name": "test1-edge2",
-            "display_name": "test1-edge2",
-            "device_type": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/device-types/1/",
-                "manufacturer": {
-                    "id": 1,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/1/",
-                    "name": "Juniper",
-                    "slug": "juniper"
-                },
-                "model": "MX960",
-                "slug": "mx960"
-            },
-            "device_role": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/device-roles/1/",
-                "name": "Router",
-                "slug": "router"
-            },
-            "tenant": null,
-            "platform": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/platforms/1/",
-                "name": "Juniper Junos",
-                "slug": "juniper-junos"
-            },
-            "serial": "7567356345",
-            "asset_tag": null,
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
-            },
-            "rack": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/racks/2/",
-                "name": "A1R2",
-                "display_name": "A1R2 (T24A01)"
-            },
-            "position": 1,
-            "face": {
-                "value": 0,
-                "label": "Front"
-            },
-            "parent_device": null,
-            "status": {
-                "value": true,
-                "label": "Active"
-            },
-            "primary_ip": {
-                "id": 3,
-                "url": "http://localhost:8000/api/ipam/ip-addresses/3/",
-                "family": 4,
-                "address": "10.0.255.2/32"
-            },
-            "primary_ip4": {
-                "id": 3,
-                "url": "http://localhost:8000/api/ipam/ip-addresses/3/",
-                "family": 4,
-                "address": "10.0.255.2/32"
-            },
-            "primary_ip6": null,
-            "comments": "",
-            "custom_fields": {}
-        },
-        {
-            "id": 4,
-            "name": "test1-leaf1",
-            "display_name": "test1-leaf1",
-            "device_type": {
-                "id": 4,
-                "url": "http://localhost:8000/api/dcim/device-types/4/",
-                "manufacturer": {
-                    "id": 1,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/1/",
-                    "name": "Juniper",
-                    "slug": "juniper"
-                },
-                "model": "QFX5100-48S",
-                "slug": "qfx5100-48s"
-            },
-            "device_role": {
-                "id": 4,
-                "url": "http://localhost:8000/api/dcim/device-roles/4/",
-                "name": "Leaf Switch",
-                "slug": "leaf-switch"
-            },
-            "tenant": null,
-            "platform": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/platforms/1/",
-                "name": "Juniper Junos",
-                "slug": "juniper-junos"
-            },
-            "serial": "",
-            "asset_tag": null,
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
-            },
-            "rack": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/racks/1/",
-                "name": "A1R1",
-                "display_name": "A1R1 (T23A01)"
-            },
-            "position": 34,
-            "face": {
-                "value": 0,
-                "label": "Front"
-            },
-            "parent_device": null,
-            "status": {
-                "value": true,
-                "label": "Active"
-            },
-            "primary_ip": null,
-            "primary_ip4": null,
-            "primary_ip6": null,
-            "comments": "",
-            "custom_fields": {}
-        },
-        {
-            "id": 5,
-            "name": "test1-leaf2",
-            "display_name": "test1-leaf2",
-            "device_type": {
-                "id": 4,
-                "url": "http://localhost:8000/api/dcim/device-types/4/",
-                "manufacturer": {
-                    "id": 1,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/1/",
-                    "name": "Juniper",
-                    "slug": "juniper"
-                },
-                "model": "QFX5100-48S",
-                "slug": "qfx5100-48s"
-            },
-            "device_role": {
-                "id": 4,
-                "url": "http://localhost:8000/api/dcim/device-roles/4/",
-                "name": "Leaf Switch",
-                "slug": "leaf-switch"
-            },
-            "tenant": null,
-            "platform": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/platforms/1/",
-                "name": "Juniper Junos",
-                "slug": "juniper-junos"
-            },
-            "serial": "9823478293748",
-            "asset_tag": null,
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
-            },
-            "rack": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/racks/2/",
-                "name": "A1R2",
-                "display_name": "A1R2 (T24A01)"
-            },
-            "position": 34,
-            "face": {
-                "value": 0,
-                "label": "Front"
-            },
-            "parent_device": null,
-            "status": {
-                "value": true,
-                "label": "Active"
-            },
-            "primary_ip": null,
-            "primary_ip4": null,
-            "primary_ip6": null,
-            "comments": "",
-            "custom_fields": {}
-        },
-        {
-            "id": 9,
-            "name": "test1-oob1",
-            "display_name": "test1-oob1",
-            "device_type": {
-                "id": 5,
-                "url": "http://localhost:8000/api/dcim/device-types/5/",
-                "manufacturer": {
-                    "id": 2,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/2/",
-                    "name": "Opengear",
-                    "slug": "opengear"
-                },
-                "model": "CM4148",
-                "slug": "cm4148"
-            },
-            "device_role": {
-                "id": 5,
-                "url": "http://localhost:8000/api/dcim/device-roles/5/",
-                "name": "OOB Switch",
-                "slug": "oob-switch"
-            },
-            "tenant": null,
-            "platform": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/platforms/2/",
-                "name": "Opengear",
-                "slug": "opengear"
-            },
-            "serial": "98273942938",
-            "asset_tag": null,
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
-            },
-            "rack": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/racks/1/",
-                "name": "A1R1",
-                "display_name": "A1R1 (T23A01)"
-            },
-            "position": 42,
-            "face": {
-                "value": 0,
-                "label": "Front"
-            },
-            "parent_device": null,
-            "status": {
-                "value": true,
-                "label": "Active"
-            },
-            "primary_ip": null,
-            "primary_ip4": null,
-            "primary_ip6": null,
-            "comments": "",
-            "custom_fields": {}
-        },
-        {
-            "id": 11,
-            "name": "test1-pdu1",
-            "display_name": "test1-pdu1",
-            "device_type": {
-                "id": 6,
-                "url": "http://localhost:8000/api/dcim/device-types/6/",
-                "manufacturer": {
-                    "id": 3,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/3/",
-                    "name": "ServerTech",
-                    "slug": "servertech"
-                },
-                "model": "CWG-24VYM415C9",
-                "slug": "cwg-24vym415c9"
-            },
-            "device_role": {
-                "id": 6,
-                "url": "http://localhost:8000/api/dcim/device-roles/6/",
-                "name": "PDU",
-                "slug": "pdu"
-            },
-            "tenant": null,
-            "platform": null,
-            "serial": "",
-            "asset_tag": null,
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
-            },
-            "rack": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/racks/1/",
-                "name": "A1R1",
-                "display_name": "A1R1 (T23A01)"
-            },
+            "rack": null,
             "position": null,
             "face": null,
             "parent_device": null,
             "status": {
-                "value": true,
+                "value": "active",
                 "label": "Active"
             },
             "primary_ip": null,
             "primary_ip4": null,
             "primary_ip6": null,
+            "secrets_group": null,
+            "cluster": null,
+            "virtual_chassis": null,
+            "vc_position": null,
+            "vc_priority": null,
             "comments": "",
-            "custom_fields": {}
+            "local_context_schema": null,
+            "local_context_data": {
+                "placeholder": true
+            },
+            "tags": [],
+            "custom_fields": {},
+            "config_context": {
+                "cdp": true,
+                "ntp": [
+                    {
+                        "ip": "10.1.1.1",
+                        "prefer": false
+                    },
+                    {
+                        "ip": "10.2.2.2",
+                        "prefer": true
+                    }
+                ],
+                "lldp": true,
+                "snmp": {
+                    "host": [
+                        {
+                            "ip": "10.1.1.1",
+                            "version": "2c",
+                            "community": "networktocode"
+                        }
+                    ],
+                    "contact": "John Smith",
+                    "location": "Network to Code - NYC | NY",
+                    "community": [
+                        {
+                            "name": "ntc-public",
+                            "role": "RO"
+                        },
+                        {
+                            "name": "ntc-private",
+                            "role": "RW"
+                        },
+                        {
+                            "name": "networktocode",
+                            "role": "RO"
+                        },
+                        {
+                            "name": "secure",
+                            "role": "RW"
+                        }
+                    ]
+                },
+                "aaa-new-model": false,
+                "acl": {
+                    "definitions": {
+                        "named": {
+                            "PERMIT_ROUTES": [
+                                "10 permit ip any any"
+                            ]
+                        }
+                    }
+                },
+                "route-maps": {
+                    "PERMIT_CONN_ROUTES": {
+                        "seq": 10,
+                        "type": "permit",
+                        "statements": [
+                            "match ip address PERMIT_ROUTES"
+                        ]
+                    }
+                }
+            },
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:26:53.466651Z",
+            "display": "ams01-dist-01"
         },
         {
-            "id": 12,
-            "name": "test1-pdu2",
-            "display_name": "test1-pdu2",
+            "id": "ac37e75b-3996-4b45-bea1-0f38eee6164b",
+            "url": "https://demo.nautobot.com/api/dcim/devices/ac37e75b-3996-4b45-bea1-0f38eee6164b/",
+            "name": "ams01-edge-01",
             "device_type": {
-                "id": 6,
-                "url": "http://localhost:8000/api/dcim/device-types/6/",
+                "id": "9f91eb45-be80-4375-bf01-21211a3ea80f",
+                "url": "https://demo.nautobot.com/api/dcim/device-types/9f91eb45-be80-4375-bf01-21211a3ea80f/",
                 "manufacturer": {
-                    "id": 3,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/3/",
-                    "name": "ServerTech",
-                    "slug": "servertech"
+                    "id": "1df6255f-96d0-4264-bbf7-557cb04adc3c",
+                    "url": "https://demo.nautobot.com/api/dcim/manufacturers/1df6255f-96d0-4264-bbf7-557cb04adc3c/",
+                    "name": "Arista",
+                    "slug": "arista",
+                    "display": "Arista"
                 },
-                "model": "CWG-24VYM415C9",
-                "slug": "cwg-24vym415c9"
+                "model": "DCS-7280CR2-60",
+                "slug": "dcs-7280cr2-60",
+                "display": "Arista DCS-7280CR2-60"
             },
             "device_role": {
-                "id": 6,
-                "url": "http://localhost:8000/api/dcim/device-roles/6/",
-                "name": "PDU",
-                "slug": "pdu"
+                "id": "6dacf26b-66c5-4048-8529-c71502414a5a",
+                "url": "https://demo.nautobot.com/api/dcim/device-roles/6dacf26b-66c5-4048-8529-c71502414a5a/",
+                "name": "edge",
+                "slug": "edge",
+                "display": "edge"
             },
-            "tenant": null,
-            "platform": null,
-            "serial": "",
-            "asset_tag": null,
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
             },
-            "rack": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/racks/2/",
-                "name": "A1R2",
-                "display_name": "A1R2 (T24A01)"
-            },
-            "position": null,
-            "face": null,
-            "parent_device": null,
-            "status": {
-                "value": true,
-                "label": "Active"
-            },
-            "primary_ip": null,
-            "primary_ip4": null,
-            "primary_ip6": null,
-            "comments": "",
-            "custom_fields": {}
-        },
-        {
-            "id": 3,
-            "name": "test1-spine1",
-            "display_name": "test1-spine1",
-            "device_type": {
-                "id": 3,
-                "url": "http://localhost:8000/api/dcim/device-types/3/",
-                "manufacturer": {
-                    "id": 1,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/1/",
-                    "name": "Juniper",
-                    "slug": "juniper"
-                },
-                "model": "QFX5100-24Q",
-                "slug": "qfx5100-24q"
-            },
-            "device_role": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/device-roles/2/",
-                "name": "Spine Switch",
-                "slug": "spine-switch"
-            },
-            "tenant": null,
             "platform": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/platforms/1/",
-                "name": "Juniper Junos",
-                "slug": "juniper-junos"
+                "id": "d9e3cefc-3983-4441-9811-deb6094a957f",
+                "url": "https://demo.nautobot.com/api/dcim/platforms/d9e3cefc-3983-4441-9811-deb6094a957f/",
+                "name": "Arista EOS",
+                "slug": "arista_eos",
+                "display": "Arista EOS"
             },
             "serial": "",
             "asset_tag": null,
             "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
+                "id": "cc966ae0-c17e-4901-953f-51b85c283948",
+                "url": "https://demo.nautobot.com/api/dcim/sites/cc966ae0-c17e-4901-953f-51b85c283948/",
+                "name": "AMS01",
+                "slug": "ams01",
+                "display": "AMS01"
             },
             "rack": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/racks/1/",
-                "name": "A1R1",
-                "display_name": "A1R1 (T23A01)"
+                "id": "faf470f1-b66e-47e2-bd90-2c35fc3f1ed5",
+                "url": "https://demo.nautobot.com/api/dcim/racks/faf470f1-b66e-47e2-bd90-2c35fc3f1ed5/",
+                "name": "ams01-101",
+                "display": "ams01-101"
             },
-            "position": 33,
+            "position": 40,
             "face": {
-                "value": 0,
+                "value": "front",
                 "label": "Front"
             },
             "parent_device": null,
             "status": {
-                "value": true,
+                "value": "active",
                 "label": "Active"
             },
-            "primary_ip": null,
-            "primary_ip4": null,
+            "primary_ip": {
+                "id": "aa82e98f-af20-4484-98d9-000338ed50ed",
+                "url": "https://demo.nautobot.com/api/ipam/ip-addresses/aa82e98f-af20-4484-98d9-000338ed50ed/",
+                "family": 4,
+                "address": "10.11.128.1/32",
+                "display": "10.11.128.1/32"
+            },
+            "primary_ip4": {
+                "id": "aa82e98f-af20-4484-98d9-000338ed50ed",
+                "url": "https://demo.nautobot.com/api/ipam/ip-addresses/aa82e98f-af20-4484-98d9-000338ed50ed/",
+                "family": 4,
+                "address": "10.11.128.1/32",
+                "display": "10.11.128.1/32"
+            },
             "primary_ip6": null,
+            "secrets_group": null,
+            "cluster": null,
+            "virtual_chassis": null,
+            "vc_position": null,
+            "vc_priority": null,
             "comments": "",
-            "custom_fields": {}
+            "local_context_schema": null,
+            "local_context_data": {
+                "placeholder": true
+            },
+            "tags": [],
+            "custom_fields": {},
+            "config_context": {
+                "cdp": true,
+                "ntp": [
+                    {
+                        "ip": "10.1.1.1",
+                        "prefer": false
+                    },
+                    {
+                        "ip": "10.2.2.2",
+                        "prefer": true
+                    }
+                ],
+                "lldp": true,
+                "snmp": {
+                    "host": [
+                        {
+                            "ip": "10.1.1.1",
+                            "version": "2c",
+                            "community": "networktocode"
+                        }
+                    ],
+                    "contact": "John Smith",
+                    "location": "Network to Code - NYC | NY",
+                    "community": [
+                        {
+                            "name": "networktocode",
+                            "role": "ro"
+                        },
+                        {
+                            "name": "secure",
+                            "role": "rw"
+                        }
+                    ]
+                },
+                "aaa-new-model": false,
+                "acl": {
+                    "definitions": {
+                        "named": {
+                            "PERMIT_ROUTES": [
+                                "10 permit ip any any"
+                            ]
+                        }
+                    }
+                },
+                "route-maps": {
+                    "PERMIT_CONN_ROUTES": {
+                        "seq": 10,
+                        "type": "permit",
+                        "statements": [
+                            "match ip address PERMIT_ROUTES"
+                        ]
+                    }
+                }
+            },
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:05.009759Z",
+            "display": "ams01-edge-01"
         },
         {
-            "id": 6,
-            "name": "test1-spine2",
-            "display_name": "test1-spine2",
+            "id": "d4b4e341-98fe-4ae3-8b3a-78e1eff877d9",
+            "url": "https://demo.nautobot.com/api/dcim/devices/d4b4e341-98fe-4ae3-8b3a-78e1eff877d9/",
+            "name": "ams01-edge-02",
             "device_type": {
-                "id": 3,
-                "url": "http://localhost:8000/api/dcim/device-types/3/",
+                "id": "9f91eb45-be80-4375-bf01-21211a3ea80f",
+                "url": "https://demo.nautobot.com/api/dcim/device-types/9f91eb45-be80-4375-bf01-21211a3ea80f/",
                 "manufacturer": {
-                    "id": 1,
-                    "url": "http://localhost:8000/api/dcim/manufacturers/1/",
-                    "name": "Juniper",
-                    "slug": "juniper"
+                    "id": "1df6255f-96d0-4264-bbf7-557cb04adc3c",
+                    "url": "https://demo.nautobot.com/api/dcim/manufacturers/1df6255f-96d0-4264-bbf7-557cb04adc3c/",
+                    "name": "Arista",
+                    "slug": "arista",
+                    "display": "Arista"
                 },
-                "model": "QFX5100-24Q",
-                "slug": "qfx5100-24q"
+                "model": "DCS-7280CR2-60",
+                "slug": "dcs-7280cr2-60",
+                "display": "Arista DCS-7280CR2-60"
             },
             "device_role": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/device-roles/2/",
-                "name": "Spine Switch",
-                "slug": "spine-switch"
+                "id": "6dacf26b-66c5-4048-8529-c71502414a5a",
+                "url": "https://demo.nautobot.com/api/dcim/device-roles/6dacf26b-66c5-4048-8529-c71502414a5a/",
+                "name": "edge",
+                "slug": "edge",
+                "display": "edge"
             },
-            "tenant": null,
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
             "platform": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/platforms/1/",
-                "name": "Juniper Junos",
-                "slug": "juniper-junos"
+                "id": "d9e3cefc-3983-4441-9811-deb6094a957f",
+                "url": "https://demo.nautobot.com/api/dcim/platforms/d9e3cefc-3983-4441-9811-deb6094a957f/",
+                "name": "Arista EOS",
+                "slug": "arista_eos",
+                "display": "Arista EOS"
             },
-            "serial": "45649818158",
+            "serial": "",
             "asset_tag": null,
             "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
+                "id": "cc966ae0-c17e-4901-953f-51b85c283948",
+                "url": "https://demo.nautobot.com/api/dcim/sites/cc966ae0-c17e-4901-953f-51b85c283948/",
+                "name": "AMS01",
+                "slug": "ams01",
+                "display": "AMS01"
             },
             "rack": {
-                "id": 2,
-                "url": "http://localhost:8000/api/dcim/racks/2/",
-                "name": "A1R2",
-                "display_name": "A1R2 (T24A01)"
+                "id": "9a47cbe5-6057-45db-8733-ca3bf0dffcd1",
+                "url": "https://demo.nautobot.com/api/dcim/racks/9a47cbe5-6057-45db-8733-ca3bf0dffcd1/",
+                "name": "ams01-102",
+                "display": "ams01-102"
             },
-            "position": 33,
+            "position": 40,
             "face": {
-                "value": 0,
+                "value": "front",
                 "label": "Front"
             },
             "parent_device": null,
             "status": {
-                "value": true,
+                "value": "active",
                 "label": "Active"
             },
-            "primary_ip": null,
-            "primary_ip4": null,
+            "primary_ip": {
+                "id": "c3dad8c6-e0e4-4e80-9965-41d8f694ebb6",
+                "url": "https://demo.nautobot.com/api/ipam/ip-addresses/c3dad8c6-e0e4-4e80-9965-41d8f694ebb6/",
+                "family": 4,
+                "address": "10.11.128.2/32",
+                "display": "10.11.128.2/32"
+            },
+            "primary_ip4": {
+                "id": "c3dad8c6-e0e4-4e80-9965-41d8f694ebb6",
+                "url": "https://demo.nautobot.com/api/ipam/ip-addresses/c3dad8c6-e0e4-4e80-9965-41d8f694ebb6/",
+                "family": 4,
+                "address": "10.11.128.2/32",
+                "display": "10.11.128.2/32"
+            },
             "primary_ip6": null,
+            "secrets_group": null,
+            "cluster": null,
+            "virtual_chassis": null,
+            "vc_position": null,
+            "vc_priority": null,
             "comments": "",
-            "custom_fields": {}
+            "local_context_schema": null,
+            "local_context_data": {
+                "placeholder": true
+            },
+            "tags": [],
+            "custom_fields": {},
+            "config_context": {
+                "cdp": true,
+                "ntp": [
+                    {
+                        "ip": "10.1.1.1",
+                        "prefer": false
+                    },
+                    {
+                        "ip": "10.2.2.2",
+                        "prefer": true
+                    }
+                ],
+                "lldp": true,
+                "snmp": {
+                    "host": [
+                        {
+                            "ip": "10.1.1.1",
+                            "version": "2c",
+                            "community": "networktocode"
+                        }
+                    ],
+                    "contact": "John Smith",
+                    "location": "Network to Code - NYC | NY",
+                    "community": [
+                        {
+                            "name": "networktocode",
+                            "role": "ro"
+                        },
+                        {
+                            "name": "secure",
+                            "role": "rw"
+                        }
+                    ]
+                },
+                "aaa-new-model": false,
+                "acl": {
+                    "definitions": {
+                        "named": {
+                            "PERMIT_ROUTES": [
+                                "10 permit ip any any"
+                            ]
+                        }
+                    }
+                },
+                "route-maps": {
+                    "PERMIT_CONN_ROUTES": {
+                        "seq": 10,
+                        "type": "permit",
+                        "statements": [
+                            "match ip address PERMIT_ROUTES"
+                        ]
+                    }
+                }
+            },
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:05.718166Z",
+            "display": "ams01-edge-02"
         }
     ]
 }

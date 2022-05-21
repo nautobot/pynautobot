@@ -953,7 +953,7 @@ docs = ["Sphinx"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "1572baa867c9ae2e805a20147a7aeab007aca2823cf4799321ed8a9617d7ee74"
+content-hash = "bb91fed8abb31c684b271de57b01c3ea9740d3de629d17d04bbf7c4c3e217a12"
 
 [metadata.files]
 alabaster = [
