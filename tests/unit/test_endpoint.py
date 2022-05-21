@@ -60,12 +60,14 @@ class EndPointTestCase(unittest.TestCase):
             self.assertEqual(choices["letter"][1]["display_name"], "B")
             self.assertEqual(choices["letter"][1]["value"], 2)
 
+
 DISPLAY_FIELD_RECORD_TESTS = [
     ("circuits", "circuits", "circuits/circuits.json", "cid", Record),
     ("circuits", "circuit_terminations", "circuits/circuit_terminations.json", "circuit.cid", Record),
     ("dcim", "devices", "dcim/devices.json", "display", Devices),
     ("ipam", "prefixes", "ipam/prefixes.json", "display", Prefixes),
 ]
+
 
 @pytest.mark.parametrize("app,endpoint,fixture,field,record", DISPLAY_FIELD_RECORD_TESTS)
 def test_record_string_method_returns_valid_value(pynautobot_api, app, endpoint, fixture, field, record):
@@ -103,4 +105,11 @@ def test_record_string_method_returns_valid_value(pynautobot_api, app, endpoint,
         # Validate correct sub records existing that are defined on custom pynautobot models
         sub_records = {attr for attr in inspect.getmembers(record, inspect.isclass) if not attr[0] == "__class__"}
         if sub_records:
-            assert all([sub_rec for sub_rec in sub_records if not isinstance(getattr(rec, sub_rec[0]), list) and isinstance(getattr(rec, sub_rec[0]), sub_rec[1])])
+            assert all(
+                [
+                    sub_rec
+                    for sub_rec in sub_records
+                    if not isinstance(getattr(rec, sub_rec[0]), list)
+                    and isinstance(getattr(rec, sub_rec[0]), sub_rec[1])
+                ]
+            )
