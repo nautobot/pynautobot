@@ -93,7 +93,14 @@ def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):
     for object_model_relfpath in DEVICETYPE_LIBRARY_OBJECTS:
         device_type_models.append(
             yaml.safe_load(
-                open(os.path.join(devicetype_library_repo_dirpath, "device-types", object_model_relfpath,), "r",).read()
+                open(
+                    os.path.join(
+                        devicetype_library_repo_dirpath,
+                        "device-types",
+                        object_model_relfpath,
+                    ),
+                    "r",
+                ).read()
             )
         )
 
@@ -140,8 +147,7 @@ def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):
 
 @pytest.fixture(scope="session")
 def nb_client(docker_ip, devicetype_library_repo_dirpath):
-    """Setup the nb_client and import necessary data.
-    """
+    """Setup the nb_client and import necessary data."""
 
     url = "http://{}:{}".format(docker_ip, 8000)
     nb_api = pynautobot.api(url, token="0123456789abcdef0123456789abcdef01234567")

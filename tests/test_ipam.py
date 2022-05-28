@@ -43,7 +43,9 @@ class PrefixTestCase(Generic.Tests):
     @patch("requests.sessions.Session.post", return_value=Response(fixture="ipam/available-ips-post.json"))
     @patch("requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"))
     def test_create_available_ips(self, _, post):
-        create_parms = dict(status=2,)
+        create_parms = dict(
+            status=2,
+        )
         pfx = self.endpoint.get(self.uuid)
         ret = pfx.available_ips.create(create_parms)
         post.assert_called_with(f"{self.detail_uri}available-ips/", params={}, headers=POST_HEADERS, json=create_parms)
@@ -63,7 +65,9 @@ class PrefixTestCase(Generic.Tests):
     @patch("requests.sessions.Session.post", return_value=Response(fixture="ipam/available-prefixes-post.json"))
     @patch("requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"))
     def test_create_available_prefixes(self, _, post):
-        create_parms = dict(prefix_length=30,)
+        create_parms = dict(
+            prefix_length=30,
+        )
         pfx = self.endpoint.get(self.uuid)
         ret = pfx.available_prefixes.create(create_parms)
         post.assert_called_with(
@@ -116,7 +120,10 @@ class VlanTestCase(Generic.Tests):
         vlan = self.endpoint.get(self.uuid)
         interface = api.dcim.interfaces.get(self.uuid)
         mock.assert_called_with(
-            f"http://localhost:8000/api/dcim/interfaces/{self.uuid}/", params={}, json=None, headers=HEADERS,
+            f"http://localhost:8000/api/dcim/interfaces/{self.uuid}/",
+            params={},
+            json=None,
+            headers=HEADERS,
         )
         self.assertEqual(vlan.vid, interface.tagged_vlans[0].vid)
         self.assertEqual(vlan.id, interface.tagged_vlans[0].id)

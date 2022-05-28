@@ -21,12 +21,16 @@ endpoints = {
 
 
 class ApiTestCase(unittest.TestCase):
-    @patch("requests.sessions.Session.post",)
+    @patch(
+        "requests.sessions.Session.post",
+    )
     def test_get(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         self.assertTrue(api)
 
-    @patch("requests.sessions.Session.post",)
+    @patch(
+        "requests.sessions.Session.post",
+    )
     def test_sanitize_url(self, *_):
         api = pynautobot.api("http://localhost:8000/", **def_kwargs)
         self.assertTrue(api)
@@ -39,10 +43,13 @@ class ApiVersionTestCase(unittest.TestCase):
         ok = True
 
     @patch(
-        "requests.sessions.Session.get", return_value=ResponseHeadersWithVersion(),
+        "requests.sessions.Session.get",
+        return_value=ResponseHeadersWithVersion(),
     )
     def test_api_version(self, *_):
-        api = pynautobot.api(host,)
+        api = pynautobot.api(
+            host,
+        )
         self.assertEqual(api.version, "1.999")
 
     class ResponseHeadersWithoutVersion:
@@ -50,10 +57,13 @@ class ApiVersionTestCase(unittest.TestCase):
         ok = True
 
     @patch(
-        "requests.sessions.Session.get", return_value=ResponseHeadersWithoutVersion(),
+        "requests.sessions.Session.get",
+        return_value=ResponseHeadersWithoutVersion(),
     )
     def test_api_version_not_found(self, *_):
-        api = pynautobot.api(host,)
+        api = pynautobot.api(
+            host,
+        )
         self.assertEqual(api.version, "")
 
 
@@ -67,8 +77,11 @@ class ApiStatusTestCase(unittest.TestCase):
             }
 
     @patch(
-        "requests.sessions.Session.get", return_value=ResponseWithStatus(),
+        "requests.sessions.Session.get",
+        return_value=ResponseWithStatus(),
     )
     def test_api_status(self, *_):
-        api = pynautobot.api(host,)
+        api = pynautobot.api(
+            host,
+        )
         self.assertEqual(api.status()["nautobot-version"], "1.3.2")

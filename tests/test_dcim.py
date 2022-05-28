@@ -50,7 +50,10 @@ class DeviceTestCase(Generic.Tests):
         ret = self.endpoint.create(**data)
         self.assertTrue(ret)
         mock.assert_called_with(
-            self.bulk_uri, headers=POST_HEADERS, params={}, json=data,
+            self.bulk_uri,
+            headers=POST_HEADERS,
+            params={},
+            json=data,
         )
 
     @patch("requests.sessions.Session.post", return_value=Response(fixture="dcim/device_bulk_create.json"))
@@ -63,7 +66,10 @@ class DeviceTestCase(Generic.Tests):
         self.assertTrue(ret)
         self.assertEqual(len(ret), 2)
         mock.assert_called_with(
-            self.bulk_uri, headers=POST_HEADERS, params={}, json=data,
+            self.bulk_uri,
+            headers=POST_HEADERS,
+            params={},
+            json=data,
         )
 
     @patch(
@@ -305,12 +311,16 @@ class VirtualChassisTestCase(Generic.Tests):
 class Choices(unittest.TestCase):
     def test_get(self):
         with patch(
-            "requests.sessions.Session.get", return_value=Response(fixture="{}/{}.json".format("dcim", "choices")),
+            "requests.sessions.Session.get",
+            return_value=Response(fixture="{}/{}.json".format("dcim", "choices")),
         ) as mock:
             ret = api.dcim.choices()
             self.assertTrue(ret)
             mock.assert_called_with(
-                "http://localhost:8000/api/dcim/_choices/", params={}, json=None, headers=HEADERS,
+                "http://localhost:8000/api/dcim/_choices/",
+                params={},
+                json=None,
+                headers=HEADERS,
             )
 
 
@@ -356,7 +366,10 @@ class CablesTestCase(Generic.Tests):
                 "length_unit": None,
             }
         )
-        with patch("requests.sessions.Session.get", return_value=response_obj,) as mock:
+        with patch(
+            "requests.sessions.Session.get",
+            return_value=response_obj,
+        ) as mock:
             ret = self.endpoint.get(self.uuid)
             self.assertTrue(ret)
             self.assertIsInstance(ret, self.ret)
