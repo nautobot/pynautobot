@@ -1,61 +1,141 @@
 {
-    "count": 2,
+    "count": 3,
     "next": null,
     "previous": null,
     "results": [
         {
-            "id": 2,
-            "family": 4,
-            "prefix": "10.0.255.0/24",
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
+            "id": "77d7e586-b878-4c94-8e06-98be7cb27bd3",
+            "url": "https://demo.nautobot.com/api/ipam/prefixes/77d7e586-b878-4c94-8e06-98be7cb27bd3/",
+            "family": {
+                "value": 4,
+                "label": "IPv4"
             },
+            "prefix": "10.0.0.0/8",
+            "site": null,
             "vrf": null,
-            "tenant": null,
+            "tenant": {
+                "id": "783c1cd7-1096-4643-822b-d3ec675ae1ec",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/783c1cd7-1096-4643-822b-d3ec675ae1ec/",
+                "name": "Nautobot Baseball Stadiums",
+                "slug": "nautobot-baseball-stadiums",
+                "display": "Nautobot Baseball Stadiums"
+            },
             "vlan": null,
             "status": {
-                "value": 1,
-                "label": "Active"
+                "value": "container",
+                "label": "Container"
             },
             "role": {
-                "id": 1,
-                "url": "http://localhost:8000/api/ipam/roles/1/",
-                "name": "Lab Network",
-                "slug": "lab-network"
+                "id": "fb064457-9ce9-4e3d-b3b3-dc4cf8ae7424",
+                "url": "https://demo.nautobot.com/api/ipam/roles/fb064457-9ce9-4e3d-b3b3-dc4cf8ae7424/",
+                "name": "POP Global Pool",
+                "slug": "pop-global-pool",
+                "display": "POP Global Pool"
             },
             "is_pool": false,
             "description": "",
-            "custom_fields": {}
+            "tags": [
+                {
+                    "id": "090dbe63-5151-48eb-bca2-104aa3286e1e",
+                    "url": "https://demo.nautobot.com/api/extras/tags/090dbe63-5151-48eb-bca2-104aa3286e1e/",
+                    "name": "DC1",
+                    "slug": "dc1",
+                    "color": "ff9800",
+                    "display": "DC1"
+                },
+                {
+                    "id": "de3a59e4-bd22-4180-9774-b643169f1be8",
+                    "url": "https://demo.nautobot.com/api/extras/tags/de3a59e4-bd22-4180-9774-b643169f1be8/",
+                    "name": "Floating",
+                    "slug": "floating",
+                    "color": "4caf50",
+                    "display": "Floating"
+                }
+            ],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-21T00:35:48.706480Z",
+            "display": "10.0.0.0/8"
         },
         {
-            "id": 1,
-            "family": 4,
-            "prefix": "10.1.1.0/24",
-            "site": {
-                "id": 1,
-                "url": "http://localhost:8000/api/dcim/sites/1/",
-                "name": "TEST1",
-                "slug": "test1"
+            "id": "bcd48a88-3337-4361-8e31-543d370c6f70",
+            "url": "https://demo.nautobot.com/api/ipam/prefixes/bcd48a88-3337-4361-8e31-543d370c6f70/",
+            "family": {
+                "value": 4,
+                "label": "IPv4"
             },
+            "prefix": "10.0.0.0/8",
+            "site": null,
             "vrf": null,
-            "tenant": null,
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
             "vlan": null,
             "status": {
-                "value": 1,
-                "label": "Active"
+                "value": "container",
+                "label": "Container"
             },
             "role": {
-                "id": 1,
-                "url": "http://localhost:8000/api/ipam/roles/1/",
-                "name": "Lab Network",
-                "slug": "lab-network"
+                "id": "fb064457-9ce9-4e3d-b3b3-dc4cf8ae7424",
+                "url": "https://demo.nautobot.com/api/ipam/roles/fb064457-9ce9-4e3d-b3b3-dc4cf8ae7424/",
+                "name": "POP Global Pool",
+                "slug": "pop-global-pool",
+                "display": "POP Global Pool"
             },
             "is_pool": false,
             "description": "",
-            "custom_fields": {}
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:18:55.601531Z",
+            "display": "10.0.0.0/8"
+        },
+        {
+            "id": "401e4ce4-2ee7-42ec-a38b-13549a8d81e9",
+            "url": "https://demo.nautobot.com/api/ipam/prefixes/401e4ce4-2ee7-42ec-a38b-13549a8d81e9/",
+            "family": {
+                "value": 4,
+                "label": "IPv4"
+            },
+            "prefix": "10.0.0.0/16",
+            "site": {
+                "id": "f080fce8-29d7-482e-a3ff-86ef5bcae5ba",
+                "url": "https://demo.nautobot.com/api/dcim/sites/f080fce8-29d7-482e-a3ff-86ef5bcae5ba/",
+                "name": "ATL01",
+                "slug": "atl01",
+                "display": "ATL01"
+            },
+            "vrf": null,
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "vlan": null,
+            "status": {
+                "value": "container",
+                "label": "Container"
+            },
+            "role": {
+                "id": "8a391683-5e76-40c2-9ff0-b8a9dc666b2f",
+                "url": "https://demo.nautobot.com/api/ipam/roles/8a391683-5e76-40c2-9ff0-b8a9dc666b2f/",
+                "name": "pop",
+                "slug": "pop",
+                "display": "pop"
+            },
+            "is_pool": false,
+            "description": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:18:57.042178Z",
+            "display": "10.0.0.0/16"
         }
     ]
 }

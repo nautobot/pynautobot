@@ -1,29 +1,3681 @@
 {
-    "count": 1,
+    "count": 184,
     "next": null,
     "previous": null,
     "results": [
         {
-            "id": 1,
-            "cid": "123456",
+            "id": "5b1d5b48-67b7-4eb4-bc72-7623aa1da9b8",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/5b1d5b48-67b7-4eb4-bc72-7623aa1da9b8/",
+            "cid": "ntt-104265404093023273",
             "provider": {
-                "id": 1,
-                "url": "http://localhost:8000/api/circuits/providers/1/",
-                "name": "TEST",
-                "slug": "test"
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
             },
             "type": {
-                "id": 1,
-                "url": "http://localhost:8000/api/circuits/circuit-types/1/",
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
                 "name": "Transit",
-                "slug": "transit"
+                "slug": "transit",
+                "display": "Transit"
             },
-            "tenant": null,
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
             "install_date": null,
             "commit_rate": null,
             "description": "",
+            "termination_a": {
+                "id": "ad666b74-10cf-4be2-a248-0393200a26f3",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/ad666b74-10cf-4be2-a248-0393200a26f3/",
+                "site": {
+                    "id": "73853b84-2970-4da9-ba6d-2e8224f293fc",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/73853b84-2970-4da9-ba6d-2e8224f293fc/",
+                    "name": "SIN01",
+                    "slug": "sin01",
+                    "display": "SIN01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "296bf3c4-a1c0-43b0-be7a-726a11b4dd40",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/296bf3c4-a1c0-43b0-be7a-726a11b4dd40/",
+                    "device": {
+                        "id": "68c74aae-17e4-47cb-95b7-cfee640f6433",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/68c74aae-17e4-47cb-95b7-cfee640f6433/",
+                        "name": "sin01-edge-01",
+                        "display": "sin01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "443b57f2-c4eb-4cb9-9a55-aa80b161652e",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: SIN01"
+            },
+            "termination_z": null,
             "comments": "",
-            "custom_fields": {}
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:22:24.005036Z",
+            "display": "ntt-104265404093023273"
+        },
+        {
+            "id": "b5395482-d211-45a2-afa0-69009f4960b4",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/b5395482-d211-45a2-afa0-69009f4960b4/",
+            "cid": "ntt-104265404093069929",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "c42cfd62-27a1-4e14-a12b-ee2477c23ef5",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/c42cfd62-27a1-4e14-a12b-ee2477c23ef5/",
+                "site": {
+                    "id": "73853b84-2970-4da9-ba6d-2e8224f293fc",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/73853b84-2970-4da9-ba6d-2e8224f293fc/",
+                    "name": "SIN01",
+                    "slug": "sin01",
+                    "display": "SIN01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "510a8293-6465-4ab5-94aa-5f5637c642f4",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/510a8293-6465-4ab5-94aa-5f5637c642f4/",
+                    "device": {
+                        "id": "5140f812-2976-4fe8-b667-7124a3c63e94",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/5140f812-2976-4fe8-b667-7124a3c63e94/",
+                        "name": "sin01-edge-02",
+                        "display": "sin01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "49f90fa5-4764-4fee-9fa8-0c6e4e3b70a4",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: SIN01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:22:24.069805Z",
+            "display": "ntt-104265404093069929"
+        },
+        {
+            "id": "b579869d-3329-4f23-9295-bd2324d95883",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/b579869d-3329-4f23-9295-bd2324d95883/",
+            "cid": "ntt-104539051754046505",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "783c1cd7-1096-4643-822b-d3ec675ae1ec",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/783c1cd7-1096-4643-822b-d3ec675ae1ec/",
+                "name": "Nautobot Baseball Stadiums",
+                "slug": "nautobot-baseball-stadiums",
+                "display": "Nautobot Baseball Stadiums"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "6d99a654-6c73-4611-9bc2-25259188ead1",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/6d99a654-6c73-4611-9bc2-25259188ead1/",
+                "site": {
+                    "id": "284c3632-9500-47bd-a82c-32915b69bd09",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/284c3632-9500-47bd-a82c-32915b69bd09/",
+                    "name": "SLC01",
+                    "slug": "slc01",
+                    "display": "SLC01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "31c1ce64-b34a-482f-a77e-f67e0b6f3c34",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/31c1ce64-b34a-482f-a77e-f67e0b6f3c34/",
+                    "device": {
+                        "id": "62ba2b88-4b8d-4ad3-9b5b-6aaeda572f00",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/62ba2b88-4b8d-4ad3-9b5b-6aaeda572f00/",
+                        "name": "slc01-edge-01",
+                        "display": "slc01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "8813d20d-b179-47ab-9304-883d05a7a6c3",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: SLC01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:25:30.489644Z",
+            "display": "ntt-104539051754046505"
+        },
+        {
+            "id": "f7d441be-f1d0-495f-acb4-d18aaa866934",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/f7d441be-f1d0-495f-acb4-d18aaa866934/",
+            "cid": "ntt-104539051754093161",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "783c1cd7-1096-4643-822b-d3ec675ae1ec",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/783c1cd7-1096-4643-822b-d3ec675ae1ec/",
+                "name": "Nautobot Baseball Stadiums",
+                "slug": "nautobot-baseball-stadiums",
+                "display": "Nautobot Baseball Stadiums"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "797bace0-64c8-4c1a-8a0d-a327e821ed86",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/797bace0-64c8-4c1a-8a0d-a327e821ed86/",
+                "site": {
+                    "id": "284c3632-9500-47bd-a82c-32915b69bd09",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/284c3632-9500-47bd-a82c-32915b69bd09/",
+                    "name": "SLC01",
+                    "slug": "slc01",
+                    "display": "SLC01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "207852c9-d3e0-4459-9798-d15993b99ff9",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/207852c9-d3e0-4459-9798-d15993b99ff9/",
+                    "device": {
+                        "id": "09e98b65-30dc-4ec9-8b22-b58ee7485848",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/09e98b65-30dc-4ec9-8b22-b58ee7485848/",
+                        "name": "slc01-edge-02",
+                        "display": "slc01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "f77c751f-a015-4bea-85c2-28fbc55c76e8",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: SLC01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:25:30.552328Z",
+            "display": "ntt-104539051754093161"
+        },
+        {
+            "id": "636d8db5-7c82-41c4-a58e-dae6896b521e",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/636d8db5-7c82-41c4-a58e-dae6896b521e/",
+            "cid": "ntt-107918741423178793",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "be775f42-8919-4049-a75e-19cbc73ca6c6",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/be775f42-8919-4049-a75e-19cbc73ca6c6/",
+                "site": {
+                    "id": "c8662697-d3be-40de-89f2-70e3c989bfb2",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/c8662697-d3be-40de-89f2-70e3c989bfb2/",
+                    "name": "tim01",
+                    "slug": "tim01",
+                    "display": "tim01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "767bdb40-8992-40ba-8e54-45093f519419",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/767bdb40-8992-40ba-8e54-45093f519419/",
+                    "device": {
+                        "id": "abac7f74-456c-4b5d-befd-e32a43032cbc",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/abac7f74-456c-4b5d-befd-e32a43032cbc/",
+                        "name": "tim01-edge-01",
+                        "display": "tim01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "eb017434-95d2-4c0d-9cc5-579ae2cf66a8",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: tim01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-20",
+            "last_updated": "2022-05-20T16:37:04.293865Z",
+            "display": "ntt-107918741423178793"
+        },
+        {
+            "id": "908eafb4-0699-40c7-9ab0-060083d457cd",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/908eafb4-0699-40c7-9ab0-060083d457cd/",
+            "cid": "ntt-107918741423225449",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "30857485-091f-42fa-b492-28d1cf6e7b39",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/30857485-091f-42fa-b492-28d1cf6e7b39/",
+                "site": {
+                    "id": "c8662697-d3be-40de-89f2-70e3c989bfb2",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/c8662697-d3be-40de-89f2-70e3c989bfb2/",
+                    "name": "tim01",
+                    "slug": "tim01",
+                    "display": "tim01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "85e8fa0c-539d-409b-a5fa-72e67f2afe76",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/85e8fa0c-539d-409b-a5fa-72e67f2afe76/",
+                    "device": {
+                        "id": "b15285b3-7299-4d33-8779-634e2db34609",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/b15285b3-7299-4d33-8779-634e2db34609/",
+                        "name": "tim01-edge-02",
+                        "display": "tim01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "3a63490b-b91f-4357-9ae4-54ea17a0fab8",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: tim01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-20",
+            "last_updated": "2022-05-20T16:37:04.533462Z",
+            "display": "ntt-107918741423225449"
+        },
+        {
+            "id": "91f89dca-a220-43b8-a98d-fba2d51c5150",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/91f89dca-a220-43b8-a98d-fba2d51c5150/",
+            "cid": "ntt-38874897548100649",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "11a06ed8-4500-41b9-8430-d957901ab0e6",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/11a06ed8-4500-41b9-8430-d957901ab0e6/",
+                "site": {
+                    "id": "cc966ae0-c17e-4901-953f-51b85c283948",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/cc966ae0-c17e-4901-953f-51b85c283948/",
+                    "name": "AMS01",
+                    "slug": "ams01",
+                    "display": "AMS01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "78b27dd6-2d64-4a1d-9f78-7afbe4bfb878",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/78b27dd6-2d64-4a1d-9f78-7afbe4bfb878/",
+                    "device": {
+                        "id": "ac37e75b-3996-4b45-bea1-0f38eee6164b",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/ac37e75b-3996-4b45-bea1-0f38eee6164b/",
+                        "name": "ams01-edge-01",
+                        "display": "ams01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "6d0a4f15-88d4-49bc-9ca2-658f30447b12",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: AMS01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:15.657959Z",
+            "display": "ntt-38874897548100649"
+        },
+        {
+            "id": "04d5e21d-1a13-4f89-8779-6037bcbb9431",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/04d5e21d-1a13-4f89-8779-6037bcbb9431/",
+            "cid": "ntt-38874897548147305",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "b913622f-8289-4ea7-a920-391dfa2f142f",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/b913622f-8289-4ea7-a920-391dfa2f142f/",
+                "site": {
+                    "id": "cc966ae0-c17e-4901-953f-51b85c283948",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/cc966ae0-c17e-4901-953f-51b85c283948/",
+                    "name": "AMS01",
+                    "slug": "ams01",
+                    "display": "AMS01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "b97e4fec-03d5-4095-b99a-8b20aae74be2",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/b97e4fec-03d5-4095-b99a-8b20aae74be2/",
+                    "device": {
+                        "id": "d4b4e341-98fe-4ae3-8b3a-78e1eff877d9",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/d4b4e341-98fe-4ae3-8b3a-78e1eff877d9/",
+                        "name": "ams01-edge-02",
+                        "display": "ams01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "c5f015de-aceb-4451-b02c-f3acd13dc4b2",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: AMS01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:15.725558Z",
+            "display": "ntt-38874897548147305"
+        },
+        {
+            "id": "f5cfe4c8-8e8f-4aff-999f-d6619ebc2487",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/f5cfe4c8-8e8f-4aff-999f-d6619ebc2487/",
+            "cid": "ntt-38942604185879593",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "783c1cd7-1096-4643-822b-d3ec675ae1ec",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/783c1cd7-1096-4643-822b-d3ec675ae1ec/",
+                "name": "Nautobot Baseball Stadiums",
+                "slug": "nautobot-baseball-stadiums",
+                "display": "Nautobot Baseball Stadiums"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "6ce96d12-6430-4114-b53b-b92401b2cd5a",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/6ce96d12-6430-4114-b53b-b92401b2cd5a/",
+                "site": {
+                    "id": "a863f82f-76b5-4345-b678-b36009f64170",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/a863f82f-76b5-4345-b678-b36009f64170/",
+                    "name": "ANG01",
+                    "slug": "ang01",
+                    "display": "ANG01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "72bdb631-8036-4fc8-bdea-5a281bcff459",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/72bdb631-8036-4fc8-bdea-5a281bcff459/",
+                    "device": {
+                        "id": "62579f32-336e-4870-8941-3e0b844d3991",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/62579f32-336e-4870-8941-3e0b844d3991/",
+                        "name": "ang01-edge-01",
+                        "display": "ang01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "6549eb32-0efd-4b97-8943-79032f18dcc9",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: ANG01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:25:18.816612Z",
+            "display": "ntt-38942604185879593"
+        },
+        {
+            "id": "66ea9445-bd3a-49fd-9584-5a5bfd7faf9a",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/66ea9445-bd3a-49fd-9584-5a5bfd7faf9a/",
+            "cid": "ntt-38942604185926249",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "783c1cd7-1096-4643-822b-d3ec675ae1ec",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/783c1cd7-1096-4643-822b-d3ec675ae1ec/",
+                "name": "Nautobot Baseball Stadiums",
+                "slug": "nautobot-baseball-stadiums",
+                "display": "Nautobot Baseball Stadiums"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "0299f634-8679-4517-8e6d-b7972d4802cb",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/0299f634-8679-4517-8e6d-b7972d4802cb/",
+                "site": {
+                    "id": "a863f82f-76b5-4345-b678-b36009f64170",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/a863f82f-76b5-4345-b678-b36009f64170/",
+                    "name": "ANG01",
+                    "slug": "ang01",
+                    "display": "ANG01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "4a882897-ba64-47d7-a562-1ca7b233df07",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/4a882897-ba64-47d7-a562-1ca7b233df07/",
+                    "device": {
+                        "id": "b6437d4b-15cc-49a5-9973-257e8301f7e2",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/b6437d4b-15cc-49a5-9973-257e8301f7e2/",
+                        "name": "ang01-edge-02",
+                        "display": "ang01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "1c293a48-3170-43b5-8d96-bfc6f9c1595c",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: ANG01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:25:18.880173Z",
+            "display": "ntt-38942604185926249"
+        },
+        {
+            "id": "5979e679-2c34-4c26-8146-0542904efd3e",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/5979e679-2c34-4c26-8146-0542904efd3e/",
+            "cid": "ntt-39566069475427369",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "c9ce7816-07f4-4a27-a1f8-53f6b14556ee",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/c9ce7816-07f4-4a27-a1f8-53f6b14556ee/",
+                "site": {
+                    "id": "f080fce8-29d7-482e-a3ff-86ef5bcae5ba",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/f080fce8-29d7-482e-a3ff-86ef5bcae5ba/",
+                    "name": "ATL01",
+                    "slug": "atl01",
+                    "display": "ATL01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "30c4f83d-46fa-4f53-8e1f-08cc45f1cd84",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/30c4f83d-46fa-4f53-8e1f-08cc45f1cd84/",
+                    "device": {
+                        "id": "a84d3dce-23d9-43fd-bc31-df775a8a5211",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/a84d3dce-23d9-43fd-bc31-df775a8a5211/",
+                        "name": "atl01-edge-01",
+                        "display": "atl01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "5920cfff-1033-4d9e-9750-4aab0177162e",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: ATL01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:19:10.568629Z",
+            "display": "ntt-39566069475427369"
+        },
+        {
+            "id": "ba6922ad-b89d-4a3b-b662-da404081d903",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/ba6922ad-b89d-4a3b-b662-da404081d903/",
+            "cid": "ntt-39566069475474025",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "e52407b7-956c-4eb9-af77-ed3ac0a89777",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/e52407b7-956c-4eb9-af77-ed3ac0a89777/",
+                "site": {
+                    "id": "f080fce8-29d7-482e-a3ff-86ef5bcae5ba",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/f080fce8-29d7-482e-a3ff-86ef5bcae5ba/",
+                    "name": "ATL01",
+                    "slug": "atl01",
+                    "display": "ATL01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "de71db86-0a90-4bed-9039-4b967d480ecd",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/de71db86-0a90-4bed-9039-4b967d480ecd/",
+                    "device": {
+                        "id": "337ced24-d8ee-43e2-8239-f79abb67a289",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/337ced24-d8ee-43e2-8239-f79abb67a289/",
+                        "name": "atl01-edge-02",
+                        "display": "atl01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "d18af8a6-39e1-46f3-98d0-3fc28007b7f0",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: ATL01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:19:10.638271Z",
+            "display": "ntt-39566069475474025"
+        },
+        {
+            "id": "b6e0b15e-4d2a-4698-9648-91946c829a46",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/b6e0b15e-4d2a-4698-9648-91946c829a46/",
+            "cid": "ntt-39566071652209705",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "14483b2d-55e2-4286-af28-5d007783320f",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/14483b2d-55e2-4286-af28-5d007783320f/",
+                "site": {
+                    "id": "e51244a7-535f-4622-845c-d93109778004",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/e51244a7-535f-4622-845c-d93109778004/",
+                    "name": "ATL02",
+                    "slug": "atl02",
+                    "display": "ATL02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "89e168a7-972b-4928-8449-2a9f8c47c187",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/89e168a7-972b-4928-8449-2a9f8c47c187/",
+                    "device": {
+                        "id": "0fb5ca6e-9edb-4598-a9c9-ed496be9797c",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/0fb5ca6e-9edb-4598-a9c9-ed496be9797c/",
+                        "name": "atl02-edge-01",
+                        "display": "atl02-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "19038521-0d55-436e-a4a4-1455d9c49a6f",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: ATL02"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:22:59.284571Z",
+            "display": "ntt-39566071652209705"
+        },
+        {
+            "id": "3edcaabe-5b3e-4877-8d51-c7aab55d66ab",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/3edcaabe-5b3e-4877-8d51-c7aab55d66ab/",
+            "cid": "ntt-39566071652209777",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "356d2412-2cd6-4ed3-bd7c-bcd51451affb",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/356d2412-2cd6-4ed3-bd7c-bcd51451affb/",
+                "name": "Dark Fiber",
+                "slug": "dark-fiber",
+                "display": "Dark Fiber"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "09db0a31-cf53-4a97-a60b-4e6dc126d4bd",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/09db0a31-cf53-4a97-a60b-4e6dc126d4bd/",
+                "site": {
+                    "id": "e51244a7-535f-4622-845c-d93109778004",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/e51244a7-535f-4622-845c-d93109778004/",
+                    "name": "ATL02",
+                    "slug": "atl02",
+                    "display": "ATL02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "29f3e6af-9c7f-454a-90fa-db5cb961872c",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/29f3e6af-9c7f-454a-90fa-db5cb961872c/",
+                    "device": {
+                        "id": "0fb5ca6e-9edb-4598-a9c9-ed496be9797c",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/0fb5ca6e-9edb-4598-a9c9-ed496be9797c/",
+                        "name": "atl02-edge-01",
+                        "display": "atl02-edge-01"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "29dbfe31-dd6f-4789-b199-6eccc6a0b7d7",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: ATL02"
+            },
+            "termination_z": {
+                "id": "1c919b67-9ede-4963-8871-9790470ba455",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/1c919b67-9ede-4963-8871-9790470ba455/",
+                "site": {
+                    "id": "f080fce8-29d7-482e-a3ff-86ef5bcae5ba",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/f080fce8-29d7-482e-a3ff-86ef5bcae5ba/",
+                    "name": "ATL01",
+                    "slug": "atl01",
+                    "display": "ATL01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "03113f1a-681b-471c-9372-6c156fa1f836",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/03113f1a-681b-471c-9372-6c156fa1f836/",
+                    "device": {
+                        "id": "a84d3dce-23d9-43fd-bc31-df775a8a5211",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/a84d3dce-23d9-43fd-bc31-df775a8a5211/",
+                        "name": "atl01-edge-01",
+                        "display": "atl01-edge-01"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "444675e7-1ab4-4391-889f-81dcdfbf28ae",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination Z: ATL01"
+            },
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:23:00.177863Z",
+            "display": "ntt-39566071652209777"
+        },
+        {
+            "id": "cfd766c0-da58-429c-bc96-eb80f1b8d85b",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/cfd766c0-da58-429c-bc96-eb80f1b8d85b/",
+            "cid": "ntt-39566071652256361",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "104234c0-7241-4c73-b21b-7a070ee75557",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/104234c0-7241-4c73-b21b-7a070ee75557/",
+                "site": {
+                    "id": "e51244a7-535f-4622-845c-d93109778004",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/e51244a7-535f-4622-845c-d93109778004/",
+                    "name": "ATL02",
+                    "slug": "atl02",
+                    "display": "ATL02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "cf89e99f-eb39-430f-8e82-21ce1588a652",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/cf89e99f-eb39-430f-8e82-21ce1588a652/",
+                    "device": {
+                        "id": "94d441c0-139f-4118-9c30-c253c2478260",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/94d441c0-139f-4118-9c30-c253c2478260/",
+                        "name": "atl02-edge-02",
+                        "display": "atl02-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "2f127b0f-8011-4307-a2c8-f2ef31e1da17",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: ATL02"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:22:59.348889Z",
+            "display": "ntt-39566071652256361"
+        },
+        {
+            "id": "36f95fdf-dbb8-4252-8295-ba2d72785ef5",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/36f95fdf-dbb8-4252-8295-ba2d72785ef5/",
+            "cid": "ntt-39566071652256433",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "356d2412-2cd6-4ed3-bd7c-bcd51451affb",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/356d2412-2cd6-4ed3-bd7c-bcd51451affb/",
+                "name": "Dark Fiber",
+                "slug": "dark-fiber",
+                "display": "Dark Fiber"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "c4628cbb-0163-47e8-8f92-92be74d397d3",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/c4628cbb-0163-47e8-8f92-92be74d397d3/",
+                "site": {
+                    "id": "e51244a7-535f-4622-845c-d93109778004",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/e51244a7-535f-4622-845c-d93109778004/",
+                    "name": "ATL02",
+                    "slug": "atl02",
+                    "display": "ATL02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "eb0b7f7d-d57c-4710-b0f9-dff450a340ad",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/eb0b7f7d-d57c-4710-b0f9-dff450a340ad/",
+                    "device": {
+                        "id": "94d441c0-139f-4118-9c30-c253c2478260",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/94d441c0-139f-4118-9c30-c253c2478260/",
+                        "name": "atl02-edge-02",
+                        "display": "atl02-edge-02"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "20367921-5d06-4262-be30-3f75f15c2a72",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: ATL02"
+            },
+            "termination_z": {
+                "id": "7d238d8a-12ba-4edf-9a46-55ed61d61757",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/7d238d8a-12ba-4edf-9a46-55ed61d61757/",
+                "site": {
+                    "id": "f080fce8-29d7-482e-a3ff-86ef5bcae5ba",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/f080fce8-29d7-482e-a3ff-86ef5bcae5ba/",
+                    "name": "ATL01",
+                    "slug": "atl01",
+                    "display": "ATL01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "ac17a0fd-d0d1-4e1a-92b5-6499a1f00ae3",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/ac17a0fd-d0d1-4e1a-92b5-6499a1f00ae3/",
+                    "device": {
+                        "id": "337ced24-d8ee-43e2-8239-f79abb67a289",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/337ced24-d8ee-43e2-8239-f79abb67a289/",
+                        "name": "atl01-edge-02",
+                        "display": "atl01-edge-02"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "9f12e61e-9d0f-45f5-a8b6-24262e222c18",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination Z: ATL01"
+            },
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:23:00.491805Z",
+            "display": "ntt-39566071652256433"
+        },
+        {
+            "id": "b269e722-8191-4079-9bcb-041744db2bc7",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/b269e722-8191-4079-9bcb-041744db2bc7/",
+            "cid": "ntt-40152860336178217",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "783c1cd7-1096-4643-822b-d3ec675ae1ec",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/783c1cd7-1096-4643-822b-d3ec675ae1ec/",
+                "name": "Nautobot Baseball Stadiums",
+                "slug": "nautobot-baseball-stadiums",
+                "display": "Nautobot Baseball Stadiums"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "05a239ef-c90f-43ba-b61e-c6cf827aaf33",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/05a239ef-c90f-43ba-b61e-c6cf827aaf33/",
+                "site": {
+                    "id": "e643ba91-422d-4702-9e3c-59bed672b72a",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/e643ba91-422d-4702-9e3c-59bed672b72a/",
+                    "name": "AZD01",
+                    "slug": "azd01",
+                    "display": "AZD01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "1710120c-03b1-4677-abd1-95788072ca0c",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/1710120c-03b1-4677-abd1-95788072ca0c/",
+                    "device": {
+                        "id": "cc3fa9ae-02ec-423c-9eed-d94e24dd2ace",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/cc3fa9ae-02ec-423c-9eed-d94e24dd2ace/",
+                        "name": "azd01-edge-01",
+                        "display": "azd01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "ad31b0dc-ec13-4015-b732-fd29758ad53f",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: AZD01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:25:41.753366Z",
+            "display": "ntt-40152860336178217"
+        },
+        {
+            "id": "b0d585ee-af14-4c21-8600-f33d9878030a",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/b0d585ee-af14-4c21-8600-f33d9878030a/",
+            "cid": "ntt-40152860336224873",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "783c1cd7-1096-4643-822b-d3ec675ae1ec",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/783c1cd7-1096-4643-822b-d3ec675ae1ec/",
+                "name": "Nautobot Baseball Stadiums",
+                "slug": "nautobot-baseball-stadiums",
+                "display": "Nautobot Baseball Stadiums"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "4a36ee2e-301c-4868-942d-9575ef8954ca",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/4a36ee2e-301c-4868-942d-9575ef8954ca/",
+                "site": {
+                    "id": "e643ba91-422d-4702-9e3c-59bed672b72a",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/e643ba91-422d-4702-9e3c-59bed672b72a/",
+                    "name": "AZD01",
+                    "slug": "azd01",
+                    "display": "AZD01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "b43653f3-b90f-42c2-830d-982b323263dc",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/b43653f3-b90f-42c2-830d-982b323263dc/",
+                    "device": {
+                        "id": "b9e2e89e-9f8c-431f-a8d0-dd63bb45e344",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/b9e2e89e-9f8c-431f-a8d0-dd63bb45e344/",
+                        "name": "azd01-edge-02",
+                        "display": "azd01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "1725c657-f4c9-47b8-b893-26705c43e4f7",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: AZD01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:25:41.822390Z",
+            "display": "ntt-40152860336224873"
+        },
+        {
+            "id": "7c8b53e5-6444-4994-a17b-45d0fb435f80",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/7c8b53e5-6444-4994-a17b-45d0fb435f80/",
+            "cid": "ntt-42305367195567145",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "fc3f5b17-1819-45d1-9e77-1e73de60e9bc",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/fc3f5b17-1819-45d1-9e77-1e73de60e9bc/",
+                "site": {
+                    "id": "3c26d93b-2dd7-47ab-82c3-0d3b057e6031",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/3c26d93b-2dd7-47ab-82c3-0d3b057e6031/",
+                    "name": "BKK01",
+                    "slug": "bkk01",
+                    "display": "BKK01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "3ea0ece5-b0a0-4c5e-bb56-2e858c38bf51",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/3ea0ece5-b0a0-4c5e-bb56-2e858c38bf51/",
+                    "device": {
+                        "id": "833d2eb9-27b7-4058-b114-3e0d43d257b4",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/833d2eb9-27b7-4058-b114-3e0d43d257b4/",
+                        "name": "bkk01-edge-01",
+                        "display": "bkk01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "388fc92c-a9a0-49c2-b21a-a855bf916f19",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: BKK01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:22:35.856738Z",
+            "display": "ntt-42305367195567145"
+        },
+        {
+            "id": "14866de9-fea2-4395-8815-d34987fc9314",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/14866de9-fea2-4395-8815-d34987fc9314/",
+            "cid": "ntt-42305367195613801",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "1500b45d-1f63-47ee-b736-ccd2230fce19",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/1500b45d-1f63-47ee-b736-ccd2230fce19/",
+                "site": {
+                    "id": "3c26d93b-2dd7-47ab-82c3-0d3b057e6031",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/3c26d93b-2dd7-47ab-82c3-0d3b057e6031/",
+                    "name": "BKK01",
+                    "slug": "bkk01",
+                    "display": "BKK01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "64635e1b-1f8f-4db5-94d9-c4390d368184",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/64635e1b-1f8f-4db5-94d9-c4390d368184/",
+                    "device": {
+                        "id": "ec6a10bc-11ef-4bdd-87e8-004652d45627",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/ec6a10bc-11ef-4bdd-87e8-004652d45627/",
+                        "name": "bkk01-edge-02",
+                        "display": "bkk01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "645b79e8-d3d0-401b-854b-9a8fd7c6bedb",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: BKK01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:22:35.927450Z",
+            "display": "ntt-42305367195613801"
+        },
+        {
+            "id": "daffdaba-0c92-40b4-8595-9ded06823c62",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/daffdaba-0c92-40b4-8595-9ded06823c62/",
+            "cid": "ntt-42999360232801321",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "783c1cd7-1096-4643-822b-d3ec675ae1ec",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/783c1cd7-1096-4643-822b-d3ec675ae1ec/",
+                "name": "Nautobot Baseball Stadiums",
+                "slug": "nautobot-baseball-stadiums",
+                "display": "Nautobot Baseball Stadiums"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "63a1e7b4-a75e-4e2e-b716-dbe69abcd4ff",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/63a1e7b4-a75e-4e2e-b716-dbe69abcd4ff/",
+                "site": {
+                    "id": "71093c5d-ded8-4881-9df1-99c00ad4508b",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/71093c5d-ded8-4881-9df1-99c00ad4508b/",
+                    "name": "BRE01",
+                    "slug": "bre01",
+                    "display": "BRE01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "a0449264-912f-411c-9d8f-c25c746e2dfa",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/a0449264-912f-411c-9d8f-c25c746e2dfa/",
+                    "device": {
+                        "id": "64986e1a-6c2f-4038-87d4-baf596832c5b",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/64986e1a-6c2f-4038-87d4-baf596832c5b/",
+                        "name": "bre01-edge-01",
+                        "display": "bre01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "3d29875c-5b2e-458d-8500-bfcb605ffacf",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: BRE01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:25:11.642297Z",
+            "display": "ntt-42999360232801321"
+        },
+        {
+            "id": "7a6a0690-3676-4c5f-8242-e68aa8856530",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/7a6a0690-3676-4c5f-8242-e68aa8856530/",
+            "cid": "ntt-42999360232847977",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "783c1cd7-1096-4643-822b-d3ec675ae1ec",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/783c1cd7-1096-4643-822b-d3ec675ae1ec/",
+                "name": "Nautobot Baseball Stadiums",
+                "slug": "nautobot-baseball-stadiums",
+                "display": "Nautobot Baseball Stadiums"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "96cce0fe-b9b8-4417-8f68-93bc908b33f9",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/96cce0fe-b9b8-4417-8f68-93bc908b33f9/",
+                "site": {
+                    "id": "71093c5d-ded8-4881-9df1-99c00ad4508b",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/71093c5d-ded8-4881-9df1-99c00ad4508b/",
+                    "name": "BRE01",
+                    "slug": "bre01",
+                    "display": "BRE01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "1b8a721d-7b3c-4ad0-9295-6798a3cba818",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/1b8a721d-7b3c-4ad0-9295-6798a3cba818/",
+                    "device": {
+                        "id": "a01adfb4-67cb-48f9-8297-ab697808721e",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/a01adfb4-67cb-48f9-8297-ab697808721e/",
+                        "name": "bre01-edge-02",
+                        "display": "bre01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "d8470d13-54ff-43bc-a389-2f51417063ef",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: BRE01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:25:11.707700Z",
+            "display": "ntt-42999360232847977"
+        },
+        {
+            "id": "3fc818d3-d3a8-4abf-a6d3-08cd58dcdf0d",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/3fc818d3-d3a8-4abf-a6d3-08cd58dcdf0d/",
+            "cid": "ntt-44954389398668329",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "d49fcc04-3b75-4403-9711-5f1b332730ea",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/d49fcc04-3b75-4403-9711-5f1b332730ea/",
+                "site": {
+                    "id": "2d85bb6f-570a-4bda-950f-b260478942eb",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/2d85bb6f-570a-4bda-950f-b260478942eb/",
+                    "name": "CAN01",
+                    "slug": "can01",
+                    "display": "CAN01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "87abf3cd-8048-4e30-a658-8bad10f39a8c",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/87abf3cd-8048-4e30-a658-8bad10f39a8c/",
+                    "device": {
+                        "id": "87ac0ba5-d903-4e70-8b50-da69b69d4d2d",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/87ac0ba5-d903-4e70-8b50-da69b69d4d2d/",
+                        "name": "can01-edge-01",
+                        "display": "can01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "6219f954-19d1-4478-9641-13d3f4fb605f",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: CAN01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:04.086812Z",
+            "display": "ntt-44954389398668329"
+        },
+        {
+            "id": "0b933630-0363-41d6-8b05-3a5a807e40c6",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/0b933630-0363-41d6-8b05-3a5a807e40c6/",
+            "cid": "ntt-44954389398714985",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "3e5ea73a-9968-48b9-86b6-364f594dfa26",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/3e5ea73a-9968-48b9-86b6-364f594dfa26/",
+                "site": {
+                    "id": "2d85bb6f-570a-4bda-950f-b260478942eb",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/2d85bb6f-570a-4bda-950f-b260478942eb/",
+                    "name": "CAN01",
+                    "slug": "can01",
+                    "display": "CAN01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "bbbcba55-76ab-4671-a0d6-1591033502e5",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/bbbcba55-76ab-4671-a0d6-1591033502e5/",
+                    "device": {
+                        "id": "c5d7a93d-413b-42ce-8bc7-55ae7be71e31",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/c5d7a93d-413b-42ce-8bc7-55ae7be71e31/",
+                        "name": "can01-edge-02",
+                        "display": "can01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "344b9925-d734-4afd-8e4d-b607d40624fa",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: CAN01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:04.176282Z",
+            "display": "ntt-44954389398714985"
+        },
+        {
+            "id": "79205ede-13c4-4037-9e10-fa467eb9fef2",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/79205ede-13c4-4037-9e10-fa467eb9fef2/",
+            "cid": "ntt-45239321499321385",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "f765206f-4d32-4937-b79e-fb1fea308508",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/f765206f-4d32-4937-b79e-fb1fea308508/",
+                "site": {
+                    "id": "2b743f70-50fb-4e93-8d22-cbdd7e9e7723",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/2b743f70-50fb-4e93-8d22-cbdd7e9e7723/",
+                    "name": "CDG01",
+                    "slug": "cdg01",
+                    "display": "CDG01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "ca9148b3-4821-4265-8379-59f9f4442ef2",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/ca9148b3-4821-4265-8379-59f9f4442ef2/",
+                    "device": {
+                        "id": "483f326f-1fe9-4991-845d-5fc63e2bfd74",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/483f326f-1fe9-4991-845d-5fc63e2bfd74/",
+                        "name": "cdg01-edge-01",
+                        "display": "cdg01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "1b245235-b6eb-4ba7-b0fe-17e70ba879a2",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: CDG01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:20:41.053841Z",
+            "display": "ntt-45239321499321385"
+        },
+        {
+            "id": "a8b815d9-3e95-4b08-ac05-992e36ec2009",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/a8b815d9-3e95-4b08-ac05-992e36ec2009/",
+            "cid": "ntt-45239321499368041",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "bfd4e33b-e430-429f-92a4-ebc1bf13529e",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/bfd4e33b-e430-429f-92a4-ebc1bf13529e/",
+                "site": {
+                    "id": "2b743f70-50fb-4e93-8d22-cbdd7e9e7723",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/2b743f70-50fb-4e93-8d22-cbdd7e9e7723/",
+                    "name": "CDG01",
+                    "slug": "cdg01",
+                    "display": "CDG01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "3109ff3e-fe0f-4b52-8e08-8d708b43f7f4",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/3109ff3e-fe0f-4b52-8e08-8d708b43f7f4/",
+                    "device": {
+                        "id": "43331a54-9ac9-4cac-9be1-8fdddc7ab882",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/43331a54-9ac9-4cac-9be1-8fdddc7ab882/",
+                        "name": "cdg01-edge-02",
+                        "display": "cdg01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "6234ee31-45a0-4b0b-ab8f-9a0aac50f5ae",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: CDG01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:20:41.121823Z",
+            "display": "ntt-45239321499368041"
+        },
+        {
+            "id": "391a0e62-a863-4369-bd10-4a6154ab0b7d",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/391a0e62-a863-4369-bd10-4a6154ab0b7d/",
+            "cid": "ntt-45239323676103721",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "e27fbeab-e77e-47f7-9753-e6dcb40689ef",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/e27fbeab-e77e-47f7-9753-e6dcb40689ef/",
+                "site": {
+                    "id": "6e611ab0-c7db-4b00-96dc-940fd5fa5d2e",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/6e611ab0-c7db-4b00-96dc-940fd5fa5d2e/",
+                    "name": "CDG02",
+                    "slug": "cdg02",
+                    "display": "CDG02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "0ee4fff6-30ce-4e14-bf24-f53855385e8d",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/0ee4fff6-30ce-4e14-bf24-f53855385e8d/",
+                    "device": {
+                        "id": "722fb5dd-e777-40ba-907c-8e9394539fb2",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/722fb5dd-e777-40ba-907c-8e9394539fb2/",
+                        "name": "cdg02-edge-01",
+                        "display": "cdg02-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "7a043c07-28fc-452e-8488-a7ae58640fd6",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: CDG02"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:24:40.820263Z",
+            "display": "ntt-45239323676103721"
+        },
+        {
+            "id": "f5d5403c-4706-4bf5-8df4-5b0dd7ffe845",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/f5d5403c-4706-4bf5-8df4-5b0dd7ffe845/",
+            "cid": "ntt-45239323676103793",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "356d2412-2cd6-4ed3-bd7c-bcd51451affb",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/356d2412-2cd6-4ed3-bd7c-bcd51451affb/",
+                "name": "Dark Fiber",
+                "slug": "dark-fiber",
+                "display": "Dark Fiber"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "352d496c-d113-48ea-9e49-29290b5c9dd4",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/352d496c-d113-48ea-9e49-29290b5c9dd4/",
+                "site": {
+                    "id": "6e611ab0-c7db-4b00-96dc-940fd5fa5d2e",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/6e611ab0-c7db-4b00-96dc-940fd5fa5d2e/",
+                    "name": "CDG02",
+                    "slug": "cdg02",
+                    "display": "CDG02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "47b9c162-4864-4db8-87f7-9e9c001627dd",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/47b9c162-4864-4db8-87f7-9e9c001627dd/",
+                    "device": {
+                        "id": "722fb5dd-e777-40ba-907c-8e9394539fb2",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/722fb5dd-e777-40ba-907c-8e9394539fb2/",
+                        "name": "cdg02-edge-01",
+                        "display": "cdg02-edge-01"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "7f53fa5f-23aa-49a1-b668-796c193d9093",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: CDG02"
+            },
+            "termination_z": {
+                "id": "93ade3ed-7f3f-4e6e-beff-c1516c8e95d9",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/93ade3ed-7f3f-4e6e-beff-c1516c8e95d9/",
+                "site": {
+                    "id": "2b743f70-50fb-4e93-8d22-cbdd7e9e7723",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/2b743f70-50fb-4e93-8d22-cbdd7e9e7723/",
+                    "name": "CDG01",
+                    "slug": "cdg01",
+                    "display": "CDG01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "e758a3e1-3b4f-469f-9680-8113846fa84e",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/e758a3e1-3b4f-469f-9680-8113846fa84e/",
+                    "device": {
+                        "id": "483f326f-1fe9-4991-845d-5fc63e2bfd74",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/483f326f-1fe9-4991-845d-5fc63e2bfd74/",
+                        "name": "cdg01-edge-01",
+                        "display": "cdg01-edge-01"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "f31808e8-8df6-4a5b-bb91-3729723e7e00",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination Z: CDG01"
+            },
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:24:41.687460Z",
+            "display": "ntt-45239323676103793"
+        },
+        {
+            "id": "24bf879a-6573-4f7b-bd78-a46df22ad3bc",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/24bf879a-6573-4f7b-bd78-a46df22ad3bc/",
+            "cid": "ntt-45239323676150377",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "2be717bb-d6f1-49ba-8208-44dcfb82b83f",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/2be717bb-d6f1-49ba-8208-44dcfb82b83f/",
+                "site": {
+                    "id": "6e611ab0-c7db-4b00-96dc-940fd5fa5d2e",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/6e611ab0-c7db-4b00-96dc-940fd5fa5d2e/",
+                    "name": "CDG02",
+                    "slug": "cdg02",
+                    "display": "CDG02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "9fcd551e-46fb-4a23-8799-8972231b06ee",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/9fcd551e-46fb-4a23-8799-8972231b06ee/",
+                    "device": {
+                        "id": "b2763939-ba4d-4389-b9bc-d8988aeb7bbe",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/b2763939-ba4d-4389-b9bc-d8988aeb7bbe/",
+                        "name": "cdg02-edge-02",
+                        "display": "cdg02-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "1049466b-b0f3-4119-89a0-a00c5576c573",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: CDG02"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:24:40.883333Z",
+            "display": "ntt-45239323676150377"
+        },
+        {
+            "id": "4a016555-c13d-4155-9270-315ae8971fbf",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/4a016555-c13d-4155-9270-315ae8971fbf/",
+            "cid": "ntt-45239323676150449",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "356d2412-2cd6-4ed3-bd7c-bcd51451affb",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/356d2412-2cd6-4ed3-bd7c-bcd51451affb/",
+                "name": "Dark Fiber",
+                "slug": "dark-fiber",
+                "display": "Dark Fiber"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "68b129ee-4554-4936-b417-406727bf6d9f",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/68b129ee-4554-4936-b417-406727bf6d9f/",
+                "site": {
+                    "id": "6e611ab0-c7db-4b00-96dc-940fd5fa5d2e",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/6e611ab0-c7db-4b00-96dc-940fd5fa5d2e/",
+                    "name": "CDG02",
+                    "slug": "cdg02",
+                    "display": "CDG02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "fb2e8963-a57d-4557-8915-efcfd6484bfd",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/fb2e8963-a57d-4557-8915-efcfd6484bfd/",
+                    "device": {
+                        "id": "b2763939-ba4d-4389-b9bc-d8988aeb7bbe",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/b2763939-ba4d-4389-b9bc-d8988aeb7bbe/",
+                        "name": "cdg02-edge-02",
+                        "display": "cdg02-edge-02"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "c106d100-cc39-4e85-9fc2-a9d18a85bf30",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: CDG02"
+            },
+            "termination_z": {
+                "id": "6f972464-24e7-4f60-8a4b-6cfed12baea0",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/6f972464-24e7-4f60-8a4b-6cfed12baea0/",
+                "site": {
+                    "id": "2b743f70-50fb-4e93-8d22-cbdd7e9e7723",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/2b743f70-50fb-4e93-8d22-cbdd7e9e7723/",
+                    "name": "CDG01",
+                    "slug": "cdg01",
+                    "display": "CDG01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "e33bb053-718f-45d4-a026-f8e3364d83ba",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/e33bb053-718f-45d4-a026-f8e3364d83ba/",
+                    "device": {
+                        "id": "43331a54-9ac9-4cac-9be1-8fdddc7ab882",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/43331a54-9ac9-4cac-9be1-8fdddc7ab882/",
+                        "name": "cdg01-edge-02",
+                        "display": "cdg01-edge-02"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "0f80d398-7c5f-4eb1-9237-072410498fbb",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination Z: CDG01"
+            },
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:24:41.994590Z",
+            "display": "ntt-45239323676150449"
+        },
+        {
+            "id": "93fbd348-c6b2-4dc4-9308-1d33211355e9",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/93fbd348-c6b2-4dc4-9308-1d33211355e9/",
+            "cid": "ntt-49011145445590057",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "dd90e5e6-64ac-4ed7-8796-340ccb56076a",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/dd90e5e6-64ac-4ed7-8796-340ccb56076a/",
+                "site": {
+                    "id": "0f9d4031-cf0c-477f-b9d6-cabcd7fecae3",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/0f9d4031-cf0c-477f-b9d6-cabcd7fecae3/",
+                    "name": "DEL01",
+                    "slug": "del01",
+                    "display": "DEL01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "9476e2ff-270f-470a-b5b6-129d3bdb1c02",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/9476e2ff-270f-470a-b5b6-129d3bdb1c02/",
+                    "device": {
+                        "id": "0bdd6791-0a11-4660-9471-87d9e88d4330",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/0bdd6791-0a11-4660-9471-87d9e88d4330/",
+                        "name": "del01-edge-01",
+                        "display": "del01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "8b6d5224-0dc9-44ad-96d3-481dc5e2c912",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DEL01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:22:12.501604Z",
+            "display": "ntt-49011145445590057"
+        },
+        {
+            "id": "69e16032-cd1f-4df2-8561-145e882e9c32",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/69e16032-cd1f-4df2-8561-145e882e9c32/",
+            "cid": "ntt-49011145445636713",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "4135aa0c-a19d-431c-9713-534c5d2872db",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/4135aa0c-a19d-431c-9713-534c5d2872db/",
+                "site": {
+                    "id": "0f9d4031-cf0c-477f-b9d6-cabcd7fecae3",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/0f9d4031-cf0c-477f-b9d6-cabcd7fecae3/",
+                    "name": "DEL01",
+                    "slug": "del01",
+                    "display": "DEL01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "b403927e-4e99-4963-8d07-a070dd0b44d1",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/b403927e-4e99-4963-8d07-a070dd0b44d1/",
+                    "device": {
+                        "id": "145bedab-52ea-49b3-a2f1-1510e4e27b50",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/145bedab-52ea-49b3-a2f1-1510e4e27b50/",
+                        "name": "del01-edge-02",
+                        "display": "del01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "c02eff1c-a190-4fa1-9968-ef1395b24a0f",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DEL01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:22:12.569797Z",
+            "display": "ntt-49011145445636713"
+        },
+        {
+            "id": "78fefe56-31aa-439a-84dd-002f4d258dce",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/78fefe56-31aa-439a-84dd-002f4d258dce/",
+            "cid": "ntt-49016787665404969",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "732060e3-a4ea-4908-b45d-61ad8be0d4af",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/732060e3-a4ea-4908-b45d-61ad8be0d4af/",
+                "site": {
+                    "id": "c3efd387-0044-44f3-b716-2042e98f3374",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/c3efd387-0044-44f3-b716-2042e98f3374/",
+                    "name": "DEN01",
+                    "slug": "den01",
+                    "display": "DEN01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "1a750fa9-3bb2-4574-b0c6-4ec9863c98ac",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/1a750fa9-3bb2-4574-b0c6-4ec9863c98ac/",
+                    "device": {
+                        "id": "0f710c71-160a-4a9b-9204-f4d123e2089e",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/0f710c71-160a-4a9b-9204-f4d123e2089e/",
+                        "name": "den01-edge-01",
+                        "display": "den01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "cd7702c8-7b6c-4949-b34c-f0a760caa67a",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DEN01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:57.841982Z",
+            "display": "ntt-49016787665404969"
+        },
+        {
+            "id": "5e770091-5451-4197-b6f8-0bb132457128",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/5e770091-5451-4197-b6f8-0bb132457128/",
+            "cid": "ntt-49016787665451625",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "7baee06b-a1ba-404f-94eb-062b4208f6a2",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/7baee06b-a1ba-404f-94eb-062b4208f6a2/",
+                "site": {
+                    "id": "c3efd387-0044-44f3-b716-2042e98f3374",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/c3efd387-0044-44f3-b716-2042e98f3374/",
+                    "name": "DEN01",
+                    "slug": "den01",
+                    "display": "DEN01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "937c8d2b-048d-4a55-bcb6-dc714c1c5ca0",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/937c8d2b-048d-4a55-bcb6-dc714c1c5ca0/",
+                    "device": {
+                        "id": "d796e621-df67-4a72-be11-45fe21c63b0b",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/d796e621-df67-4a72-be11-45fe21c63b0b/",
+                        "name": "den01-edge-02",
+                        "display": "den01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "cc84fcb7-fa85-49c7-bac6-8cd3a966dc22",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DEN01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:57.910627Z",
+            "display": "ntt-49016787665451625"
+        },
+        {
+            "id": "481f5071-5ba6-4e4b-acc5-23e96385170e",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/481f5071-5ba6-4e4b-acc5-23e96385170e/",
+            "cid": "ntt-49143737611240489",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "37e22bf1-0e51-4e77-91b4-f7b04f3eb76a",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/37e22bf1-0e51-4e77-91b4-f7b04f3eb76a/",
+                "site": {
+                    "id": "b99d132c-3871-4858-9a8f-00dd7056dade",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/b99d132c-3871-4858-9a8f-00dd7056dade/",
+                    "name": "DFW01",
+                    "slug": "dfw01",
+                    "display": "DFW01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "0f16df7f-393e-430b-b172-b2dad6b39066",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/0f16df7f-393e-430b-b172-b2dad6b39066/",
+                    "device": {
+                        "id": "500a15d4-1d3e-4389-921f-4cc45888e0e4",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/500a15d4-1d3e-4389-921f-4cc45888e0e4/",
+                        "name": "dfw01-edge-01",
+                        "display": "dfw01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "10ee4bc5-8055-4a4f-ab0b-08c347eda942",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DFW01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:20:52.591645Z",
+            "display": "ntt-49143737611240489"
+        },
+        {
+            "id": "966fb29a-b11d-4745-817f-86088f78d03f",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/966fb29a-b11d-4745-817f-86088f78d03f/",
+            "cid": "ntt-49143737611287145",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "5db6604b-6b63-44b5-8c45-c0601a34de38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/5db6604b-6b63-44b5-8c45-c0601a34de38/",
+                "site": {
+                    "id": "b99d132c-3871-4858-9a8f-00dd7056dade",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/b99d132c-3871-4858-9a8f-00dd7056dade/",
+                    "name": "DFW01",
+                    "slug": "dfw01",
+                    "display": "DFW01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "58d8c0a2-a71e-40f6-a3c2-8836ee383bc2",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/58d8c0a2-a71e-40f6-a3c2-8836ee383bc2/",
+                    "device": {
+                        "id": "adef0b84-eaca-4b2a-8ec4-007680328793",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/adef0b84-eaca-4b2a-8ec4-007680328793/",
+                        "name": "dfw01-edge-02",
+                        "display": "dfw01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "d815ee40-0a93-4ed0-8725-0a008177d083",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DFW01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:20:52.653997Z",
+            "display": "ntt-49143737611287145"
+        },
+        {
+            "id": "6fc3654a-c9cc-4560-9017-991ebd2dd393",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/6fc3654a-c9cc-4560-9017-991ebd2dd393/",
+            "cid": "ntt-49143739788022825",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "8f0bd7d0-e013-47df-81c0-5e214078c797",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/8f0bd7d0-e013-47df-81c0-5e214078c797/",
+                "site": {
+                    "id": "8510a1db-af33-4a56-a3f5-bae4d217f8bc",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/8510a1db-af33-4a56-a3f5-bae4d217f8bc/",
+                    "name": "DFW02",
+                    "slug": "dfw02",
+                    "display": "DFW02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "c89da62c-c18d-42f2-84ed-399c214656ca",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/c89da62c-c18d-42f2-84ed-399c214656ca/",
+                    "device": {
+                        "id": "64ffc75d-12c9-4fa8-8d8f-6f95c9911a3d",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/64ffc75d-12c9-4fa8-8d8f-6f95c9911a3d/",
+                        "name": "dfw02-edge-01",
+                        "display": "dfw02-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "031cf267-f8fc-423b-8c79-428b72dbb8b9",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DFW02"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:24:53.445250Z",
+            "display": "ntt-49143739788022825"
+        },
+        {
+            "id": "f300f188-3556-47b9-8bf0-f75de10c695c",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/f300f188-3556-47b9-8bf0-f75de10c695c/",
+            "cid": "ntt-49143739788022897",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "356d2412-2cd6-4ed3-bd7c-bcd51451affb",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/356d2412-2cd6-4ed3-bd7c-bcd51451affb/",
+                "name": "Dark Fiber",
+                "slug": "dark-fiber",
+                "display": "Dark Fiber"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "2093cec5-3802-4aa7-abfd-a13984e74aef",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/2093cec5-3802-4aa7-abfd-a13984e74aef/",
+                "site": {
+                    "id": "8510a1db-af33-4a56-a3f5-bae4d217f8bc",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/8510a1db-af33-4a56-a3f5-bae4d217f8bc/",
+                    "name": "DFW02",
+                    "slug": "dfw02",
+                    "display": "DFW02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "a6b6b9b1-bfa3-4a93-9ff0-71e4333308a2",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/a6b6b9b1-bfa3-4a93-9ff0-71e4333308a2/",
+                    "device": {
+                        "id": "64ffc75d-12c9-4fa8-8d8f-6f95c9911a3d",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/64ffc75d-12c9-4fa8-8d8f-6f95c9911a3d/",
+                        "name": "dfw02-edge-01",
+                        "display": "dfw02-edge-01"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "e7328617-1067-46d9-b352-0b25959fa5ca",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DFW02"
+            },
+            "termination_z": {
+                "id": "b079753e-9824-4e4e-8ce2-320c402eb11a",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/b079753e-9824-4e4e-8ce2-320c402eb11a/",
+                "site": {
+                    "id": "b99d132c-3871-4858-9a8f-00dd7056dade",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/b99d132c-3871-4858-9a8f-00dd7056dade/",
+                    "name": "DFW01",
+                    "slug": "dfw01",
+                    "display": "DFW01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "12852ff4-d2a1-4d81-9643-d7bf30f66937",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/12852ff4-d2a1-4d81-9643-d7bf30f66937/",
+                    "device": {
+                        "id": "500a15d4-1d3e-4389-921f-4cc45888e0e4",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/500a15d4-1d3e-4389-921f-4cc45888e0e4/",
+                        "name": "dfw01-edge-01",
+                        "display": "dfw01-edge-01"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "a0956ca9-3a3c-493c-9537-1e236523a703",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination Z: DFW01"
+            },
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:24:54.295172Z",
+            "display": "ntt-49143739788022897"
+        },
+        {
+            "id": "c08fc34b-079e-4233-a6a9-a766be869a37",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/c08fc34b-079e-4233-a6a9-a766be869a37/",
+            "cid": "ntt-49143739788069481",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "ad27a630-afb5-4ff7-993e-684ca13e5312",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/ad27a630-afb5-4ff7-993e-684ca13e5312/",
+                "site": {
+                    "id": "8510a1db-af33-4a56-a3f5-bae4d217f8bc",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/8510a1db-af33-4a56-a3f5-bae4d217f8bc/",
+                    "name": "DFW02",
+                    "slug": "dfw02",
+                    "display": "DFW02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "56671306-bda8-4ab3-9655-131d6d4135e0",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/56671306-bda8-4ab3-9655-131d6d4135e0/",
+                    "device": {
+                        "id": "608c1235-2a36-4eb7-8499-a996190faf36",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/608c1235-2a36-4eb7-8499-a996190faf36/",
+                        "name": "dfw02-edge-02",
+                        "display": "dfw02-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "af81ba51-1801-4992-97f1-4adf31fe7297",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DFW02"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:24:53.512466Z",
+            "display": "ntt-49143739788069481"
+        },
+        {
+            "id": "e3778d98-1c79-44e4-8d84-2cbb210227e8",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/e3778d98-1c79-44e4-8d84-2cbb210227e8/",
+            "cid": "ntt-49143739788069553",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "356d2412-2cd6-4ed3-bd7c-bcd51451affb",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/356d2412-2cd6-4ed3-bd7c-bcd51451affb/",
+                "name": "Dark Fiber",
+                "slug": "dark-fiber",
+                "display": "Dark Fiber"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "b78bb11a-a8f5-4361-afd9-454d8c89b8ba",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/b78bb11a-a8f5-4361-afd9-454d8c89b8ba/",
+                "site": {
+                    "id": "8510a1db-af33-4a56-a3f5-bae4d217f8bc",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/8510a1db-af33-4a56-a3f5-bae4d217f8bc/",
+                    "name": "DFW02",
+                    "slug": "dfw02",
+                    "display": "DFW02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "66461b46-8d1d-4f92-a582-7e5d911b0875",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/66461b46-8d1d-4f92-a582-7e5d911b0875/",
+                    "device": {
+                        "id": "608c1235-2a36-4eb7-8499-a996190faf36",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/608c1235-2a36-4eb7-8499-a996190faf36/",
+                        "name": "dfw02-edge-02",
+                        "display": "dfw02-edge-02"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "10ac48ae-f30e-4f96-9c3f-e171425e6a83",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DFW02"
+            },
+            "termination_z": {
+                "id": "b06c3f10-68b2-46cf-b3ff-dc0ce1f5aed7",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/b06c3f10-68b2-46cf-b3ff-dc0ce1f5aed7/",
+                "site": {
+                    "id": "b99d132c-3871-4858-9a8f-00dd7056dade",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/b99d132c-3871-4858-9a8f-00dd7056dade/",
+                    "name": "DFW01",
+                    "slug": "dfw01",
+                    "display": "DFW01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "c23317ef-6a75-4c16-87df-362921288b93",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/c23317ef-6a75-4c16-87df-362921288b93/",
+                    "device": {
+                        "id": "adef0b84-eaca-4b2a-8ec4-007680328793",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/adef0b84-eaca-4b2a-8ec4-007680328793/",
+                        "name": "dfw01-edge-02",
+                        "display": "dfw01-edge-02"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "f47160b6-cac9-4060-8197-b86783aa613a",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination Z: DFW01"
+            },
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:24:54.607247Z",
+            "display": "ntt-49143739788069553"
+        },
+        {
+            "id": "8542189e-bdfb-4ef9-9932-db28b9242062",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/8542189e-bdfb-4ef9-9932-db28b9242062/",
+            "cid": "ntt-50912573523215401",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "fc6dffce-197a-4fa8-b030-a98316143d3a",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/fc6dffce-197a-4fa8-b030-a98316143d3a/",
+                "site": {
+                    "id": "9fbe05e5-9fb7-4a23-b7bc-2069b987db24",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/9fbe05e5-9fb7-4a23-b7bc-2069b987db24/",
+                    "name": "DXB01",
+                    "slug": "dxb01",
+                    "display": "DXB01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "b77fdaff-396f-42f2-85b7-3819b365e307",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/b77fdaff-396f-42f2-85b7-3819b365e307/",
+                    "device": {
+                        "id": "d29e22c6-2460-4d56-ab9f-2b42abefde91",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/d29e22c6-2460-4d56-ab9f-2b42abefde91/",
+                        "name": "dxb01-edge-01",
+                        "display": "dxb01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "1ab76ed7-1c01-4173-8328-8722fc1545e7",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DXB01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:19:46.719281Z",
+            "display": "ntt-50912573523215401"
+        },
+        {
+            "id": "6e503baa-c8dd-4908-9b29-55b8f868ea41",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/6e503baa-c8dd-4908-9b29-55b8f868ea41/",
+            "cid": "ntt-50912573523262057",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "03b9211d-0109-4724-bcc4-7221e02ecfbd",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/03b9211d-0109-4724-bcc4-7221e02ecfbd/",
+                "site": {
+                    "id": "9fbe05e5-9fb7-4a23-b7bc-2069b987db24",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/9fbe05e5-9fb7-4a23-b7bc-2069b987db24/",
+                    "name": "DXB01",
+                    "slug": "dxb01",
+                    "display": "DXB01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "59ee7274-caa5-4b21-a235-eab293f993d8",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/59ee7274-caa5-4b21-a235-eab293f993d8/",
+                    "device": {
+                        "id": "39db44bc-63e9-4212-940b-a40c97ef8b41",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/39db44bc-63e9-4212-940b-a40c97ef8b41/",
+                        "name": "dxb01-edge-02",
+                        "display": "dxb01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "fa26ce34-3eb9-4c16-af1b-cadb340a000f",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DXB01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:19:46.802141Z",
+            "display": "ntt-50912573523262057"
+        },
+        {
+            "id": "efde55b9-7e44-4635-92c1-75b4a1fa6432",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/efde55b9-7e44-4635-92c1-75b4a1fa6432/",
+            "cid": "ntt-50912575699997737",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "f0bf736a-3dbd-45a4-8a8c-c9677f5b5e0e",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/f0bf736a-3dbd-45a4-8a8c-c9677f5b5e0e/",
+                "site": {
+                    "id": "26c7a449-f1fe-4631-9f89-377f35c9c71f",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/26c7a449-f1fe-4631-9f89-377f35c9c71f/",
+                    "name": "DXB02",
+                    "slug": "dxb02",
+                    "display": "DXB02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "aee700f7-04dd-4d3f-9a08-8a1125c7e38d",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/aee700f7-04dd-4d3f-9a08-8a1125c7e38d/",
+                    "device": {
+                        "id": "b6430c73-3a68-4a37-b6b7-b4cba27fcca3",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/b6430c73-3a68-4a37-b6b7-b4cba27fcca3/",
+                        "name": "dxb02-edge-01",
+                        "display": "dxb02-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "2d15597c-a742-41b6-b98d-982f34f78bec",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DXB02"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:23:41.313270Z",
+            "display": "ntt-50912575699997737"
+        },
+        {
+            "id": "d89d4f12-9e7e-49b8-8683-9244ec734228",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/d89d4f12-9e7e-49b8-8683-9244ec734228/",
+            "cid": "ntt-50912575699997809",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "356d2412-2cd6-4ed3-bd7c-bcd51451affb",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/356d2412-2cd6-4ed3-bd7c-bcd51451affb/",
+                "name": "Dark Fiber",
+                "slug": "dark-fiber",
+                "display": "Dark Fiber"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "778284b7-9178-4143-b84b-8e920ede3b5e",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/778284b7-9178-4143-b84b-8e920ede3b5e/",
+                "site": {
+                    "id": "26c7a449-f1fe-4631-9f89-377f35c9c71f",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/26c7a449-f1fe-4631-9f89-377f35c9c71f/",
+                    "name": "DXB02",
+                    "slug": "dxb02",
+                    "display": "DXB02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "f154a268-5d69-4bdf-ad16-92d7d1330548",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/f154a268-5d69-4bdf-ad16-92d7d1330548/",
+                    "device": {
+                        "id": "b6430c73-3a68-4a37-b6b7-b4cba27fcca3",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/b6430c73-3a68-4a37-b6b7-b4cba27fcca3/",
+                        "name": "dxb02-edge-01",
+                        "display": "dxb02-edge-01"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "b956fbc3-6d7e-4590-bd1e-b3974879bbfc",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DXB02"
+            },
+            "termination_z": {
+                "id": "ab04782e-d5db-4b3f-9390-174eb4c680ba",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/ab04782e-d5db-4b3f-9390-174eb4c680ba/",
+                "site": {
+                    "id": "9fbe05e5-9fb7-4a23-b7bc-2069b987db24",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/9fbe05e5-9fb7-4a23-b7bc-2069b987db24/",
+                    "name": "DXB01",
+                    "slug": "dxb01",
+                    "display": "DXB01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "03d72844-e123-41ae-8ff6-ded7e59b7fa1",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/03d72844-e123-41ae-8ff6-ded7e59b7fa1/",
+                    "device": {
+                        "id": "d29e22c6-2460-4d56-ab9f-2b42abefde91",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/d29e22c6-2460-4d56-ab9f-2b42abefde91/",
+                        "name": "dxb01-edge-01",
+                        "display": "dxb01-edge-01"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "669bfb84-b730-47bd-b7aa-bc81be459f12",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination Z: DXB01"
+            },
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:23:42.171149Z",
+            "display": "ntt-50912575699997809"
+        },
+        {
+            "id": "c8e632f2-250b-4381-83a3-5b4341211ede",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/c8e632f2-250b-4381-83a3-5b4341211ede/",
+            "cid": "ntt-50912575700044393",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "03f8f132-54e4-48eb-ae4f-de14c471a94b",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/03f8f132-54e4-48eb-ae4f-de14c471a94b/",
+                "site": {
+                    "id": "26c7a449-f1fe-4631-9f89-377f35c9c71f",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/26c7a449-f1fe-4631-9f89-377f35c9c71f/",
+                    "name": "DXB02",
+                    "slug": "dxb02",
+                    "display": "DXB02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "53be8540-d623-4d9a-8a90-30aff8d8e67d",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/53be8540-d623-4d9a-8a90-30aff8d8e67d/",
+                    "device": {
+                        "id": "41942b10-feff-4a25-bc61-cec776ec0250",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/41942b10-feff-4a25-bc61-cec776ec0250/",
+                        "name": "dxb02-edge-02",
+                        "display": "dxb02-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "29a494fa-f610-4253-89d2-a3f8b547bd11",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DXB02"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:23:41.379985Z",
+            "display": "ntt-50912575700044393"
+        },
+        {
+            "id": "bc5193f1-ae2c-4259-9f7e-991a68870003",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/bc5193f1-ae2c-4259-9f7e-991a68870003/",
+            "cid": "ntt-50912575700044465",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "356d2412-2cd6-4ed3-bd7c-bcd51451affb",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/356d2412-2cd6-4ed3-bd7c-bcd51451affb/",
+                "name": "Dark Fiber",
+                "slug": "dark-fiber",
+                "display": "Dark Fiber"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "1c645bb6-218c-48f9-aaef-1848d53f711a",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/1c645bb6-218c-48f9-aaef-1848d53f711a/",
+                "site": {
+                    "id": "26c7a449-f1fe-4631-9f89-377f35c9c71f",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/26c7a449-f1fe-4631-9f89-377f35c9c71f/",
+                    "name": "DXB02",
+                    "slug": "dxb02",
+                    "display": "DXB02"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "686598f9-656f-4b6d-9b89-f921518b0a0c",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/686598f9-656f-4b6d-9b89-f921518b0a0c/",
+                    "device": {
+                        "id": "41942b10-feff-4a25-bc61-cec776ec0250",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/41942b10-feff-4a25-bc61-cec776ec0250/",
+                        "name": "dxb02-edge-02",
+                        "display": "dxb02-edge-02"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "36ae89f2-2636-4100-8c4b-f3b1098a9a89",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: DXB02"
+            },
+            "termination_z": {
+                "id": "8fb0f1ed-ed63-4fe6-a394-20850130779b",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/8fb0f1ed-ed63-4fe6-a394-20850130779b/",
+                "site": {
+                    "id": "9fbe05e5-9fb7-4a23-b7bc-2069b987db24",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/9fbe05e5-9fb7-4a23-b7bc-2069b987db24/",
+                    "name": "DXB01",
+                    "slug": "dxb01",
+                    "display": "DXB01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "4853318c-833a-4c5e-80ae-40fdbf2307d0",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/4853318c-833a-4c5e-80ae-40fdbf2307d0/",
+                    "device": {
+                        "id": "39db44bc-63e9-4212-940b-a40c97ef8b41",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/39db44bc-63e9-4212-940b-a40c97ef8b41/",
+                        "name": "dxb01-edge-02",
+                        "display": "dxb01-edge-02"
+                    },
+                    "name": "Ethernet18/1",
+                    "cable": "a7f100eb-40ef-4532-8fa5-5315596cdb4c",
+                    "display": "Ethernet18/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination Z: DXB01"
+            },
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:23:42.489172Z",
+            "display": "ntt-50912575700044465"
+        },
+        {
+            "id": "ce14c0d6-42ae-4a65-bc77-00e13d2b697f",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/ce14c0d6-42ae-4a65-bc77-00e13d2b697f/",
+            "cid": "ntt-57612709553423401",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "1d6b6609-142c-4165-bda7-570adcf08f00",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/1d6b6609-142c-4165-bda7-570adcf08f00/",
+                "site": {
+                    "id": "4e3b7795-dfbc-45b4-9351-808ff5cd5dd1",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/4e3b7795-dfbc-45b4-9351-808ff5cd5dd1/",
+                    "name": "FRA01",
+                    "slug": "fra01",
+                    "display": "FRA01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "f7e82733-9c1e-41e8-bfee-fb9df114c1a5",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/f7e82733-9c1e-41e8-bfee-fb9df114c1a5/",
+                    "device": {
+                        "id": "aacd794c-dae5-4185-992d-1096cc7c16c3",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/aacd794c-dae5-4185-992d-1096cc7c16c3/",
+                        "name": "fra01-edge-01",
+                        "display": "fra01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "23d37326-3f93-4818-a717-99e6b2d9e44c",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: FRA01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:46.286732Z",
+            "display": "ntt-57612709553423401"
+        },
+        {
+            "id": "e5d1cef5-6b66-424b-93f9-aa31455de3e0",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/e5d1cef5-6b66-424b-93f9-aa31455de3e0/",
+            "cid": "ntt-57612709553470057",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "54d76e55-1d63-4fa2-a05b-9302d5e8d7a1",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/54d76e55-1d63-4fa2-a05b-9302d5e8d7a1/",
+                "site": {
+                    "id": "4e3b7795-dfbc-45b4-9351-808ff5cd5dd1",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/4e3b7795-dfbc-45b4-9351-808ff5cd5dd1/",
+                    "name": "FRA01",
+                    "slug": "fra01",
+                    "display": "FRA01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "f6fae8ad-0ae2-40c5-9f4c-71fec3471dda",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/f6fae8ad-0ae2-40c5-9f4c-71fec3471dda/",
+                    "device": {
+                        "id": "dc66bf45-7757-4445-87ff-c80dd7998353",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/dc66bf45-7757-4445-87ff-c80dd7998353/",
+                        "name": "fra01-edge-02",
+                        "display": "fra01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "6f30fda6-4ac9-4bce-b043-1bfb7d43afa5",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: FRA01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:46.387726Z",
+            "display": "ntt-57612709553470057"
+        },
+        {
+            "id": "7fad9a73-dc08-4563-8628-c06e2b6e4458",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/7fad9a73-dc08-4563-8628-c06e2b6e4458/",
+            "cid": "ntt-64231033396315177",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "493c925b-dbf3-4904-8b3b-cca65078d9a3",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/493c925b-dbf3-4904-8b3b-cca65078d9a3/",
+                "site": {
+                    "id": "69b75bfa-6ba2-46f8-93fc-eb61a0d0b136",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/69b75bfa-6ba2-46f8-93fc-eb61a0d0b136/",
+                    "name": "HKG01",
+                    "slug": "hkg01",
+                    "display": "HKG01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "3d1300e7-975c-4fab-af71-f4dd15c655e5",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/3d1300e7-975c-4fab-af71-f4dd15c655e5/",
+                    "device": {
+                        "id": "f6ac4250-2e6f-41cc-9b2b-9ebcb4df33c2",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/f6ac4250-2e6f-41cc-9b2b-9ebcb4df33c2/",
+                        "name": "hkg01-edge-01",
+                        "display": "hkg01-edge-01"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "d516ccd3-0ddb-437a-a6f5-53f36e9f646f",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: HKG01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:27.104578Z",
+            "display": "ntt-64231033396315177"
+        },
+        {
+            "id": "eafe1a7e-d0b9-41f4-b5f9-07d74fa3d6bf",
+            "url": "https://demo.nautobot.com/api/circuits/circuits/eafe1a7e-d0b9-41f4-b5f9-07d74fa3d6bf/",
+            "cid": "ntt-64231033396361833",
+            "provider": {
+                "id": "d73376a4-6271-43e4-a403-1a7168c9e365",
+                "url": "https://demo.nautobot.com/api/circuits/providers/d73376a4-6271-43e4-a403-1a7168c9e365/",
+                "name": "NTT",
+                "slug": "ntt",
+                "display": "NTT"
+            },
+            "type": {
+                "id": "f2ad4615-cc83-4ea4-924b-2f15fe0d0b38",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-types/f2ad4615-cc83-4ea4-924b-2f15fe0d0b38/",
+                "name": "Transit",
+                "slug": "transit",
+                "display": "Transit"
+            },
+            "status": {
+                "value": "active",
+                "label": "Active"
+            },
+            "tenant": {
+                "id": "9b22f4e6-e7bb-4c85-8989-c65e1a2cc629",
+                "url": "https://demo.nautobot.com/api/tenancy/tenants/9b22f4e6-e7bb-4c85-8989-c65e1a2cc629/",
+                "name": "Nautobot Airports",
+                "slug": "nautobot-airports",
+                "display": "Nautobot Airports"
+            },
+            "install_date": null,
+            "commit_rate": null,
+            "description": "",
+            "termination_a": {
+                "id": "36a477dd-f987-4181-b7cd-db27bb0b9668",
+                "url": "https://demo.nautobot.com/api/circuits/circuit-terminations/36a477dd-f987-4181-b7cd-db27bb0b9668/",
+                "site": {
+                    "id": "69b75bfa-6ba2-46f8-93fc-eb61a0d0b136",
+                    "url": "https://demo.nautobot.com/api/dcim/sites/69b75bfa-6ba2-46f8-93fc-eb61a0d0b136/",
+                    "name": "HKG01",
+                    "slug": "hkg01",
+                    "display": "HKG01"
+                },
+                "provider_network": null,
+                "connected_endpoint": {
+                    "id": "5c64b5fe-aa9d-4d71-a9fd-6c2cc22ca0f0",
+                    "url": "https://demo.nautobot.com/api/dcim/interfaces/5c64b5fe-aa9d-4d71-a9fd-6c2cc22ca0f0/",
+                    "device": {
+                        "id": "22a9adc4-e471-4c2b-9579-6deeafb1865d",
+                        "url": "https://demo.nautobot.com/api/dcim/devices/22a9adc4-e471-4c2b-9579-6deeafb1865d/",
+                        "name": "hkg01-edge-02",
+                        "display": "hkg01-edge-02"
+                    },
+                    "name": "Ethernet16/1",
+                    "cable": "65cd0004-f777-447e-ac83-98d46a0e96db",
+                    "display": "Ethernet16/1"
+                },
+                "port_speed": null,
+                "upstream_speed": null,
+                "xconnect_id": "",
+                "display": "Termination A: HKG01"
+            },
+            "termination_z": null,
+            "comments": "",
+            "tags": [],
+            "custom_fields": {},
+            "created": "2022-05-04",
+            "last_updated": "2022-05-04T13:21:27.170794Z",
+            "display": "ntt-64231033396361833"
         }
     ]
 }
