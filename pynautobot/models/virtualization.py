@@ -16,12 +16,8 @@ limitations under the License.
 This file has been modified by NetworktoCode, LLC.
 """
 from pynautobot.core.response import Record, JsonField
-from pynautobot.models.ipam import IpAddresses
 
 
 class VirtualMachines(Record):
 
-    primary_ip = IpAddresses
-    primary_ip4 = IpAddresses
-    primary_ip6 = IpAddresses
     config_context = JsonField
