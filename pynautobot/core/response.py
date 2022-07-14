@@ -299,7 +299,11 @@ class Record(object):
         :returns: True
         """
         if self.url:
-            req = Request(base=self.url, token=self.api.token, http_session=self.api.http_session,)
+            req = Request(
+                base=self.url,
+                token=self.api.token,
+                http_session=self.api.http_session,
+            )
             self._parse_values(req.get())
             self.has_details = True
             return True
@@ -382,7 +386,10 @@ class Record(object):
             if diff:
                 serialized = self.serialize()
                 req = Request(
-                    key=self.id, base=self.endpoint.url, token=self.api.token, http_session=self.api.http_session,
+                    key=self.id,
+                    base=self.endpoint.url,
+                    token=self.api.token,
+                    http_session=self.api.http_session,
                 )
                 if req.patch({i: serialized[i] for i in diff}):
                     return True
@@ -425,5 +432,10 @@ class Record(object):
         True
         >>>
         """
-        req = Request(key=self.id, base=self.endpoint.url, token=self.api.token, http_session=self.api.http_session,)
+        req = Request(
+            key=self.id,
+            base=self.endpoint.url,
+            token=self.api.token,
+            http_session=self.api.http_session,
+        )
         return True if req.delete() else False

@@ -23,7 +23,7 @@ import json
 
 
 def calc_pages(limit, count):
-    """ Calculate number of pages required for full results set. """
+    """Calculate number of pages required for full results set."""
     return int(count / limit) + (limit % count > 0)
 
 
@@ -119,7 +119,14 @@ class Request(object):
     """
 
     def __init__(
-        self, base, http_session, filters=None, key=None, token=None, threading=False, api_version=None,
+        self,
+        base,
+        http_session,
+        filters=None,
+        key=None,
+        token=None,
+        threading=False,
+        api_version=None,
     ):
         """
         Instantiates a new Request object
@@ -143,7 +150,7 @@ class Request(object):
         self.api_version = api_version
 
     def get_openapi(self):
-        """ Gets the OpenAPI Spec """
+        """Gets the OpenAPI Spec"""
         headers = {
             "Content-Type": "application/json;",
         }
@@ -151,7 +158,10 @@ class Request(object):
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
 
-        req = self.http_session.get("{}docs/?format=openapi".format(self.normalize_url(self.base)), headers=headers,)
+        req = self.http_session.get(
+            "{}docs/?format=openapi".format(self.normalize_url(self.base)),
+            headers=headers,
+        )
         if req.ok:
             return req.json()
         else:
@@ -171,7 +181,10 @@ class Request(object):
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
 
-        req = self.http_session.get(self.normalize_url(self.base), headers=headers,)
+        req = self.http_session.get(
+            self.normalize_url(self.base),
+            headers=headers,
+        )
 
         if req.ok:
             return req.headers.get("API-Version", "")
@@ -191,7 +204,10 @@ class Request(object):
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
 
-        req = self.http_session.get("{}status/".format(self.normalize_url(self.base)), headers=headers,)
+        req = self.http_session.get(
+            "{}status/".format(self.normalize_url(self.base)),
+            headers=headers,
+        )
         if req.ok:
             return req.json()
         else:
