@@ -111,12 +111,12 @@ class SiteTestCase(Generic.Tests):
         self.assertEqual(ret.custom_fields["test_custom"], "Testing")
 
     @patch("requests.sessions.Session.get", return_value=Response(fixture="dcim/site.json"))
-    def test_custom_selection_serializer(self, _):
+    def test_custom_field_json(self, _):
         """Tests serializer with custom selection fields."""
         ret = self.endpoint.get(self.uuid)
         ret.custom_fields["test_custom"] = "Testing"
         test = ret.serialize()
-        self.assertEqual(test["custom_fields"]["test_selection"], 2)
+        self.assertEqual(test["custom_fields"]["test_json"]["second_key"], "second")
 
     @patch("requests.sessions.Session.post", return_value=Response(fixture="dcim/site.json"))
     def test_create(self, mock):

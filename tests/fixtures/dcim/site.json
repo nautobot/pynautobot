@@ -14,9 +14,9 @@
     "comments": "",
     "custom_fields": {
         "test_custom": "Hello",
-        "test_selection": {
-            "value": 2,
-            "label": "second"
+        "test_json": {
+            "first_key": 2,
+            "second_key": "second"
         }
     },
     "count_prefixes": 2,

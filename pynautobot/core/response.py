@@ -59,10 +59,6 @@ def get_return(lookup, return_fields=None):
         return lookup
 
 
-def flatten_custom(custom_dict):
-    return {k: v if not isinstance(v, dict) else v["value"] for k, v in custom_dict.items()}
-
-
 class JsonField(object):
     """Explicit field type for values that are not to be converted
     to a Record object"""
@@ -335,10 +331,9 @@ class Record(object):
         ret = {}
         for i in dict(self):
             current_val = getattr(self, i) if not init else init_vals.get(i)
-            if i == "custom_fields":
-                ret[i] = flatten_custom(current_val)
-            elif i == "constraints":  # just pass constraints as it is (a JSON string)
+            if i in ["custom_fields", "constraints"]:  # just pass constraints as it is (a JSON string)
                 ret[i] = current_val
+
             else:
                 if isinstance(current_val, Record):
                     current_val = getattr(current_val, "serialize")(nested=True)
