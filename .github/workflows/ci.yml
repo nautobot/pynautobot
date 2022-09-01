@@ -26,8 +26,6 @@ jobs:
         uses: "actions/checkout@v2"
       - name: "Install CICD dependencies"
         run: "pip install -U pip && pip install poetry"
-      - name: "Install project dependencies via Poetry"
-        run: "poetry install"
       - name: "Start containers"
         run: "poetry run invoke start"
       - name: "Wait for Nautobot to become available."
