@@ -27,11 +27,11 @@ jobs:
       - name: "Install CICD dependencies"
         run: "pip install -U pip && pip install poetry"
       - name: "Start containers"
-        run: "poetry run invoke start"
+        run: "invoke start"
       - name: "Wait for Nautobot to become available."
         run: timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)" != "200" ]]; do echo "waiting for Nautobot"; sleep 5; done' || false
       - name: "Tests"
-        run: "poetry run invoke tests"
+        run: "invoke build tests"
   publish_pypi:
     name: "Push Package to PyPI"
     runs-on: "ubuntu-20.04"
