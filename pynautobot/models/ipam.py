@@ -91,9 +91,3 @@ class Prefixes(Record):
 
         """
         return DetailEndpoint(self, "available-prefixes", custom_return=Prefixes)
-
-
-class Aggregates(Record):
-    def __str__(self):
-        parent_record_string = super().__str__()
-        return parent_record_string or str(self.prefix)
