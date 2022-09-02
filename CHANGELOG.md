@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1.3
+
+### Bug Fixes
+
+- (#75) Fixes child prefixes for the **available-prefixes/ips** endpoint
+- (#72) Updates to account for JSON Custom Field type introduced by Nautobot Custom Fields
+
 ## v1.1.2
 
 ### Bug Fixes
