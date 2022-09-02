@@ -39,6 +39,8 @@ class PrefixTestCase(Generic.Tests):
         mock.assert_called_with(f"{self.detail_uri}available-ips/", params={}, json=None, headers=HEADERS)
         self.assertTrue(ret)
         self.assertEqual(len(ret), 3)
+        for record in ret:
+            self.assertEqual(record.address, str(record))
 
     @patch("requests.sessions.Session.post", return_value=Response(fixture="ipam/available-ips-post.json"))
     @patch("requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"))
@@ -61,6 +63,9 @@ class PrefixTestCase(Generic.Tests):
         ret = pfx.available_prefixes.list()
         mock.assert_called_with(f"{self.detail_uri}available-prefixes/", params={}, json=None, headers=HEADERS)
         self.assertTrue(ret)
+        self.assertEqual(len(ret), 1)
+        for record in ret:
+            self.assertEqual(record.prefix, str(record))
 
     @patch("requests.sessions.Session.post", return_value=Response(fixture="ipam/available-prefixes-post.json"))
     @patch("requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"))
@@ -106,6 +111,16 @@ class RIRTestCase(Generic.Tests):
 class AggregatesTestCase(Generic.Tests):
     app = "ipam"
     name = "aggregates"
+
+    @patch(
+        "requests.sessions.Session.get",
+        side_effect=[Response(fixture="ipam/aggregate.json")],
+    )
+    def test_get_aggregate_stringify(self, mock):
+        ret = self.endpoint.get(self.uuid)
+        mock.assert_called_with(f"{self.detail_uri}", params={}, json=None, headers=HEADERS)
+        self.assertTrue(ret)
+        self.assertEqual(ret.prefix, str(ret))
 
 
 class VlanTestCase(Generic.Tests):
