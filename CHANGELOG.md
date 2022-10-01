@@ -6,7 +6,7 @@
 
     It is now allowed to filter per id. (switch = devices.get(id="..."))
 
-e## v1.2.0
+## v1.2.0
 
 ### Significant Updates
 
