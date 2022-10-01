@@ -1,10 +1,17 @@
 # Changelog
 
-## v1.2.0
+## v1.2.1
+
+- (#76) Feature: Removing the restriction on `id` for filter
+
+    It is now allowed to filter per id. (switch = devices.get(id="..."))
+
+e## v1.2.0
 
 ### Significant Updates
 
 - (#71) Drops support for Python3.6 and updates package dependencies.
+
 ### Bug Fixes
 
 - (#75) Fixes child prefixes for the **available-prefixes/ips** endpoint.

@@ -22,6 +22,18 @@ class DeviceTestCase(Generic.Tests):
         self.assertIsInstance(ret.local_context_data, dict)
         mock.assert_called_with(self.detail_uri, params={}, json=None, headers=HEADERS)
 
+    @patch("requests.sessions.Session.get", return_value=Response(fixture="dcim/device.json"))
+    def test_get_by_id(self, mock):
+        params = {"id": self.uuid}
+        ret = self.endpoint.filter(**params)
+        self.assertIsInstance(ret, self.ret)
+        self.assertIsInstance(ret.primary_ip, pynautobot.core.response.Record)
+        self.assertIsInstance(ret.primary_ip4, pynautobot.core.response.Record)
+        self.assertIsInstance(ret.config_context, dict)
+        self.assertIsInstance(ret.custom_fields, dict)
+        self.assertIsInstance(ret.local_context_data, dict)
+        mock.assert_called_with(self.bulk_uri, params=params, json=None, headers=HEADERS)
+
     @patch("requests.sessions.Session.get", return_value=Response(fixture="dcim/devices.json"))
     def test_multi_filter(self, mock):
         params = {"role": ["test", "test1"], "site": "TEST#1"}
