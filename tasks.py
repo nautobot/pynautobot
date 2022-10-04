@@ -44,7 +44,19 @@ INVOKE_LOCAL = is_truthy(os.getenv("INVOKE_LOCAL", False))  # pylint: disable=W1
 
 @task
 def start(context):
+    print("Starting Nautobot in detached mode...")
     return context.run("docker-compose -f development/docker-compose.yml up -d")
+
+
+@task
+def stop(context):
+    return context.run("docker-compose -f development/docker-compose.yml down")
+
+
+@task
+def debug(context):
+    print("Starting Nautobot in debug mode...")
+    return context.run("docker-compose -f development/docker-compose.yml up")
 
 
 def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
