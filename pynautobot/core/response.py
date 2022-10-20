@@ -279,7 +279,7 @@ class Record(object):
         if split_url_path[2] == "plugins":
             # Keep plugins in app path
             app = "/".join(split_url_path[2:4])
-            name = split_url_path[4]
+            name = "/".join(split_url_path[4:-2])
         else:
             app, name = split_url_path[2:4]
         return getattr(pynautobot.core.app.App(self.api, app), name)
