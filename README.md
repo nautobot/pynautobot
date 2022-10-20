@@ -1,11 +1,11 @@
 ![pynautobot](docs/nautobot_logo.svg "Nautobot logo")
 
 # Pynautobot
+
 Python API client library for [Nautobot](https://github.com/nautobot/nautobot).
 
 > Pynautobot was initially developed as a fork of [pynetbox](https://github.com/digitalocean/pynetbox/).
-  Pynetbox was originally developed by Zach Moody at DigitalOcean and the NetBox Community.
-
+> Pynetbox was originally developed by Zach Moody at DigitalOcean and the NetBox Community.
 
 The complete documentation for pynautobot can be found at [Read the Docs](https://pynautobot.readthedocs.io/en/stable/).
 
@@ -34,7 +34,6 @@ Virtual environment already activated: /home/user/pynautobot/.venv
 $ poetry install
 ...
 ```
-
 
 ## Quick Start
 
@@ -86,7 +85,7 @@ hq
 
 ### Threading
 
-Pynautobot supports multithreaded calls for `.filter()` and `.all()` queries. It is **highly recommended** you have `MAX_PAGE_SIZE` in your Nautobot install set to anything *except* `0` or `None`. The default value of `1000` is usually a good value to use. To enable threading, add `threading=True` parameter when instantiating the `Api` object:
+Pynautobot supports multithreaded calls for `.filter()` and `.all()` queries. It is **highly recommended** you have `MAX_PAGE_SIZE` in your Nautobot install set to anything _except_ `0` or `None`. The default value of `1000` is usually a good value to use. To enable threading, add `threading=True` parameter when instantiating the `Api` object:
 
 ```python
 nautobot = pynautobot.api(
@@ -100,7 +99,8 @@ nautobot = pynautobot.api(
 
 Used for Nautobot Rest API versioning. Versioning can be controlled globally by setting `api_version` on initialization of the `API` class and/or for a specific request e.g (`list()`, `get()`, `create()` etc.) by setting an optional `api_version` parameter.
 
-__Global versioning__
+**Global versioning**
+
 ```python
 import pynautobot
 nautobot = pynautobot.api(
@@ -110,7 +110,8 @@ nautobot = pynautobot.api(
 )
 ```
 
-__Request specific versioning__
+**Request specific versioning**
+
 ```python
 import pynautobot
 nautobot = pynautobot.api(
@@ -119,6 +120,21 @@ nautobot = pynautobot.api(
 tags = nautobot.extras.tags
 tags.create(name="Tag", slug="tag", api_version="1.2",)
 tags.list(api_version="1.3",)
+```
+
+### Retry logic
+
+By default, the client will not retry any operation. This behavior can be adjusted via the `retries` optional parameters. This will only affect for HTTP codes: 429, 501, 502, 503 and 504.
+
+**Retries**
+
+```python
+import pynautobot
+nautobot = pynautobot.api(
+    url="http://localhost:8000",
+    token="d6f4e314a5b5fefd164995169f28ae32d987704f",
+    retries=3
+)
 ```
 
 ## Related projects
