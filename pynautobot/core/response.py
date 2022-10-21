@@ -59,10 +59,6 @@ def get_return(lookup, return_fields=None):
         return lookup
 
 
-def flatten_custom(custom_dict):
-    return {k: v if not isinstance(v, dict) else v["value"] for k, v in custom_dict.items()}
-
-
 class JsonField(object):
     """Explicit field type for values that are not to be converted
     to a Record object"""
@@ -283,7 +279,7 @@ class Record(object):
         if split_url_path[2] == "plugins":
             # Keep plugins in app path
             app = "/".join(split_url_path[2:4])
-            name = split_url_path[4]
+            name = "/".join(split_url_path[4:-2])
         else:
             app, name = split_url_path[2:4]
         return getattr(pynautobot.core.app.App(self.api, app), name)
@@ -299,7 +295,11 @@ class Record(object):
         :returns: True
         """
         if self.url:
-            req = Request(base=self.url, token=self.api.token, http_session=self.api.http_session,)
+            req = Request(
+                base=self.url,
+                token=self.api.token,
+                http_session=self.api.http_session,
+            )
             self._parse_values(req.get())
             self.has_details = True
             return True
@@ -331,10 +331,9 @@ class Record(object):
         ret = {}
         for i in dict(self):
             current_val = getattr(self, i) if not init else init_vals.get(i)
-            if i == "custom_fields":
-                ret[i] = flatten_custom(current_val)
-            elif i == "constraints":  # just pass constraints as it is (a JSON string)
+            if i in ["custom_fields", "constraints"]:  # just pass constraints as it is (a JSON string)
                 ret[i] = current_val
+
             else:
                 if isinstance(current_val, Record):
                     current_val = getattr(current_val, "serialize")(nested=True)
@@ -382,7 +381,10 @@ class Record(object):
             if diff:
                 serialized = self.serialize()
                 req = Request(
-                    key=self.id, base=self.endpoint.url, token=self.api.token, http_session=self.api.http_session,
+                    key=self.id,
+                    base=self.endpoint.url,
+                    token=self.api.token,
+                    http_session=self.api.http_session,
                 )
                 if req.patch({i: serialized[i] for i in diff}):
                     return True
@@ -425,5 +427,10 @@ class Record(object):
         True
         >>>
         """
-        req = Request(key=self.id, base=self.endpoint.url, token=self.api.token, http_session=self.api.http_session,)
+        req = Request(
+            key=self.id,
+            base=self.endpoint.url,
+            token=self.api.token,
+            http_session=self.api.http_session,
+        )
         return True if req.delete() else False

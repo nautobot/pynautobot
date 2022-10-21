@@ -224,7 +224,8 @@ class RecordTestCase(unittest.TestCase):
         test.child.name = "test321"
         test.child.save()
         self.assertEqual(
-            app.http_session.patch.call_args[0][0], "http://localhost:8080/api/test-app/test-endpoint/321/",
+            app.http_session.patch.call_args[0][0],
+            "http://localhost:8080/api/test-app/test-endpoint/321/",
         )
 
     def test_nested_write_with_directory_in_base_url(self):
@@ -250,14 +251,17 @@ class RecordTestCase(unittest.TestCase):
         test.child.name = "test321"
         test.child.save()
         self.assertEqual(
-            app.http_session.patch.call_args[0][0], "http://localhost:8080/testing/api/test-app/test-endpoint/321/",
+            app.http_session.patch.call_args[0][0],
+            "http://localhost:8080/testing/api/test-app/test-endpoint/321/",
         )
 
     def test_endpoint_from_url(self):
         api = Mock()
         api.base_url = "http://localhost:8080/api"
         test = Record(
-            {"id": 123, "name": "test", "url": "http://localhost:8080/api/test-app/test-endpoint/1/"}, api, None,
+            {"id": 123, "name": "test", "url": "http://localhost:8080/api/test-app/test-endpoint/1/"},
+            api,
+            None,
         )
         ret = test._endpoint_from_url(test.url)
         self.assertEqual(ret.name, "test-endpoint")
@@ -294,6 +298,21 @@ class RecordTestCase(unittest.TestCase):
         )
         ret = test._endpoint_from_url(test.url)
         self.assertEqual(ret.name, "test-endpoint")
+
+    def test_endpoint_from_url_with_plugin_nested_endpoints(self):
+        api = Mock()
+        api.base_url = "http://localhost:8080/testing/api"
+        test = Record(
+            {
+                "id": 123,
+                "name": "test",
+                "url": "http://localhost:8080/testing/api/plugins/test-app/test-endpoint/test-nested-endpoint/1/",
+            },
+            api,
+            None,
+        )
+        ret = test._endpoint_from_url(test.url)
+        self.assertEqual(ret.name, "test-endpoint/test-nested-endpoint")
 
     def test_serialize_tag_list_order(self):
         """Add tests to ensure we're preserving tag order

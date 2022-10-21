@@ -32,7 +32,8 @@ class AppConfigTestCase(unittest.TestCase):
         config = api.users.config()
         self.assertEqual(sorted(config.keys()), ["tables"])
         self.assertEqual(
-            sorted(config["tables"]["DeviceTable"]["columns"]), ["name", "status", "tags", "tenant"],
+            sorted(config["tables"]["DeviceTable"]["columns"]),
+            ["name", "status", "tags", "tenant"],
         )
 
 
@@ -48,7 +49,8 @@ class PluginAppCustomChoicesTestCase(unittest.TestCase):
         self.assertEqual(sorted(choices.keys()), ["Testfield1", "Testfield2"])
 
     @patch(
-        "pynautobot.core.query.Request.get", return_value=[{"name": "test_plugin", "package": "netbox_test_plugin"}],
+        "pynautobot.core.query.Request.get",
+        return_value=[{"name": "test_plugin", "package": "netbox_test_plugin"}],
     )
     def test_installed_plugins(self, *_):
         api = pynautobot.api(host, **def_kwargs)

@@ -11,8 +11,6 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          - python-version: "3.6"
-            nautobot-version: "1.1.6"
           - python-version: "3.7"
             nautobot-version: "1.2"
           - python-version: "3.8"
@@ -27,7 +25,7 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
       - name: "Install CICD dependencies"
-        run: "pip install -U pip && pip install poetry"
+        run: "pip install -U pip && pip install poetry==1.1.15"
       - name: "Install project dependencies via Poetry"
         run: "poetry install"
       - name: "Start containers"

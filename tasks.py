@@ -29,7 +29,7 @@ PYPROJECT_CONFIG = toml.load("pyproject.toml")
 TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
 # Can be set to a separate Python version to be used for launching or building image
-PYTHON_VER = os.getenv("PYTHON_VER", "3.6")
+PYTHON_VER = os.getenv("PYTHON_VER", "3.7")
 # Name of the docker image/image
 IMAGE_NAME = os.getenv("IMAGE_NAME")
 if IMAGE_NAME is None:
@@ -44,7 +44,19 @@ INVOKE_LOCAL = is_truthy(os.getenv("INVOKE_LOCAL", False))  # pylint: disable=W1
 
 @task
 def start(context):
+    print("Starting Nautobot in detached mode...")
     return context.run("docker-compose -f development/docker-compose.yml up -d")
+
+
+@task
+def stop(context):
+    return context.run("docker-compose -f development/docker-compose.yml down")
+
+
+@task
+def debug(context):
+    print("Starting Nautobot in debug mode...")
+    return context.run("docker-compose -f development/docker-compose.yml up")
 
 
 def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):

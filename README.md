@@ -1,6 +1,6 @@
 ![pynautobot](docs/nautobot_logo.svg "Nautobot logo")
 
-# Pynautobot [![build main](https://travis-ci.com/nautobot/pynautobot.svg?branch=main)](https://travis-ci.com/nautobot/pynautobot)
+# Pynautobot
 Python API client library for [Nautobot](https://github.com/nautobot/nautobot).
 
 > Pynautobot was initially developed as a fork of [pynetbox](https://github.com/digitalocean/pynetbox/).

@@ -66,7 +66,11 @@ class Api(object):
     """
 
     def __init__(
-        self, url, token=None, threading=False, api_version=None,
+        self,
+        url,
+        token=None,
+        threading=False,
+        api_version=None,
     ):
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
         self.token = token
@@ -127,7 +131,11 @@ class Api(object):
         {...}
         >>>
         """
-        return Request(base=self.base_url, http_session=self.http_session, api_version=self.api_version,).get_openapi()
+        return Request(
+            base=self.base_url,
+            http_session=self.http_session,
+            api_version=self.api_version,
+        ).get_openapi()
 
     def status(self):
         """Gets the status information from Nautobot.
@@ -158,6 +166,9 @@ class Api(object):
         >>>
         """
         status = Request(
-            base=self.base_url, token=self.token, http_session=self.http_session, api_version=self.api_version,
+            base=self.base_url,
+            token=self.token,
+            http_session=self.http_session,
+            api_version=self.api_version,
         ).get_status()
         return status
