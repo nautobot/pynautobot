@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.2
+
+### Bug Fixes
+
+- (#84) Fixes URLs for plugins with nested endpoints (i.e. /api/plugins/app_name/endpoint/nested_endpoint)
+
 ## v1.2.1
 
 - (#76) Feature: Removing the restriction on `id` for filter
