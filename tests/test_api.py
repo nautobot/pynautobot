@@ -104,7 +104,7 @@ class ApiRetryTestCase(unittest.TestCase):
 
         api = pynautobot.api(
             "http://any.url/",
-            retries=1,
+            retries=2,
         )
 
         api.version
