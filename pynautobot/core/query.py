@@ -20,6 +20,7 @@ try:
 except ImportError:
     pass
 import json
+import requests
 
 
 def calc_pages(limit, count):
@@ -64,6 +65,10 @@ class RequestError(Exception):
         self.request_body = req.request.body
         self.base = req.url
         self.error = req.text
+
+
+class RequestErrorFromException(Exception):
+    """RequestErrorFromException is raised from exception."""
 
 
 class AllocationError(Exception):
@@ -158,10 +163,14 @@ class Request(object):
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
 
-        req = self.http_session.get(
-            "{}docs/?format=openapi".format(self.normalize_url(self.base)),
-            headers=headers,
-        )
+        try:
+            req = self.http_session.get(
+                "{}docs/?format=openapi".format(self.normalize_url(self.base)),
+                headers=headers,
+            )
+        except requests.exceptions.RetryError as error:
+            raise RequestErrorFromException from error
+
         if req.ok:
             return req.json()
         else:
@@ -181,10 +190,13 @@ class Request(object):
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
 
-        req = self.http_session.get(
-            self.normalize_url(self.base),
-            headers=headers,
-        )
+        try:
+            req = self.http_session.get(
+                self.normalize_url(self.base),
+                headers=headers,
+            )
+        except requests.exceptions.RetryError as error:
+            raise RequestErrorFromException from error
 
         if req.ok:
             return req.headers.get("API-Version", "")
@@ -204,10 +216,14 @@ class Request(object):
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
 
-        req = self.http_session.get(
-            "{}status/".format(self.normalize_url(self.base)),
-            headers=headers,
-        )
+        try:
+            req = self.http_session.get(
+                "{}status/".format(self.normalize_url(self.base)),
+                headers=headers,
+            )
+        except requests.exceptions.RetryError as error:
+            raise RequestErrorFromException from error
+
         if req.ok:
             return req.json()
         else:
@@ -239,7 +255,10 @@ class Request(object):
             if add_params:
                 params.update(add_params)
 
-        req = getattr(self.http_session, verb)(url_override or self.url, headers=headers, params=params, json=data)
+        try:
+            req = getattr(self.http_session, verb)(url_override or self.url, headers=headers, params=params, json=data)
+        except requests.exceptions.RetryError as error:
+            raise RequestErrorFromException from error
 
         if req.status_code == 204 and verb == "post":
             raise AllocationError(req)
