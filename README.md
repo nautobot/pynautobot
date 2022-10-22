@@ -124,7 +124,7 @@ tags.list(api_version="1.3",)
 
 ### Retry logic
 
-By default, the client will not retry any operation. This behavior can be adjusted via the `retries` optional parameters. This will only affect for HTTP codes: 429, 501, 502, 503 and 504.
+By default, the client will not retry any operation. This behavior can be adjusted via the `retries` optional parameters. This will only affect for HTTP codes: 429, 500, 502, 503 and 504.
 
 **Retries**
 
