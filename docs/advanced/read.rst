@@ -72,14 +72,14 @@ but will return all matches using :py:meth:`~pynautobot.core.endpoint.Endpoint.f
 
 .. code-block:: python
 
-    >>> # Get all c9300-48 devices
+    >>> # Get all CSR1000V devices
     >>> devices = nautobot.dcim.devices.filter(model="CSR1000V")
 
     >>> # Show a list of Records are returned
     >>> devices
     [jcy-bb-01.infra.ntc.com, jcy-rtr-01.infra.ntc.com, jcy-rtr-02.infra.ntc.com]
 
-    >>> # Show accessing data from the first c9300-48 device
+    >>> # Show accessing data from the first CSR1000V device
     >>> dev1 = devices[0]
     >>> dev1.name
     'jcy-bb-01.infra.ntc.com'
