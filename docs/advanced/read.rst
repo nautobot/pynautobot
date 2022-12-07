@@ -39,7 +39,7 @@ If multiple Records are matched, then a ``ValueError`` is raised.
 
 .. code-block:: python
 
-    >>> dev = nautobot.dcim.devices.get(device_type="c9300-48")
+    >>> dev = nautobot.dcim.devices.get(model="CSR1000V")
     Traceback (most recent call last):
     ...
     ValueError: get() returned more than one result.
@@ -72,17 +72,17 @@ but will return all matches using :py:meth:`~pynautobot.core.endpoint.Endpoint.f
 
 .. code-block:: python
 
-    >>> # Get all c9300-48 devices
-    >>> devices = nautobot.dcim.devices.filter(device_type="c9300-48")
+    >>> # Get all CSR1000V devices
+    >>> devices = nautobot.dcim.devices.filter(model="CSR1000V")
 
     >>> # Show a list of Records are returned
     >>> devices
-    [hq-access-01, hq-access-02, hq-access-03, hq-access-04, hq-access-05, switch0, switch1]
+    [jcy-bb-01.infra.ntc.com, jcy-rtr-01.infra.ntc.com, jcy-rtr-02.infra.ntc.com]
 
-    >>> # Show accessing data from the first c9300-48 device
+    >>> # Show accessing data from the first CSR1000V device
     >>> dev1 = devices[0]
     >>> dev1.name
-    'hq-access-01'
+    'jcy-bb-01.infra.ntc.com'
     >>> dev1.status
     Active
 
