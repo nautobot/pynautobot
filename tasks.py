@@ -256,3 +256,12 @@ def tests(context, local=INVOKE_LOCAL):
     pytest(context, local)
 
     print("All tests have passed!")
+
+
+@task
+def wait(context):
+    """Wait for Nautobot to be ready."""
+
+    context.run(
+        "timeout 300 bash -c 'while [[ \"$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)\" != \"200\" ]]; do echo \"waiting for Nautobot\"; sleep 5; done' || false"
+    )
