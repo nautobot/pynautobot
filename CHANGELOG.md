@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.3.0
+
+### New Features
+
+- (#85) Add retries to option to API
+
+### Bug Fixes
+
+- (#94) Fixes API version key for updating records
+
 ## v1.2.2
 
 ### Bug Fixes
