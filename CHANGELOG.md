@@ -4,7 +4,7 @@
 
 ### New Features
 
-- (#85) Add retries to option to API
+- (#85) Added `retries` option to API
 
 ### Bug Fixes
 
