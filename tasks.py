@@ -29,7 +29,7 @@ PYPROJECT_CONFIG = toml.load("pyproject.toml")
 TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
 # Can be set to a separate Python version to be used for launching or building image
-PYTHON_VER = os.getenv("PYTHON_VER", "3.6")
+PYTHON_VER = os.getenv("PYTHON_VER", "3.7")
 # Name of the docker image/image
 IMAGE_NAME = os.getenv("IMAGE_NAME")
 if IMAGE_NAME is None:
@@ -44,7 +44,19 @@ INVOKE_LOCAL = is_truthy(os.getenv("INVOKE_LOCAL", False))  # pylint: disable=W1
 
 @task
 def start(context):
+    print("Starting Nautobot in detached mode...")
     return context.run("docker-compose -f development/docker-compose.yml up -d")
+
+
+@task
+def stop(context):
+    return context.run("docker-compose -f development/docker-compose.yml down")
+
+
+@task
+def debug(context):
+    print("Starting Nautobot in debug mode...")
+    return context.run("docker-compose -f development/docker-compose.yml up")
 
 
 def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
@@ -244,3 +256,12 @@ def tests(context, local=INVOKE_LOCAL):
     pytest(context, local)
 
     print("All tests have passed!")
+
+
+@task
+def wait(context):
+    """Wait for Nautobot to be ready."""
+
+    context.run(
+        "timeout 300 bash -c 'while [[ \"$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)\" != \"200\" ]]; do echo \"waiting for Nautobot\"; sleep 5; done' || false"
+    )

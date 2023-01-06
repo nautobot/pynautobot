@@ -1,6 +1,8 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import ANY, Mock, patch, call
+from http.client import HTTPMessage
 
+from pynautobot.core.query import RequestErrorFromException
 import pynautobot
 
 host = "http://localhost:8000"
@@ -21,12 +23,16 @@ endpoints = {
 
 
 class ApiTestCase(unittest.TestCase):
-    @patch("requests.sessions.Session.post",)
+    @patch(
+        "requests.sessions.Session.post",
+    )
     def test_get(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         self.assertTrue(api)
 
-    @patch("requests.sessions.Session.post",)
+    @patch(
+        "requests.sessions.Session.post",
+    )
     def test_sanitize_url(self, *_):
         api = pynautobot.api("http://localhost:8000/", **def_kwargs)
         self.assertTrue(api)
@@ -39,10 +45,13 @@ class ApiVersionTestCase(unittest.TestCase):
         ok = True
 
     @patch(
-        "requests.sessions.Session.get", return_value=ResponseHeadersWithVersion(),
+        "requests.sessions.Session.get",
+        return_value=ResponseHeadersWithVersion(),
     )
     def test_api_version(self, *_):
-        api = pynautobot.api(host,)
+        api = pynautobot.api(
+            host,
+        )
         self.assertEqual(api.version, "1.999")
 
     class ResponseHeadersWithoutVersion:
@@ -50,10 +59,13 @@ class ApiVersionTestCase(unittest.TestCase):
         ok = True
 
     @patch(
-        "requests.sessions.Session.get", return_value=ResponseHeadersWithoutVersion(),
+        "requests.sessions.Session.get",
+        return_value=ResponseHeadersWithoutVersion(),
     )
     def test_api_version_not_found(self, *_):
-        api = pynautobot.api(host,)
+        api = pynautobot.api(
+            host,
+        )
         self.assertEqual(api.version, "")
 
 
@@ -67,8 +79,54 @@ class ApiStatusTestCase(unittest.TestCase):
             }
 
     @patch(
-        "requests.sessions.Session.get", return_value=ResponseWithStatus(),
+        "requests.sessions.Session.get",
+        return_value=ResponseWithStatus(),
     )
     def test_api_status(self, *_):
-        api = pynautobot.api(host,)
+        api = pynautobot.api(
+            host,
+        )
         self.assertEqual(api.status()["nautobot-version"], "1.3.2")
+
+
+class ApiRetryTestCase(unittest.TestCase):
+    class ResponseWithStatus:
+        ok = False
+        status_code = 429
+
+    @patch("urllib3.connectionpool.HTTPConnectionPool._get_conn")
+    def test_api_retry(self, getconn_mock):
+        getconn_mock.return_value.getresponse.side_effect = [
+            Mock(status=500, msg=HTTPMessage()),
+            Mock(status=429, msg=HTTPMessage()),
+            Mock(status=200, msg=HTTPMessage()),
+        ]
+
+        api = pynautobot.api(
+            "http://any.url/",
+            retries=2,
+        )
+
+        api.version
+
+        assert getconn_mock.return_value.request.mock_calls == [
+            call("GET", "/api/", body=None, headers=ANY),
+            call("GET", "/api/", body=None, headers=ANY),
+            call("GET", "/api/", body=None, headers=ANY),
+        ]
+
+    @patch("urllib3.connectionpool.HTTPConnectionPool._get_conn")
+    def test_api_retry_fails(self, getconn_mock):
+        getconn_mock.return_value.getresponse.side_effect = [
+            Mock(status=500, msg=HTTPMessage()),
+            Mock(status=429, msg=HTTPMessage()),
+            Mock(status=200, msg=HTTPMessage()),
+        ]
+
+        api = pynautobot.api(
+            "http://any.url/",
+            retries=1,
+        )
+
+        with self.assertRaises(RequestErrorFromException):
+            api.version

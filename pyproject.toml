@@ -2,7 +2,7 @@
 
 [tool.poetry]
 name = "pynautobot"
-version = "1.1.1"
+version = "1.2.3"
 description = "Nautobot API client library"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 readme = "README.md"
@@ -19,24 +19,24 @@ homepage = "https://nautobot.com"
 documentation = "https://pynautobot.readthedocs.io"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 requests = "^2.20.0"
-Sphinx = "^3.5.1"
 
 [tool.poetry.dev-dependencies]
-pytest = {version="^5.4.1", python="^3.6"}
-pytest-docker = {version="^0.10.1", python="^3.6"}
+pytest = {version="^5.4.1"}
+pytest-docker = {version="^0.10.1"}
 requests_mock = "^1.7.0"
 pyyaml = "^5.3"
-black = {version="^19.10b0", python="^3.6"}
-pylint = {version="^2.4.4", python="^3.6"}
-pydocstyle = {version="^5.0.2", python="^3.6"}
+pylint = {version="^2.4.4"}
+pydocstyle = {version="^5.0.2"}
 yamllint = "^1.20.0"
-bandit = "^1.6.2"
 invoke = "^1.4.1"
 toml = "0.10.1"
 flake8 = "^3.8.3"
 attrs = "^20.3.0"
+black = "^22.3.0"
+bandit = "^1.7.4"
+Sphinx = "^4.5.0"
 
 [tool.poetry.extras]
 docs = ["sphinx"]

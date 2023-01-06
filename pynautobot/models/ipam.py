@@ -21,12 +21,14 @@ from pynautobot.core.endpoint import DetailEndpoint
 
 class IpAddresses(Record):
     def __str__(self):
-        return str(self.address)
+        parent_record_string = super().__str__()
+        return parent_record_string or str(self.address)
 
 
 class Prefixes(Record):
     def __str__(self):
-        return str(self.prefix)
+        parent_record_string = super().__str__()
+        return parent_record_string or str(self.prefix)
 
     @property
     def available_ips(self):
@@ -89,8 +91,3 @@ class Prefixes(Record):
 
         """
         return DetailEndpoint(self, "available-prefixes", custom_return=Prefixes)
-
-
-class Aggregates(Record):
-    def __str__(self):
-        return str(self.prefix)

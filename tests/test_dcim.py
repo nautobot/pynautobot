@@ -15,12 +15,24 @@ class DeviceTestCase(Generic.Tests):
     def test_get(self, mock):
         ret = self.endpoint.get(self.uuid)
         self.assertIsInstance(ret, self.ret)
-        self.assertIsInstance(ret.primary_ip, pynautobot.models.ipam.IpAddresses)
-        self.assertIsInstance(ret.primary_ip4, pynautobot.models.ipam.IpAddresses)
+        self.assertIsInstance(ret.primary_ip, pynautobot.core.response.Record)
+        self.assertIsInstance(ret.primary_ip4, pynautobot.core.response.Record)
         self.assertIsInstance(ret.config_context, dict)
         self.assertIsInstance(ret.custom_fields, dict)
         self.assertIsInstance(ret.local_context_data, dict)
         mock.assert_called_with(self.detail_uri, params={}, json=None, headers=HEADERS)
+
+    @patch("requests.sessions.Session.get", return_value=Response(fixture="dcim/device.json"))
+    def test_get_by_id(self, mock):
+        params = {"id": self.uuid}
+        ret = self.endpoint.filter(**params)
+        self.assertIsInstance(ret, self.ret)
+        self.assertIsInstance(ret.primary_ip, pynautobot.core.response.Record)
+        self.assertIsInstance(ret.primary_ip4, pynautobot.core.response.Record)
+        self.assertIsInstance(ret.config_context, dict)
+        self.assertIsInstance(ret.custom_fields, dict)
+        self.assertIsInstance(ret.local_context_data, dict)
+        mock.assert_called_with(self.bulk_uri, params=params, json=None, headers=HEADERS)
 
     @patch("requests.sessions.Session.get", return_value=Response(fixture="dcim/devices.json"))
     def test_multi_filter(self, mock):
@@ -50,7 +62,10 @@ class DeviceTestCase(Generic.Tests):
         ret = self.endpoint.create(**data)
         self.assertTrue(ret)
         mock.assert_called_with(
-            self.bulk_uri, headers=POST_HEADERS, params={}, json=data,
+            self.bulk_uri,
+            headers=POST_HEADERS,
+            params={},
+            json=data,
         )
 
     @patch("requests.sessions.Session.post", return_value=Response(fixture="dcim/device_bulk_create.json"))
@@ -63,7 +78,10 @@ class DeviceTestCase(Generic.Tests):
         self.assertTrue(ret)
         self.assertEqual(len(ret), 2)
         mock.assert_called_with(
-            self.bulk_uri, headers=POST_HEADERS, params={}, json=data,
+            self.bulk_uri,
+            headers=POST_HEADERS,
+            params={},
+            json=data,
         )
 
     @patch(
@@ -105,12 +123,12 @@ class SiteTestCase(Generic.Tests):
         self.assertEqual(ret.custom_fields["test_custom"], "Testing")
 
     @patch("requests.sessions.Session.get", return_value=Response(fixture="dcim/site.json"))
-    def test_custom_selection_serializer(self, _):
+    def test_custom_field_json(self, _):
         """Tests serializer with custom selection fields."""
         ret = self.endpoint.get(self.uuid)
         ret.custom_fields["test_custom"] = "Testing"
         test = ret.serialize()
-        self.assertEqual(test["custom_fields"]["test_selection"], 2)
+        self.assertEqual(test["custom_fields"]["test_json"]["second_key"], "second")
 
     @patch("requests.sessions.Session.post", return_value=Response(fixture="dcim/site.json"))
     def test_create(self, mock):
@@ -305,12 +323,16 @@ class VirtualChassisTestCase(Generic.Tests):
 class Choices(unittest.TestCase):
     def test_get(self):
         with patch(
-            "requests.sessions.Session.get", return_value=Response(fixture="{}/{}.json".format("dcim", "choices")),
+            "requests.sessions.Session.get",
+            return_value=Response(fixture="{}/{}.json".format("dcim", "choices")),
         ) as mock:
             ret = api.dcim.choices()
             self.assertTrue(ret)
             mock.assert_called_with(
-                "http://localhost:8000/api/dcim/_choices/", params={}, json=None, headers=HEADERS,
+                "http://localhost:8000/api/dcim/_choices/",
+                params={},
+                json=None,
+                headers=HEADERS,
             )
 
 
@@ -356,7 +378,10 @@ class CablesTestCase(Generic.Tests):
                 "length_unit": None,
             }
         )
-        with patch("requests.sessions.Session.get", return_value=response_obj,) as mock:
+        with patch(
+            "requests.sessions.Session.get",
+            return_value=response_obj,
+        ) as mock:
             ret = self.endpoint.get(self.uuid)
             self.assertTrue(ret)
             self.assertIsInstance(ret, self.ret)

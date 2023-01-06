@@ -5,7 +5,10 @@ import pynautobot
 
 from .util import Response
 
-api = pynautobot.api("http://localhost:8000", token="abc123",)
+api = pynautobot.api(
+    "http://localhost:8000",
+    token="abc123",
+)
 
 HEADERS = {
     "accept": "application/json;",
@@ -47,7 +50,8 @@ class Generic:
 
         def test_get_all(self):
             with patch(
-                "requests.sessions.Session.get", return_value=Response(fixture=f"{self.app}/{self.name}.json"),
+                "requests.sessions.Session.get",
+                return_value=Response(fixture=f"{self.app}/{self.name}.json"),
             ) as mock:
                 ret = self.endpoint.all()
                 self.assertIsInstance(ret, list)
@@ -56,7 +60,8 @@ class Generic:
 
         def test_filter(self):
             with patch(
-                "requests.sessions.Session.get", return_value=Response(fixture=f"{self.app}/{self.name}.json"),
+                "requests.sessions.Session.get",
+                return_value=Response(fixture=f"{self.app}/{self.name}.json"),
             ) as mock:
                 ret = self.endpoint.filter(name="test")
                 self.assertIsInstance(ret, list)
@@ -65,7 +70,8 @@ class Generic:
 
         def test_get(self):
             with patch(
-                "requests.sessions.Session.get", return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
+                "requests.sessions.Session.get",
+                return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
             ) as mock:
                 ret = self.endpoint.get(self.uuid)
                 self.assertIsInstance(ret, self.ret)
@@ -76,7 +82,8 @@ class Generic:
 
         def test_delete(self):
             with patch(
-                "requests.sessions.Session.get", return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
+                "requests.sessions.Session.get",
+                return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
             ) as mock, patch("requests.sessions.Session.delete") as delete:
                 ret = self.endpoint.get(self.uuid)
                 # get() was already tested more thoroughly above, not repeated here
@@ -86,7 +93,8 @@ class Generic:
 
         def test_diff(self):
             with patch(
-                "requests.sessions.Session.get", return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
+                "requests.sessions.Session.get",
+                return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
             ):
                 ret = self.endpoint.get(self.uuid)
                 self.assertTrue(ret)
@@ -94,7 +102,8 @@ class Generic:
 
         def test_serialize(self):
             with patch(
-                "requests.sessions.Session.get", return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
+                "requests.sessions.Session.get",
+                return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
             ):
                 ret = self.endpoint.get(self.uuid)
                 self.assertTrue(ret)

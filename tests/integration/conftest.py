@@ -93,7 +93,14 @@ def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):
     for object_model_relfpath in DEVICETYPE_LIBRARY_OBJECTS:
         device_type_models.append(
             yaml.safe_load(
-                open(os.path.join(devicetype_library_repo_dirpath, "device-types", object_model_relfpath,), "r",).read()
+                open(
+                    os.path.join(
+                        devicetype_library_repo_dirpath,
+                        "device-types",
+                        object_model_relfpath,
+                    ),
+                    "r",
+                ).read()
             )
         )
 

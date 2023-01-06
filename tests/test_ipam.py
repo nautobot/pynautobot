@@ -19,6 +19,8 @@ class PrefixTestCase(Generic.Tests):
         self.assertTrue(ret_serialized)
         self.assertEqual(ret._diff(), {"prefix"})
         self.assertEqual(ret_serialized["prefix"], "10.1.2.0/24")
+        self.assertTrue(ret.tags)
+        self.assertIsInstance(ret.tags[0], pynautobot.core.response.Record)
 
     @patch("requests.sessions.Session.put", return_value=Response(fixture="ipam/prefix.json"))
     @patch("requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"))
@@ -37,16 +39,20 @@ class PrefixTestCase(Generic.Tests):
         mock.assert_called_with(f"{self.detail_uri}available-ips/", params={}, json=None, headers=HEADERS)
         self.assertTrue(ret)
         self.assertEqual(len(ret), 3)
+        for record in ret:
+            self.assertEqual(record.address, str(record))
 
     @patch("requests.sessions.Session.post", return_value=Response(fixture="ipam/available-ips-post.json"))
     @patch("requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"))
     def test_create_available_ips(self, _, post):
-        create_parms = dict(status=2,)
+        create_parms = dict(
+            status=2,
+        )
         pfx = self.endpoint.get(self.uuid)
         ret = pfx.available_ips.create(create_parms)
         post.assert_called_with(f"{self.detail_uri}available-ips/", params={}, headers=POST_HEADERS, json=create_parms)
         self.assertTrue(ret)
-        self.assertTrue(isinstance(ret, pynautobot.models.ipam.IpAddresses))
+        self.assertIsInstance(ret, pynautobot.core.response.Record)
 
     @patch(
         "requests.sessions.Session.get",
@@ -57,11 +63,16 @@ class PrefixTestCase(Generic.Tests):
         ret = pfx.available_prefixes.list()
         mock.assert_called_with(f"{self.detail_uri}available-prefixes/", params={}, json=None, headers=HEADERS)
         self.assertTrue(ret)
+        self.assertEqual(len(ret), 1)
+        for record in ret:
+            self.assertEqual(record.prefix, str(record))
 
     @patch("requests.sessions.Session.post", return_value=Response(fixture="ipam/available-prefixes-post.json"))
     @patch("requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"))
     def test_create_available_prefixes(self, _, post):
-        create_parms = dict(prefix_length=30,)
+        create_parms = dict(
+            prefix_length=30,
+        )
         pfx = self.endpoint.get(self.uuid)
         ret = pfx.available_prefixes.create(create_parms)
         post.assert_called_with(
@@ -101,6 +112,16 @@ class AggregatesTestCase(Generic.Tests):
     app = "ipam"
     name = "aggregates"
 
+    @patch(
+        "requests.sessions.Session.get",
+        side_effect=[Response(fixture="ipam/aggregate.json")],
+    )
+    def test_get_aggregate_stringify(self, mock):
+        ret = self.endpoint.get(self.uuid)
+        mock.assert_called_with(f"{self.detail_uri}", params={}, json=None, headers=HEADERS)
+        self.assertTrue(ret)
+        self.assertEqual(ret.prefix, str(ret))
+
 
 class VlanTestCase(Generic.Tests):
     app = "ipam"
@@ -114,7 +135,10 @@ class VlanTestCase(Generic.Tests):
         vlan = self.endpoint.get(self.uuid)
         interface = api.dcim.interfaces.get(self.uuid)
         mock.assert_called_with(
-            f"http://localhost:8000/api/dcim/interfaces/{self.uuid}/", params={}, json=None, headers=HEADERS,
+            f"http://localhost:8000/api/dcim/interfaces/{self.uuid}/",
+            params={},
+            json=None,
+            headers=HEADERS,
         )
         self.assertEqual(vlan.vid, interface.tagged_vlans[0].vid)
         self.assertEqual(vlan.id, interface.tagged_vlans[0].id)

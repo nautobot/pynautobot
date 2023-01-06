@@ -18,7 +18,7 @@ This file has been modified by NetworktoCode, LLC.
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
 
-RESERVED_KWARGS = ("id", "pk", "limit", "offset")
+RESERVED_KWARGS = ("pk", "limit", "offset")
 
 
 def response_loader(req, return_obj, endpoint):
@@ -54,7 +54,11 @@ class Endpoint(object):
         self.api = api
         self.base_url = api.base_url
         self.token = api.token
-        self.url = "{base_url}/{app}/{endpoint}".format(base_url=self.base_url, app=app.name, endpoint=self.name,)
+        self.url = "{base_url}/{app}/{endpoint}".format(
+            base_url=self.base_url,
+            app=app.name,
+            endpoint=self.name,
+        )
         self._choices = None
 
     def _lookup_ret_obj(self, name, model):
@@ -158,7 +162,11 @@ class Endpoint(object):
             return None
 
         req = Request(
-            key=key, base=self.url, token=self.token, http_session=self.api.http_session, api_version=api_version,
+            key=key,
+            base=self.url,
+            token=self.token,
+            http_session=self.api.http_session,
+            api_version=api_version,
         )
 
         try:
@@ -291,7 +299,10 @@ class Endpoint(object):
         api_version = api_version or self.api.api_version
 
         req = Request(
-            base=self.url, token=self.token, http_session=self.api.http_session, api_version=api_version,
+            base=self.url,
+            token=self.token,
+            http_session=self.api.http_session,
+            api_version=api_version,
         ).post(args[0] if args else kwargs)
 
         return response_loader(req, self.return_obj, self)
@@ -334,7 +345,10 @@ class Endpoint(object):
         api_version = api_version or self.api.api_version
 
         req = Request(
-            base=self.url, token=self.api.token, http_session=self.api.http_session, api_version=api_version,
+            base=self.url,
+            token=self.api.token,
+            http_session=self.api.http_session,
+            api_version=api_version,
         ).options()
         try:
             post_data = req["actions"]["POST"]
@@ -457,7 +471,11 @@ class DetailEndpoint(object):
         self.custom_return = custom_return
         self.url = "{}/{}/{}/".format(parent_obj.endpoint.url, parent_obj.id, name)
 
-        self.request_kwargs = dict(base=self.url, token=parent_obj.api.token, http_session=parent_obj.api.http_session,)
+        self.request_kwargs = dict(
+            base=self.url,
+            token=parent_obj.api.token,
+            http_session=parent_obj.api.http_session,
+        )
 
     def list(self, api_version=None, **kwargs):
         r"""The view operation for a detail endpoint

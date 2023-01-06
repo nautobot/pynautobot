@@ -20,7 +20,6 @@ from requests.utils import urlparse
 from pynautobot.core.query import Request
 from pynautobot.core.response import Record, JsonField
 from pynautobot.core.endpoint import RODetailEndpoint
-from pynautobot.models.ipam import IpAddresses
 from pynautobot.models.circuits import Circuits
 
 
@@ -50,7 +49,10 @@ class TraceableRecord(Record):
                 # TODO: Move this to a more general function.
                 app_endpoint = "/".join(urlparse(hop_item_data["url"][len(self.api.base_url) :]).path.split("/")[1:3])
 
-                return_obj_class = uri_to_obj_class_map.get(app_endpoint, Record,)
+                return_obj_class = uri_to_obj_class_map.get(
+                    app_endpoint,
+                    Record,
+                )
 
                 this_hop_ret.append(return_obj_class(hop_item_data, self.endpoint.api, self.endpoint))
 
@@ -81,9 +83,6 @@ class Devices(Record):
 
     has_details = True
     device_type = DeviceTypes
-    primary_ip = IpAddresses
-    primary_ip4 = IpAddresses
-    primary_ip6 = IpAddresses
     local_context_data = JsonField
     config_context = JsonField
 

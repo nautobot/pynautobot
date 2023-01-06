@@ -1,14 +1,25 @@
 {
     "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
-    "family": 4,
+    "display": "10.0.0.0/8",
+    "url": "http://192.168.50.10:8080/api/ipam/aggregates/3962c9b8-7df9-4d9b-89db-685e5d62876d/",
+    "family": {
+        "value": 4,
+        "label": "IPv4"
+    },
     "prefix": "10.0.0.0/8",
     "rir": {
-        "id": 1,
-        "url": "http://localhost:8000/api/ipam/rirs/1/",
+        "display": "RFC1918",
+        "id": "0ef5d123-d412-4dfd-a923-0f72435ed9d0",
+        "url": "http://192.168.50.10:8080/api/ipam/rirs/0ef5d123-d412-4dfd-a923-0f72435ed9d0/",
         "name": "RFC1918",
         "slug": "rfc1918"
     },
+    "tenant": null,
     "date_added": null,
     "description": "",
+    "created": "2022-09-01",
+    "last_updated": "2022-09-01T14:58:42.629535Z",
+    "tags": [],
+    "notes_url": "http://192.168.50.10:8080/api/ipam/aggregates/3962c9b8-7df9-4d9b-89db-685e5d62876d/notes/",
     "custom_fields": {}
 }

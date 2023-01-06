@@ -10,15 +10,11 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        include:
-          - python-version: "3.6"
-            nautobot-version: "1.1.6"
-          - python-version: "3.7"
-            nautobot-version: "1.2"
-          - python-version: "3.8"
-            nautobot-version: "1.3"
-          - python-version: "3.9"
-            nautobot-version: "1.3"
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        nautobot-version: ["1.2", "1.3"]
+        exclude:
+          - python-version: 3.10
+            nautobot-version: 1.2
     env:
       PYTHON_VER: "${{ matrix.python-version }}"
       NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
@@ -27,13 +23,13 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
       - name: "Install CICD dependencies"
-        run: "pip install -U pip && pip install poetry"
+        run: "pip install -U pip && pip install poetry==1.1.15"
       - name: "Install project dependencies via Poetry"
         run: "poetry install"
       - name: "Start containers"
         run: "poetry run invoke start"
       - name: "Wait for Nautobot to become available."
-        run: timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)" != "200" ]]; do echo "waiting for Nautobot"; sleep 5; done' || false
+        run: "poetry run invoke wait"
       - name: "Tests"
         run: "poetry run invoke tests"
   publish_pypi:
