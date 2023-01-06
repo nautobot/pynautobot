@@ -505,10 +505,6 @@ class JobsEndpoint(Endpoint):
             )
         >>>
         """
-
-        if "jobs" not in self.url:
-            raise ValueError('The "run" method can only be executed against the "jobs" app.')
-
         api_version = api_version or self.api.api_version or self.api.version
 
         # Check Nautobot Version as API version can be `None`.  Job run endpoints changed in 1.3.
@@ -524,7 +520,10 @@ class JobsEndpoint(Endpoint):
             job_run_url = f"{self.url}/{kwargs['job_id']}/run/"
 
         req = Request(
-            base=job_run_url, token=self.token, http_session=self.api.http_session, api_version=api_version,
+            base=job_run_url,
+            token=self.token,
+            http_session=self.api.http_session,
+            api_version=api_version,
         ).post(args[0] if args else kwargs)
 
         return response_loader(req, self.return_obj, self)
