@@ -15,9 +15,9 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
-from pynautobot.core.endpoint import Endpoint
+from pynautobot.core.endpoint import Endpoint, JobsEndpoint
 from pynautobot.core.query import Request
-from pynautobot.models import dcim, ipam, virtualization, circuits, extras, users
+from pynautobot.models import circuits, dcim, extras, ipam, users, virtualization
 
 
 class App(object):
@@ -56,6 +56,8 @@ class App(object):
         self._setmodel()
 
     def __getattr__(self, name):
+        if name == "jobs":
+            return JobsEndpoint(self.api, self, name, model=self.model)
         return Endpoint(self.api, self, name, model=self.model)
 
     def choices(self):
