@@ -60,6 +60,26 @@ devices
 <pynautobot.core.endpoint.Endpoint object at 0x7fe801e62fa0>
 ```
 
+## Jobs
+
+Pynautobot provides a specialized `Endpoint` class to represent the Jobs model. This class is called `JobsEndpoint`.
+This extends the `Endpoint` class by adding the `run` method so pynautobot can be used to call/execute a job run.
+
+### Run from a instance of a job.
+```python
+>>> gc_backup_job = nautobot.extras.jobs.all()[14]
+>>> job_result = gc_backup_job.run()
+>>> job_result.result.id
+'1838f8bd-440f-434e-9f29-82b46549a31d' # <-- Job Result ID.
+```
+
+### Run by providing the job id
+```python
+>>> gc_backup_job = nautobot.extras.jobs.run(class_path=nautobot.extras.jobs.all()[14].id)
+>>> gc_backup_job.result.id
+'548832dc-e586-4c65-a7c1-a4e799398a3b' # <-- Job Result ID.
+```
+
 ## Queries
 
 Pynautobot provides several ways to retrieve objects from Nautobot.
