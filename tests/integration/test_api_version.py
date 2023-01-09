@@ -1,3 +1,5 @@
+from packaging import version
+
 import pytest
 import pynautobot
 
@@ -20,7 +22,7 @@ class TestAPIVersioning:
         status = nb_client.status()
         assert status
         assert status.get("nautobot-version")
-        if status["nautobot-version"] < "1.3":
+        if version.parse(status["nautobot-version"]) < version.parse("1.3"):
             pytest.skip("API versioning is only in Nautobot 1.3+")
 
         return status["nautobot-version"]
