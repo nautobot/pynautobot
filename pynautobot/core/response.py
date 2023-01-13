@@ -299,6 +299,7 @@ class Record(object):
                 base=self.url,
                 token=self.api.token,
                 http_session=self.api.http_session,
+                api_version=self.api.api_version,
             )
             self._parse_values(req.get())
             self.has_details = True
@@ -385,6 +386,7 @@ class Record(object):
                     base=self.endpoint.url,
                     token=self.api.token,
                     http_session=self.api.http_session,
+                    api_version=self.api.api_version,
                 )
                 if req.patch({i: serialized[i] for i in diff}):
                     return True
@@ -432,5 +434,6 @@ class Record(object):
             base=self.endpoint.url,
             token=self.api.token,
             http_session=self.api.http_session,
+            api_version=self.api.api_version,
         )
         return True if req.delete() else False
