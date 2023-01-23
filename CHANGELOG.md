@@ -23,6 +23,11 @@ job = nautobot.extras.jobs.all()[7]
 job.run(data={"hostname_regex": ".*"})
 ```
 
+### Package Updates
+
+- Updates `gitpython` to 3.1.30
+-
+
 ## v1.3.0
 
 ### New Features
