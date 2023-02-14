@@ -15,7 +15,9 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
-from pynautobot.core.response import Record, JsonField
+
+from pynautobot.core.endpoint import JobsEndpoint
+from pynautobot.core.response import JsonField, Record
 
 
 class ConfigContexts(Record):
@@ -36,3 +38,9 @@ class CustomFieldChoices(Record):
 
 class JobResults(Record):
     data = JsonField
+
+
+class Jobs(Record):
+    def run(self, **kwargs):
+        """Run a job from within a job instance."""
+        return JobsEndpoint(self.api, self.api.extras, "jobs").run(class_path=self.id, **kwargs)
