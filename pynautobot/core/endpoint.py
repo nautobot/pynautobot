@@ -15,6 +15,8 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+import urllib.parse
+
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
 
@@ -80,7 +82,22 @@ class Endpoint(object):
             ret = Record
         return ret
 
-    def all(self, api_version=None):
+    def _check_manual_pagination(self, limit, offset):
+        """Checks whether manual pagination should be applied.
+
+        :arg limit: Integer value corresponding to the API parameter.
+        :arg offset: Integer value corresponding to the API parameter.
+
+        :Returns: True or false, depending on whether manual pagination is used."""
+        if limit:
+            if not offset:
+                raise ValueError("If limit is passed to the 'all' method, offset needs to be passed as well.")
+            if self.api.threading:
+                raise ValueError("Threading and manual pagination cannot be used in conjunction.")
+            return True
+        return False
+
+    def all(self, api_version=None, limit=None, offset=None):
         """Queries the 'ListView' of a given endpoint.
 
         Returns all objects from an endpoint.
@@ -98,12 +115,17 @@ class Endpoint(object):
         """
 
         api_version = api_version or self.api.api_version
+        manual_pagination = self._check_manual_pagination(limit, offset)
+        url = "{}/".format(self.url)
+        if manual_pagination:
+            url += "?" + urllib.parse.urlencode({"limit": limit, "offset": offset})
         req = Request(
-            base="{}/".format(self.url),
+            base=url,
             token=self.token,
             http_session=self.api.http_session,
             threading=self.api.threading,
             api_version=api_version,
+            manual_pagination=manual_pagination,
         )
 
         return response_loader(req.get(), self.return_obj, self)
@@ -179,7 +201,7 @@ class Endpoint(object):
 
         return response_loader(resp, self.return_obj, self)
 
-    def filter(self, *args, api_version=None, **kwargs):
+    def filter(self, *args, api_version=None, limit=None, offset=None, **kwargs):
         r"""Queries the 'ListView' of a given endpoint.
 
         Takes named arguments that match the usable filters on a
@@ -232,13 +254,19 @@ class Endpoint(object):
             raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
 
         api_version = api_version or self.api.api_version
+
+        manual_pagination = self._check_manual_pagination(limit, offset)
+        url = "{}/".format(self.url)
+        if manual_pagination:
+            url += "?" + urllib.parse.urlencode({"limit": limit, "offset": offset})
         req = Request(
             filters=kwargs,
-            base=self.url,
+            base=url,
             token=self.token,
             http_session=self.api.http_session,
             threading=self.api.threading,
             api_version=api_version,
+            manual_pagination=manual_pagination,
         )
 
         return response_loader(req.get(), self.return_obj, self)
