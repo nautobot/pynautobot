@@ -28,8 +28,9 @@ def is_truthy(arg):
 PYPROJECT_CONFIG = toml.load("pyproject.toml")
 TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
+NAUTOBOT_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_VER", os.getenv("NAUTOBOT_VER", "stable"))
 # Can be set to a separate Python version to be used for launching or building image
-PYTHON_VER = os.getenv("PYTHON_VER", "3.7")
+PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.8"))
 # Name of the docker image/image
 IMAGE_NAME = os.getenv("IMAGE_NAME")
 if IMAGE_NAME is None:
@@ -47,8 +48,8 @@ _DOCKER_COMPOSE_ENV = {
     "COMPOSE_PROJECT_NAME": "pynautobot",
     "IMAGE_NAME": IMAGE_NAME,
     "IMAGE_VER": IMAGE_VER,
+    "NAUTOBOT_VER": NAUTOBOT_VER,
     "PYTHON_VER": PYTHON_VER,
-    "NAUTOBOT_VER": os.getenv("NAUTOBOT_VER", "stable"),
 }
 
 @task
