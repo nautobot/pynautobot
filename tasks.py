@@ -48,7 +48,7 @@ _DOCKER_COMPOSE_ENV = {
     "IMAGE_NAME": IMAGE_NAME,
     "IMAGE_VER": IMAGE_VER,
     "PYTHON_VER": PYTHON_VER,
-    "NAUTOBOT_VER": getenv("NAUTOBOT_VER", "stable"),
+    "NAUTOBOT_VER": os.getenv("NAUTOBOT_VER", "stable"),
 }
 
 @task
