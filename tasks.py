@@ -134,7 +134,7 @@ def rebuild(context):
 
 
 @task(aliases=("unittest",))
-def pytest(context, local=INVOKE_LOCAL, label=""):
+def pytest(context, local=INVOKE_LOCAL, label="", failfast=False, keepdb=False):
     """Run pytest for the specified name and Python version.
 
     Args:
@@ -144,9 +144,14 @@ def pytest(context, local=INVOKE_LOCAL, label=""):
     # pty is set to true to properly run the docker commands due to the invocation process of docker
     # https://docs.pyinvoke.org/en/latest/api/runners.html - Search for pty for more information
     # Install python module
+
+    if keepdb:
+        raise NotImplementedError("--keepdb is not implemented yet")
+
     command = [
         "" if local else "docker-compose run --rm -- pynautobot-dev",
         "pytest -vv",
+        "--maxfail=1" if failfast else "",
         label,
     ]
     context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
