@@ -134,7 +134,7 @@ def rebuild(context):
 
 
 @task(aliases=("unittest",))
-def pytest(context, local=INVOKE_LOCAL):
+def pytest(context, local=INVOKE_LOCAL, label=""):
     """Run pytest for the specified name and Python version.
 
     Args:
@@ -147,6 +147,7 @@ def pytest(context, local=INVOKE_LOCAL):
     command = [
         "" if local else "docker-compose run --rm -- pynautobot-dev",
         "pytest -vv",
+        label,
     ]
     context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
 
@@ -242,8 +243,8 @@ def cli(context):
     Args:
         context (obj): Used to run specific commands
     """
-    dev = f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} /bin/bash"
-    context.run(f"{dev}", pty=True)
+    # dev = f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} /bin/bash"
+    context.run("docker-compose run --rm -- pynautobot-dev bash", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task
