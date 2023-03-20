@@ -146,7 +146,7 @@ def pytest(context, local=INVOKE_LOCAL, label="", failfast=False, keepdb=False):
     # Install python module
 
     if keepdb:
-        raise NotImplementedError("--keepdb is not implemented yet")
+        print("WARNING: --keepdb is not implemented yet")
 
     command = [
         "" if local else "docker-compose run --rm -- pynautobot-dev",
