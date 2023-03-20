@@ -41,6 +41,13 @@ PWD = os.getcwd()
 # Local or Docker execution provide "local" to run locally without docker execution
 INVOKE_LOCAL = is_truthy(os.getenv("INVOKE_LOCAL", False))  # pylint: disable=W1508
 
+_DOCKER_COMPOSE_ENV = {
+    "COMPOSE_FILE": "development/docker-compose.yml",
+    "COMPOSE_HTTP_TIMEOUT": "86400",
+    "COMPOSE_PROJECT_NAME": "pynautobot",
+    "IMAGE_NAME": IMAGE_NAME,
+    "IMAGE_VER": IMAGE_VER,
+}
 
 @task
 def start(context):
@@ -81,26 +88,26 @@ def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
 
 
 @task
-def build(context, nocache=False, forcerm=False, hide=False):  # pylint: disable=too-many-arguments
+def build(context, nocache=False, forcerm=False):
     """Build a Docker image.
 
     Args:
         context (obj): Used to run specific commands
         nocache (bool): Do not use cache when building the image
         forcerm (bool): Always remove intermediate containers
-        hide (bool): Hide output of Docker image build
     """
-    print(f"Building image {IMAGE_NAME}:{IMAGE_VER}")
-    command = f"docker build --tag {IMAGE_NAME}:{IMAGE_VER} --build-arg PYTHON_VER={PYTHON_VER} -f Dockerfile ."
 
-    if nocache:
-        command += " --no-cache"
-    if forcerm:
-        command += " --force-rm"
+    command = [
+        "docker-compose build",
+        "--progress=plain",
+        "--no-cache" if nocache else "",
+        "--force-rm" if forcerm else "",
+        "-- pynautobot-dev",
+    ]
 
-    result = context.run(command, hide=hide)
+    result = context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
     if result.exited != 0:
-        print(f"Failed to build image {IMAGE_NAME}:{IMAGE_VER}\nError: {result.stderr}")
+        print(f"Failed to build pynautobot-dev image\nError: {result.stderr}")
 
 
 @task
@@ -126,7 +133,7 @@ def rebuild(context):
     build(context)
 
 
-@task
+@task(aliases=("unittest",))
 def pytest(context, local=INVOKE_LOCAL):
     """Run pytest for the specified name and Python version.
 
@@ -137,8 +144,11 @@ def pytest(context, local=INVOKE_LOCAL):
     # pty is set to true to properly run the docker commands due to the invocation process of docker
     # https://docs.pyinvoke.org/en/latest/api/runners.html - Search for pty for more information
     # Install python module
-    exec_cmd = "pytest -vv"
-    run_cmd(context, exec_cmd, local)
+    command = [
+        "" if local else "docker-compose run --rm -- pynautobot-dev",
+        "pytest -vv",
+    ]
+    context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task
