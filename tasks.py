@@ -47,6 +47,8 @@ _DOCKER_COMPOSE_ENV = {
     "COMPOSE_PROJECT_NAME": "pynautobot",
     "IMAGE_NAME": IMAGE_NAME,
     "IMAGE_VER": IMAGE_VER,
+    "PYTHON_VER": PYTHON_VER,
+    "NAUTOBOT_VER": getenv("NAUTOBOT_VER", "stable"),
 }
 
 @task
