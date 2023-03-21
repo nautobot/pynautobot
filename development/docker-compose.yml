@@ -1,15 +1,21 @@
 ---
 version: "3"
+
+x-common: &common
+  image: "${IMAGE_NAME}:${IMAGE_VER}"
+  build:
+    context: "${PWD}"
+    dockerfile: "development/Dockerfile"
+    args:
+      PYTHON_VER: "${PYTHON_VER}"
+  volumes:
+    - "${PWD}:/source"
+
 services:
   pynautobot-dev:
-    image: "$IMAGE_NAME:$IMAGE_VER"
-    build:
-      context: $PWD
-      dockerfile: development/Dockerfile
-      args:
-        PYTHON_VER:
-    volumes:
-      - $PWD:/source
+    <<: *common
+  pynautobot-dev-tests:
+    <<: *common
     depends_on:
       nautobot:
         condition: "service_healthy"
@@ -27,11 +33,11 @@ services:
     healthcheck:
       interval: "30s"
       timeout: "10s"
-      start_period: "30s"
+      start_period: "2m"
       retries: 4
       test:
-        - CMD-SHELL
-        - curl --fail http://localhost:8000/health/ || exit 1
+        - "CMD-SHELL"
+        - "curl --fail http://localhost:8000/health/ || exit 1"
   postgres:
     image: "postgres:13"
     env_file:

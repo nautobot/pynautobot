@@ -11,7 +11,7 @@ jobs:
       fail-fast: true
       matrix:
         python-version: ["3.7", "3.8", "3.9", "3.10"]
-        nautobot-version: ["1.2", "1.3"]
+        nautobot-version: ["1.2", "1.3", "stable"]
         exclude:
           - python-version: 3.10
             nautobot-version: 1.2

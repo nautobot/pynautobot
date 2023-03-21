@@ -12,4 +12,3 @@ jobs:
     with:  # Below could potentially be collapsed into a single argument if a concrete relationship between both is enforced
       invoke_context_name: "PYNAUTOBOT"
       plugin_name: "pynautobot"
-

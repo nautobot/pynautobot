@@ -19,5 +19,4 @@ from pynautobot.core.response import Record, JsonField
 
 
 class VirtualMachines(Record):
-
     config_context = JsonField

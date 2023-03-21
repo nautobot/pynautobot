@@ -10,21 +10,6 @@ except ImportError:
     sys.exit("Please make sure to `pip install toml` or enable the Poetry shell and run `poetry install`.")
 
 
-def is_truthy(arg):
-    """Convert "truthy" strings into Booleans.
-
-    Examples:
-        >>> is_truthy('yes')
-        True
-    Args:
-        arg (str): Truthy string (True values are y, yes, t, true, on and 1; false values are n, no,
-        f, false, off and 0. Raises ValueError if val is anything else.
-    """
-    if isinstance(arg, bool):
-        return arg
-    return bool(strtobool(arg))
-
-
 PYPROJECT_CONFIG = toml.load("pyproject.toml")
 TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
@@ -40,8 +25,9 @@ IMAGE_VER = os.getenv("IMAGE_VER", f"{TOOL_CONFIG['version']}-py{PYTHON_VER}")
 # Gather current working directory for Docker commands
 PWD = os.getcwd()
 # Local or Docker execution provide "local" to run locally without docker execution
-INVOKE_LOCAL = is_truthy(os.getenv("INVOKE_LOCAL", False))  # pylint: disable=W1508
+INVOKE_LOCAL = strtobool(os.getenv("INVOKE_LOCAL", "False"))
 
+_DEFAULT_SERVICE = "pynautobot-dev"
 _DOCKER_COMPOSE_ENV = {
     "COMPOSE_FILE": "development/docker-compose.yml",
     "COMPOSE_HTTP_TIMEOUT": "86400",
@@ -52,88 +38,109 @@ _DOCKER_COMPOSE_ENV = {
     "PYTHON_VER": PYTHON_VER,
 }
 
+
 @task
 def start(context):
     print("Starting Nautobot in detached mode...")
-    return context.run("docker-compose -f development/docker-compose.yml up -d")
+    return context.run("docker-compose up -d", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task
 def stop(context):
-    return context.run("docker-compose -f development/docker-compose.yml down")
+    print("Stopping Nautobot...")
+    return context.run("docker-compose stop", env=_DOCKER_COMPOSE_ENV, pty=True)
+
+
+@task
+def destroy(context):
+    down(context, remove=True)
+
+
+@task
+def down(context, remove=False):
+    print("Stopping Nautobot and removing resources...")
+    command = [
+        "docker-compose",
+        "down",
+        "--remove-orphans",
+        "--rmi local" if remove else "",
+        "--volumes" if remove else "",
+    ]
+    return context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task
 def debug(context):
     print("Starting Nautobot in debug mode...")
-    return context.run("docker-compose -f development/docker-compose.yml up")
+    return context.run("docker-compose up", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
-def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
+def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, service=_DEFAULT_SERVICE):
     """Wrapper to run the invoke task commands.
 
     Args:
         context ([invoke.task]): Invoke task object.
         exec_cmd ([str]): Command to run.
         local (bool): Define as `True` to execute locally
+        service (str): Service to run command in if not local
 
     Returns:
         result (obj): Contains Invoke result from running task.
     """
-    if is_truthy(local):
+    if local:
         print(f"LOCAL - Running command {exec_cmd}")
         result = context.run(exec_cmd, pty=True)
     else:
-        print(f"DOCKER - Running command: {exec_cmd} container: {IMAGE_NAME}:{IMAGE_VER}")
-        result = context.run(f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} sh -c '{exec_cmd}'", pty=True)
+        print(f"DOCKER - Running command: {exec_cmd} service: {service}")
+        result = context.run(f"docker-compose run --rm -- {service} {exec_cmd}", env=_DOCKER_COMPOSE_ENV, pty=True)
 
     return result
 
 
 @task
-def build(context, nocache=False, forcerm=False):
+def build(context, nocache=False, service=_DEFAULT_SERVICE):
     """Build a Docker image.
 
     Args:
         context (obj): Used to run specific commands
         nocache (bool): Do not use cache when building the image
-        forcerm (bool): Always remove intermediate containers
+        service (str): Service to build
     """
 
     command = [
         "docker-compose build",
         "--progress=plain",
         "--no-cache" if nocache else "",
-        "--force-rm" if forcerm else "",
-        "-- pynautobot-dev",
+        "--",
+        service,
     ]
 
     result = context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
     if result.exited != 0:
-        print(f"Failed to build pynautobot-dev image\nError: {result.stderr}")
+        print(f"Failed to build {service} image\nError: {result.stderr}")
 
 
 @task
-def clean(context):
+def clean(context, remove=True):
     """Remove the project specific image.
 
     Args:
         context (obj): Used to run specific commands
     """
-    print(f"Attempting to forcefully remove image {IMAGE_NAME}:{IMAGE_VER}")
-    context.run(f"docker rmi {IMAGE_NAME}:{IMAGE_VER} --force")
-    print(f"Successfully removed image {IMAGE_NAME}:{IMAGE_VER}")
+    print("Attempting to remove all docker-compose resources")
+    down(context, remove)
 
 
 @task
-def rebuild(context):
+def rebuild(context, remove=False):
     """Clean the Docker image and then rebuild without using cache.
 
     Args:
         context (obj): Used to run specific commands
+        remove (bool): Remove docker-compose resources
     """
-    clean(context)
-    build(context)
+    clean(context, remove)
+    build(context, nocache=True)
 
 
 @task(aliases=("unittest",))
@@ -143,34 +150,31 @@ def pytest(context, local=INVOKE_LOCAL, label="", failfast=False, keepdb=False):
     Args:
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
+        label (str): Label to run tests for
+        failfast (bool): Stop on first failure
+        keepdb (bool): Keep the database between test runs, not implemented yet, argument is necessary for upstream CI tests
     """
-    # pty is set to true to properly run the docker commands due to the invocation process of docker
-    # https://docs.pyinvoke.org/en/latest/api/runners.html - Search for pty for more information
-    # Install python module
-
     if keepdb:
-        print("WARNING: --keepdb is not implemented yet")
+        print("WARNING: `--keepdb` is not implemented yet, ignoring...")
 
     command = [
-        "" if local else "docker-compose run --rm -- pynautobot-dev",
         "pytest -vv",
         "--maxfail=1" if failfast else "",
         label,
     ]
-    context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
+    run_cmd(context, " ".join(command), local, service="pynautobot-dev-tests")
 
 
 @task
-def black(context, local=INVOKE_LOCAL):
+def black(context, local=INVOKE_LOCAL, autoformat=False):
     """Run black to check that Python files adherence to black standards.
 
     Args:
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
+        autoformat (bool): Autoformat the code
     """
-    # pty is set to true to properly run the docker commands due to the invocation process of docker
-    # https://docs.pyinvoke.org/en/latest/api/runners.html - Search for pty for more information
-    exec_cmd = "black --check --diff ."
+    exec_cmd = "black ." if autoformat else "black --check --diff ."
     run_cmd(context, exec_cmd, local)
 
 
@@ -196,8 +200,6 @@ def pylint(context, local=INVOKE_LOCAL):
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    # pty is set to true to properly run the docker commands due to the invocation process of docker
-    # https://docs.pyinvoke.org/en/latest/api/runners.html - Search for pty for more information
     exec_cmd = 'find . -name "*.py" | xargs pylint'
     run_cmd(context, exec_cmd, local)
 
@@ -210,8 +212,6 @@ def yamllint(context, local=INVOKE_LOCAL):
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    # pty is set to true to properly run the docker commands due to the invocation process of docker
-    # https://docs.pyinvoke.org/en/latest/api/runners.html - Search for pty for more information
     exec_cmd = "yamllint ."
     run_cmd(context, exec_cmd, local)
 
@@ -224,8 +224,6 @@ def pydocstyle(context, local=INVOKE_LOCAL):
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    # pty is set to true to properly run the docker commands due to the invocation process of docker
-    # https://docs.pyinvoke.org/en/latest/api/runners.html - Search for pty for more information
     exec_cmd = "pydocstyle ."
     run_cmd(context, exec_cmd, local)
 
@@ -238,8 +236,6 @@ def bandit(context, local=INVOKE_LOCAL):
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    # pty is set to true to properly run the docker commands due to the invocation process of docker
-    # https://docs.pyinvoke.org/en/latest/api/runners.html - Search for pty for more information
     exec_cmd = "bandit --recursive ./ --configfile .bandit.yml"
     run_cmd(context, exec_cmd, local)
 
@@ -251,8 +247,7 @@ def cli(context):
     Args:
         context (obj): Used to run specific commands
     """
-    # dev = f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} /bin/bash"
-    context.run("docker-compose run --rm -- pynautobot-dev bash", env=_DOCKER_COMPOSE_ENV, pty=True)
+    run_cmd(context, "bash", False)
 
 
 @task
@@ -271,7 +266,6 @@ def tests(context, local=INVOKE_LOCAL):
     # Skipping due to using different doc strings atm.
     # pydocstyle(context, local)
     bandit(context, local)
-    # Skipping due to some issues, but at least linting, etc. is working
     pytest(context, local)
 
     print("All tests have passed!")
@@ -284,3 +278,9 @@ def wait(context):
     context.run(
         "timeout 300 bash -c 'while [[ \"$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)\" != \"200\" ]]; do echo \"waiting for Nautobot\"; sleep 5; done' || false"
     )
+
+
+@task
+def export(context):
+    """Export compose configuration to `compose.yaml` file."""
+    context.run("docker-compose convert > compose.yaml", env=_DOCKER_COMPOSE_ENV, pty=True)
