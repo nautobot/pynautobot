@@ -18,18 +18,11 @@ jobs:
     env:
       PYTHON_VER: "${{ matrix.python-version }}"
       NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
-      INVOKE_LOCAL: true
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
       - name: "Install CICD dependencies"
         run: "pip install -U pip && pip install poetry"
-      - name: "Install project dependencies via Poetry"
-        run: "poetry install"
-      - name: "Start containers"
-        run: "poetry run invoke start"
-      - name: "Wait for Nautobot to become available."
-        run: "poetry run invoke wait"
       - name: "Tests"
         run: "poetry run invoke tests"
   publish_pypi:
