@@ -8,7 +8,7 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL https://install.python-poetry.org | python3 - && \
-  /root/.local/bin/poetry config virtualenvs.create false
+    /root/.local/bin/poetry config virtualenvs.create false
 
 WORKDIR /source
 COPY pyproject.toml /source
