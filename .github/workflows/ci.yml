@@ -26,8 +26,6 @@ jobs:
       - name: "Set up Docker Buildx"
         id: "buildx"
         uses: "docker/setup-buildx-action@v1"
-      - name: "Install Python Packages"
-        run: "pip install poetry"
       - name: "Tests"
         run: "poetry run invoke tests"
   publish_pypi:
