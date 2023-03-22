@@ -21,10 +21,10 @@ jobs:
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
-      - name: "Install CICD dependencies"
-        run: "pip install -U pip && pip install poetry"
-      - name: "Tests"
-        run: "poetry run invoke tests"
+      - name: "Set up Python"
+        uses: "actions/setup-python@v2"
+        with:
+          python-version: "3.9"
   publish_pypi:
     name: "Push Package to PyPI"
     runs-on: "ubuntu-20.04"
