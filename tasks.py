@@ -21,8 +21,8 @@ PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "
 def _get_image_name_and_tag():
     """Return image name and tag. Necessary to avoid double build in upstream testing"""
 
-    workflow_name = os.getenv("GITHUB_WORKFLOW")
-    if workflow_name == "Nautobot Plugin Upstream Testing - Base":
+    workflow_name = os.getenv("GITHUB_WORKFLOW", "")
+    if "upstream" in workflow_name.lower():
         return "pynautobot/nautobot", f"{NAUTOBOT_VER}-py{PYTHON_VER}"
 
     image_name = os.getenv("IMAGE_NAME", TOOL_CONFIG["name"])
