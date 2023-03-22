@@ -16,12 +16,23 @@ TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 NAUTOBOT_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_VER", os.getenv("NAUTOBOT_VER", "stable"))
 # Can be set to a separate Python version to be used for launching or building image
 PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.8"))
-# Name of the docker image/image
-IMAGE_NAME = os.getenv("IMAGE_NAME")
-if IMAGE_NAME is None:
-    IMAGE_NAME = TOOL_CONFIG["name"]
-# Tag for the image
-IMAGE_VER = os.getenv("IMAGE_VER", f"{TOOL_CONFIG['version']}-py{PYTHON_VER}")
+
+
+def _get_image_name_and_tag():
+    """Return image name and tag. Necessary to avoid double build in upstream testing"""
+
+    workflow_name = os.getenv("GITHUB_WORKFLOW")
+    if workflow_name == "Nautobot Plugin Upstream Testing - Base":
+        return "pynautobot/nautobot", f"{NAUTOBOT_VER}-py{PYTHON_VER}"
+
+    image_name = os.getenv("IMAGE_NAME", TOOL_CONFIG["name"])
+    image_tag = os.getenv("IMAGE_VER", f"{TOOL_CONFIG['version']}-py{PYTHON_VER}")
+
+    return image_name, image_tag
+
+
+IMAGE_NAME, IMAGE_VER = _get_image_name_and_tag()
+
 # Gather current working directory for Docker commands
 PWD = os.getcwd()
 # Local or Docker execution provide "local" to run locally without docker execution

@@ -3,17 +3,17 @@ version: "3"
 
 x-common: &common
   image: "${IMAGE_NAME}:${IMAGE_VER}"
-  build:
-    context: "${PWD}"
-    dockerfile: "development/Dockerfile"
-    args:
-      PYTHON_VER: "${PYTHON_VER}"
   volumes:
     - "${PWD}:/source"
 
 services:
   pynautobot-dev:
     <<: *common
+    build:
+      context: "${PWD}"
+      dockerfile: "development/Dockerfile"
+      args:
+        PYTHON_VER: "${PYTHON_VER}"
   pynautobot-dev-tests:
     <<: *common
     depends_on:
