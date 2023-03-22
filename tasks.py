@@ -80,6 +80,25 @@ def down(context, remove=False):
     return context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
+@task(
+    help={
+        "service": "Docker-compose service name to view (default: nautobot)",
+        "follow": "Follow logs",
+        "tail": "Tail N number of lines or 'all'",
+    }
+)
+def logs(context, service="", follow=False, tail=None):
+    """View the logs of a docker-compose service."""
+    command = [
+        "docker-compose logs",
+        "--follow" if follow else "",
+        f"--tail={tail}" if tail else "",
+        service if service else "",
+    ]
+
+    context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
+
+
 @task
 def debug(context):
     print("Starting Nautobot in debug mode...")
