@@ -38,7 +38,7 @@ class TraceableRecord(Record):
             "dcim/rear-ports": RearPorts,
         }
         ret = []
-        for (termination_a_data, cable_data, termination_b_data) in req.get():
+        for termination_a_data, cable_data, termination_b_data in req.get():
             this_hop_ret = []
             for hop_item_data in (termination_a_data, cable_data, termination_b_data):
                 # if not fully terminated then some items will be None

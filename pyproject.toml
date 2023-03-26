@@ -24,7 +24,6 @@ requests = "^2.20.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
-pytest-docker = "*"
 requests_mock = "*"
 pyyaml = "*"
 pylint = "*"

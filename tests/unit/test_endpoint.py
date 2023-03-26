@@ -15,7 +15,6 @@ class EndPointTestCase(unittest.TestCase):
             self.assertEqual(len(test), 2)
 
     def test_filter_empty_kwargs(self):
-
         api = Mock(base_url="http://localhost:8000/api")
         app = Mock(name="test")
         test_obj = Endpoint(api, app, "test")
@@ -23,7 +22,6 @@ class EndPointTestCase(unittest.TestCase):
             test_obj.filter()
 
     def test_filter_reserved_kwargs(self):
-
         api = Mock(base_url="http://localhost:8000/api")
         app = Mock(name="test")
         test_obj = Endpoint(api, app, "test")
