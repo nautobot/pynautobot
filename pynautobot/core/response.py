@@ -84,7 +84,7 @@ class Record(object):
 
     >>> x = nb.dcim.devices.get(1)
     >>> x
-    <pynautobot.models.dcim.Devices name='test1-switch1' at 0x1953d821250>
+    <pynautobot.models.dcim.Devices ('test1-switch1') at 0x1953d821250>
     >>>
 
     Querying a string field.
