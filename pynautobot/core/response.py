@@ -206,7 +206,7 @@ class Record(object):
         return getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or ""
 
     def __repr__(self):
-        return "<{}.{} name='{}' at {}>".format(self.__class__.__module__, self.__class__.__name__, self, hex(id(self)))
+        return "<{}.{} ('{}') at {}>".format(self.__class__.__module__, self.__class__.__name__, self, hex(id(self)))
 
     def __getstate__(self):
         return self.__dict__
