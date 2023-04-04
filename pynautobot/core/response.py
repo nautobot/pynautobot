@@ -80,11 +80,11 @@ class Record(object):
     :examples:
 
     Default representation of the object usually contains object's
-    class and object's name
+    class, object's name and it's location in memory
 
     >>> x = nb.dcim.devices.get(1)
     >>> x
-    <pynautobot.models.dcim.Devices object (name='test1-switch1')>
+    <pynautobot.models.dcim.Devices name='test1-switch1' at 0x1953d821250>
     >>>
 
     Querying a string field.
@@ -206,7 +206,7 @@ class Record(object):
         return getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or ""
 
     def __repr__(self):
-        return "<{}.{} object (name='{}')>".format(self.__class__.__module__, self.__class__.__name__, self)
+        return "<{}.{} name='{}' at {}>".format(self.__class__.__module__, self.__class__.__name__, self, hex(id(self)))
 
     def __getstate__(self):
         return self.__dict__
