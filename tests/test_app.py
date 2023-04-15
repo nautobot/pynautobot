@@ -17,7 +17,7 @@ class AppCustomChoicesTestCase(unittest.TestCase):
     )
     def test_custom_choices(self, *_):
         api = pynautobot.api(host, **def_kwargs)
-        choices = api.extras.custom_choices()
+        choices = api.extras.custom_fields()
         self.assertEqual(len(choices), 2)
         self.assertEqual(sorted(choices.keys()), ["Testfield1", "Testfield2"])
 
@@ -44,7 +44,7 @@ class PluginAppCustomChoicesTestCase(unittest.TestCase):
     )
     def test_custom_choices(self, *_):
         api = pynautobot.api(host, **def_kwargs)
-        choices = api.plugins.test_plugin.custom_choices()
+        choices = api.plugins.test_plugin.custom_fields()
         self.assertEqual(len(choices), 2)
         self.assertEqual(sorted(choices.keys()), ["Testfield1", "Testfield2"])
 

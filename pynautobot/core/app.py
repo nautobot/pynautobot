@@ -82,19 +82,45 @@ class App(object):
 
         return self._choices
 
-    def custom_choices(self):
+    def custom_fields(self):
         """Returns custom-fields response from app
 
         :Returns: Raw response from Nautobot's custom-fields endpoint.
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
         :Example:
 
-        >>> nb.extras.custom_choices()
-        {'Testfield1': {'Testvalue2': 2, 'Testvalue1': 1},
-         'Testfield2': {'Othervalue2': 4, 'Othervalue1': 3}}
+        >>> custom_fields_list = nb.extras.custom_fields()
+        >>> print(custom_fields_list[0]['label'])
+        Test custom field for rack
+        >>> print(custom_fields_list[0]['content_types'])
+        ['dcim.rack']
         """
         custom_fields = Request(
             base="{}/{}/custom-fields/".format(
+                self.api.base_url,
+                self.name,
+            ),
+            token=self.api.token,
+            http_session=self.api.http_session,
+        ).get()
+        return custom_fields
+
+    def custom_field_choices(self):
+        """Returns custom-field-choices response from app
+
+        :Returns: Raw response from Nautobot's custom-field-choices endpoint.
+        :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
+        :Example:
+
+
+        >>> custom_field_choices_list = nb.extras.custom_field_choices()
+        >>> print(custom_field_choices_list[0]['value'])
+        First option
+        >>> print(custom_field_choices_list[0]['field']['name'])
+        test_custom_field
+        """
+        custom_fields = Request(
+            base="{}/{}/custom-field-choices/".format(
                 self.api.base_url,
                 self.name,
             ),
