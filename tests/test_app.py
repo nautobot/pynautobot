@@ -22,9 +22,10 @@ class AppCustomFieldsTestCase(unittest.TestCase):
         choices = api.extras.custom_fields()
 
         session_get_mock.assert_called_once()
-        expect_url = f"{api.base_url}/extras/custom-fields/"
-        url_passed_in_args = expect_url in session_get_mock.call_args.args
-        url_passed_in_kwargs = expect_url == session_get_mock.call_args.kwargs.get("url")
+        expect_url = "{}/extras/custom-fields/".format(api.base_url)
+        self.assertGreaterEqual(len(session_get_mock.call_args), 2)
+        url_passed_in_args = expect_url in session_get_mock.call_args[0]
+        url_passed_in_kwargs = expect_url == session_get_mock.call_args[1].get("url")
         self.assertTrue(url_passed_in_args or url_passed_in_kwargs)
 
         self.assertIsInstance(choices, list)
@@ -46,9 +47,10 @@ class AppCustomFieldChoicesTestCase(unittest.TestCase):
         choices = api.extras.custom_field_choices()
 
         session_get_mock.assert_called_once()
-        expect_url = f"{api.base_url}/extras/custom-field-choices/"
-        url_passed_in_args = expect_url in session_get_mock.call_args.args
-        url_passed_in_kwargs = expect_url == session_get_mock.call_args.kwargs.get("url")
+        expect_url = "{}/extras/custom-field-choices/".format(api.base_url)
+        self.assertGreaterEqual(len(session_get_mock.call_args), 2)
+        url_passed_in_args = expect_url in session_get_mock.call_args[0]
+        url_passed_in_kwargs = expect_url == session_get_mock.call_args[1].get("url")
         self.assertTrue(url_passed_in_args or url_passed_in_kwargs)
 
         self.assertIsInstance(choices, list)
