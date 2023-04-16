@@ -1,0 +1,60 @@
+[
+    {
+        "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+        "display": "Test custom field",
+        "url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+        "content_types": [
+            "dcim.rack"
+        ],
+        "type": {
+            "value": "integer",
+            "label": "Integer"
+        },
+        "label": "Test custom field",
+        "name": "test_custom_field",
+        "slug": "test_custom_field",
+        "description": "",
+        "required": false,
+        "filter_logic": {
+            "value": "loose",
+            "label": "Loose"
+        },
+        "default": null,
+        "weight": 100,
+        "validation_minimum": null,
+        "validation_maximum": null,
+        "validation_regex": "",
+        "created": "2023-04-15",
+        "last_updated": "2023-04-15T17:45:11.839431Z",
+        "notes_url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/notes/"
+    },
+    {
+        "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+        "display": "Test custom field 2",
+        "url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+        "content_types": [
+            "dcim.rack"
+        ],
+        "type": {
+            "value": "select",
+            "label": "Selection"
+        },
+        "label": "Test custom field 2",
+        "name": "test_custom_field_2",
+        "slug": "test_custom_field_2",
+        "description": "",
+        "required": false,
+        "filter_logic": {
+            "value": "loose",
+            "label": "Loose"
+        },
+        "default": null,
+        "weight": 100,
+        "validation_minimum": null,
+        "validation_maximum": null,
+        "validation_regex": "",
+        "created": "2023-04-15",
+        "last_updated": "2023-04-15T18:11:57.133408Z",
+        "notes_url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/notes/"
+    }
+]
