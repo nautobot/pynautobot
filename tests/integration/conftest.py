@@ -31,6 +31,9 @@ DEVICE_ROLE_NAMES = [
     "Server",
     "Spine Switch",
 ]
+PARENT_PREFIXES = [
+    "192.0.0.0/8",
+]
 
 # When running tests locally `export NAUTOBOT_URL="http://localhost:8000"` (or wherever Nautobot runs) to override the default
 _NAUTOBOT_URL = os.getenv("NAUTOBOT_URL", "http://nautobot:8000")
@@ -145,7 +148,13 @@ def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):
 
     # add device roles
     for device_role_name in DEVICE_ROLE_NAMES:
-        nb_api.dcim.device_roles.create(name=device_role_name, slug=device_role_name.lower().replace(" ", "-"))
+        nb_api.extras.roles.create(
+            name=device_role_name, slug=device_role_name.lower().replace(" ", "-"), content_types=["dcim.device"]
+        )
+
+    # add parent prefix
+    for parent_prefix in PARENT_PREFIXES:
+        nb_api.ipam.prefixes.create(prefix=parent_prefix, namespace={"name": "Global"}, status={"name": "Active"})
 
 
 @pytest.fixture(scope="session")

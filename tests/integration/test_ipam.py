@@ -1,10 +1,15 @@
+import pytest
+
 from pynautobot.core.response import Record
 
 
+@pytest.mark.xfail(reason="REST API doesn't yet support namespace in POST request.")
 def test_ip_address_nat_inside_outside_correct_objects(nb_client):
     """Validate nat_inside and nat_outside both return IpAddress Record objects."""
-    ip_inside = nb_client.ipam.ip_addresses.create(address="192.0.2.1/32", status="active")
-    ip_outside = nb_client.ipam.ip_addresses.create(address="192.0.2.2/32", status="active", nat_inside=ip_inside.id)
+    ip_inside = nb_client.ipam.ip_addresses.create(address="192.0.2.1/32", status={"name": "Active"})
+    ip_outside = nb_client.ipam.ip_addresses.create(
+        address="192.0.2.2/32", status={"name": "Active"}, nat_inside=ip_inside.id
+    )
 
     ip_inside_refresh = nb_client.ipam.ip_addresses.get(address="192.0.2.1/32")
 
@@ -14,8 +19,10 @@ def test_ip_address_nat_inside_outside_correct_objects(nb_client):
 
 def test_prefixes_successfully_stringify_tags(nb_client):
     """Validate prefix will properly stringify the tags attribute and they are Record objects."""
-    tag = nb_client.extras.tags.create(name="production", slug="production")
-    prefix = nb_client.ipam.prefixes.create(prefix="192.0.2.0/24", status="active", tags=[tag.id])
+    tag = nb_client.extras.tags.create(name="production", slug="production", content_types=["ipam.prefix"])
+    prefix = nb_client.ipam.prefixes.create(
+        prefix="192.0.2.0/24", namespace={"name": "Global"}, status={"name": "Active"}, tags=[tag.id]
+    )
 
     assert str(prefix) == "192.0.2.0/24"
     assert prefix.tags
