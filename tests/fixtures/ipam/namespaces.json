@@ -1,0 +1,33 @@
+{
+  "count": 2,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": "c7671ec3-3900-4650-9dd7-ac538f2bee67",
+      "display": "Global",
+      "url": "http://localhost:8080/api/ipam/namespaces/c7671ec3-3900-4650-9dd7-ac538f2bee67/",
+      "name": "Global",
+      "description": "Default Global namespace. Created by Nautobot.",
+      "location": null,
+      "created": "2023-04-24T12:25:55.901435Z",
+      "last_updated": "2023-04-24T12:25:55.901447Z",
+      "tags": [],
+      "notes_url": "http://localhost:8080/api/ipam/namespaces/c7671ec3-3900-4650-9dd7-ac538f2bee67/notes/",
+      "custom_fields": {}
+    },
+    {
+      "id": "b0b85da2-4e5f-4b0f-a960-4f7bc5f225db",
+      "display": "internal",
+      "url": "http://localhost:8080/api/ipam/namespaces/b0b85da2-4e5f-4b0f-a960-4f7bc5f225db/",
+      "name": "internal",
+      "description": "",
+      "location": null,
+      "created": "2023-04-24T12:36:38.598529Z",
+      "last_updated": "2023-04-24T12:36:38.598564Z",
+      "tags": [],
+      "notes_url": "http://localhost:8080/api/ipam/namespaces/b0b85da2-4e5f-4b0f-a960-4f7bc5f225db/notes/",
+      "custom_fields": {}
+    }
+  ]
+}
