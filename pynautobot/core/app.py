@@ -141,7 +141,7 @@ class PluginsApp(object):
         self.api = api
 
     def __getattr__(self, name):
-        return App(self.api, "plugins/{}".format(name))
+        return App(self.api, f"plugins/{name.replace('_', '-')}")
 
     def installed_plugins(self):
         """Returns raw response with installed plugins
