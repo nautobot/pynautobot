@@ -50,14 +50,13 @@ class Endpoint(object):
 
     def __init__(self, api, app, name, model=None):
         self.return_obj = self._lookup_ret_obj(name, model)
-        self.app_name = app.name.replace("_", "-")
         self.name = name.replace("_", "-")
         self.api = api
         self.base_url = api.base_url
         self.token = api.token
         self.url = "{base_url}/{app}/{endpoint}".format(
             base_url=self.base_url,
-            app=self.app_name,
+            app=app.name,
             endpoint=self.name,
         )
         self._choices = None
