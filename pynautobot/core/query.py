@@ -132,6 +132,7 @@ class Request(object):
         token=None,
         threading=False,
         api_version=None,
+        manual_pagination=False,
     ):
         """
         Instantiates a new Request object
@@ -153,6 +154,7 @@ class Request(object):
         self.url = self.base if not key else "{}{}/".format(self.base, key)
         self.threading = threading
         self.api_version = api_version
+        self.manual_pagination = manual_pagination
 
     def get_openapi(self):
         """Gets the OpenAPI Spec"""
@@ -303,6 +305,8 @@ class Request(object):
             req = self._make_call(add_params=add_params)
             if isinstance(req, dict) and req.get("results") is not None:
                 ret = req["results"]
+                if self.manual_pagination:
+                    return ret
                 first_run = True
                 while req["next"]:
                     # Not worrying about making sure add_params kwargs is
