@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+from typing import Dict
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
 
@@ -306,6 +307,43 @@ class Endpoint(object):
         ).post(args[0] if args else kwargs)
 
         return response_loader(req, self.return_obj, self)
+
+    def update(self, id: str, data: Dict[str, any]):
+        """
+        Update a resource with a dictionary.
+
+        Accepts the id of the object that needs to be updated as well as
+        a dictionary of k/v pairs used to update an object. The object
+        is directly updated on the server using a PATCH request without
+        fetching object information.
+
+        For fields requiring an object reference (such as a device location),
+        the API user is responsible for providing the object ID or the object
+        URL. This API will not accept the pynautobot object directly.
+
+        :arg str id: Identifier of the object being updated
+        :arg dict data: Dictionary containing the k/v to update the
+            record object with.
+        :returns: True if PATCH request was successful.
+        :example:
+
+        >>> nb.dcim.devices.update(id="0238a4e3-66f2-455a-831f-5f177215de0f", data={
+        ...     "name": "test-switch2",
+        ...     "serial": "ABC321",
+        ...     "location": "9b1f53c7-89fa-4fb2-a89a-b97364fef50c",
+        ... })
+        True
+        """
+        req = Request(
+            key=id,
+            base=self.url,
+            token=self.api.token,
+            http_session=self.api.http_session,
+            api_version=self.api.api_version,
+        )
+        if req.patch(data):
+            return True
+        return False
 
     def choices(self, api_version=None):
         """Returns all choices from the endpoint.

@@ -152,3 +152,43 @@ and fetching the object from Nautobot shows that ``face`` has also been left unc
     Front
     >>> tmp_hq_access_5.position
     42
+
+
+Updating objects without loading data
+-------------------------------------
+
+In some cases it may not be necessary to load an object to update it, for example
+if the ID and updated fields are known, the call HTTP PATCH may be made without
+performing an :py:meth:`~pynautobot.core.endpoint.Endpoint.get` first.
+
+In this case, the :py:meth:`~pynautobot.core.endpoint.Endpoint.update` method may
+be used to directly submit a PATCH to the Nautobot REST API. Using this reduces
+the number of API calls. It can be particularly useful as a way to update data
+fetched from the GraphQL API.
+
+The examples updates a Device record, however this can apply to other API
+:py:class:`~pynautobot.core.endpoint.Endpoint` types.
+
+.. code-block:: python
+
+    import os
+    from pynautobot import api
+
+    url = os.environ["NAUTOBOT_URL"]
+    token = os.environ["NAUTOBOT_TOKEN"]
+    nautobot = api(url=url, token=token)
+
+    # Update status and name fields
+    result = nautobot.dcim.devices.update(
+      id="491d799a-2b4d-41fc-80e1-7c5cbb5b71b6",
+      data={
+        "comments": "removed from service",
+        "status": "decommissioned",
+      },
+    )
+
+    print(result)  # will output True if successful
+
+References:
+
+* :ref:`Gathering Data from GraphQL Endpoint`

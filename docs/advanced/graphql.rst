@@ -152,3 +152,12 @@ This example shows accessing data from the previous query.
     >>> # Get the name of the first site
     >>> graphql_response.json["data"]["sites"][0]["name"]
     'den'
+
+
+Saving Changes
+--------------
+
+The Nautobot GraphQL API is currently read-only. To make updates to objects, see:
+
+* :ref:`Updating objects without loading data`
+* :py:meth:`~pynautobot.core.endpoint.Endpoint.update`

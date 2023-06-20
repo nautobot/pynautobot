@@ -91,6 +91,17 @@ class Generic:
                 mock.assert_called_with(self.detail_uri, params={}, json=None, headers=HEADERS)
                 delete.assert_called_with(self.detail_uri, params={}, json=None, headers=HEADERS)
 
+        def test_endpoint_update(self):
+            """Tests that calling Endpoint.update(id=x, data={...}) will result in an HTTP PATCH"""
+            with patch(
+                "requests.sessions.Session.patch",
+                return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
+            ) as mock:
+                UPDATE_DATA = {"field1": "value1"}
+                ret = self.endpoint.update(id=self.uuid, data=UPDATE_DATA)
+                self.assertTrue(ret)
+                mock.assert_called_with(self.detail_uri, params={}, json=UPDATE_DATA, headers=HEADERS)
+
         def test_diff(self):
             with patch(
                 "requests.sessions.Session.get",
