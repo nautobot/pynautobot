@@ -1,6 +1,24 @@
 ---
 version: "3"
+
+x-common: &common
+  image: "${IMAGE_NAME}:${IMAGE_VER}"
+  volumes:
+    - "${PWD}:/source"
+
 services:
+  pynautobot-dev:
+    <<: *common
+    build:
+      context: "${PWD}"
+      dockerfile: "development/Dockerfile"
+      args:
+        PYTHON_VER: "${PYTHON_VER}"
+  pynautobot-dev-tests:
+    <<: *common
+    depends_on:
+      nautobot:
+        condition: "service_healthy"
   nautobot:
     image: "ghcr.io/nautobot/nautobot-dev:${NAUTOBOT_VER:-1.3}-py${PYTHON_VER:-3.7}"
     command: "nautobot-server runserver 0.0.0.0:8000 --insecure"
@@ -12,6 +30,14 @@ services:
     env_file:
       - "./dev.env"
     tty: true
+    healthcheck:
+      interval: "30s"
+      timeout: "10s"
+      start_period: "2m"
+      retries: 4
+      test:
+        - "CMD-SHELL"
+        - "curl --fail http://localhost:8000/health/ || exit 1"
   postgres:
     image: "postgres:13"
     env_file:
