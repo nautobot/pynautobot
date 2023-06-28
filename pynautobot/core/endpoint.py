@@ -105,6 +105,7 @@ class Endpoint(object):
             http_session=self.api.http_session,
             threading=self.api.threading,
             api_version=api_version,
+            api_depth=self.api.api_depth,
         )
 
         return response_loader(req.get(), self.return_obj, self)
@@ -168,6 +169,7 @@ class Endpoint(object):
             token=self.token,
             http_session=self.api.http_session,
             api_version=api_version,
+            api_depth=self.api.api_depth,
         )
 
         try:
@@ -240,6 +242,7 @@ class Endpoint(object):
             http_session=self.api.http_session,
             threading=self.api.threading,
             api_version=api_version,
+            api_depth=self.api.api_depth,
         )
 
         return response_loader(req.get(), self.return_obj, self)

@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+import os
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
@@ -75,6 +76,7 @@ class Api(object):
         token=None,
         threading=False,
         api_version=None,
+        api_depth=os.getenv("PYNAUTOBOT_API_DEPTH"),
         retries=0,
     ):
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
@@ -95,6 +97,7 @@ class Api(object):
             self.http_session.mount("https://", _adapter)
         self.threading = threading
         self.api_version = api_version
+        self.api_depth = api_depth
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")
@@ -151,6 +154,7 @@ class Api(object):
             base=self.base_url,
             http_session=self.http_session,
             api_version=self.api_version,
+            api_depth=self.api_depth,
         ).get_openapi()
 
     def status(self):
@@ -186,5 +190,6 @@ class Api(object):
             token=self.token,
             http_session=self.http_session,
             api_version=self.api_version,
+            api_depth=self.api_depth,
         ).get_status()
         return status

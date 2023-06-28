@@ -301,6 +301,7 @@ class Record(object):
                 token=self.api.token,
                 http_session=self.api.http_session,
                 api_version=self.api.api_version,
+                api_depth=self.api.api_depth,
             )
             self._parse_values(req.get())
             self.has_details = True

@@ -7,7 +7,7 @@ from pynautobot.core.endpoint import Endpoint
 @patch("pynautobot.core.endpoint.response_loader")
 class APIVersionTestCase(unittest.TestCase):
     def setUp(self):
-        self.api = Mock(base_url="http://localhost:8000/api", api_version="1.3", name="API-Mock")
+        self.api = Mock(base_url="http://localhost:8000/api", api_version="1.3", name="API-Mock", api_depth=None)
         self.api.token = 1234
         app = Mock(name="test")
         app.name = "test"

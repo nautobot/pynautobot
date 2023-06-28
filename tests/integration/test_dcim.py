@@ -19,7 +19,7 @@ class TestSimpleServerRackingAndConnecting:
     @pytest.fixture
     def location(self, nb_client):
         """Verify we can create a location."""
-        location_types = ["dcim.device", "dcim.rack"]
+        location_types = ["dcim.device", "dcim.rack", "dcim.rackgroup"]
         site_type = nb_client.dcim.location_types.create(name="Site", content_types=location_types, nestable=True)
         location_name = "MSP"
         location = nb_client.dcim.locations.create(
@@ -27,21 +27,32 @@ class TestSimpleServerRackingAndConnecting:
             slug=location_name.lower().replace(" ", "_"),
             status={"name": "Active"},
             location_type=site_type.id,
+            depth=3,
         )
         assert location
 
         return location
 
     @pytest.fixture
-    def rack(self, location):
+    def rack_group(self, location):
         """Verify we can create a rack device."""
-        rack = location.api.dcim.racks.create(name="rack1", location=location.id, status={"name": "Active"})
+        rack_group = location.api.dcim.rack_groups.create(name="rack_group_1", location=location.id)
+        assert rack_group
+
+        return rack_group
+
+    @pytest.fixture
+    def rack(self, location, rack_group):
+        """Verify we can create a rack device."""
+        rack = location.api.dcim.racks.create(
+            name="rack1", location=location.id, rack_group=rack_group.id, status={"name": "Active"}
+        )
         assert rack
 
         return rack
 
     @pytest.fixture
-    def data_leafs(self, rack):
+    def data_leafs(self, rack, location):
         """Verify we can create data leaf switch devices."""
         devices = []
         for i in [1, 2]:
@@ -49,7 +60,7 @@ class TestSimpleServerRackingAndConnecting:
                 name=f"access_switch{i}.networktocode.com",
                 device_type={"slug": "dcs-7050tx3-48c8"},
                 role={"name": "Leaf Switch"},
-                location=rack.location.id,
+                location=location.id,
                 rack=rack.id,
                 face="rear",
                 position=rack.u_height - i,
@@ -61,13 +72,13 @@ class TestSimpleServerRackingAndConnecting:
         return devices
 
     @pytest.fixture
-    def mgmt_leaf(self, rack):
+    def mgmt_leaf(self, rack, location):
         """Verify we can create data leaf switch devices."""
         device = rack.api.dcim.devices.create(
             name="mgmt_switch1.networktocode.com",
             device_type={"slug": "dcs-7010t-48"},
             role={"name": "Leaf Switch"},
-            location=rack.location.id,
+            location=location.id,
             rack=rack.id,
             face="rear",
             position=rack.u_height - 3,
@@ -91,7 +102,7 @@ class TestSimpleServerRackingAndConnecting:
 
         return device
 
-    def test_racking_server(self, server, data_leafs, mgmt_leaf, rack):
+    def test_racking_server(self, nb_client, server, data_leafs, mgmt_leaf, rack):
         """Verify we can rack the server."""
         assert server.update({"rack": rack.id, "face": "front", "position": rack.u_height - 4})
 
@@ -133,7 +144,7 @@ class TestSimpleServerRackingAndConnecting:
             assert server_data_iface.update({"lag": bond_iface.id})
 
         # now reload the server and verify it's set correctly
-        server = server.api.dcim.devices.get(server.id)
+        server = nb_client.dcim.devices.get(name="server.networktocode.com")
 
         # check the cable traces
         for iface in server.api.dcim.interfaces.filter(device_id=server.id, has_cable=True):
@@ -187,8 +198,9 @@ class TestSimpleServerRackingAndConnecting:
             vc_position=2,
         )
         all_vcs = nb_client.dcim.virtual_chassis.all()
-        vc1 = all_vcs[0]
         assert len(all_vcs) == 1
+
+        vc1 = nb_client.dcim.virtual_chassis.get(name="VC1")
         assert vc1.member_count == 2
         assert vc1.master.name == dev1.name
         assert vc1.master.id == dev1.id
