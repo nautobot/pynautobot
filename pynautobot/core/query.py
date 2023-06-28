@@ -256,6 +256,7 @@ class Request(object):
                 params.update(self.filters)
             if add_params:
                 params.update(add_params)
+
         try:
             req = getattr(self.http_session, verb)(url_override or self.url, headers=headers, params=params, json=data)
         except requests.exceptions.RetryError as error:

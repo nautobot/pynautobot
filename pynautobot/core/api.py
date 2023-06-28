@@ -154,7 +154,6 @@ class Api(object):
             base=self.base_url,
             http_session=self.http_session,
             api_version=self.api_version,
-            api_depth=self.api_depth,
         ).get_openapi()
 
     def status(self):
@@ -190,6 +189,5 @@ class Api(object):
             token=self.token,
             http_session=self.http_session,
             api_version=self.api_version,
-            api_depth=self.api_depth,
         ).get_status()
         return status
