@@ -77,7 +77,7 @@ class Api(object):
         token=None,
         threading=False,
         api_version=None,
-        api_depth=os.getenv("PYNAUTOBOT_API_DEPTH"),
+        api_depth=int(os.getenv("PYNAUTOBOT_API_DEPTH", "1")),
         retries=0,
     ):
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
