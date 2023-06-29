@@ -279,7 +279,7 @@ class Request(object):
 
     def concurrent_get(self, ret, page_size, page_offsets):
         futures_to_results = []
-        with cf.ThreadPoolExecutor(max_workers=4) as pool:
+        with cf.ThreadPoolExecutor(max_workers=self.max_workers) as pool:
             for offset in page_offsets:
                 new_params = {"offset": offset, "limit": page_size}
                 futures_to_results.append(pool.submit(self._make_call, add_params=new_params))
