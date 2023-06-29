@@ -57,6 +57,7 @@ class Api(object):
         and ``.filter()`` requests.
     :param str,optional api_version: Set to override the default Nautobot REST API Version
         for all requests.
+    :param int,optional api_depth: Set to add ?depth=<value> to all get requests.
     :param int,optional retries: Number of retries, for HTTP codes 429, 500, 502, 503, 504,
         this client will try before dropping.
     :raises AttributeError: If app doesn't exist.
