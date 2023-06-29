@@ -33,7 +33,7 @@ services:
     healthcheck:
       interval: "30s"
       timeout: "10s"
-      start_period: "2m"
+      start_period: "5m"
       retries: 4
       test:
         - "CMD-SHELL"
