@@ -74,6 +74,7 @@ class Api(object):
         url,
         token=None,
         threading=False,
+        max_workers:int=4,
         api_version=None,
         retries=0,
     ):
@@ -94,6 +95,7 @@ class Api(object):
             self.http_session.mount("http://", _adapter)
             self.http_session.mount("https://", _adapter)
         self.threading = threading
+        self.max_workers = max_workers
         self.api_version = api_version
 
         self.dcim = App(self, "dcim")
