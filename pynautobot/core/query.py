@@ -131,6 +131,7 @@ class Request(object):
         key=None,
         token=None,
         threading=False,
+        max_workers:int=4,
         api_version=None,
     ):
         """
@@ -152,6 +153,7 @@ class Request(object):
         self.http_session = http_session
         self.url = self.base if not key else "{}{}/".format(self.base, key)
         self.threading = threading
+        self.max_workers = max_workers
         self.api_version = api_version
 
     def get_openapi(self):
