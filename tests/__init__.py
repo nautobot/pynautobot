@@ -66,7 +66,7 @@ class Generic:
                 ret = self.endpoint.filter(name="test")
                 self.assertIsInstance(ret, list)
                 self.assertIsInstance(ret[0], self.ret)
-                mock.assert_called_with(self.bulk_uri, params={"name": "test"}, json=None, headers=HEADERS)
+                mock.assert_called_with(self.bulk_uri, params={"name": "test", "depth": 1}, json=None, headers=HEADERS)
 
         def test_get(self):
             with patch(

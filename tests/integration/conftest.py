@@ -161,7 +161,7 @@ def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):
 def nb_client(devicetype_library_repo_dirpath):
     """Setup the nb_client and import necessary data."""
 
-    nb_api = pynautobot.api(_NAUTOBOT_URL, token="0123456789abcdef0123456789abcdef01234567", api_depth=1)
+    nb_api = pynautobot.api(_NAUTOBOT_URL, token="0123456789abcdef0123456789abcdef01234567")
     populate_nautobot_object_types(nb_api=nb_api, devicetype_library_repo_dirpath=devicetype_library_repo_dirpath)
 
     return nb_api
