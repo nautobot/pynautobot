@@ -54,6 +54,8 @@ class Api(object):
     :param str token: Your Nautobot token.
     :param bool,optional threading: Set to True to use threading in ``.all()``
         and ``.filter()`` requests.
+    :param int,optional max_workers: Set the maximum workers for threading in ``.all()``
+        and ``.filter()`` requests.
     :param str,optional api_version: Set to override the default Nautobot REST API Version
         for all requests.
     :param int,optional retries: Number of retries, for HTTP codes 429, 500, 502, 503, 504,
