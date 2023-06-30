@@ -76,7 +76,7 @@ class Api(object):
         url,
         token=None,
         threading=False,
-        max_workers:int=4,
+        max_workers=4,
         api_version=None,
         retries=0,
     ):
