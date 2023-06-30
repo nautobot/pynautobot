@@ -104,6 +104,7 @@ class Endpoint(object):
             token=self.token,
             http_session=self.api.http_session,
             threading=self.api.threading,
+            max_workers=self.api.max_workers,
             api_version=api_version,
         )
 

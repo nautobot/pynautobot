@@ -121,6 +121,8 @@ class Request(object):
         correlate to the filters a given endpoint accepts.
         In (e.g. /api/dcim/devices/?name='test') 'name': 'test'
         would be in the filters dict.
+    :param int,optional max_workers: Set the maximum workers for threading in ``.all()``
+        and ``.filter()`` requests.
     """
 
     def __init__(
@@ -131,6 +133,7 @@ class Request(object):
         key=None,
         token=None,
         threading=False,
+        max_workers=4,
         api_version=None,
     ):
         """
@@ -152,6 +155,7 @@ class Request(object):
         self.http_session = http_session
         self.url = self.base if not key else "{}{}/".format(self.base, key)
         self.threading = threading
+        self.max_workers = max_workers
         self.api_version = api_version
 
     def get_openapi(self):
@@ -277,7 +281,7 @@ class Request(object):
 
     def concurrent_get(self, ret, page_size, page_offsets):
         futures_to_results = []
-        with cf.ThreadPoolExecutor(max_workers=4) as pool:
+        with cf.ThreadPoolExecutor(max_workers=self.max_workers) as pool:
             for offset in page_offsets:
                 new_params = {"offset": offset, "limit": page_size}
                 futures_to_results.append(pool.submit(self._make_call, add_params=new_params))
