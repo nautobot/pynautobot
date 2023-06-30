@@ -121,6 +121,8 @@ class Request(object):
         correlate to the filters a given endpoint accepts.
         In (e.g. /api/dcim/devices/?name='test') 'name': 'test'
         would be in the filters dict.
+    :param int,optional max_workers: Set the maximum workers for threading in ``.all()``
+        and ``.filter()`` requests.
     """
 
     def __init__(
@@ -131,7 +133,7 @@ class Request(object):
         key=None,
         token=None,
         threading=False,
-        max_workers:int=4,
+        max_workers=4,
         api_version=None,
     ):
         """
