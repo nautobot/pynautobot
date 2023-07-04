@@ -24,10 +24,8 @@ class TestSimpleServerRackingAndConnecting:
         location_name = "MSP"
         location = nb_client.dcim.locations.create(
             name=location_name,
-            slug=location_name.lower().replace(" ", "_"),
             status={"name": "Active"},
             location_type=site_type.id,
-            depth=3,
         )
         assert location
 
@@ -58,7 +56,7 @@ class TestSimpleServerRackingAndConnecting:
         for i in [1, 2]:
             device = rack.api.dcim.devices.create(
                 name=f"access_switch{i}.networktocode.com",
-                device_type={"slug": "dcs-7050tx3-48c8"},
+                device_type={"model": "DCS-7050TX3-48C8"},
                 role={"name": "Leaf Switch"},
                 location=location.id,
                 rack=rack.id,
@@ -76,7 +74,7 @@ class TestSimpleServerRackingAndConnecting:
         """Verify we can create data leaf switch devices."""
         device = rack.api.dcim.devices.create(
             name="mgmt_switch1.networktocode.com",
-            device_type={"slug": "dcs-7010t-48"},
+            device_type={"model": "DCS-7010T-48"},
             role={"name": "Leaf Switch"},
             location=location.id,
             rack=rack.id,
@@ -93,7 +91,7 @@ class TestSimpleServerRackingAndConnecting:
         """Verify we can create a server device."""
         device = location.api.dcim.devices.create(
             name="server.networktocode.com",
-            device_type={"slug": "dell_poweredge_r640"},
+            device_type={"model": "PowerEdge R640"},
             role={"name": "Server"},
             location=location.id,
             status={"name": "Active"},
@@ -162,14 +160,14 @@ class TestSimpleServerRackingAndConnecting:
         """Validate two device objects return the proper string when casting to string."""
         location = nb_client.dcim.locations.get(slug="msp")
         device_no_name = nb_client.dcim.devices.create(
-            device_type={"slug": "dcs-7050tx3-48c8"},
+            device_type={"model": "DCS-7050TX3-48C8"},
             role={"name": "Leaf Switch"},
             location=location.id,
             status={"name": "Active"},
         )
         device_w_name = nb_client.dcim.devices.create(
             name="im a real boy",
-            device_type={"slug": "dcs-7050tx3-48c8"},
+            device_type={"model": "DCS-7050TX3-48C8"},
             role={"name": "Leaf Switch"},
             location=location.id,
             status={"name": "Active"},
@@ -182,7 +180,7 @@ class TestSimpleServerRackingAndConnecting:
         location = nb_client.dcim.locations.get(slug="msp")
         dev1 = nb_client.dcim.devices.create(
             name="dev-1",
-            device_type={"slug": "dcs-7050tx3-48c8"},
+            device_type={"model": "DCS-7050TX3-48C8"},
             role={"name": "Leaf Switch"},
             location=location.id,
             status={"name": "Active"},
@@ -190,7 +188,7 @@ class TestSimpleServerRackingAndConnecting:
         vc = nb_client.dcim.virtual_chassis.create(name="VC1", master=dev1.id)
         nb_client.dcim.devices.create(
             name="dev-2",
-            device_type={"slug": "dcs-7050tx3-48c8"},
+            device_type={"model": "DCS-7050TX3-48C8"},
             role={"name": "Leaf Switch"},
             location=location.id,
             status={"name": "Active"},

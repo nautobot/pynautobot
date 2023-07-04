@@ -113,7 +113,7 @@ def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):
     # create the manufacturers
     manufacturer_names = {model["manufacturer"] for model in device_type_models}
     for manufacturer_name in manufacturer_names:
-        nb_api.dcim.manufacturers.create(name=manufacturer_name, slug=manufacturer_name.lower().replace(" ", "-"))
+        nb_api.dcim.manufacturers.create(name=manufacturer_name)
 
     # create the device types and their components
     for device_type_model in device_type_models:
@@ -148,9 +148,7 @@ def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):
 
     # add device roles
     for device_role_name in DEVICE_ROLE_NAMES:
-        nb_api.extras.roles.create(
-            name=device_role_name, slug=device_role_name.lower().replace(" ", "-"), content_types=["dcim.device"]
-        )
+        nb_api.extras.roles.create(name=device_role_name, content_types=["dcim.device"])
 
     # add parent prefix
     for parent_prefix in PARENT_PREFIXES:
