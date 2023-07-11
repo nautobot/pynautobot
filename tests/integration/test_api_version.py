@@ -31,9 +31,7 @@ class TestAPIVersioning:
     def tag(self, nb_client):
         """Create a tag."""
         tag_name = "Test Tag"
-        tag = nb_client.extras.tags.create(
-            name=tag_name, slug=tag_name.lower().replace(" ", "_"), content_types=["dcim.location"]
-        )
+        tag = nb_client.extras.tags.create(name=tag_name, content_types=["dcim.location"])
         assert tag
 
         return tag
