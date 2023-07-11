@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+from packaging import version
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
@@ -109,6 +110,12 @@ class Api(object):
         self.users = App(self, "users")
         self.plugins = PluginsApp(self)
         self.graphql = GraphQLQuery(self)
+        self._validate_version()
+
+    def _validate_version(self):
+        """Validate API version if eq or ge than 2.0 raise an error."""
+        if self.version.replace(".", "").isnumeric() and version.parse(self.version) >= version.parse("2.0"):
+            raise ValueError("Nautobot version 2 detected, please upgrade pynautobot to version 2.x")
 
     @property
     def version(self):

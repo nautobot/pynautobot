@@ -15,6 +15,7 @@ class AppCustomChoicesTestCase(unittest.TestCase):
         "pynautobot.core.query.Request.get",
         return_value={"Testfield1": {"TF1_1": 1, "TF1_2": 2}, "Testfield2": {"TF2_1": 3, "TF2_2": 4}},
     )
+    @patch("pynautobot.api.version", "1.999")
     def test_custom_choices(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         choices = api.extras.custom_choices()
@@ -27,6 +28,7 @@ class AppConfigTestCase(unittest.TestCase):
         "pynautobot.core.query.Request.get",
         return_value={"tables": {"DeviceTable": {"columns": ["name", "status", "tenant", "tags"]}}},
     )
+    @patch("pynautobot.api.version", "1.999")
     def test_config(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         config = api.users.config()
@@ -42,6 +44,7 @@ class PluginAppCustomChoicesTestCase(unittest.TestCase):
         "pynautobot.core.query.Request.get",
         return_value={"Testfield1": {"TF1_1": 1, "TF1_2": 2}, "Testfield2": {"TF2_1": 3, "TF2_2": 4}},
     )
+    @patch("pynautobot.api.version", "1.999")
     def test_custom_choices(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         choices = api.plugins.test_plugin.custom_choices()
@@ -52,6 +55,7 @@ class PluginAppCustomChoicesTestCase(unittest.TestCase):
         "pynautobot.core.query.Request.get",
         return_value=[{"name": "test_plugin", "package": "netbox_test_plugin"}],
     )
+    @patch("pynautobot.api.version", "1.999")
     def test_installed_plugins(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         plugins = api.plugins.installed_plugins()
