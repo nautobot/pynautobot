@@ -15,22 +15,22 @@ def_kwargs = {
 class AppCustomFieldsTestCase(unittest.TestCase):
     @patch(
         "requests.sessions.Session.get",
-        side_effect=[Response(fixture="extras/custom_fields.json")],
+        return_value=Response(fixture="extras/custom_fields.json"),
     )
     def test_custom_fields(self, session_get_mock):
         api = pynautobot.api(host, **def_kwargs)
-        choices = api.extras.custom_fields()
+        cfs = api.extras.custom_fields()
 
         session_get_mock.assert_called_once()
-        expect_url = "{}/extras/custom-fields/".format(api.base_url)
+        expect_url = f"{api.base_url}/extras/custom-fields/"
         self.assertGreaterEqual(len(session_get_mock.call_args), 2)
         url_passed_in_args = expect_url in session_get_mock.call_args[0]
         url_passed_in_kwargs = expect_url == session_get_mock.call_args[1].get("url")
         self.assertTrue(url_passed_in_args or url_passed_in_kwargs)
 
-        self.assertIsInstance(choices, list)
-        self.assertEqual(len(choices), 2)
-        for field in choices:
+        self.assertIsInstance(cfs, list)
+        self.assertEqual(len(cfs), 2)
+        for field in cfs:
             self.assertIsInstance(field.get("name"), str)
             self.assertIsInstance(field.get("content_types"), list)
             self.assertIsInstance(field.get("slug"), str)
@@ -40,14 +40,14 @@ class AppCustomFieldsTestCase(unittest.TestCase):
 class AppCustomFieldChoicesTestCase(unittest.TestCase):
     @patch(
         "requests.sessions.Session.get",
-        side_effect=[Response(fixture="extras/custom_field_choices.json")],
+        return_value=Response(fixture="extras/custom_field_choices.json"),
     )
     def test_custom_field_choices(self, session_get_mock):
         api = pynautobot.api(host, **def_kwargs)
         choices = api.extras.custom_field_choices()
 
         session_get_mock.assert_called_once()
-        expect_url = "{}/extras/custom-field-choices/".format(api.base_url)
+        expect_url = f"{api.base_url}/extras/custom-field-choices/"
         self.assertGreaterEqual(len(session_get_mock.call_args), 2)
         url_passed_in_args = expect_url in session_get_mock.call_args[0]
         url_passed_in_kwargs = expect_url == session_get_mock.call_args[1].get("url")

@@ -89,17 +89,33 @@ class App(object):
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
         :Example:
 
-        >>> custom_fields_list = nb.extras.custom_fields()
-        >>> print(custom_fields_list[0]['label'])
-        Test custom field for rack
-        >>> print(custom_fields_list[0]['content_types'])
-        ['dcim.rack']
+        >>> nb.extras.custom_fields()
+        [
+            {
+                "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+                "display": "Test custom field",
+                "url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+                "content_types": ["dcim.rack"],
+                "type": {"value": "integer", "label": "Integer"},
+                "label": "Test custom field",
+                "name": "test_custom_field",
+                "slug": "test_custom_field",
+                "description": "",
+                "required": False,
+                "filter_logic": {"value": "loose", "label": "Loose"},
+                "default": None,
+                "weight": 100,
+                "validation_minimum": None,
+                "validation_maximum": None,
+                "validation_regex": "",
+                "created": "2023-04-15",
+                "last_updated": "2023-04-15T17:45:11.839431Z",
+                "notes_url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/notes/",
+            },
+        ]
         """
         custom_fields = Request(
-            base="{}/{}/custom-fields/".format(
-                self.api.base_url,
-                self.name,
-            ),
+            base=f"{self.api.base_url}/{self.name}/custom-fields/",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
@@ -112,18 +128,27 @@ class App(object):
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
         :Example:
 
-
-        >>> custom_field_choices_list = nb.extras.custom_field_choices()
-        >>> print(custom_field_choices_list[0]['value'])
-        First option
-        >>> print(custom_field_choices_list[0]['field']['name'])
-        test_custom_field
+        >>> nb.extras.custom_field_choices()
+        [
+            {
+                "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+                "display": "First option",
+                "url": "http://localhost:8000/api/extras/custom-field-choices/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+                "field": {
+                    "display": "Test custom field 2",
+                    "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+                    "url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+                    "name": "test_custom_field_2"
+                },
+                "value": "First option",
+                "weight": 100,
+                "created": "2023-04-15",
+                "last_updated": "2023-04-15T18:11:57.163237Z"
+            },
+        ]
         """
         custom_fields = Request(
-            base="{}/{}/custom-field-choices/".format(
-                self.api.base_url,
-                self.name,
-            ),
+            base=f"{self.api.base_url}/{self.name}/custom-field-choices/",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
