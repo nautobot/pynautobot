@@ -15,9 +15,13 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+import logging
+
 from pynautobot.core.endpoint import Endpoint, JobsEndpoint
 from pynautobot.core.query import Request
 from pynautobot.models import circuits, dcim, extras, ipam, users, virtualization
+
+logger = logging.getLogger(__name__)
 
 
 class App(object):
@@ -81,6 +85,38 @@ class App(object):
         ).get()
 
         return self._choices
+
+    def custom_choices(self):
+        """Returns custom-fields response from app
+
+        .. note::
+
+            This method is deprecated and will be removed in pynautobot
+            2.0 or newer. Please use `custom_fields()` instead.
+
+        :Returns: Raw response from Nautobot's custom-fields endpoint.
+        :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
+        :Example:
+
+        >>> nb.extras.custom_choices()
+        {'Testfield1': {'Testvalue2': 2, 'Testvalue1': 1},
+         'Testfield2': {'Othervalue2': 4, 'Othervalue1': 3}}
+        """
+        logger.warning(
+            "WARNING: The method 'custom_choices()' will be removed in "
+            "the next major version (2.x) of pynautobot. Please use "
+            "`custom_fields()` instead."
+        )
+
+        custom_fields = Request(
+            base="{}/{}/custom-fields/".format(
+                self.api.base_url,
+                self.name,
+            ),
+            token=self.api.token,
+            http_session=self.api.http_session,
+        ).get()
+        return custom_fields
 
     def custom_fields(self):
         """Returns custom-fields response from app
