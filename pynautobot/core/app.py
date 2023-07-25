@@ -108,15 +108,7 @@ class App(object):
             "`custom_fields()` instead."
         )
 
-        custom_fields = Request(
-            base="{}/{}/custom-fields/".format(
-                self.api.base_url,
-                self.name,
-            ),
-            token=self.api.token,
-            http_session=self.api.http_session,
-        ).get()
-        return custom_fields
+        return self.custom_fields()
 
     def custom_fields(self):
         """Returns custom-fields response from app
