@@ -1,0 +1,47 @@
+[
+    {
+        "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+        "display": "First option",
+        "url": "http://localhost:8000/api/extras/custom-field-choices/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+        "field": {
+            "display": "Test custom field 2",
+            "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+            "url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+            "name": "test_custom_field_2"
+        },
+        "value": "First option",
+        "weight": 100,
+        "created": "2023-04-15",
+        "last_updated": "2023-04-15T18:11:57.163237Z"
+    },
+    {
+        "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+        "display": "Second option",
+        "url": "http://localhost:8000/api/extras/custom-field-choices/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+        "field": {
+            "display": "Test custom field 2",
+            "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+            "url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+            "name": "test_custom_field_2"
+        },
+        "value": "Second option",
+        "weight": 100,
+        "created": "2023-04-15",
+        "last_updated": "2023-04-15T18:11:57.169962Z"
+    },
+    {
+        "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+        "display": "Third option",
+        "url": "http://localhost:8000/api/extras/custom-field-choices/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+        "field": {
+            "display": "Test custom field 2",
+            "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+            "url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+            "name": "test_custom_field_2"
+        },
+        "value": "Third option",
+        "weight": 100,
+        "created": "2023-04-15",
+        "last_updated": "2023-04-15T18:11:57.174825Z"
+    }
+]
