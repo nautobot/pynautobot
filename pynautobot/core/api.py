@@ -114,7 +114,8 @@ class Api(object):
 
     def _validate_version(self):
         """Validate API version if eq or ge than 2.0 raise an error."""
-        if self.version.replace(".", "").isnumeric() and version.parse(self.version) >= version.parse("2.0"):
+        api_version = self.version
+        if api_version.replace(".", "").isnumeric() and version.parse(api_version) >= version.parse("2.0"):
             raise ValueError("Nautobot version 2 detected, please upgrade pynautobot to version 2.x")
 
     @property
