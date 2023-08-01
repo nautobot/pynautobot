@@ -36,7 +36,6 @@ class TraceableRecord(Record):
             base=self.endpoint.url,
             token=self.api.token,
             http_session=self.api.http_session,
-            api_depth=self.api.api_depth,
         )
         uri_to_obj_class_map = {
             "dcim/cables": Cables,

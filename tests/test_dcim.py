@@ -32,7 +32,6 @@ class DeviceTestCase(Generic.Tests):
         self.assertIsInstance(ret.config_context, dict)
         self.assertIsInstance(ret.custom_fields, dict)
         self.assertIsInstance(ret.local_context_data, dict)
-        params["depth"] = 1  # Default API depth is set to 1.
         mock.assert_called_with(self.bulk_uri, params=params, json=None, headers=HEADERS)
 
     @patch("requests.sessions.Session.get", return_value=Response(fixture="dcim/devices.json"))
@@ -41,7 +40,6 @@ class DeviceTestCase(Generic.Tests):
         ret = self.endpoint.filter(**params)
         self.assertIsInstance(ret, list)
         self.assertIsInstance(ret[0], self.ret)
-        params["depth"] = 1  # Default API depth is set to 1.
         mock.assert_called_with(self.bulk_uri, params=params, json=None, headers=HEADERS)
 
     @patch("requests.sessions.Session.get", return_value=Response(fixture="dcim/device.json"))

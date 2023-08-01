@@ -15,7 +15,6 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
-import os
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
@@ -57,7 +56,6 @@ class Api(object):
         and ``.filter()`` requests.
     :param str,optional api_version: Set to override the default Nautobot REST API Version
         for all requests.
-    :param int,optional api_depth: Set to add ?depth=<value> to all get requests.
     :param int,optional retries: Number of retries, for HTTP codes 429, 500, 502, 503, 504,
         this client will try before dropping.
     :raises AttributeError: If app doesn't exist.
@@ -77,7 +75,6 @@ class Api(object):
         token=None,
         threading=False,
         api_version=None,
-        api_depth=int(os.getenv("PYNAUTOBOT_API_DEPTH", "1")),
         retries=0,
     ):
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
@@ -98,7 +95,6 @@ class Api(object):
             self.http_session.mount("https://", _adapter)
         self.threading = threading
         self.api_version = api_version
-        self.api_depth = api_depth
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")

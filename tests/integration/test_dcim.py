@@ -158,7 +158,7 @@ class TestSimpleServerRackingAndConnecting:
 
     def test_string_represention(self, nb_client):
         """Validate two device objects return the proper string when casting to string."""
-        location = nb_client.dcim.locations.get(slug="msp")
+        location = nb_client.dcim.locations.get(name="MSP")
         device_no_name = nb_client.dcim.devices.create(
             device_type={"model": "DCS-7050TX3-48C8"},
             role={"name": "Leaf Switch"},
@@ -177,7 +177,7 @@ class TestSimpleServerRackingAndConnecting:
 
     def test_fetching_vc_success(self, nb_client):
         """Validate nb_client.dcim.virtual_chassis.all() fetches successfully and has the correct data."""
-        location = nb_client.dcim.locations.get(slug="msp")
+        location = nb_client.dcim.locations.get(name="MSP")
         dev1 = nb_client.dcim.devices.create(
             name="dev-1",
             device_type={"model": "DCS-7050TX3-48C8"},

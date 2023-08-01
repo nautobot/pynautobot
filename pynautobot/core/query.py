@@ -132,7 +132,6 @@ class Request(object):
         token=None,
         threading=False,
         api_version=None,
-        api_depth=None,
     ):
         """
         Instantiates a new Request object
@@ -154,7 +153,6 @@ class Request(object):
         self.url = self.base if not key else "{}{}/".format(self.base, key)
         self.threading = threading
         self.api_version = api_version
-        self.api_depth = api_depth
 
     def get_openapi(self):
         """Gets the OpenAPI Spec"""
@@ -300,13 +298,6 @@ class Request(object):
         :Returns: List of `Response` objects returned from the
             endpoint.
         """
-
-        # Add api depth set in env vars to all get requests when depth not set in current get call.
-        if self.filters and "depth" not in self.filters:
-            if not add_params and self.api_depth:
-                add_params = {"depth": self.api_depth}
-            elif add_params and self.api_depth and "depth" not in add_params:
-                add_params.update({"depth": self.api_depth})
 
         def req_all():
             req = self._make_call(add_params=add_params)
