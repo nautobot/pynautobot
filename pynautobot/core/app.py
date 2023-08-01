@@ -15,9 +15,13 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+import logging
+
 from pynautobot.core.endpoint import Endpoint, JobsEndpoint
 from pynautobot.core.query import Request
 from pynautobot.models import circuits, dcim, extras, ipam, users, virtualization
+
+logger = logging.getLogger(__name__)
 
 
 class App(object):
@@ -85,6 +89,11 @@ class App(object):
     def custom_choices(self):
         """Returns custom-fields response from app
 
+        .. note::
+
+            This method is deprecated and will be removed in pynautobot
+            2.0 or newer. Please use `custom_fields()` instead.
+
         :Returns: Raw response from Nautobot's custom-fields endpoint.
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
         :Example:
@@ -93,11 +102,81 @@ class App(object):
         {'Testfield1': {'Testvalue2': 2, 'Testvalue1': 1},
          'Testfield2': {'Othervalue2': 4, 'Othervalue1': 3}}
         """
+        logger.warning(
+            "WARNING: The method 'custom_choices()' will be removed in "
+            "the next major version (2.x) of pynautobot. Please use "
+            "`custom_fields()` instead."
+        )
+
+        return self.custom_fields()
+
+    def custom_fields(self):
+        """Returns custom-fields response from app
+
+        :Returns: Raw response from Nautobot's custom-fields endpoint.
+        :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
+        :Example:
+
+        >>> nb.extras.custom_fields()
+        [
+            {
+                "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+                "display": "Test custom field",
+                "url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+                "content_types": ["dcim.rack"],
+                "type": {"value": "integer", "label": "Integer"},
+                "label": "Test custom field",
+                "name": "test_custom_field",
+                "slug": "test_custom_field",
+                "description": "",
+                "required": False,
+                "filter_logic": {"value": "loose", "label": "Loose"},
+                "default": None,
+                "weight": 100,
+                "validation_minimum": None,
+                "validation_maximum": None,
+                "validation_regex": "",
+                "created": "2023-04-15",
+                "last_updated": "2023-04-15T17:45:11.839431Z",
+                "notes_url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/notes/",
+            },
+        ]
+        """
         custom_fields = Request(
-            base="{}/{}/custom-fields/".format(
-                self.api.base_url,
-                self.name,
-            ),
+            base=f"{self.api.base_url}/{self.name}/custom-fields/",
+            token=self.api.token,
+            http_session=self.api.http_session,
+        ).get()
+        return custom_fields
+
+    def custom_field_choices(self):
+        """Returns custom-field-choices response from app
+
+        :Returns: Raw response from Nautobot's custom-field-choices endpoint.
+        :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
+        :Example:
+
+        >>> nb.extras.custom_field_choices()
+        [
+            {
+                "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+                "display": "First option",
+                "url": "http://localhost:8000/api/extras/custom-field-choices/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+                "field": {
+                    "display": "Test custom field 2",
+                    "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+                    "url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+                    "name": "test_custom_field_2"
+                },
+                "value": "First option",
+                "weight": 100,
+                "created": "2023-04-15",
+                "last_updated": "2023-04-15T18:11:57.163237Z"
+            },
+        ]
+        """
+        custom_fields = Request(
+            base=f"{self.api.base_url}/{self.name}/custom-field-choices/",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
