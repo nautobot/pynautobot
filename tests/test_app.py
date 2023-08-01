@@ -43,6 +43,7 @@ class AppCustomFieldChoicesTestCase(unittest.TestCase):
         "requests.sessions.Session.get",
         return_value=Response(fixture="extras/custom_field_choices.json"),
     )
+    @patch("pynautobot.api.version", "1.999")
     def test_custom_field_choices(self, session_get_mock):
         api = pynautobot.api(host, **def_kwargs)
         choices = api.extras.custom_field_choices()
