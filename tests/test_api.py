@@ -26,6 +26,7 @@ class ApiTestCase(unittest.TestCase):
     @patch(
         "requests.sessions.Session.post",
     )
+    @patch("pynautobot.api.version", "2.0")
     def test_get(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         self.assertTrue(api)
@@ -33,6 +34,7 @@ class ApiTestCase(unittest.TestCase):
     @patch(
         "requests.sessions.Session.post",
     )
+    @patch("pynautobot.api.version", "2.0")
     def test_sanitize_url(self, *_):
         api = pynautobot.api("http://localhost:8000/", **def_kwargs)
         self.assertTrue(api)
@@ -49,10 +51,11 @@ class ApiVersionTestCase(unittest.TestCase):
         return_value=ResponseHeadersWithVersion(),
     )
     def test_api_version(self, *_):
-        api = pynautobot.api(
-            host,
+        with self.assertRaises(ValueError) as error:
+            pynautobot.api(host)
+        self.assertEqual(
+            str(error.exception), "Nautobot version 1 detected, please downgrade pynautobot to version 1.x"
         )
-        self.assertEqual(api.version, "1.999")
 
     class ResponseHeadersWithoutVersion:
         headers = {}
@@ -68,6 +71,20 @@ class ApiVersionTestCase(unittest.TestCase):
         )
         self.assertEqual(api.version, "")
 
+    class ResponseHeadersWithVersion2:
+        headers = {"API-Version": "2.0"}
+        ok = True
+
+    @patch(
+        "requests.sessions.Session.get",
+        return_value=ResponseHeadersWithVersion2(),
+    )
+    def test_api_version_2(self, *_):
+        api = pynautobot.api(
+            host,
+        )
+        self.assertEqual(api.version, "2.0")
+
 
 class ApiStatusTestCase(unittest.TestCase):
     class ResponseWithStatus:
@@ -82,6 +99,7 @@ class ApiStatusTestCase(unittest.TestCase):
         "requests.sessions.Session.get",
         return_value=ResponseWithStatus(),
     )
+    @patch("pynautobot.api.version", "2.0")
     def test_api_status(self, *_):
         api = pynautobot.api(
             host,
@@ -106,8 +124,8 @@ class ApiRetryTestCase(unittest.TestCase):
             "http://any.url/",
             retries=2,
         )
-
-        api.version
+        with patch("pynautobot.api.version", "2.0"):
+            api.version
 
         assert getconn_mock.return_value.request.mock_calls == [
             call("GET", "/api/", body=None, headers=ANY),
@@ -123,10 +141,11 @@ class ApiRetryTestCase(unittest.TestCase):
             Mock(status=200, msg=HTTPMessage()),
         ]
 
-        api = pynautobot.api(
-            "http://any.url/",
-            retries=1,
-        )
+        with patch("pynautobot.api.version", "2.0"):
+            api = pynautobot.api(
+                "http://any.url/",
+                retries=1,
+            )
 
         with self.assertRaises(RequestErrorFromException):
             api.version
