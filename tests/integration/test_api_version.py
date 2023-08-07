@@ -11,7 +11,7 @@ class TestAPIVersioning:
     def nb_client_1_3(self, nb_client):
         """Setup a nb_client with API v1.3."""
         # Instantiate with a temp url and then replace
-        nb_api = pynautobot.api("http://localhost", token=nb_client.token, api_version="1.3")
+        nb_api = pynautobot.api("http://nautobot:8000", token=nb_client.token, api_version="1.3")
         nb_api.base_url = nb_client.base_url
 
         return nb_api
