@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+from packaging import version
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
@@ -54,6 +55,8 @@ class Api(object):
     :param str token: Your Nautobot token.
     :param bool,optional threading: Set to True to use threading in ``.all()``
         and ``.filter()`` requests.
+    :param int,optional max_workers: Set the maximum workers for threading in ``.all()``
+        and ``.filter()`` requests.
     :param str,optional api_version: Set to override the default Nautobot REST API Version
         for all requests.
     :param int,optional retries: Number of retries, for HTTP codes 429, 500, 502, 503, 504,
@@ -74,6 +77,7 @@ class Api(object):
         url,
         token=None,
         threading=False,
+        max_workers=4,
         api_version=None,
         retries=0,
     ):
@@ -94,6 +98,7 @@ class Api(object):
             self.http_session.mount("http://", _adapter)
             self.http_session.mount("https://", _adapter)
         self.threading = threading
+        self.max_workers = max_workers
         self.api_version = api_version
 
         self.dcim = App(self, "dcim")
@@ -105,6 +110,13 @@ class Api(object):
         self.users = App(self, "users")
         self.plugins = PluginsApp(self)
         self.graphql = GraphQLQuery(self)
+        self._validate_version()
+
+    def _validate_version(self):
+        """Validate API version if eq or ge than 2.0 raise an error."""
+        api_version = self.version
+        if api_version.replace(".", "").isnumeric() and version.parse(api_version) >= version.parse("2.0"):
+            raise ValueError("Nautobot version 2 detected, please upgrade pynautobot to version 2.x")
 
     @property
     def version(self):
