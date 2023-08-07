@@ -5,7 +5,7 @@ import pynautobot
 
 from .util import Response
 
-with patch("pynautobot.api.version", "1.999"):
+with patch("pynautobot.api.version", "2.0"):
     api = pynautobot.api(
         "http://localhost:8000",
         token="abc123",
