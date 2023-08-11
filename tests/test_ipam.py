@@ -11,6 +11,22 @@ class PrefixTestCase(Generic.Tests):
     name = "prefixes"
     name_singular = "prefix"
 
+    @patch(
+        "requests.sessions.Session.get",
+        side_effect=[Response(fixture="ipam/namespace.json"), Response(fixture="ipam/prefix.json")],
+    )
+    def test_namespace_in_prefix(self, mock):
+        namespace = self.endpoint.get(self.uuid)
+        prefix = api.ipam.prefixes.get(self.uuid)
+        mock.assert_called_with(
+            f"http://localhost:8000/api/ipam/prefixes/{self.uuid}/",
+            params={},
+            json=None,
+            headers=HEADERS,
+        )
+        self.assertEqual(namespace.id, prefix.namespace.id)
+        self.assertEqual(namespace.name, prefix.namespace.name)
+
     @patch("requests.sessions.Session.get", return_value=Response(fixture="ipam/prefix.json"))
     def test_modify(self, *_):
         ret = self.endpoint.get(self.uuid)
@@ -153,6 +169,28 @@ class VlanGroupsTestCase(Generic.Tests):
 class VRFTestCase(Generic.Tests):
     app = "ipam"
     name = "vrfs"
+
+    @patch(
+        "requests.sessions.Session.get",
+        side_effect=[Response(fixture="ipam/namespace.json"), Response(fixture="ipam/vrf.json")],
+    )
+    def test_namespace_in_vrf(self, mock):
+        namespace = self.endpoint.get(self.uuid)
+        vrf = api.ipam.vrfs.get(self.uuid)
+        mock.assert_called_with(
+            f"http://localhost:8000/api/ipam/vrfs/{self.uuid}/",
+            params={},
+            json=None,
+            headers=HEADERS,
+        )
+        self.assertEqual(namespace.id, vrf.namespace.id)
+        self.assertEqual(namespace.name, vrf.namespace.name)
+
+
+class NameSpaceTestCase(Generic.Tests):
+    app = "ipam"
+    name = "namespaces"
+    name_singular = "namespace"
 
 
 # class ServicesTestCase(Generic.Tests):
