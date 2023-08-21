@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0-rc.1
+
+### Significant Updates
+
+Release Candidate. 
+New release train for nautobot 2.X
+
 ## v1.5.0
 
 ### New Features
