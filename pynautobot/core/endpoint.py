@@ -390,9 +390,9 @@ class Endpoint(object):
             api_version=api_version,
         ).options()
         try:
-            post_data = req["actions"]["POST"]
-        except KeyError:
-            raise ValueError("Unexpected format in the OPTIONS response at {}".format(self.url))
+            post_data = req["schema"]["properties"]
+        except (KeyError, TypeError):
+            raise ValueError(f"Unexpected format in the OPTIONS response at {self.url}")
         self._choices = {}
         for prop in post_data:
             if "choices" in post_data[prop]:
