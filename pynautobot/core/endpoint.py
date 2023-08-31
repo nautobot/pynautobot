@@ -393,11 +393,11 @@ class Endpoint(object):
             post_data = req["schema"]["properties"]
         except (KeyError, TypeError):
             raise ValueError(f"Unexpected format in the OPTIONS response at {self.url}")
-        self._choices = {}
-        for prop in post_data:
-            if "choices" in post_data[prop]:
-                self._choices[prop] = post_data[prop]["choices"]
-
+        self._choices = {
+            prop: [{"value": x, "display": y} for x, y in zip(post_data[prop]["enum"], post_data[prop]["enumNames"])]
+            for prop in post_data
+            if "enum" in post_data[prop]
+        }
         return self._choices
 
     def count(self, *args, api_version=None, **kwargs):
