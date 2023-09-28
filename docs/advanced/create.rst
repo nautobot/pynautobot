@@ -18,9 +18,6 @@ Obtaining Choices
 
 For fields that are enum type, Endpoint objects have a :py:meth:`~pynautobot.core.endpoint.Endpoint.choices`
 method to provide a mapping of enum fields to their list of acceptable choices.
-The examples used in the document revolve around creating a new Device Record.
-Creating a *Device* requires specifying the ``status`` field, which is an example of an enum.
-Below demonstrates how to view the list of available choices for Device Status.
 
 .. code-block:: python
 
@@ -31,42 +28,70 @@ Below demonstrates how to view the list of available choices for Device Status.
     token = os.environ["NAUTOBOT_TOKEN"]
     nautobot = api(url=url, token=token)
 
-    # Get the choices for enum fields for the devices endpoint
-    nautobot.dcim.devices.choices()
+    # Get the choices for enum fields for the cables endpoint
+    nautobot.dcim.cables.choices()
     {
-        'face': [
-            {
-                'value': 'front',
-                'display_name': 'Front'
-            },
-            {
-                'value', 'rear',
-                'display_name': 'Rear'
-            }
+        "length_unit": [
+            {"display": "Kilometers", "value": "km"},
+            {"display": "Meters", "value": "m"},
+            {"display": "Centimeters", "value": "cm"},
+            {"display": "Miles", "value": "mi"},
+            {"display": "Feet", "value": "ft"},
+            {"display": "Inches", "value": "in"},
         ],
-        'status': [
-          {
-              'value': 'active',
-              'display_name': 'Active'
-          },
-          {
-              'value': 'maintenance',
-              'display_name': 'Maintenance'
-          },
-          {
-              'value': 'staged',
-              'display_name': 'Staged'
-          }
-        ]
+        "termination_a_type": [
+            {"display": "dcim | power feed", "value": "dcim.powerfeed"},
+            {"display": "dcim | interface", "value": "dcim.interface"},
+            {"display": "circuits | circuit termination", "value": "circuits.circuittermination"},
+            {"display": "dcim | console port", "value": "dcim.consoleport"},
+            {"display": "dcim | console server port", "value": "dcim.consoleserverport"},
+            {"display": "dcim | front port", "value": "dcim.frontport"},
+            {"display": "dcim | power outlet", "value": "dcim.poweroutlet"},
+            {"display": "dcim | power port", "value": "dcim.powerport"},
+            {"display": "dcim | rear port", "value": "dcim.rearport"},
+        ],
+        "termination_b_type": [
+            {"display": "dcim | power feed", "value": "dcim.powerfeed"},
+            {"display": "dcim | interface", "value": "dcim.interface"},
+            {"display": "circuits | circuit termination", "value": "circuits.circuittermination"},
+            {"display": "dcim | console port", "value": "dcim.consoleport"},
+            {"display": "dcim | console server port", "value": "dcim.consoleserverport"},
+            {"display": "dcim | front port", "value": "dcim.frontport"},
+            {"display": "dcim | power outlet", "value": "dcim.poweroutlet"},
+            {"display": "dcim | power port", "value": "dcim.powerport"},
+            {"display": "dcim | rear port", "value": "dcim.rearport"},
+        ],
+        "type": [
+            {"display": "CAT3", "value": "cat3"},
+            {"display": "CAT5", "value": "cat5"},
+            {"display": "CAT5e", "value": "cat5e"},
+            {"display": "CAT6", "value": "cat6"},
+            {"display": "CAT6a", "value": "cat6a"},
+            {"display": "CAT7", "value": "cat7"},
+            {"display": "CAT7a", "value": "cat7a"},
+            {"display": "CAT8", "value": "cat8"},
+            {"display": "Direct Attach Copper (Active)", "value": "dac-active"},
+            {"display": "Direct Attach Copper (Passive)", "value": "dac-passive"},
+            {"display": "MRJ21 Trunk", "value": "mrj21-trunk"},
+            {"display": "Coaxial", "value": "coaxial"},
+            {"display": "Multimode Fiber", "value": "mmf"},
+            {"display": "Multimode Fiber (OM1)", "value": "mmf-om1"},
+            {"display": "Multimode Fiber (OM2)", "value": "mmf-om2"},
+            {"display": "Multimode Fiber (OM3)", "value": "mmf-om3"},
+            {"display": "Multimode Fiber (OM4)", "value": "mmf-om4"},
+            {"display": "Singlemode Fiber", "value": "smf"},
+            {"display": "Singlemode Fiber (OS1)", "value": "smf-os1"},
+            {"display": "Singlemode Fiber (OS2)", "value": "smf-os2"},
+            {"display": "Active Optical Cabling (AOC)", "value": "aoc"},
+            {"display": "Power", "value": "power"},
+            {"display": "Other", "value": "other"},
+        ],
     }
 
-    # Accessing entries from choices for the status field
-    device_status_choices = nautobot.dcim.devices.choices()['status']
-    device_status_choices[0]
-    {'value': 'active', 'display_name': 'Active'}
-
-.. tip::
-  The list of available status choices is configurable, so the output will vary between implementations.
+    # Accessing entries from choices for the type field
+    cable_types_choices = nautobot.dcim.cables.choices()['type']
+    cable_types_choices[3]
+    {'value': 'cat6', 'display': 'CAT6'}
 
 .. warning::
   In order to avoid repeated calls to Nautobot, ``choices`` are cached on the Endpoint object. It is advisable to
@@ -78,9 +103,9 @@ Creating Objects with Foreign Key Relationships
 
 Creating a Device in Nautobot requires the following :ref:`fields <Terminology>` to specify a foreign key relationship:
 
+  * Role
   * Device Type
-  * Device Role
-  * Site
+  * Location
 
 This can be accomplished by providing the Primary Key (**PK**),
 which is an UUID string or a dictionary with key/value pairs that make the object unique.
@@ -93,19 +118,19 @@ Endpoint object, and then referencing the ``id`` of those objects to create a ne
 
     nautobot = api(url=url, token=token)
     
-    # Get objects for device_type, device_role, and site to get their ID
-    device_type = nautobot.dcim.device_types.get(slug="c9300-48")
-    device_role = nautobot.dcim.device_roles.get(slug="access")
-    site = nautobot.dcim.sites.get(slug="hq")
+    # Get objects for device_type, role, and location to get their ID
+    device_type = nautobot.dcim.device_types.get(name="c9300-48")
+    role = nautobot.dcim.roles.get(name="access")
+    location = nautobot.dcim.sites.get(id="hq")
 
     # Create new device using foreign key IDs
     devices = nautobot.dcim.devices
     hq_access_1 = devices.create(
         name="hq-access-01",
         device_type=device_type.id,
-        device_role=device_role.id,
-        site=site.id,
-        status="active",
+        role=role.id,
+        location=location.id,
+        status={"name": "Active"},
     )
     type(hq_access_1)
     "<class 'pynautobot.models.dcim.Devices'>"
@@ -122,7 +147,9 @@ The *Device Type*, *Device Role*, and *Site* Models all have a ``slug``
 field that can be used to lookup a specific Record.
 
 .. code-block:: python
-
+        "ip_address": ip4.id,
+        "interface": nexus_child_eth1.id,
+        "vm_interface": None,
     nautobot = api(url=url, token=token)
     device_name = "hq-access-02"
 
@@ -357,7 +384,7 @@ The last example specifies a rack unit higher than what is supported by *Rack* R
     ...     device_type={"model": "c9300-48"},
     ...     device_role={"slug": "access"},
     ...     site={"slug": "hq"},
-    ...     status="active",
+    ...     status={"name": "Active"},
     ...     rack={"name": "hq-001"},
     ...     face=1,
     ...     position="high",
