@@ -10,7 +10,6 @@ A few examples are provided below:
 * :ref:`SSL Verification`
 * :ref:`Timeouts`
 
-
 Headers
 -------
 
@@ -31,11 +30,10 @@ The example below shows how to update a Token if it has been cycled.
     # Update Session object with new header
     nautobot.http_session.headers["Authorization"] = new_token
 
-
 SSL Verification
 ----------------
 
-Handling SSL Verification is documented `here <https://requests.readthedocs.io/en/stable/user/advanced/#ssl-cert-verification>`_.
+Handling SSL verification is documented `here <https://requests.readthedocs.io/en/stable/user/advanced/#ssl-cert-verification>`_.
 The below example shows how to disable SSL verification.
 
 .. code-block:: python
@@ -47,7 +45,6 @@ The below example shows how to disable SSL verification.
         token=os.environ["NAUTOBOT_TOKEN"]
     )
     nautobot.http_session.verify = False
-
 
 Timeouts
 --------

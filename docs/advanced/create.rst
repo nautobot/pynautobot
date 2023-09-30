@@ -21,76 +21,85 @@ method to provide a mapping of enum fields to their list of acceptable choices.
 
 .. code-block:: python
 
-    import os
-    from pynautobot import api
-
-    url = os.environ["NAUTOBOT_URL"]
-    token = os.environ["NAUTOBOT_TOKEN"]
-    nautobot = api(url=url, token=token)
-
-    # Get the choices for enum fields for the cables endpoint
-    nautobot.dcim.cables.choices()
-    {
-        "length_unit": [
-            {"display": "Kilometers", "value": "km"},
-            {"display": "Meters", "value": "m"},
-            {"display": "Centimeters", "value": "cm"},
-            {"display": "Miles", "value": "mi"},
-            {"display": "Feet", "value": "ft"},
-            {"display": "Inches", "value": "in"},
-        ],
-        "termination_a_type": [
-            {"display": "dcim | power feed", "value": "dcim.powerfeed"},
-            {"display": "dcim | interface", "value": "dcim.interface"},
-            {"display": "circuits | circuit termination", "value": "circuits.circuittermination"},
-            {"display": "dcim | console port", "value": "dcim.consoleport"},
-            {"display": "dcim | console server port", "value": "dcim.consoleserverport"},
-            {"display": "dcim | front port", "value": "dcim.frontport"},
-            {"display": "dcim | power outlet", "value": "dcim.poweroutlet"},
-            {"display": "dcim | power port", "value": "dcim.powerport"},
-            {"display": "dcim | rear port", "value": "dcim.rearport"},
-        ],
-        "termination_b_type": [
-            {"display": "dcim | power feed", "value": "dcim.powerfeed"},
-            {"display": "dcim | interface", "value": "dcim.interface"},
-            {"display": "circuits | circuit termination", "value": "circuits.circuittermination"},
-            {"display": "dcim | console port", "value": "dcim.consoleport"},
-            {"display": "dcim | console server port", "value": "dcim.consoleserverport"},
-            {"display": "dcim | front port", "value": "dcim.frontport"},
-            {"display": "dcim | power outlet", "value": "dcim.poweroutlet"},
-            {"display": "dcim | power port", "value": "dcim.powerport"},
-            {"display": "dcim | rear port", "value": "dcim.rearport"},
-        ],
-        "type": [
-            {"display": "CAT3", "value": "cat3"},
-            {"display": "CAT5", "value": "cat5"},
-            {"display": "CAT5e", "value": "cat5e"},
-            {"display": "CAT6", "value": "cat6"},
-            {"display": "CAT6a", "value": "cat6a"},
-            {"display": "CAT7", "value": "cat7"},
-            {"display": "CAT7a", "value": "cat7a"},
-            {"display": "CAT8", "value": "cat8"},
-            {"display": "Direct Attach Copper (Active)", "value": "dac-active"},
-            {"display": "Direct Attach Copper (Passive)", "value": "dac-passive"},
-            {"display": "MRJ21 Trunk", "value": "mrj21-trunk"},
-            {"display": "Coaxial", "value": "coaxial"},
-            {"display": "Multimode Fiber", "value": "mmf"},
-            {"display": "Multimode Fiber (OM1)", "value": "mmf-om1"},
-            {"display": "Multimode Fiber (OM2)", "value": "mmf-om2"},
-            {"display": "Multimode Fiber (OM3)", "value": "mmf-om3"},
-            {"display": "Multimode Fiber (OM4)", "value": "mmf-om4"},
-            {"display": "Singlemode Fiber", "value": "smf"},
-            {"display": "Singlemode Fiber (OS1)", "value": "smf-os1"},
-            {"display": "Singlemode Fiber (OS2)", "value": "smf-os2"},
-            {"display": "Active Optical Cabling (AOC)", "value": "aoc"},
-            {"display": "Power", "value": "power"},
-            {"display": "Other", "value": "other"},
-        ],
-    }
-
-    # Accessing entries from choices for the type field
-    cable_types_choices = nautobot.dcim.cables.choices()['type']
-    cable_types_choices[3]
+    >>> import os
+    >>> from pprint import pprint
+    >>> from pynautobot import api
+    >>>
+    >>> url = os.environ["NAUTOBOT_URL"]
+    >>> token = os.environ["NAUTOBOT_TOKEN"]
+    >>> nautobot = api(url=url, token=token)
+    >>>
+    >>> # Get the choices for enum fields for the cables endpoint
+    >>> pprint(nautobot.dcim.cables.choices())
+    {'length_unit': [{'display': 'Kilometers', 'value': 'km'},
+                     {'display': 'Meters', 'value': 'm'},
+                     {'display': 'Centimeters', 'value': 'cm'},
+                     {'display': 'Miles', 'value': 'mi'},
+                     {'display': 'Feet', 'value': 'ft'},
+                     {'display': 'Inches', 'value': 'in'}],
+     'termination_a_type': [{'display': 'dcim | interface',
+                             'value': 'dcim.interface'},
+                            {'display': 'dcim | power feed',
+                             'value': 'dcim.powerfeed'},
+                            {'display': 'circuits | circuit termination',
+                             'value': 'circuits.circuittermination'},
+                            {'display': 'dcim | console port',
+                             'value': 'dcim.consoleport'},
+                            {'display': 'dcim | console server port',
+                             'value': 'dcim.consoleserverport'},
+                            {'display': 'dcim | front port',
+                             'value': 'dcim.frontport'},
+                            {'display': 'dcim | power outlet',
+                             'value': 'dcim.poweroutlet'},
+                            {'display': 'dcim | power port',
+                             'value': 'dcim.powerport'},
+                            {'display': 'dcim | rear port',
+                             'value': 'dcim.rearport'}],
+     'termination_b_type': [{'display': 'dcim | interface',
+                             'value': 'dcim.interface'},
+                            {'display': 'dcim | power feed',
+                             'value': 'dcim.powerfeed'},
+                            {'display': 'circuits | circuit termination',
+                             'value': 'circuits.circuittermination'},
+                            {'display': 'dcim | console port',
+                             'value': 'dcim.consoleport'},
+                            {'display': 'dcim | console server port',
+                             'value': 'dcim.consoleserverport'},
+                            {'display': 'dcim | front port',
+                             'value': 'dcim.frontport'},
+                            {'display': 'dcim | power outlet',
+                             'value': 'dcim.poweroutlet'},
+                            {'display': 'dcim | power port',
+                             'value': 'dcim.powerport'},
+                            {'display': 'dcim | rear port',
+                             'value': 'dcim.rearport'}],
+     'type': [{'display': 'CAT3', 'value': 'cat3'},
+              {'display': 'CAT5', 'value': 'cat5'},
+              {'display': 'CAT5e', 'value': 'cat5e'},
+              {'display': 'CAT6', 'value': 'cat6'},
+              {'display': 'CAT6a', 'value': 'cat6a'},
+              {'display': 'CAT7', 'value': 'cat7'},
+              {'display': 'CAT7a', 'value': 'cat7a'},
+              {'display': 'CAT8', 'value': 'cat8'},
+              {'display': 'Direct Attach Copper (Active)', 'value': 'dac-active'},
+              {'display': 'Direct Attach Copper (Passive)', 'value': 'dac-passive'},
+              {'display': 'MRJ21 Trunk', 'value': 'mrj21-trunk'},
+              {'display': 'Coaxial', 'value': 'coaxial'},
+              {'display': 'Multimode Fiber', 'value': 'mmf'},
+              {'display': 'Multimode Fiber (OM1)', 'value': 'mmf-om1'},
+              {'display': 'Multimode Fiber (OM2)', 'value': 'mmf-om2'},
+              {'display': 'Multimode Fiber (OM3)', 'value': 'mmf-om3'},
+              {'display': 'Multimode Fiber (OM4)', 'value': 'mmf-om4'},
+              {'display': 'Singlemode Fiber', 'value': 'smf'},
+              {'display': 'Singlemode Fiber (OS1)', 'value': 'smf-os1'},
+              {'display': 'Singlemode Fiber (OS2)', 'value': 'smf-os2'},
+              {'display': 'Active Optical Cabling (AOC)', 'value': 'aoc'},
+              {'display': 'Power', 'value': 'power'},
+              {'display': 'Other', 'value': 'other'}]}
+    >>>
+    >>> # Accessing entries from choices for the type field
+    >>> cable_types_choices = nautobot.dcim.cables.choices()['type']
+    >>> cable_types_choices[3]
     {'value': 'cat6', 'display': 'CAT6'}
 
 .. warning::
@@ -116,26 +125,26 @@ Endpoint object, and then referencing the ``id`` of those objects to create a ne
 
 .. code-block:: python
 
-    nautobot = api(url=url, token=token)
-    
-    # Get objects for device_type, role, and location to get their ID
-    device_type = nautobot.dcim.device_types.get(name="c9300-48")
-    role = nautobot.dcim.roles.get(name="access")
-    location = nautobot.dcim.sites.get(id="hq")
-
-    # Create new device using foreign key IDs
-    devices = nautobot.dcim.devices
-    hq_access_1 = devices.create(
-        name="hq-access-01",
-        device_type=device_type.id,
-        role=role.id,
-        location=location.id,
-        status={"name": "Active"},
-    )
-    type(hq_access_1)
+    >>> nautobot = api(url=url, token=token)
+    >>>
+    >>> # Get objects for device_type, role, and location to get their ID
+    >>> device_type = nautobot.dcim.device_types.get(model="c9300-48")
+    >>> role = nautobot.extras.roles.get(name="access")
+    >>> location = nautobot.dcim.locations.get(name="HQ")
+    >>>
+    >>> # Create new device using foreign key IDs
+    >>> devices = nautobot.dcim.devices
+    >>> hq_access_1 = devices.create(
+    ...     name="hq-access-01",
+    ...     device_type=device_type.id,
+    ...     role=role.id,
+    ...     location=location.id,
+    ...     status={"name": "Active"},
+    ... )
+    >>> type(hq_access_1)
     "<class 'pynautobot.models.dcim.Devices'>"
-    hq_access_1.created
-    '2021-01-01'
+    >>> hq_access_1.created
+    '2023-09-30T07:56:23.664150Z'
 
 The above works, but it requires three :py:meth:`~pynautobot.core.endpoint.Endpoint.get` calls.
 The next example demonstrates a simpler interface for creating a device
@@ -143,29 +152,28 @@ by passing dictionary objects instead of using the Primary Key.
 The dictionaries passed for these fields use key/value pairs
 to lookup the Record with matching field/value pairs in the related Model.
 
-The *Device Type*, *Device Role*, and *Site* Models all have a ``slug``
-field that can be used to lookup a specific Record.
+The *Device Type* Model has ``model`` field, and  *Role* and *Location* Models all have a ``name``
+field that can be used to lookup a specific Record. ``name`` is not unique for *Location*.
 
 .. code-block:: python
-        "ip_address": ip4.id,
-        "interface": nexus_child_eth1.id,
-        "vm_interface": None,
-    nautobot = api(url=url, token=token)
-    device_name = "hq-access-02"
 
-    # Create new device using fields to uniquely identify foreign key relationships
-    devices = nautobot.dcim.devices
-    hq_access_2 = devices.create(
-        name=device_name,
-        device_type={"slug": "c9300-48"},
-        device_role={"slug": "access"},
-        site={"slug": "hq"},
-        status="active",
-    )
-
-    # Show that device was created in Nautobot
-    hq_access_2.created
-    '2021-01-01'
+    >>> nautobot = api(url=url, token=token)
+    >>>
+    >>> device_name = "hq-access-02"
+    >>>
+    >>> # Create new device using fields to uniquely identify foreign key relationships
+    >>> devices = nautobot.dcim.devices
+    >>> hq_access_2 = devices.create(
+    ...     name=device_name,
+    ...     device_type={"model": "c9300-48"},
+    ...     role={"name": "access"},
+    ...     location="HQ",
+    ...     status="Active",
+    ... )
+    >>>
+    >>> # Show that device was created in Nautobot
+    >>> hq_access_2.created
+    '2023-09-30T08:02:03.872486Z'
 
 
 Creating Multiple Objects
@@ -177,43 +185,42 @@ This is done by passing a list of dictionaries instead of keyword arguments.
 
 .. code-block:: python
 
-    nautobot = api(url=url, token=token)
-
-    # Create multiple new devices with a single method call
-    devices = nautobot.dcim.devices
-    hq_access_multiple = devices.create([
-        {
-            "name": "hq-access-03",
-            "device_type": {"slug": "c9300-48"},
-            "device_role": {"slug": "access"},
-            "site": {"slug": "hq"},
-            "status": "active",
-        },
-        {
-            "name": "hq-access-04",
-            "device_type": {"slug": "c9300-48"},
-            "device_role": {"slug": "access"},
-            "site": {"slug": "hq"},
-            "status": "active",
-        },
-    ])
-
-    # show that both devices were created in Nautobot
-    hq_access_multiple
-    [hq-access-03, hq-access-04]
-
-    # We can access these Record objects as well
-    hq_access_03 = hq_access_multiple[0]
-    hq_access_03.created
-    '2021-01-01'
-
-    # Use get calls to get the newly created devices
-    hq_access_03 = nautobot.dcim.devices.get(name="hq-access-03")
-    hq_access_03.created
-    '2021-01-01'
-    hq_access_04 = nautobot.dcim.devices.get(name="hq-access-04")
-    hq_access_04.created
-    '2021-01-01'
+    >>> nautobot = api(url=url, token=token)
+    >>>
+    >>> # Create multiple new devices with a single method call
+    >>> devices = nautobot.dcim.devices
+    >>> hq_access_multiple = devices.create([
+    ...     {
+    ...         "name": "hq-access-03",
+    ...         "device_type": {"model": "c9300-48"},
+    ...         "role": {"name": "access"},
+    ...         "location": {"name": "HQ"},
+    ...         "status": "Active",
+    ...     },
+    ...     {
+    ...         "name": "hq-access-04",
+    ...         "device_type": {"model": "c9300-48"},
+    ...         "role": {"name": "access"},
+    ...         "location": {"name": "HQ"},
+    ...         "status": "Active",
+    ...     },
+    ... ])
+    >>>
+    >>> # show that both devices were created in Nautobot
+    >>> hq_access_multiple
+    [<pynautobot.models.dcim.Devices ('hq-access-03') ...>, <pynautobot.models.dcim.Devices ('hq-access-04') at ...>]
+    >>>
+    >>> # We can access these Record objects as well
+    >>> hq_access_03 = hq_access_multiple[0]
+    >>> hq_access_03.created
+    '2023-09-30T08:14:24.756447Z'
+    >>> # Use get calls to get the newly created devices
+    >>> hq_access_03 = nautobot.dcim.devices.get(name="hq-access-03")
+    >>> hq_access_03.created
+    '2023-09-30T08:14:24.756447Z'
+    >>> hq_access_04 = nautobot.dcim.devices.get(name="hq-access-04")
+    >>> hq_access_04.created
+    '2023-09-30T08:14:24.790198Z'
 
 
 Common Errors
@@ -235,24 +242,24 @@ Missing a Required Field
 
 A :py:exc:`~pynautobot.core.query.RequestError` is raised when a required field is not passed to the
 :py:meth:`~pynautobot.core.endpoint.Endpoint.create` method.
-Creating a new *Device* requires passing the ``name``, ``device_type``, ``device_role``, ``site``, and ``status`` fields.
+Creating a new *Device* requires passing the ``name``, ``device_type``, ``role``, ``location``, and ``status`` fields.
 The below example demonstrates passing only ``name`` and ``status`` when creating a *Device*;
-as expected, an Exception is raised indicating that ``device_type``, ``device_role``, and ``site`` are also required fields.
+as expected, an Exception is raised indicating that ``device_type``, ``role``, and ``location`` are also required fields.
 
 .. code-block:: python
 
     >>> hq_access_5 = devices.create(
     ...     name="hq-access-05",
-    ...     status="active",
+    ...     status="Active",
     ... )
     Traceback (most recent call last):
     ...
     pynautobot.core.query.RequestError:
     The request failed with code 400 Bad Request:
     {
-      'device_type': ['This field is required.'],
-      'device_role': ['This field is required.'],
-      'site': ['This field is required.']
+        'device_type': ['This field is required.'],
+        'role': ['This field is required.'],
+        'location': ['This field is required.']
     }
 
 
@@ -275,18 +282,18 @@ one uses the Primary Key, and the other uses a dictionary to lookup the Record i
     >>> hq_access_5 = devices.create(
     ...     name="hq-access-05",
     ...     device_type='2302f2a1-2ed4-4ac9-a43a-285c95190071',
-    ...     device_role={"slug": "access"},
-    ...     site={"slug": "hq"},
-    ...     status="active",
+    ...     role={"name": "access"},
+    ...     location={"name": "HQ"},
+    ...     status="Active",
     ... )
     Traceback (most recent call last):
     ...
     pynautobot.core.query.RequestError:
     The request failed with code 400 Bad Request:
     {
-      'device_type': [
-        'Related object not found using the provided numeric ID: 2302f2a1-2ed4-4ac9-a43a-285c95190071'
-      ]
+        'device_type': [
+            "Related object not found using the provided attributes: {'pk': UUID('2302f2a1-2ed4-4ac9-a43a-285c95190071')}"
+        ]
     }
 
 .. code-block:: python
@@ -294,20 +301,20 @@ one uses the Primary Key, and the other uses a dictionary to lookup the Record i
     >>> # Foreign Key by fields do not exist
     >>> hq_access_5 = devices.create(
     ...     name="hq-access-05",
-    ...     device_type={"slug": "non-existent-type"},
-    ...     device_role={"slug": "access"},
-    ...     site={"slug": "hq"},
-    ...     status="active",
+    ...     device_type={"model": "non-existent-type"},
+    ...     role={"name": "access"},
+    ...     location={"name": "HQ"},
+    ...     status="Active",
     ... )
     Traceback (most recent call last):
     ...
     pynautobot.core.query.RequestError:
     The request failed with code 400 Bad Request:
     {
-      'device_type': [
-        "Related object not found using the provided attributes: " \
-        "{'slug': 'non-existent-type'}"
-      ]
+        'device_type': [
+            "Related object not found using the provided attributes: " \
+            "{'model': 'non-existent-type'}"
+        ]
     }
 
 The final example uses a dictionary for ``device_type`` that matches multiple *Device Types* in the database.
@@ -317,20 +324,20 @@ The final example uses a dictionary for ``device_type`` that matches multiple *D
     >>> # Non-unique data passed in for Foreign Key field
     >>> hq_access_5 = devices.create(
     ...     name="hq-access-05",
-    ...     device_type={"model": "c9300-48"},
-    ...     device_role={"slug": "access"},
-    ...     site={"slug": "hq"},
-    ...     status="active",
+    ...     device_type={"manufacturer": { "name": "Cisco" } },
+    ...     role={"name": "access"},
+    ...     location={"name": "HQ"},
+    ...     status="Active",
     ... )
     Traceback (most recent call last):
     ...
     pynautobot.core.query.RequestError:
     The request failed with code 400 Bad Request:
     {
-      'device_type': [
-        "Multiple objects match the provided attributes: " \
-        "{'model': 'c9300-48'}"
-      ]
+        'device_type': [
+            "Multiple objects match the provided attributes: " \
+            " {'manufacturer__name': 'Cisco'}"
+        ]
     }
 
 
@@ -359,12 +366,12 @@ The first example passes a string instead of an integer.
     >>> hq_access_5 = devices.create(
     ...     name="hq-access-05",
     ...     device_type={"model": "c9300-48"},
-    ...     device_role={"slug": "access"},
-    ...     site={"slug": "hq"},
-    ...     status="active",
+    ...     role={"name": "access"},
+    ...     location={"name": "HQ"},
+    ...     status="Active",
     ...     rack={"name": "hq-001"},
-    ...     face=1,
-    ...     position="high",
+    ...     face="front",
+    ...     position=1,
     ... )
     Traceback (most recent call last):
     ...
@@ -382,20 +389,19 @@ The last example specifies a rack unit higher than what is supported by *Rack* R
     >>> hq_access_5 = devices.create(
     ...     name="hq-access-05",
     ...     device_type={"model": "c9300-48"},
-    ...     device_role={"slug": "access"},
-    ...     site={"slug": "hq"},
+    ...     role={"name": "access"},
+    ...     location={"name": "HQ"},
     ...     status={"name": "Active"},
     ...     rack={"name": "hq-001"},
-    ...     face=1,
-    ...     position="high",
+    ...     face="front",
+    ...     position=1,
     ... )
     Traceback (most recent call last):
     ...
     pynautobot.core.query.RequestError:
     The request failed with code 400 Bad Request:
     {
-      'position': [
-        'U100 is already occupied or does not have sufficient space' \
-        'to accommodate this device type: c9300-48 (1U)'
-      ]
+        'non_field_errors': [
+            'The position and face is already occupied on this rack. The fields rack, position, face must make a unique set.'
+        ]
     }
