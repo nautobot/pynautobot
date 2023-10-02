@@ -50,7 +50,7 @@ services:
       - "redis-server --appendonly yes --requirepass $$REDIS_PASSWORD"  ## $$ because of docker-compose
     env_file: "./dev.env"
   docs:
-    image: nginx:alpine
+    image: "nginx:alpine"
     ports:
       - "8001:80"
     volumes:
