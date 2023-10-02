@@ -8,15 +8,15 @@ This method will return a boolean to indicate whether or not the Record was succ
 .. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
-    >>> device_roles = nautobot.dcim.device_roles
-
-    >>> # Get the record object for the access-switch device role
-    >>> access_role = device_roles.get(slug="access-switch")
-
+    >>> roles = nautobot.extras.roles
+    >>>
+    >>> # Get the record object for the access-switch role
+    >>> access_role = roles.get(name="Access Switch")
+    >>>
     >>> # Show deleting the Record
     >>> access_role.delete()
     True
-
-    >>> # Show that the "access-switch" Device Role was deleted
-    >>> device_roles.get(slug="access-switch")
-    ValueError ...
+    >>>
+    >>> # Show that the "access-switch" Role was deleted
+    >>> pprint(roles.get(name="Access Switch"))
+    None

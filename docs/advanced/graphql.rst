@@ -22,7 +22,6 @@ to the above ``nautobot`` object upon initialization.
 The :py:meth:`~pynautobot.core.graphql.GraphQLQuery.query` method is used to
 perform queries against Nautobot's GraphQL endpoint.
 
-
 Making a GraphQL Query
 ----------------------
 
@@ -31,40 +30,41 @@ that a query string is passed into it.
 The method retuns a :py:class:`~pynautobot.core.graphql.GraphQLRecord` object
 as discussed in :ref:`The GraphQLRecord Object` section.
 
-This example demonstrates how to fetch the `id`, `name`, and `region name` for all *Sites*.
+This example demonstrates how to fetch the `id`, `name`, and `parent name` for all *Locations*.
 
 .. code-block:: python
 
     >>> # Build a query string
     >>> query = """
     ... query {
-    ...   sites {
+    ...   locations {
     ...     id
     ...     name
-    ...     region {
+    ...     parent {
     ...       name
     ...     }
     ...   }
     ... }
     ... """
-
+    >>>
     >>> # Make a graphql query
     >>> graphql_response = nautobot.graphql.query(query=query)
-
+    >>>
     >>> # Show that a GraphQLRecord is returned
-    GraphQLRecord(json={'data': {'sites': [{'id': '2cfbc91e-361f-4129-9db6-bc21a6f88d38', 'name': 'ams', ..., status_code=200)
+    >>> graphql_response
+    GraphQLRecord(json={'data': {'locations': [{'id': ..., status_code=200)
 
-The next example performs the same query, but restricts it to only the ``den`` site.
+The next example performs the same query, but restricts it to only the ``HQ`` location.
 
 .. code-block:: python
 
-    >>> # Build a query string restricting only to den site
+    >>> # Build a query string restricting only to HQ location
     >>> query = """
     ... query {
-    ...   sites (name: "den") {
+    ...   locations (name: "HQ") {
     ...     id
     ...     name
-    ...     region {
+    ...     parent {
     ...       name
     ...     }
     ...   }
@@ -72,46 +72,44 @@ The next example performs the same query, but restricts it to only the ``den`` s
     ... """
     >>> graphql_response = nautobot.graphql.query(query=query)
     >>> graphql_response
-    GraphQLRecord(json={'data': {'sites': [{'id': '45399b54-47f9-4eec-86e3-47352e103b1b', 'name': 'den', 'region': {'name': 'United States'}}]}}, status_code=200)
+    GraphQLRecord(json={'data': {'locations': [{'id': ..., 'name': 'HQ', 'parent': {'name': 'US'}}]}}, status_code=200)
 
 .. tip::
 
-   Nautobot's `GraphQL documentation <https://nautobot.readthedocs.io/en/latest/additional-features/graphql/>`_ 
+   Nautobot's `GraphQL documentation <https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/graphql/>`_ 
    provides a summary of making queries.
 
    Nautobot's browsable API also provides a `graphiql` interface to aid in developing query strings at `/graphql/` 
-
 
 Making a GraphQL Query with Variables
 -------------------------------------
 
 The :py:meth:`~pynautobot.core.graphql.GraphQLQuery.query` method supports using variables in the query string by passing in an optional ``variables`` argument.
 This argument is a dictionary, with the `key` being the variable name, and the `value` being the value to use for the variable in the query string.
-This example is the same as the previous one, except the site name is now derived using variables.
+This example is the same as the previous one, except the location name is now derived using variables.
 
 .. code-block:: python
 
     >>> # Create a variables dictionary
-    >>> variables = {"site_name": "den"}
-
+    >>> variables = {"location_name": "HQ"}
+    >>>
     >>> # Create a query string that takes variables
     >>> query = """
-    ... query ($site_name:String!) {
-    ...   sites (name: $site_name) {
+    ... query ($location_name:String!) {
+    ...   locations (name: [$location_name]) {
     ...     id
     ...     name
-    ...     region {
+    ...     parent {
     ...       name
     ...     }
     ...   }
     ... }
     ... """
-
+    >>>
     >>> # Use the query method with variables
     >>> graphql_response = nautobot.graphql.query(query=query, variables=variables)
     >>> graphql_response
-    GraphQLRecord(json={'data': {'sites': [{'id': '45399b54-47f9-4eec-86e3-47352e103b1b', 'name': 'den', 'region': {'name': 'United States'}}]}}, status_code=200)
-
+    GraphQLRecord(json={'data': {'locations': [{'id': ..., 'name': 'HQ', 'parent': {'name': 'US'}}]}}, status_code=200)
 
 The GraphQLRecord Object
 ------------------------
@@ -122,13 +120,13 @@ This example shows accessing data from the previous query.
 
 .. code-block:: python
 
-    >>> variables = {"site_name": "den"}
+    >>> variables = {"location_name": "HQ"}
     >>> query = """
-    ... query ($site_name:String!) {
-    ...   sites (name: $site_name) {
+    ... query ($location_name:String!) {
+    ...   locations (name: [$location_name]) {
     ...     id
     ...     name
-    ...     region {
+    ...     parent {
     ...       name
     ...     }
     ...   }
@@ -138,21 +136,20 @@ This example shows accessing data from the previous query.
     >>> graphql_response.json
     {
       'data': {
-        'sites': [
+        'locations': [
           {
-            'id': '45399b54-47f9-4eec-86e3-47352e103b1b',
-            'name': 'den',
-            'region': {
-              'name': 'United States'
+            'id': ...,
+            'name': 'HQ',
+            'parent': {
+              'name': 'US'
             }
           }
         ]
       }
     }
-    >>> # Get the name of the first site
-    >>> graphql_response.json["data"]["sites"][0]["name"]
-    'den'
-
+    >>> # Get the name of the first location
+    >>> graphql_response.json["data"]["locations"][0]["name"]
+    'HQ'
 
 Saving Changes
 --------------

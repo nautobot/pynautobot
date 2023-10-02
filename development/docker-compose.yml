@@ -20,7 +20,7 @@ services:
       nautobot:
         condition: "service_healthy"
   nautobot:
-    image: "ghcr.io/nautobot/nautobot:${NAUTOBOT_VER:-1.3}-py${PYTHON_VER:-3.7}"
+    image: "ghcr.io/nautobot/nautobot:${NAUTOBOT_VER:-1.3}-py${PYTHON_VER:-3.8}"
     command: "nautobot-server runserver 0.0.0.0:8000 --insecure"
     ports:
       - "8000:8000"
@@ -49,3 +49,9 @@ services:
       - "-c"  # this is to evaluate the $REDIS_PASSWORD from the env
       - "redis-server --appendonly yes --requirepass $$REDIS_PASSWORD"  ## $$ because of docker-compose
     env_file: "./dev.env"
+  docs:
+    image: "nginx:alpine"
+    ports:
+      - "8001:80"
+    volumes:
+      - "${PWD}/docs/_build/html:/usr/share/nginx/html:ro"

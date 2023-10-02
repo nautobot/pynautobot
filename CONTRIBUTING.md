@@ -10,7 +10,7 @@ This section describes how to install *pynautobot* for development, how to run t
 
 ## Python Versions
 
-This leverages Python3.6 or later.
+This leverages Python 3.8 or later.
 
 ## Installing dependencies for local development
 
@@ -21,7 +21,7 @@ Follow these steps to set up your local development environment:
 ```bash
 # Double check your version
 $ python --version
-Python 3.7.7
+Python 3.8.7
 # Activate the Poetry environment, which will auto create the virtual environment related to the project
 $ poetry shell
 # Install project dependencies as well as development dependencies

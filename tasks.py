@@ -100,9 +100,9 @@ def logs(context, service="", follow=False, tail=None):
 
 
 @task
-def debug(context):
+def debug(context, service=_DEFAULT_SERVICE):
     print("Starting Nautobot in debug mode...")
-    return context.run("docker-compose up", env=_DOCKER_COMPOSE_ENV, pty=True)
+    return context.run(f"docker-compose up -- {service}", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, service=_DEFAULT_SERVICE):
