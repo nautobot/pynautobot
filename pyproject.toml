@@ -12,14 +12,14 @@ classifiers = [
   "Intended Audience :: Developers",
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.8",
 ]
 repository = "https://github.com/nautobot/pynautobot"
 homepage = "https://nautobot.com"
 documentation = "https://pynautobot.readthedocs.io"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 requests = "^2.30.0"
 # requests doesn't support `urllib3` 2.0 yet see: https://github.com/psf/requests/issues/6432
 urllib3 = ">=1.21.1 <1.27"

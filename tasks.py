@@ -13,7 +13,7 @@ except ImportError:
 PYPROJECT_CONFIG = toml.load("pyproject.toml")
 TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
-NAUTOBOT_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_VER", os.getenv("NAUTOBOT_VER", "stable"))
+NAUTOBOT_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_VER", os.getenv("NAUTOBOT_VER", "1.6"))
 # Can be set to a separate Python version to be used for launching or building image
 PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.8"))
 
@@ -100,9 +100,9 @@ def logs(context, service="", follow=False, tail=None):
 
 
 @task
-def debug(context):
+def debug(context, service=_DEFAULT_SERVICE):
     print("Starting Nautobot in debug mode...")
-    return context.run("docker-compose up", env=_DOCKER_COMPOSE_ENV, pty=True)
+    return context.run(f"docker-compose up -- {service}", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, service=_DEFAULT_SERVICE):
