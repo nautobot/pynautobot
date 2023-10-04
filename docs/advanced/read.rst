@@ -8,7 +8,6 @@ for retrieving :py:class:`~pynautobot.core.response.Record` objects from Nautobo
 * The :py:meth:`~pynautobot.core.endpoint.Endpoint.filter` method will return a list of Records.
 * The :py:meth:`~pynautobot.core.endpoint.Endpoint.all` method will return all Records for the Model.
 
-
 Using the Get Method
 --------------------
 
@@ -19,15 +18,15 @@ which is the ID for most objects.
 
 .. code-block:: python
 
-    >>> dev = nautobot.dcim.devices.get('2302f2a1-2ed4-4ac9-a43a-285c95190071')
-    >>> dev.name
+    >>> device = nautobot.dcim.devices.get('2302f2a1-2ed4-4ac9-a43a-285c95190071')
+    >>> device.name
     'hq-access-01'
-    >>> dev.status
+    >>> device.status
     Active
-    >>> dev.device_type
+    >>> device.device_type
     c9300-48
-    >>> dev.device_role
-    Access
+    >>> device.role
+    <pynautobot.core.response.Record ('Active') at ...>
 
 .. note::
    If an entry with the specified value for the PK does not exist,
@@ -39,13 +38,12 @@ If multiple Records are matched, then a ``ValueError`` is raised.
 
 .. code-block:: python
 
-    >>> dev = nautobot.dcim.devices.get(model="CSR1000V")
+    >>> device = nautobot.dcim.devices.get(device_type="c9300-48")
     Traceback (most recent call last):
     ...
     ValueError: get() returned more than one result.
     Check that the kwarg(s) passed are valid for this endpoint
     or use filter() or all() instead.
-
 
 Using the Filter Method
 -----------------------
@@ -60,7 +58,6 @@ This method also supports:
 * filtering based on custom fields
 * filtering with lookup expressions
 
-
 Basic Usage
 ^^^^^^^^^^^
 
@@ -72,49 +69,50 @@ but will return all matches using :py:meth:`~pynautobot.core.endpoint.Endpoint.f
 
 .. code-block:: python
 
-    >>> # Get all CSR1000V devices
-    >>> devices = nautobot.dcim.devices.filter(model="CSR1000V")
-
+    >>> # Get all c9300-48 devices
+    >>> devices = nautobot.dcim.devices.filter(device_type="c9300-48")
+    >>>
     >>> # Show a list of Records are returned
-    >>> devices
-    [jcy-bb-01.infra.ntc.com, jcy-rtr-01.infra.ntc.com, jcy-rtr-02.infra.ntc.com]
-
-    >>> # Show accessing data from the first CSR1000V device
-    >>> dev1 = devices[0]
-    >>> dev1.name
-    'jcy-bb-01.infra.ntc.com'
-    >>> dev1.status
-    Active
-
+    >>> pprint(devices)
+    [<pynautobot.models.dcim.Devices ('hq-access-01') at ...>,
+     <pynautobot.models.dcim.Devices ('hq-access-02') at ...>,
+     <pynautobot.models.dcim.Devices ('hq-access-03') at ...>,
+     <pynautobot.models.dcim.Devices ('hq-access-04') at ...>]
+    >>> 
+    >>> # Show accessing data from the first c9300-48 device
+    >>> device1 = devices[0]
+    >>> device1.name
+    'hq-access-01'
+    >>> device1.status
+    <pynautobot.core.response.Record ('Active') at ...>
 
 Filtering with OR logic
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 The :py:meth:`~pynautobot.core.endpoint.Endpoint.filter` method allows
 using an **OR** condition by passing in a list of values to match against the field.
-The example below gets all devices located in either *Site* ``hq`` or ``dc``.
+The example below gets all devices located in either *Location* ``HQ`` or ``DC``.
 
 .. code-block:: python
 
     >>> # There are 100 devices total
     >>> nautobot.dcim.devices.count()
     100
-
-    >>> # There are 20 dc devices
-    >>> dev_dc_site = nautobot.dcim.devices.filter(site="dc")
-    >>> len(dev_dc_site)
+    >>>
+    >>> # There are 20 DC devices
+    >>> dev_dc_location = nautobot.dcim.devices.filter(location="DC")
+    >>> len(dev_dc_location)
     20
-
-    >>> # There are 5 hq devices
-    >>> dev_hq_site = nautobot.dcim.devices.filter(site="hq")
-    >>> len(dev_hq_site)
+    >>>
+    >>> # There are 5 HQ devices
+    >>> dev_hq_location = nautobot.dcim.devices.filter(location="HQ")
+    >>> len(dev_hq_location)
     5
-
-    # The filter method will grab all devices in both sites
-    >>> dev_hq_dc_sites = nautobot.dcim.devices.filter(site=["hq", "dc"])
-    >>> len(dev_all_sites)
+    >>>
+    # The filter method will grab all devices in both locations
+    >>> dev_hq_dc_locations = nautobot.dcim.devices.filter(location=["HQ", "DC"])
+    >>> len(dev_hq_dc_locations)
     25
-
 
 Filtering based on a Custom Field
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -129,12 +127,12 @@ by passing the ``cf_owner`` keyword argument.
 
     >>> devices = nautobot.dcim.devices.filter(cf_owner="John Smith")
     >>> devices
-    [switch0, switch1]
-
+    [<pynautobot.models.dcim.Devices ('switch0') at ...>,
+     <pynautobot.models.dcim.Devices ('switch1') at ...>]
+    >>>
     >>> # Show device has an owner of "John Smith"
     >>> devices[0].custom_fields["owner"]
     'John Smith'
-
 
 Filtering with Lookup Expressions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -151,19 +149,18 @@ There are several expressions that can be used; they generally cover things like
 * case insensitivity
 
 The example below shows how use negation with *__n*.
-From the previous examples, there are 100 devices total, and 25 are located in either the `dc` or `hq` site.
-Using ``site__n`` to get the negation of these sites returns 75 devices.
+From the previous examples, there are 100 devices total, and 25 are located in either the `DC` or `HQ` location.
+Using ``location__n`` to get the negation of these locations returns 75 devices.
 
 .. code-block::
 
-    >>> devices = nautobot.dcim.devices.filter(site__n=["hq", "dc"])
+    >>> devices = nautobot.dcim.devices.filter(location__n=["HQ", "DC"])
     >>> len(devices)
     75
-
-    >>> # Show the device is not in either hq or dc site
-    >>> devices[0].site
-    branch1
-
+    >>>
+    >>> # Show the device is not in either HQ or DC location
+    >>> devices[0].location
+    <pynautobot.core.response.Record ('branch1') at 0x7f650006df50>
 
 Using the All Method
 --------------------
@@ -176,15 +173,11 @@ This will return a list of all :py:class:`~pynautobot.core.response.Record` obje
     >>> devices = nautobot.dcim.devices.all()
     >>> len(devices)
     100
-    >>> dev1 = devices[0]
-    >>> dev1.name
+    >>> device1 = devices[0]
+    >>> device1.name
     'hq-access-01'
-    >>> dev1.status
+    >>> device1.status
     Active
-
-.. tip::
-  Both ``filter`` and ``all`` can use threading by passing
-  in ``use_threading=True`` when instantiating the ``api`` object.
 
 The following two pages cover interacting with the returned :py:class:`~pynautobot.core.response.Record` objects.
 The next page covers additional Update operations, which is followed by a discussion of other features and methods.

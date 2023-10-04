@@ -17,7 +17,7 @@ class AppCustomFieldsTestCase(unittest.TestCase):
         "requests.sessions.Session.get",
         return_value=Response(fixture="extras/custom_fields.json"),
     )
-    @patch("pynautobot.api.version", "1.999")
+    @patch("pynautobot.api.version", "2.0")
     def test_custom_fields(self, session_get_mock):
         api = pynautobot.api(host, **def_kwargs)
         cfs = api.extras.custom_fields()
@@ -43,7 +43,7 @@ class AppCustomFieldChoicesTestCase(unittest.TestCase):
         "requests.sessions.Session.get",
         return_value=Response(fixture="extras/custom_field_choices.json"),
     )
-    @patch("pynautobot.api.version", "1.999")
+    @patch("pynautobot.api.version", "2.0")
     def test_custom_field_choices(self, session_get_mock):
         api = pynautobot.api(host, **def_kwargs)
         choices = api.extras.custom_field_choices()
@@ -68,7 +68,7 @@ class AppConfigTestCase(unittest.TestCase):
         "pynautobot.core.query.Request.get",
         return_value={"tables": {"DeviceTable": {"columns": ["name", "status", "tenant", "tags"]}}},
     )
-    @patch("pynautobot.api.version", "1.999")
+    @patch("pynautobot.api.version", "2.0")
     def test_config(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         config = api.users.config()
@@ -84,7 +84,7 @@ class PluginAppCustomChoicesTestCase(unittest.TestCase):
         "pynautobot.core.query.Request.get",
         return_value={"Testfield1": {"TF1_1": 1, "TF1_2": 2}, "Testfield2": {"TF2_1": 3, "TF2_2": 4}},
     )
-    @patch("pynautobot.api.version", "1.999")
+    @patch("pynautobot.api.version", "2.0")
     def test_custom_choices(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         choices = api.plugins.test_plugin.custom_fields()
@@ -95,7 +95,7 @@ class PluginAppCustomChoicesTestCase(unittest.TestCase):
         "pynautobot.core.query.Request.get",
         return_value=[{"name": "test_plugin", "package": "netbox_test_plugin"}],
     )
-    @patch("pynautobot.api.version", "1.999")
+    @patch("pynautobot.api.version", "2.0")
     def test_installed_plugins(self, *_):
         api = pynautobot.api(host, **def_kwargs)
         plugins = api.plugins.installed_plugins()

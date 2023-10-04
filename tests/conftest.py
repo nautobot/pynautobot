@@ -48,7 +48,7 @@ def pytest_configure(config):
 @pytest.fixture
 def pynautobot_api(monkeypatch):
     """Factory to create pynautobot api instance."""
-    monkeypatch.setattr("pynautobot.api.version", "1.999")
+    monkeypatch.setattr("pynautobot.api.version", "2.0")
     return Api(url="https://mocknautobot.example.com", token="1234567890abcdefg")
 
 
