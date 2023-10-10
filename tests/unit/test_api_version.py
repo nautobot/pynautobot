@@ -42,7 +42,7 @@ class APIVersionTestCase(unittest.TestCase):
         )
 
         # Test choices request includes version=1.3 in its headers
-        self.api.http_session.options.return_value.json.return_value = {"actions": {"POST": []}}
+        self.api.http_session.options.return_value.json.return_value = {"schema": {"properties": {}}}
         self.test_obj.choices()
         self.api.http_session.options.assert_called_with(
             "http://localhost:8000/api/test/test/",
@@ -80,7 +80,7 @@ class APIVersionTestCase(unittest.TestCase):
         )
 
         # Test choices request overrides Api level versioning
-        self.api.http_session.options.return_value.json.return_value = {"actions": {"POST": []}}
+        self.api.http_session.options.return_value.json.return_value = {"schema": {"properties": {}}}
         self.test_obj.choices(api_version=1.2)
         self.api.http_session.options.assert_called_with(
             "http://localhost:8000/api/test/test/",

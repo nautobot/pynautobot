@@ -37,21 +37,18 @@ class EndPointTestCase(unittest.TestCase):
             api = Mock(base_url="http://localhost:8000/api")
             app = Mock(name="test")
             mock.return_value = {
-                "actions": {
-                    "POST": {
+                "schema": {
+                    "properties": {
                         "letter": {
-                            "choices": [
-                                {"display_name": "A", "value": 1},
-                                {"display_name": "B", "value": 2},
-                                {"display_name": "C", "value": 3},
-                            ]
+                            "enum": [1, 2, 3],
+                            "enumNames": ["A", "B", "C"],
                         }
                     }
                 }
             }
             test_obj = Endpoint(api, app, "test")
             choices = test_obj.choices()
-            self.assertEqual(choices["letter"][1]["display_name"], "B")
+            self.assertEqual(choices["letter"][1]["display"], "B")
             self.assertEqual(choices["letter"][1]["value"], 2)
 
 

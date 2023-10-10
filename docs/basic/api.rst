@@ -6,22 +6,30 @@ passing in the proper URL and a valid Token.
 The code sample below assumes that the token has been stored as an environment variable,
 and uses the builtin :py:mod:`os` module to retrieve it.
 
+.. note::
+
+    To display dictionaries or other objects in examples, the ``pprint`` package is used. To install it run ``pip install pprint``.
+
 .. code-block:: python
 
-    import os
-
-    from pynautobot import api
-
-    url = "https://demo.nautobot.com"
-
-    # Retrieve token from system environment variable
-    # token = os.environ["NAUTOBOT_TOKEN"]
-    token = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    nautobot = api(url=url, token=token)
+    >>> import os
+    >>>
+    >>> from pprint import pprint
+    >>>
+    >>> from pynautobot import api
+    >>>
+    >>> url = "https://next.demo.nautobot.com"
+    >>>
+    >>> # Retrieve token from system environment variable
+    >>> # token = os.environ["NAUTOBOT_TOKEN"]
+    >>> token = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    >>> nautobot = api(url=url, token=token)
+    >>> nautobot
+    <pynautobot.core.api.Api object at ...>
 
 .. tip::
 
-   Creating a `token <https://nautobot.readthedocs.io/en/latest/rest-api/authentication/>`_ in Nautobot.
+   Creating a `token <https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/users/token/#tokens>`_ in Nautobot.
 
 
 Nautobot Info and Apps
@@ -44,27 +52,61 @@ The core Apps are:
 .. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
-
+    >>>
     >>> # View version of Nautobot
     >>> nautobot.version
-    '1.0'
-
+    '2.0'
+    >>>
     >>> # View various details about Nautobot
-    >>> nautobot.status()
-    {
-        'django-version': '3.1.3',
-        'installed-apps': {...},
-        'nautobot-version': '1.0.3+5de17ddd',
-        'plugins': {
-            'nautobot_healthcheck': '0.0.1'
-        },
-        'python-version': '3.7.9',
-        'rq-workers-running': 2
-    }
-
+    >>> pprint(nautobot.status())
+    {'celery-workers-running': 0,
+     'django-version': '3.2.21',
+     'installed-apps': {'constance': '2.9.1',
+                        'constance.backends.database': None,
+                        'corsheaders': None,
+                        'db_file_storage': None,
+                        'debug_toolbar': '4.1.0',
+                        'django.contrib.admin': None,
+                        'django.contrib.auth': None,
+                        'django.contrib.contenttypes': None,
+                        'django.contrib.humanize': None,
+                        'django.contrib.messages': None,
+                        'django.contrib.sessions': None,
+                        'django.contrib.staticfiles': None,
+                        'django_ajax_tables': None,
+                        'django_celery_beat': '2.5.0..',
+                        'django_celery_results': '2.4.0..',
+                        'django_extensions': '3.2.3',
+                        'django_filters': '23.1',
+                        'django_jinja': '3.2.21.final.0',
+                        'django_prometheus': '2.3.1',
+                        'django_tables2': '2.6.0',
+                        'drf_spectacular': '0.26.3',
+                        'drf_spectacular_sidecar': '2023.9.1',
+                        'example_plugin': '1.0.0',
+                        'graphene_django': '2.16.0',
+                        'health_check': None,
+                        'health_check.storage': None,
+                        'nautobot.circuits': None,
+                        'nautobot.core': None,
+                        'nautobot.dcim': None,
+                        'nautobot.extras': None,
+                        'nautobot.extras.tests.example_plugin_dependency': None,
+                        'nautobot.ipam': None,
+                        'nautobot.tenancy': None,
+                        'nautobot.users': None,
+                        'nautobot.virtualization': None,
+                        'rest_framework': '3.14.0',
+                        'social_django': '5.2.0',
+                        'taggit': '4.0.0',
+                        'timezone_field': '5.1'},
+     'nautobot-version': '2.0.0',
+     'plugins': {'example_plugin': '1.0.0'},
+     'python-version': '3.8.18'}
+    >>> 
     >>> # Show that the dcim app is available
     >>> nautobot.dcim
-    <pynautobot.core.app.App object at 0x7fbd42870fa0>
+    <pynautobot.core.app.App object at ...>
 
 The main purpose of :py:class:`~pynautobot.core.app.App` objects is to provide access
 to :ref:`Models <Terminology>` and their data.
@@ -76,7 +118,7 @@ Models
 Pynautobot :py:class:`~pynautobot.core.app.App` objects will treat all unknown attributes
 as :py:class:`Endpoints <pynautobot.core.endpoint.Endpoint>`.
 The :py:class:`~pynautobot.core.endpoint.Endpoint` class is used to represent Models in Nautobot.
-For example, the Nautobot DCIM App contains Models, such as: *Devices*, *Platforms*, and *Device Roles*.
+For example, the Nautobot DCIM App contains Models, such as: *Devices*, *Platforms*, and *Roles*.
 The pynautobot ``dcim`` :py:class:`~pynautobot.core.app.App` does not provide attributes to represent these Models,
 however, :py:class:`~pynautobot.core.endpoint.Endpoint` objects are created upon attribute access.
 
@@ -86,23 +128,21 @@ but the ``devices`` Model is still accessible from it.
 .. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
-
+    >>>
     >>> # Show that the devices attribute does not exist on the dcim object
-    >>> nautobot.dcim.__dict__
-    {
-        'api': <pynautobot.core.api.Api object at 0x7fb9c20dbfa0>,
-        'name': 'dcim',
-        '_choices': None,
-        'model': <module 'pynautobot.models.dcim'
-    }
-
+    >>> pprint(nautobot.dcim.__dict__)
+    {'_choices': None,
+     'api': <pynautobot.core.api.Api object at ...>,
+     'model': <module 'pynautobot.models.dcim' from '/opt/ntc/nautobot/pynautobot/pynautobot/models/dcim.py'>,
+     'name': 'dcim'}
+    >>> 
     >>> # Show that the devices attribute is accessible and
     >>> # is an Endpoint object corresponding to the Devices Model
     >>> devices = nautobot.dcim.devices
     >>> devices
-    <pynautobot.core.endpoint.Endpoint object at 0x7fb9c1b4c0a0>
+    <pynautobot.core.endpoint.Endpoint object at ...>
     >>> devices.url
-    'https://demo.nautobot.com/api/dcim/devices'
+    'https://next.demo.nautobot.com/api/dcim/devices'
 
 .. note::
 
@@ -111,19 +151,19 @@ but the ``devices`` Model is still accessible from it.
 
 Some Models in Nautobot have names that contain more than a single word.
 In order to access these Models, the names should be joined with an underscore.
-The above example of *Device Roles* would use ``device_roles``.
+The above example of *Roles* would use ``roles``.
 Pynautobot will automatically convert the underscore into a hyphen for access to the Nautobot API endpoint.
 
 .. code-block:: python
 
     >>> nautobot = api(url=url, token=token)
-
+    >>>
     >>> # Show using an underscore to access Models with multi-word names.
-    >>> device_roles = nautobot.dcim.device_roles
-
+    >>> roles = nautobot.extras.roles
+    >>>
     >>> # Show that the URL converts the underscore to a hyphen
-    >>> device_roles.url
-    'https://demo.nautobot.com/api/dcim/device-roles'
+    >>> roles.url
+    'https://next.demo.nautobot.com/api/extras.roles'
 
 .. note::
 

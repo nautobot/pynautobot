@@ -24,6 +24,12 @@ from pynautobot.models.circuits import Circuits
 
 
 class TraceableRecord(Record):
+    def _get_app_endpoint(self, hop_item_data):
+        if "url" not in hop_item_data:
+            return ""
+        path_elements = urlparse(hop_item_data["url"][len(self.api.base_url) :]).path.split("/")[1:3]
+        return "/".join(path_elements)
+
     def trace(self):
         req = Request(
             key=str(self.id) + "/trace",
@@ -46,8 +52,7 @@ class TraceableRecord(Record):
                     this_hop_ret.append(hop_item_data)
                     continue
 
-                # TODO: Move this to a more general function.
-                app_endpoint = "/".join(urlparse(hop_item_data["url"][len(self.api.base_url) :]).path.split("/")[1:3])
+                app_endpoint = self._get_app_endpoint(hop_item_data)
 
                 return_obj_class = uri_to_obj_class_map.get(
                     app_endpoint,

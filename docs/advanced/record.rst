@@ -3,7 +3,6 @@ Interacting With A Record
 
 We already know that we can access attributes on the record, but what else can we do?
 
-
 NAPALM
 ------
 
@@ -13,14 +12,11 @@ Here we can run the ``get_facts`` getter.
 
 .. code-block:: python
 
-   dev1.napalm.list(method='get_facts')
-   {"get_facts": {"interface_list": ["ge-0/0/0"]}}
-
+    >>> device1.napalm.list(method='get_facts')
+    {"get_facts": {"interface_list": ["ge-0/0/0"]}}
 
 Accessing Field Data
 --------------------
-
-
 
 Serialize
 ^^^^^^^^^
@@ -29,116 +25,142 @@ Instead of accessing the device and only receiving the name, you can use the :py
 
 .. code-block:: python
 
-   import json
-   >>> print(json.dumps(dev1.serialize(), indent=4))
-   {
-       "id": "ea354978-471a-45a2-a438-92cfc046df0b",
-       "url": "http://localhost:8000/api/dcim/devices/102/",
-       "name": "hq-access-01",
-       "display_name": "hq-access-01",
-       "device_type": 2,
-       "device_role": 2,
-       "tenant": null,
-       "platform": null,
-       "serial": "",
-       "asset_tag": null,
-       "site": 2,
-       "rack": null,
-       "position": null,
-       "face": null,
-       "parent_device": null,
-       "status": "active",
-       "primary_ip": null,
-       "primary_ip4": null,
-       "primary_ip6": null,
-       "cluster": null,
-       "virtual_chassis": null,
-       "vc_position": null,
-       "vc_priority": null,
-       "comments": "",
-       "local_context_data": null,
-       "tags": [],
-       "custom_fields": {},
-       "config_context": {},
-       "created": "2021-02-17",
-       "last_updated": "2021-02-17T17:46:44.788078Z"
-   }
+    >>> import json
+    >>> print(json.dumps(device1.serialize(), indent=4))
+    {
+        "id": "86924375-4b50-4f95-a1c7-99896ab03307",
+        "object_type": "dcim.device",
+        "display": "hq-access-01",
+        "url": "http://nautobot:8080/api/dcim/devices/86924375-4b50-4f95-a1c7-99896ab03307/",
+        "natural_slug": "hq-access-01__hq_8692",
+        "face": null,
+        "local_config_context_data": null,
+        "local_config_context_data_owner_object_id": null,
+        "name": "hq-access-01",
+        "serial": "",
+        "asset_tag": null,
+        "position": null,
+        "device_redundancy_group_priority": null,
+        "vc_position": null,
+        "vc_priority": null,
+        "comments": "",
+        "local_config_context_schema": null,
+        "local_config_context_data_owner_content_type": null,
+        "device_type": "a99de3bf-9a81-4645-9828-b00866de94a5",
+        "status": "44a25fa2-ee88-47ed-b004-4dd36e54706f",
+        "role": "ca552e01-bb63-4742-be5c-d27e62ae3e50",
+        "tenant": null,
+        "platform": null,
+        "location": "fb720cca-ee59-4b76-9322-dfbbdaa5d052",
+        "rack": null,
+        "primary_ip4": null,
+        "primary_ip6": null,
+        "cluster": null,
+        "virtual_chassis": null,
+        "device_redundancy_group": null,
+        "secrets_group": null,
+        "created": "2023-09-30T07:56:23.664150Z",
+        "last_updated": "2023-09-30T07:56:23.664168Z",
+        "tags": [],
+        "notes_url": "http://nautobot:8080/api/dcim/devices/86924375-4b50-4f95-a1c7-99896ab03307/notes/",
+        "custom_fields": {},
+        "parent_bay": null
+    }
 
 You may have noticed that any field that is a foreign key relationship only provides the ID.
 We need to cast to a dictionary to see the actual sub keys.
 
 .. code-block:: python
 
-   >>> print(json.dumps(dict(dev1), indent=4))
-   {
-       "id": "2d7c20dc-78a8-44af-961b-56d418c14bea",
-       "url": "http://localhost:8000/api/dcim/devices/102/",
-       "name": "hq-access-01",
-       "display_name": "hq-access-01",
-       "device_type": {
-           "id": "100fa8e8-381b-4f25-b2cd-10c99cdef523",
-           "url": "http://localhost:8000/api/dcim/device-types/2/",
-           "manufacturer": {
-               "id": "e14f5b2b-bf5f-449f-b089-495b73657cf5",
-               "url": "http://localhost:8000/api/dcim/manufacturers/1/",
-               "name": "Cisco",
-               "slug": "cisco"
-           },
-           "model": "c9300-48",
-           "slug": "c9300-48",
-           "display_name": "Cisco c9300-48"
-       },
-       "device_role": {
-           "id": "022d3ff6-b08d-4380-9daa-8e16c6fed5ec",
-           "url": "http://localhost:8000/api/dcim/device-roles/2/",
-           "name": "Access",
-           "slug": "access"
-       },
-       "tenant": null,
-       "platform": null,
-       "serial": "",
-       "asset_tag": null,
-       "site": {
-           "id": "09df769c-af34-45f8-950a-94c268d48464",
-           "url": "http://localhost:8000/api/dcim/sites/2/",
-           "name": "HQ",
-           "slug": "hq"
-       },
-       "rack": null,
-       "position": null,
-       "face": null,
-       "parent_device": null,
-       "status": {
-           "value": "active",
-           "label": "Active"
-       },
-       "primary_ip": null,
-       "primary_ip4": null,
-       "primary_ip6": null,
-       "cluster": null,
-       "virtual_chassis": null,
-       "vc_position": null,
-       "vc_priority": null,
-       "comments": "",
-       "local_context_data": null,
-       "tags": [],
-       "custom_fields": {},
-       "config_context": {},
-       "created": "2021-02-17",
-       "last_updated": "2021-02-17T17:46:44.788078Z"
-   }
-
+    >>> print(json.dumps(dict(device1), indent=4))
+    {
+        "id": "86924375-4b50-4f95-a1c7-99896ab03307",
+        "object_type": "dcim.device",
+        "display": "hq-access-01",
+        "url": "http://nautobot:8080/api/dcim/devices/86924375-4b50-4f95-a1c7-99896ab03307/",
+        "natural_slug": "hq-access-01__hq_8692",
+        "face": null,
+        "local_config_context_data": null,
+        "local_config_context_data_owner_object_id": null,
+        "name": "hq-access-01",
+        "serial": "",
+        "asset_tag": null,
+        "position": null,
+        "device_redundancy_group_priority": null,
+        "vc_position": null,
+        "vc_priority": null,
+        "comments": "",
+        "local_config_context_schema": null,
+        "local_config_context_data_owner_content_type": null,
+        "device_type": {
+            "id": "a99de3bf-9a81-4645-9828-b00866de94a5",
+            "object_type": "dcim.devicetype",
+            "url": "http://nautobot:8080/api/dcim/device-types/a99de3bf-9a81-4645-9828-b00866de94a5/"
+        },
+        "status": {
+            "id": "44a25fa2-ee88-47ed-b004-4dd36e54706f",
+            "object_type": "extras.status",
+            "url": "http://nautobot:8080/api/extras/statuses/44a25fa2-ee88-47ed-b004-4dd36e54706f/",
+            "display": "Active",
+            "natural_slug": "active_44a2",
+            "content_types": [
+                "circuits.circuit",
+                "dcim.device",
+                "dcim.powerfeed",
+                "dcim.rack",
+                "ipam.ipaddress",
+                "ipam.prefix",
+                "ipam.vlan",
+                "virtualization.virtualmachine",
+                "virtualization.vminterface",
+                "dcim.interface",
+                "dcim.location",
+                "dcim.deviceredundancygroup",
+                "dcim.interfaceredundancygroup"
+            ],
+            "name": "Active",
+            "color": "4caf50",
+            "description": "Unit is active",
+            "created": "2023-09-30T00:00:00Z",
+            "last_updated": "2023-09-30T06:06:44.559130Z",
+            "notes_url": "http://nautobot:8080/api/extras/statuses/44a25fa2-ee88-47ed-b004-4dd36e54706f/notes/",
+            "custom_fields": {}
+        },
+        "role": {
+            "id": "ca552e01-bb63-4742-be5c-d27e62ae3e50",
+            "object_type": "extras.role",
+            "url": "http://nautobot:8080/api/extras/roles/ca552e01-bb63-4742-be5c-d27e62ae3e50/"
+        },
+        "tenant": null,
+        "platform": null,
+        "location": {
+            "id": "fb720cca-ee59-4b76-9322-dfbbdaa5d052",
+            "object_type": "dcim.location",
+            "url": "http://nautobot:8080/api/dcim/locations/fb720cca-ee59-4b76-9322-dfbbdaa5d052/"
+        },
+        "rack": null,
+        "primary_ip4": null,
+        "primary_ip6": null,
+        "cluster": null,
+        "virtual_chassis": null,
+        "device_redundancy_group": null,
+        "secrets_group": null,
+        "created": "2023-09-30T07:56:23.664150Z",
+        "last_updated": "2023-09-30T07:56:23.664168Z",
+        "tags": [],
+        "notes_url": "http://nautobot:8080/api/dcim/devices/86924375-4b50-4f95-a1c7-99896ab03307/notes/",
+        "custom_fields": {},
+        "parent_bay": null
+    }
 
 Record Hashes and Equality Comparison
 -------------------------------------
-
 
 Record Hash
 ^^^^^^^^^^^
 
 The hash of a record is made from a combination of the name of the endpoint and its ID. If the ID does not exist, then it will be a hash of **only** the
 endpoint name. If an ID does exist then the hash will be of the tuple representing `(endpoint.name, id)`.
-
 
 Equality Comparison
 ^^^^^^^^^^^^^^^^^^^
@@ -148,24 +170,24 @@ then a equals comparison will return True, even though there is a different data
 
 .. code-block:: python
 
-    # Assign den-rtr01 to dev1, then to dev2
-    >>> dev1 = nautobot.dcim.devices.get(name="den-rtr01")
-    >>> dev2 = nautobot.dcim.devices.get(name="den-rtr01")
-    >>> dev1 == dev2
+    >>> # Assign hq-access-01 to device1, then to device2
+    >>> device1 = nautobot.dcim.devices.get(name="hq-access-01")
+    >>> device2 = nautobot.dcim.devices.get(name="hq-access-01")
+    >>> device1 == device2
     True
-    >>> dev2.platform
+    >>> device2.platform
     Cisco IOS
     # Change the platform
-    >>> dev2.platform = "Cisco NXOS"
-    >>> dev2.platform
+    >>> device2.platform = "Cisco NXOS"
+    >>> device2.platform
     'Cisco NXOS'
     # Compare the devices, since the ID nor the 
-    >>> dev1 == dev2
+    >>> device1 == device2
     True
 
 A comparison can be made on individual attributes of an object:
 
 .. code-block:: python
 
-    >>> dev1.platform == dev2.platform
+    >>> device1.platform == device2.platform
     False

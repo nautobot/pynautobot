@@ -9,6 +9,14 @@
         "slug": "test1"
     },
     "vrf": null,
+    "namespace": {
+        "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+        "display": "internal",
+        "url": "http://localhost:8080/api/ipam/namespaces/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+        "name": "internal",
+        "description": "",
+        "location": null
+    },
     "tenant": null,
     "vlan": null,
     "status": {
