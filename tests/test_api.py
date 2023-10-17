@@ -40,6 +40,18 @@ class ApiTestCase(unittest.TestCase):
         self.assertTrue(api)
         self.assertEqual(api.base_url, "http://localhost:8000/api")
 
+    @patch("pynautobot.api.version", "2.0")
+    def test_verify_true(self, *_):
+        api = pynautobot.api("http://localhost:8000/", **def_kwargs)
+        self.assertTrue(api)
+        self.assertTrue(api.http_session.verify)
+
+    @patch("pynautobot.api.version", "2.0")
+    def test_verify_false(self, *_):
+        api = pynautobot.api("http://localhost:8000/", verify=False, **def_kwargs)
+        self.assertTrue(api)
+        self.assertFalse(api.http_session.verify)
+
 
 class ApiVersionTestCase(unittest.TestCase):
     class ResponseHeadersWithVersion:

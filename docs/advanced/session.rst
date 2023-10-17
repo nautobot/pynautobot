@@ -33,7 +33,6 @@ The example below shows how to update a Token if it has been cycled.
 SSL Verification
 ----------------
 
-Handling SSL verification is documented `here <https://requests.readthedocs.io/en/stable/user/advanced/#ssl-cert-verification>`_.
 The below example shows how to disable SSL verification.
 
 .. code-block:: python
@@ -42,9 +41,9 @@ The below example shows how to disable SSL verification.
     from pynautobot import api
     nautobot = api(
         url='https://localhost:8000',
-        token=os.environ["NAUTOBOT_TOKEN"]
+        token=os.environ["NAUTOBOT_TOKEN"],
+        verify=False
     )
-    nautobot.http_session.verify = False
 
 Timeouts
 --------
