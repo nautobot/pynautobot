@@ -105,19 +105,19 @@ class App(object):
         logger.warning(
             "WARNING: The method 'custom_choices()' will be removed in "
             "the next major version (2.x) of pynautobot. Please use "
-            "`custom_fields()` instead."
+            "`get_custom_fields()` instead."
         )
 
-        return self.custom_fields()
+        return self.get_custom_fields()
 
-    def custom_fields(self):
+    def get_custom_fields(self):
         """Returns custom-fields response from app
 
         :Returns: Raw response from Nautobot's custom-fields endpoint.
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
         :Example:
 
-        >>> nb.extras.custom_fields()
+        >>> nb.extras.get_custom_fields()
         [
             {
                 "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
@@ -142,21 +142,20 @@ class App(object):
             },
         ]
         """
-        custom_fields = Request(
+        return Request(
             base=f"{self.api.base_url}/{self.name}/custom-fields/",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
-        return custom_fields
 
-    def custom_field_choices(self):
+    def get_custom_field_choices(self):
         """Returns custom-field-choices response from app
 
         :Returns: Raw response from Nautobot's custom-field-choices endpoint.
         :Raises: :py:class:`.RequestError` if called for an invalid endpoint.
         :Example:
 
-        >>> nb.extras.custom_field_choices()
+        >>> nb.extras.get_custom_field_choices()
         [
             {
                 "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
@@ -175,12 +174,11 @@ class App(object):
             },
         ]
         """
-        custom_fields = Request(
+        return Request(
             base=f"{self.api.base_url}/{self.name}/custom-field-choices/",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
-        return custom_fields
 
     def config(self):
         """Returns config response from app
