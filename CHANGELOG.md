@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.5.1
+
+### Bug Fixes
+
+- (#140) Fixes SSL
+- (#141) Fixes methods and endpoints naming overlap
+
 ## v1.5.0
 
 ### New Features
