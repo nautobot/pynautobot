@@ -20,7 +20,7 @@ class AppCustomFieldsTestCase(unittest.TestCase):
     @patch("pynautobot.api.version", "2.0")
     def test_custom_fields(self, session_get_mock):
         api = pynautobot.api(host, **def_kwargs)
-        cfs = api.extras.custom_fields()
+        cfs = api.extras.get_custom_fields()
 
         session_get_mock.assert_called_once()
         expect_url = f"{api.base_url}/extras/custom-fields/"
@@ -46,7 +46,7 @@ class AppCustomFieldChoicesTestCase(unittest.TestCase):
     @patch("pynautobot.api.version", "2.0")
     def test_custom_field_choices(self, session_get_mock):
         api = pynautobot.api(host, **def_kwargs)
-        choices = api.extras.custom_field_choices()
+        choices = api.extras.get_custom_field_choices()
 
         session_get_mock.assert_called_once()
         expect_url = f"{api.base_url}/extras/custom-field-choices/"
@@ -85,11 +85,11 @@ class PluginAppCustomChoicesTestCase(unittest.TestCase):
         return_value={"Testfield1": {"TF1_1": 1, "TF1_2": 2}, "Testfield2": {"TF2_1": 3, "TF2_2": 4}},
     )
     @patch("pynautobot.api.version", "2.0")
-    def test_custom_choices(self, *_):
+    def test_custom_fields(self, *_):
         api = pynautobot.api(host, **def_kwargs)
-        choices = api.plugins.test_plugin.custom_fields()
-        self.assertEqual(len(choices), 2)
-        self.assertEqual(sorted(choices.keys()), ["Testfield1", "Testfield2"])
+        custom_fields = api.plugins.test_plugin.get_custom_fields()
+        self.assertEqual(len(custom_fields), 2)
+        self.assertEqual(sorted(custom_fields.keys()), ["Testfield1", "Testfield2"])
 
     @patch(
         "pynautobot.core.query.Request.get",
