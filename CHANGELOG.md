@@ -1,10 +1,17 @@
 # Changelog
 
-## v2.0.1
+## v2.0.2
 
 ### Fixes
 
 - (#148) Fixes missing `packages` dependency
+
+## v2.0.1
+
+### Bug Fixes
+
+- (#140) Fixes SSL
+- (#141) Fixes methods and endpoints naming overlap
 
 ## v2.0.0
 
