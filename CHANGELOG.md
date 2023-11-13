@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.0.2
+
+### Fixes
+
+- (#148) Fixes missing `packages` dependency
+
 ## v2.0.1
 
 ### Bug Fixes
