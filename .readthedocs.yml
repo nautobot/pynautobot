@@ -1,6 +1,12 @@
 ---
 version: 2
 
+# Patch to get docs building in current pattern
+build:
+  os: "ubuntu-22.04"
+  tools:
+    python: "3.10"
+
 sphinx:
   builder: "html"
   configuration: "docs/conf.py"
