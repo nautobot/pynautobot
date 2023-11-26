@@ -28,7 +28,7 @@ class TraceableRecord(Record):
         req = Request(
             key=str(self.id) + "/trace",
             base=self.endpoint.url,
-            token=self.api.token,
+            auth_header=self.api.auth_header,
             http_session=self.api.http_session,
         )
         uri_to_obj_class_map = {
