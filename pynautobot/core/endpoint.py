@@ -54,7 +54,7 @@ class Endpoint(object):
         self.name = name.replace("_", "-")
         self.api = api
         self.base_url = api.base_url
-        self.token = api.token
+        self.auth_header = api.auth_header
         self.url = "{base_url}/{app}/{endpoint}".format(
             base_url=self.base_url,
             app=app.name,
@@ -101,7 +101,7 @@ class Endpoint(object):
         api_version = api_version or self.api.api_version
         req = Request(
             base="{}/".format(self.url),
-            token=self.token,
+            auth_header=self.auth_header,
             http_session=self.api.http_session,
             threading=self.api.threading,
             max_workers=self.api.max_workers,
@@ -166,7 +166,7 @@ class Endpoint(object):
         req = Request(
             key=key,
             base=self.url,
-            token=self.token,
+            auth_header=self.auth_header,
             http_session=self.api.http_session,
             api_version=api_version,
         )
@@ -237,7 +237,7 @@ class Endpoint(object):
         req = Request(
             filters=kwargs,
             base=self.url,
-            token=self.token,
+            auth_header=self.auth_header,
             http_session=self.api.http_session,
             threading=self.api.threading,
             api_version=api_version,
@@ -302,7 +302,7 @@ class Endpoint(object):
 
         req = Request(
             base=self.url,
-            token=self.token,
+            auth_header=self.auth_header,
             http_session=self.api.http_session,
             api_version=api_version,
         ).post(args[0] if args else kwargs)
@@ -338,7 +338,7 @@ class Endpoint(object):
         req = Request(
             key=id,
             base=self.url,
-            token=self.api.token,
+            auth_header=self.api.auth_header,
             http_session=self.api.http_session,
             api_version=self.api.api_version,
         )
@@ -385,7 +385,7 @@ class Endpoint(object):
 
         req = Request(
             base=self.url,
-            token=self.api.token,
+            auth_header=self.api.auth_header,
             http_session=self.api.http_session,
             api_version=api_version,
         ).options()
@@ -442,7 +442,7 @@ class Endpoint(object):
         api_version = api_version or self.api.api_version
 
         ret = Request(
-            filters=kwargs, base=self.url, token=self.token, http_session=self.api.http_session, api_version=api_version
+            filters=kwargs, base=self.url, auth_header=self.auth_header, http_session=self.api.http_session, api_version=api_version
         )
 
         return ret.get_count()
@@ -462,7 +462,7 @@ class DetailEndpoint(object):
 
         self.request_kwargs = dict(
             base=self.url,
-            token=parent_obj.api.token,
+            auth_header=parent_obj.api.auth_header,
             http_session=parent_obj.api.http_session,
         )
 
@@ -560,7 +560,7 @@ class JobsEndpoint(Endpoint):
 
         req = Request(
             base=job_run_url,
-            token=self.token,
+            auth_header=self.auth_header,
             http_session=self.api.http_session,
             api_version=api_version,
         ).post(args[0] if args else kwargs)

@@ -80,7 +80,7 @@ class App(object):
 
         self._choices = Request(
             base="{}/{}/_choices/".format(self.api.base_url, self.name),
-            token=self.api.token,
+            auth_header=self.api.auth_header,
             http_session=self.api.http_session,
         ).get()
 
@@ -144,7 +144,7 @@ class App(object):
         """
         return Request(
             base=f"{self.api.base_url}/{self.name}/custom-fields/",
-            token=self.api.token,
+            auth_header=self.api.auth_header,
             http_session=self.api.http_session,
         ).get()
 
@@ -176,7 +176,7 @@ class App(object):
         """
         return Request(
             base=f"{self.api.base_url}/{self.name}/custom-field-choices/",
-            token=self.api.token,
+            auth_header=self.api.auth_header,
             http_session=self.api.http_session,
         ).get()
 
@@ -201,7 +201,7 @@ class App(object):
                 self.api.base_url,
                 self.name,
             ),
-            token=self.api.token,
+            auth_header=self.api.auth_header,
             http_session=self.api.http_session,
         ).get()
         return config
@@ -241,7 +241,7 @@ class PluginsApp(object):
             base="{}/plugins/installed-plugins".format(
                 self.api.base_url,
             ),
-            token=self.api.token,
+            auth_header=self.api.auth_header,
             http_session=self.api.http_session,
         ).get()
         return installed_plugins

@@ -298,7 +298,7 @@ class Record(object):
         if self.url:
             req = Request(
                 base=self.url,
-                token=self.api.token,
+                auth_header=self.api.auth_header,
                 http_session=self.api.http_session,
                 api_version=self.api.api_version,
             )
@@ -385,7 +385,7 @@ class Record(object):
                 req = Request(
                     key=self.id,
                     base=self.endpoint.url,
-                    token=self.api.token,
+                    auth_header=self.api.auth_header,
                     http_session=self.api.http_session,
                     api_version=self.api.api_version,
                 )
@@ -433,7 +433,7 @@ class Record(object):
         req = Request(
             key=self.id,
             base=self.endpoint.url,
-            token=self.api.token,
+            auth_header=self.api.auth_header,
             http_session=self.api.http_session,
             api_version=self.api.api_version,
         )

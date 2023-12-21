@@ -132,6 +132,7 @@ class Request(object):
         filters=None,
         key=None,
         token=None,
+        auth_header=None,
         threading=False,
         max_workers=4,
         api_version=None,
@@ -152,6 +153,10 @@ class Request(object):
         self.filters = filters
         self.key = key
         self.token = token
+        if auth_header:
+            self.auth_header = auth_header
+        else:
+            self.auth_header = f"Token {self.token}"
         self.http_session = http_session
         self.url = self.base if not key else "{}{}/".format(self.base, key)
         self.threading = threading
@@ -214,8 +219,8 @@ class Request(object):
         :Raises: RequestError if request is not successful.
         """
         headers = {"Content-Type": "application/json;"}
-        if self.token:
-            headers["authorization"] = "Token {}".format(self.token)
+        if self.auth_header:
+            headers["authorization"] = self.auth_header
 
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
@@ -246,8 +251,8 @@ class Request(object):
         else:
             headers = {"accept": "application/json;"}
 
-        if self.token:
-            headers["authorization"] = "Token {}".format(self.token)
+        if self.auth_header:
+            headers["authorization"] = self.auth_header
 
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
