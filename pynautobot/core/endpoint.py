@@ -512,7 +512,7 @@ class DetailEndpoint(object):
 
 
 class RODetailEndpoint(DetailEndpoint):
-    def create(self, data):
+    def create(self, data=None, api_version=None):
         raise NotImplementedError("Writes are not supported for this endpoint.")
 
 
