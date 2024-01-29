@@ -16,6 +16,7 @@ limitations under the License.
 This file has been modified by NetworktoCode, LLC.
 """
 from typing import Dict
+from uuid import UUID
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
 
@@ -345,6 +346,59 @@ class Endpoint(object):
         if req.patch(data):
             return True
         return False
+
+    def delete(self, objects):
+        r"""Bulk deletes objects on an endpoint.
+
+        Allows for batch deletion of multiple objects from
+        a single endpoint
+
+        :arg list objects: A list of either ids or Records to delete.
+        :returns: True if bulk DELETE operation was successful.
+
+        :Examples:
+
+        Deleting all `devices`:
+
+        >>> pynautobot.dcim.devices.delete(pynautobot.dcim.devices.all())
+        >>>
+
+        Use bulk deletion by passing a list of ids:
+
+        >>> pynautobot.dcim.devices.delete(["db8770c4-61e5-4999-8372-e7fa576a4f65"
+        ...                                  ,"e9b5f2e0-4f20-41ad-9179-90a4987f743e"])
+        >>>
+
+        Use bulk deletion to delete objects eg. when filtering
+        on a `custom_field`:
+        >>> pynautobot.dcim.devices.delete([
+        ...         d for d in pynautobot.dcim.devices.all()
+        ...             if d.custom_fields.get("field", False)
+        ...     ])
+        >>>
+        """
+        ids = []
+        if not isinstance(objects, list):
+            raise ValueError("objects must be list[str|Record] - was " + str(type(objects)))
+        for o in objects:
+            try:
+                if isinstance(o, str):
+                    if UUID(o):
+                        ids.append(o)
+                elif isinstance(o, Record):
+                    if hasattr(o, "id"):
+                        ids.append(o.id)
+            except ValueError as exc:
+                raise ValueError("Invalid object in list of objects: " + str(type(o))) from exc
+
+        req = Request(
+            base=self.url,
+            token=self.token,
+            http_session=self.api.http_session,
+            api_version=self.api.api_version,
+        )
+
+        return req.delete(data=[{"id": id} for id in ids])
 
     def choices(self, api_version=None):
         """Returns all choices from the endpoint.
