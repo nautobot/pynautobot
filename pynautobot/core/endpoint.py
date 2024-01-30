@@ -379,17 +379,24 @@ class Endpoint(object):
         """
         ids = []
         if not isinstance(objects, list):
-            raise ValueError("objects must be list[str|Record] - was " + str(type(objects)))
+            raise ValueError("objects must be a list[str(id)|Record] not " + str(type(objects)))
         for o in objects:
             try:
                 if isinstance(o, str):
                     if UUID(o):
                         ids.append(o)
                 elif isinstance(o, Record):
-                    if hasattr(o, "id"):
-                        ids.append(o.id)
+                    if not hasattr(o, "id"):
+                        raise ValueError(
+                            "'Record' object has no attribute 'id'"
+                    )
+                    ids.append(o.id)
+                else:
+                    raise ValueError(
+                        "Invalid object type: " + str(type(o))
+                )
             except ValueError as exc:
-                raise ValueError("Invalid object in list of objects: " + str(type(o))) from exc
+                raise ValueError("Unexpected value in object list") from exc
 
         req = Request(
             base=self.url,

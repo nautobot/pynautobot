@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 from pynautobot.core.endpoint import Endpoint, JobsEndpoint
-
+from pynautobot.core.response import Record
 
 class EndPointTestCase(unittest.TestCase):
     def test_filter(self):
@@ -51,6 +51,34 @@ class EndPointTestCase(unittest.TestCase):
             self.assertEqual(choices["letter"][1]["display"], "B")
             self.assertEqual(choices["letter"][1]["value"], 2)
 
+    def test_delete_with_ids(self):
+        with patch(
+            "pynautobot.core.query.Request._make_call", return_value=Mock()
+        ) as mock:
+            ids = ["db8770c4-61e5-4999-8372-e7fa576a4f65","e9b5f2e0-4f20-41ad-9179-90a4987f743e"]
+            mock.return_value = True
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            test_obj = Endpoint(api, app, "test")
+            test = test_obj.delete(ids)
+            mock.assert_called_with(verb="delete", data=[{"id": i} for i in ids])
+            self.assertTrue(test)
+
+    def test_delete_with_objects(self):
+        with patch(
+            "pynautobot.core.query.Request._make_call", return_value=Mock()
+        ) as mock:
+            ids = ["db8770c4-61e5-4999-8372-e7fa576a4f65","e9b5f2e0-4f20-41ad-9179-90a4987f743e"]
+            mock.return_value = True
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            test_obj = Endpoint(api, app, "test")
+            objects = [
+                Record({"id": i, "name": "test_" + str(i)}, api, test_obj) for i in ids
+            ]
+            test = test_obj.delete(objects)
+            mock.assert_called_with(verb="delete", data=[{"id": i} for i in ids])
+            self.assertTrue(test)
 
 class JobEndPointTestCase(unittest.TestCase):
     def test_invalid_arg_less_v1_3(self):
