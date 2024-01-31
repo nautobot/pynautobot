@@ -80,6 +80,35 @@ class EndPointTestCase(unittest.TestCase):
             mock.assert_called_with(verb="delete", data=[{"id": i} for i in ids])
             self.assertTrue(test)
 
+    def test_delete_with_invalid_uuid(self):
+        ids = ["123","456"]
+        api = Mock(base_url="http://localhost:8000/api")
+        app = Mock(name="test")
+        test_obj = Endpoint(api, app, "test")
+        with self.assertRaises(ValueError) as exc:
+            test_obj.delete(ids)
+        self.assertEqual(str(exc.exception.__cause__), "badly formed hexadecimal UUID string")
+
+    def test_delete_with_invalid_id_type(self):
+        ids = [123,456]
+        api = Mock(base_url="http://localhost:8000/api")
+        app = Mock(name="test")
+        test_obj = Endpoint(api, app, "test")
+        with self.assertRaises(ValueError) as exc:
+            test_obj.delete(ids)
+        self.assertEqual(str(exc.exception.__cause__), "Invalid object type: <class 'int'>")
+
+    def test_delete_with_invalid_object(self):
+        api = Mock(base_url="http://localhost:8000/api")
+        app = Mock(name="test")
+        test_obj = Endpoint(api, app, "test")
+        objects = [
+            Record({"no_id": "db8770c4-61e5-4999-8372-e7fa576a4f65", "name": "test"},api, test_obj),
+        ]
+        with self.assertRaises(ValueError) as exc:
+            test_obj.delete(objects)
+        self.assertEqual(str(exc.exception.__cause__), "'Record' object has no attribute 'id'")
+
 class JobEndPointTestCase(unittest.TestCase):
     def test_invalid_arg_less_v1_3(self):
         with self.assertRaises(
