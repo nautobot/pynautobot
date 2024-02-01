@@ -16,7 +16,6 @@ limitations under the License.
 This file has been modified by NetworktoCode, LLC.
 """
 
-from typing import Dict
 from uuid import UUID
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
@@ -311,42 +310,95 @@ class Endpoint(object):
 
         return response_loader(req, self.return_obj, self)
 
-    def update(self, id: str, data: Dict[str, any]):
-        """
-        Update a resource with a dictionary.
+    def update(self, *args, **kwargs):
+        r"""
+        Update a single resource with a dictionary or bulk update a list of objects.
 
-        Accepts the id of the object that needs to be updated as well as
-        a dictionary of k/v pairs used to update an object. The object
-        is directly updated on the server using a PATCH request without
-        fetching object information.
+        Allows for bulk updating of existing objects on an endpoint.
+        Objects is a list which contain either json/dicts or Record
+        derived objects, which contain the updates to apply.
+        If json/dicts are used, then the id of the object *must* be
+        included
 
-        For fields requiring an object reference (such as a device location),
-        the API user is responsible for providing the object ID or the object
-        URL. This API will not accept the pynautobot object directly.
+        :arg str,optional \*args: A list of dicts or a list of Record
 
-        :arg str id: Identifier of the object being updated
-        :arg dict data: Dictionary containing the k/v to update the
-            record object with.
-        :returns: True if PATCH request was successful.
+        :arg str,optional \**kwargs:
+            See Below
+
+        :Keyword Arguments:
+            * *id* (``string``) -- Identifier of the object being updated 
+            * *data* (``dict``) -- k/v to update the record object with
+        
+        :returns: A list or single :py:class:`.Record` object depending
+            on whether a bulk update was requested.
         :example:
 
+        Accepts the id of the object that needs to be updated as well as a 
+            dictionary of k/v pairs used to update an object
         >>> nb.dcim.devices.update(id="0238a4e3-66f2-455a-831f-5f177215de0f", data={
-        ...     "name": "test-switch2",
-        ...     "serial": "ABC321",
+        ...     "name": "test",
+        ...     "serial": "1234",
         ...     "location": "9b1f53c7-89fa-4fb2-a89a-b97364fef50c",
         ... })
-        True
+        >>>
+
+        Use bulk update by passing a list of dicts:
+
+        >>> devices = nb.dcim.devices.update([
+        ...    {'id': "db8770c4-61e5-4999-8372-e7fa576a4f65", 'name': 'test'},
+        ...    {'id': "e9b5f2e0-4f20-41ad-9179-90a4987f743e", 'name': 'test2'},
+        ... ])
+        >>>
+
+        Use bulk update by passing a list of Records:
+
+        >>> devices = list(nb.dcim.devices.filter())
+        >>> devices
+        [Device1, Device2, Device3]
+        >>> for d in devices:
+        ...     d.name = d.name+'-test'
+        ...
+        >>> nb.dcim.devices.update(devices)
+        >>>        
         """
+        objects = args[0] if args else []
+        if not isinstance(objects, list):
+            raise ValueError("objects must be a list[dict()|Record] not " + str(type(objects)))
+        if "data" in kwargs and "id" in kwargs:
+            kwargs["data"]["id"] = kwargs["id"]
+            objects.append(kwargs["data"])
+
+        data = []
+        for o in objects:
+            try:
+                if isinstance(o, dict):
+                    data.append(o)
+                elif isinstance(o, Record):
+                    if not hasattr(o, "id"):
+                        raise ValueError(
+                            "'Record' object has no attribute 'id'"
+                    )
+                    updates = o.updates()
+                    if updates:
+                        updates["id"] = o.id
+                        data.append(updates)
+                else:
+                    raise ValueError(
+                        "Invalid object type: " + str(type(o))
+                )
+            except ValueError as exc:
+                raise ValueError("Unexpected value in object list") from exc
+
         req = Request(
-            key=id,
             base=self.url,
             token=self.api.token,
             http_session=self.api.http_session,
             api_version=self.api.api_version,
-        )
-        if req.patch(data):
-            return True
-        return False
+        ).patch(data)
+
+        if isinstance(req, list):
+            return [self.return_obj(i, self.api, self) for i in req]
+        return self.return_obj(req, self.api, self)
 
     def delete(self, objects):
         r"""Bulk deletes objects on an endpoint.
@@ -531,12 +583,16 @@ class DetailEndpoint(object):
         Returns the response from Nautobot for a detail endpoint.
 
         Args:
-            :arg str,optional api_version: Override default or globally set Nautobot REST API version for this single request.
-            **kwargs: key/value pairs that get converted into url parameters when passed to the endpoint.
-                E.g. ``.list(method='get_facts')`` would be converted to ``.../?method=get_facts``.
 
-        :returns: A dictionary or list of dictionaries retrieved from
-            Nautobot.
+        :arg str,optional api_version: Override default or globally set Nautobot REST API version for this single request.
+        :arg \**kwargs:
+            See below 
+        
+        :Keyword Arugments:
+            key/value pairs that get converted into url parameters when passed to the endpoint. 
+            E.g. ``.list(method='get_facts')`` would be converted to ``.../?method=get_facts``.
+
+        :returns: A dictionary or list of dictionaries retrieved from Nautobot.
         """
         api_version = api_version or self.parent_obj.api.api_version
 
