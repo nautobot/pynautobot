@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+
 from typing import Dict
 from uuid import UUID
 from pynautobot.core.query import Request, RequestError
@@ -371,6 +372,7 @@ class Endpoint(object):
 
         Use bulk deletion to delete objects eg. when filtering
         on a `custom_field`:
+
         >>> pynautobot.dcim.devices.delete([
         ...         d for d in pynautobot.dcim.devices.all()
         ...             if d.custom_fields.get("field", False)
@@ -387,14 +389,10 @@ class Endpoint(object):
                         ids.append(o)
                 elif isinstance(o, Record):
                     if not hasattr(o, "id"):
-                        raise ValueError(
-                            "'Record' object has no attribute 'id'"
-                    )
+                        raise ValueError("'Record' object has no attribute 'id'")
                     ids.append(o.id)
                 else:
-                    raise ValueError(
-                        "Invalid object type: " + str(type(o))
-                )
+                    raise ValueError("Invalid object type: " + str(type(o)))
             except ValueError as exc:
                 raise ValueError("Unexpected value in object list") from exc
 
