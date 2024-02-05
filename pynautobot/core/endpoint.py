@@ -326,14 +326,14 @@ class Endpoint(object):
             See Below
 
         :Keyword Arguments:
-            * *id* (``string``) -- Identifier of the object being updated 
+            * *id* (``string``) -- Identifier of the object being updated
             * *data* (``dict``) -- k/v to update the record object with
-        
+
         :returns: A list or single :py:class:`.Record` object depending
             on whether a bulk update was requested.
         :example:
 
-        Accepts the id of the object that needs to be updated as well as a 
+        Accepts the id of the object that needs to be updated as well as a
             dictionary of k/v pairs used to update an object
         >>> nb.dcim.devices.update(id="0238a4e3-66f2-455a-831f-5f177215de0f", data={
         ...     "name": "test",
@@ -359,7 +359,7 @@ class Endpoint(object):
         ...     d.name = d.name+'-test'
         ...
         >>> nb.dcim.devices.update(devices)
-        >>>        
+        >>>
         """
         objects = args[0] if args else []
         if not isinstance(objects, list):
@@ -375,17 +375,13 @@ class Endpoint(object):
                     data.append(o)
                 elif isinstance(o, Record):
                     if not hasattr(o, "id"):
-                        raise ValueError(
-                            "'Record' object has no attribute 'id'"
-                    )
+                        raise ValueError("'Record' object has no attribute 'id'")
                     updates = o.updates()
                     if updates:
                         updates["id"] = o.id
                         data.append(updates)
                 else:
-                    raise ValueError(
-                        "Invalid object type: " + str(type(o))
-                )
+                    raise ValueError("Invalid object type: " + str(type(o)))
             except ValueError as exc:
                 raise ValueError("Unexpected value in object list") from exc
 
@@ -396,9 +392,7 @@ class Endpoint(object):
             api_version=self.api.api_version,
         ).patch(data)
 
-        if isinstance(req, list):
-            return [self.return_obj(i, self.api, self) for i in req]
-        return self.return_obj(req, self.api, self)
+        return response_loader(req, self.return_obj, self)
 
     def delete(self, objects):
         r"""Bulk deletes objects on an endpoint.
@@ -586,10 +580,10 @@ class DetailEndpoint(object):
 
         :arg str,optional api_version: Override default or globally set Nautobot REST API version for this single request.
         :arg \**kwargs:
-            See below 
-        
+            See below
+
         :Keyword Arugments:
-            key/value pairs that get converted into url parameters when passed to the endpoint. 
+            key/value pairs that get converted into url parameters when passed to the endpoint.
             E.g. ``.list(method='get_facts')`` would be converted to ``.../?method=get_facts``.
 
         :returns: A dictionary or list of dictionaries retrieved from Nautobot.

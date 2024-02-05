@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+
 import copy
 from collections import OrderedDict
 
@@ -384,7 +385,7 @@ class Record(object):
                 serialized = self.serialize()
                 return {i: serialized[i] for i in diff}
         return {}
-    
+
     def save(self):
         """Saves changes to an existing object.
 
