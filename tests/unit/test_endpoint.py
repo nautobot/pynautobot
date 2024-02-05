@@ -57,9 +57,9 @@ class EndPointTestCase(unittest.TestCase):
             api = Mock(base_url="http://localhost:8000/api")
             app = Mock(name="test")
             test_obj = Endpoint(api, app, "test")
-            mock.return_value = [{"id": "db8770c4-61e5-4999-8372-e7fa576a4f65", "name": "test"}]
+            mock.return_value = [{"name": "test"}]
             test = test_obj.update(id="db8770c4-61e5-4999-8372-e7fa576a4f65", data={"name": "test"})
-            mock.assert_called_with(verb="patch", data=[{"id": "db8770c4-61e5-4999-8372-e7fa576a4f65", "name": "test"}])
+            mock.assert_called_with(verb="patch", data={"name": "test"})
             self.assertTrue(test)
 
     def test_update_with_dict(self):

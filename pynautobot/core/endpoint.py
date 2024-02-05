@@ -364,9 +364,21 @@ class Endpoint(object):
         objects = args[0] if args else []
         if not isinstance(objects, list):
             raise ValueError("objects must be a list[dict()|Record] not " + str(type(objects)))
+
         if "data" in kwargs and "id" in kwargs:
-            kwargs["data"]["id"] = kwargs["id"]
-            objects.append(kwargs["data"])
+            uuid = kwargs["id"]
+            data = kwargs["data"]
+
+            req = Request(
+                key=uuid,
+                base=self.url,
+                token=self.api.token,
+                http_session=self.api.http_session,
+                api_version=self.api.api_version,
+            )
+            if req.patch(data):
+                return True
+            return False
 
         data = []
         for o in objects:
