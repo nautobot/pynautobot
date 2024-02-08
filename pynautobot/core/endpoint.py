@@ -16,6 +16,7 @@ limitations under the License.
 This file has been modified by NetworktoCode, LLC.
 """
 
+from typing import List, Dict, Any
 from uuid import UUID
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
@@ -320,7 +321,7 @@ class Endpoint(object):
         If json/dicts are used, then the id of the object *must* be
         included
 
-        :arg str,optional \*args: A list of dicts or a list of Record
+        :arg list,optional \*args: A list of dicts or a list of Record
 
         :arg str,optional \**kwargs:
             See Below
@@ -361,37 +362,56 @@ class Endpoint(object):
         >>> nb.dcim.devices.update(devices)
         >>>
         """
-        objects = args[0] if args else []
+        if not args and not kwargs:
+            raise ValueError("You must provide either a UUID and data dict or a list of objects to update")
+        uuid = kwargs.get("id", "")
+        data = kwargs.get("data", {})
+        if data and not uuid:
+            uuid = args[0]
+        if len(args) == 2:
+            uuid, data = args
+
+        if not any([uuid, data]):
+            return self.bulk_update(args[0])
+
+        req = Request(
+            key=uuid,
+            base=self.url,
+            token=self.api.token,
+            http_session=self.api.http_session,
+            api_version=self.api.api_version,
+        )
+        if req.patch(data):
+            return True
+        return False
+
+    def bulk_update(self, objects: List[Dict[str, Any]]):
+        r"""This method is called from the update() method if a bulk
+        update is detected.
+
+        Allows for bulk updating of existing objects on an endpoint.
+        Objects is a list which contain either json/dicts or Record
+        derived objects, which contain the updates to apply.
+        If json/dicts are used, then the id of the object *must* be
+        included
+
+        :arg list,optional \*args: A list of dicts or a list of Record
+        """
         if not isinstance(objects, list):
             raise ValueError("objects must be a list[dict()|Record] not " + str(type(objects)))
 
-        if "data" in kwargs and "id" in kwargs:
-            uuid = kwargs["id"]
-            data = kwargs["data"]
-
-            req = Request(
-                key=uuid,
-                base=self.url,
-                token=self.api.token,
-                http_session=self.api.http_session,
-                api_version=self.api.api_version,
-            )
-            if req.patch(data):
-                return True
-            return False
-
-        data = []
+        bulk_data = []
         for o in objects:
             try:
                 if isinstance(o, dict):
-                    data.append(o)
+                    bulk_data.append(o)
                 elif isinstance(o, Record):
                     if not hasattr(o, "id"):
                         raise ValueError("'Record' object has no attribute 'id'")
                     updates = o.updates()
                     if updates:
                         updates["id"] = o.id
-                        data.append(updates)
+                        bulk_data.append(updates)
                 else:
                     raise ValueError("Invalid object type: " + str(type(o)))
             except ValueError as exc:
@@ -402,8 +422,7 @@ class Endpoint(object):
             token=self.api.token,
             http_session=self.api.http_session,
             api_version=self.api.api_version,
-        ).patch(data)
-
+        ).patch(bulk_data)
         return response_loader(req, self.return_obj, self)
 
     def delete(self, objects):

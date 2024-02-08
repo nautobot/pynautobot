@@ -62,6 +62,26 @@ class EndPointTestCase(unittest.TestCase):
             mock.assert_called_with(verb="patch", data={"name": "test"})
             self.assertTrue(test)
 
+    def test_update_with_id_and_data_args(self):
+        with patch("pynautobot.core.query.Request._make_call", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            test_obj = Endpoint(api, app, "test")
+            mock.return_value = [{"name": "test"}]
+            test = test_obj.update("db8770c4-61e5-4999-8372-e7fa576a4f65", {"name": "test"})
+            mock.assert_called_with(verb="patch", data={"name": "test"})
+            self.assertTrue(test)
+
+    def test_update_with_id_and_data_args_kwargs(self):
+        with patch("pynautobot.core.query.Request._make_call", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            test_obj = Endpoint(api, app, "test")
+            mock.return_value = [{"name": "test"}]
+            test = test_obj.update("db8770c4-61e5-4999-8372-e7fa576a4f65", data={"name": "test"})
+            mock.assert_called_with(verb="patch", data={"name": "test"})
+            self.assertTrue(test)
+
     def test_update_with_dict(self):
         with patch("pynautobot.core.query.Request._make_call", return_value=Mock()) as mock:
             api = Mock(base_url="http://localhost:8000/api")
@@ -85,6 +105,16 @@ class EndPointTestCase(unittest.TestCase):
             test = test_obj.update(objects)
             mock.assert_called_with(verb="patch", data=[{"id": i, "name": "new_" + str(i)} for i in ids])
             self.assertTrue(test)
+
+    def test_update_with_invalid_input(self):
+        api = Mock(base_url="http://localhost:8000/api")
+        app = Mock(name="test")
+        test_obj = Endpoint(api, app, "test")
+        with self.assertRaises(ValueError) as exc:
+            test_obj.update()
+        self.assertEqual(
+            str(exc.exception), "You must provide either a UUID and data dict or a list of objects to update"
+        )
 
     def test_update_with_invalid_objects_type(self):
         objects = {"id": "db8770c4-61e5-4999-8372-e7fa576a4f65", "name": "test"}
