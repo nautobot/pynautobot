@@ -65,7 +65,7 @@ devices
 Pynautobot provides a specialized `Endpoint` class to represent the Jobs model. This class is called `JobsEndpoint`.
 This extends the `Endpoint` class by adding the `run` method so pynautobot can be used to call/execute a job run.
 
-1. Run from a instance of a job.
+1. Run from an instance of a job.
 
 ```python
 >>> gc_backup_job = nautobot.extras.jobs.all()[14]
@@ -92,12 +92,12 @@ job.run(data={"hostname_regex": ".*"})
 ## Queries
 
 Pynautobot provides several ways to retrieve objects from Nautobot.
-Only the `get()` method is show here.
+Only the `get()` method is shown here.
 To continue from the example above, the `Endpoint` object returned will be used to `get`
 the device named _hq-access-01_.
 
 ```python
-switch = devices.get(nam="hq-access-01")
+switch = devices.get(name="hq-access-01")
 ```
 
 The object returned from the `get()` method is an implementation of the `Record` class.
@@ -126,7 +126,7 @@ nautobot = pynautobot.api(
 
 ### Versioning
 
-Used for Nautobot Rest API versioning. Versioning can be controlled globally by setting `api_version` on initialization of the `API` class and/or for a specific request e.g (`list()`, `get()`, `create()` etc.) by setting an optional `api_version` parameter.
+Used for Nautobot Rest API versioning. Versioning can be controlled globally by setting `api_version` on initialization of the `API` class and/or for a specific request e.g (`all()`, `filter()`, `get()`, `create()` etc.) by setting an optional `api_version` parameter.
 
 **Global versioning**
 
@@ -135,7 +135,7 @@ import pynautobot
 nautobot = pynautobot.api(
     url="http://localhost:8000",
     token="d6f4e314a5b5fefd164995169f28ae32d987704f",
-    api_version="1.3"
+    api_version="2.1"
 )
 ```
 
@@ -147,13 +147,13 @@ nautobot = pynautobot.api(
   url="http://localhost:8000", token="d6f4e314a5b5fefd164995169f28ae32d987704f",
 )
 tags = nautobot.extras.tags
-tags.create(name="Tag", slug="tag", api_version="1.2",)
-tags.list(api_version="1.3",)
+tags.create(name="Tag", api_version="2.0",)
+tags.get(api_version="2.1",)
 ```
 
 ### Retry logic
 
-By default, the client will not retry any operation. This behavior can be adjusted via the `retries` optional parameters. This will only affect for HTTP codes: 429, 500, 502, 503 and 504.
+By default, the client will not retry any operation. This behavior can be adjusted via the `retries` optional parameters. This will only affect HTTP codes: 429, 500, 502, 503, and 504.
 
 **Retries**
 
