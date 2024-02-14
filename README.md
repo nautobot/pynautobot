@@ -147,7 +147,7 @@ nautobot = pynautobot.api(
   url="http://localhost:8000", token="d6f4e314a5b5fefd164995169f28ae32d987704f",
 )
 tags = nautobot.extras.tags
-tags.create(name="Tag", api_version="2.0",)
+tags.create(name="Tag", api_version="2.0", content_types=["dcim.device"])
 tags.get(api_version="2.1",)
 ```
 
