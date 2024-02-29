@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+
 import copy
 from collections import OrderedDict
 
@@ -360,6 +361,30 @@ class Record(object):
         current = Hashabledict({fmt_dict(k, v) for k, v in self.serialize().items()})
         init = Hashabledict({fmt_dict(k, v) for k, v in self.serialize(init=True).items()})
         return set([i[0] for i in set(current.items()) ^ set(init.items())])
+
+    def updates(self):
+        """Compiles changes for an existing object into a dict.
+
+        Takes a diff between the objects current state and its state at init
+        and returns them as a dictionary, which will be empty if no changes.
+
+        :returns: dict.
+        :example:
+
+        >>> x = nb.dcim.devices.get(name='test1234')
+        >>> x.serial
+        ''
+        >>> x.serial = '1234'
+        >>> x.updates()
+        {'serial': '1234'}
+        >>>
+        """
+        if self.id:
+            diff = self._diff()
+            if diff:
+                serialized = self.serialize()
+                return {i: serialized[i] for i in diff}
+        return {}
 
     def save(self):
         """Saves changes to an existing object.
