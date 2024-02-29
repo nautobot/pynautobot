@@ -181,3 +181,34 @@ The examples updates a Device record, however this can apply to other API
 References:
 
 * :ref:`Gathering Data from GraphQL Endpoint`
+
+Updating Multiple Objects
+-------------------------
+
+The :py:meth:`~pynautobot.core.endpoint.Endpoint.update` method can also be used to update multiple
+items with a single call. You can pass in a list of dictionaries, each containing the
+``id`` and the fields to be updated, or a list of :py:class:`~pynautobot.core.response.Record`.
+
+.. code-block:: python
+
+    >>> import os
+    >>> from pynautobot import api
+    >>>
+    >>> url = os.environ["NAUTOBOT_URL"]
+    >>> token = os.environ["NAUTOBOT_TOKEN
+    >>> nautobot = api(url=url, token=token)
+    >>>
+    >>> # Add a comment to multiple devices by passing in a list of dictionaries
+    >>> updated_devices = nautobot.dcim.devices.update([
+    >>>     {"id": "db8770c4-61e5-4999-8372-e7fa576a4f65", "comments": "removed from service"},
+    >>>     {"id": "e9b5f2e0-4f20-41ad-9179-90a4987f743e", "comments": "removed from service"},
+    >>> ])
+    >>>
+    >>> # Get a list of all devices
+    >>> devices = nautobot.dcim.devices.all()
+    >>> # Update the status and name fields for all records
+    >>> for device in devices:
+    >>>     device.status = "Decommissioned"
+    >>>     device.comments = "removed from service"
+    >>> # And then update them all at once
+    >>> updated_devices = nautobot.dcim.devices.update(devices)
