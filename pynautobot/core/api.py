@@ -62,7 +62,7 @@ class Api(object):
     :param int,optional retries: Number of retries, for HTTP codes 429, 500, 502, 503, 504,
         this client will try before dropping.
     :param bool,optional verify: SSL cert verification.
-    :param dict,optional headers: Set add additional HTTP headers
+    :param dict,optional headers: Override default or add additional HTTP headers
     :raises AttributeError: If app doesn't exist.
     :Examples:
 
