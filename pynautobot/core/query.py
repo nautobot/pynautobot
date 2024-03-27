@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+
 try:
     import concurrent.futures as cf
 except ImportError:
@@ -162,6 +163,7 @@ class Request(object):
         """Gets the OpenAPI Spec"""
         headers = {
             "Content-Type": "application/json;",
+            "Authorization": f"Token {self.token}",
         }
 
         if self.api_version:
@@ -190,7 +192,10 @@ class Request(object):
         :Returns: Version number as a string. Empty string if version is not
         present in the headers.
         """
-        headers = {"Content-Type": "application/json;"}
+        headers = {
+            "Content-Type": "application/json;",
+            "Authorization": f"Token {self.token}",
+        }
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
 
@@ -213,7 +218,10 @@ class Request(object):
         :Returns: Dictionary as returned by Nautobot.
         :Raises: RequestError if request is not successful.
         """
-        headers = {"Content-Type": "application/json;"}
+        headers = {
+            "Content-Type": "application/json;",
+            "Authorization": f"Token {self.token}",
+        }
         if self.token:
             headers["authorization"] = "Token {}".format(self.token)
 
