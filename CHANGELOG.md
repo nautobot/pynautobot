@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.2
+
+- (#174) Fixes for authentication change in Nautobot.
+
 ## v1.5.1
 
 ### Bug Fixes
