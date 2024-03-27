@@ -63,6 +63,7 @@ class Api(object):
     :param int,optional retries: Number of retries, for HTTP codes 429, 500, 502, 503, 504,
         this client will try before dropping.
     :param bool,optional verify: SSL cert verification.
+    :param dict,optional headers: Override default or add additional HTTP headers
     :raises AttributeError: If app doesn't exist.
     :Examples:
 
@@ -83,10 +84,13 @@ class Api(object):
         api_version=None,
         retries=0,
         verify=True,
+        headers=None,
     ):
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
         self.token = token
         self.headers = {"Authorization": f"Token {self.token}"}
+        if headers:
+            self.headers.update(**headers)
         self.base_url = base_url
         self.http_session = requests.Session()
         self.http_session.verify = verify
@@ -104,6 +108,8 @@ class Api(object):
         self.threading = threading
         self.max_workers = max_workers
         self.api_version = api_version
+        if headers:
+            self.http_session.headers.update(**headers)
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")
