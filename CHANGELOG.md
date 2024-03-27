@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.1
+
+- (#173) Fixes for authentication change in Nautobot.
+
 ## v2.1.0
 
 ### New Features
@@ -40,6 +44,10 @@ New release for nautobot 2.0
 
 Release Candidate. 
 New release train for nautobot 2.X
+
+## v1.5.2
+
+- (#174) Fixes for authentication change in Nautobot.
 
 ## v1.5.0
 
