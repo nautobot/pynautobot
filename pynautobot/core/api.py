@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+
 from packaging import version
 import requests
 from requests.adapters import HTTPAdapter
@@ -140,10 +141,12 @@ class Api(object):
         '1.0'
         >>>
         """
-        version = Request(
-            base=self.base_url, http_session=self.http_session, api_version=self.api_version
+        return Request(
+            base=self.base_url,
+            http_session=self.http_session,
+            api_version=self.api_version,
+            token=self.token,
         ).get_version()
-        return version
 
     def openapi(self):
         """Returns the OpenAPI spec.
@@ -166,6 +169,7 @@ class Api(object):
             base=self.base_url,
             http_session=self.http_session,
             api_version=self.api_version,
+            token=self.token,
         ).get_openapi()
 
     def status(self):
@@ -196,10 +200,9 @@ class Api(object):
          'rq-workers-running': 1}
         >>>
         """
-        status = Request(
+        return Request(
             base=self.base_url,
             token=self.token,
             http_session=self.http_session,
             api_version=self.api_version,
         ).get_status()
-        return status
