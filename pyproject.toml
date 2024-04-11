@@ -20,9 +20,7 @@ documentation = "https://pynautobot.readthedocs.io"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-requests = "^2.30.0"
-# requests doesn't support `urllib3` 2.0 yet see: https://github.com/psf/requests/issues/6432
-urllib3 = ">=1.21.1 <1.27"
+requests = "^2.31.0"
 packaging = "^23.2"
 
 [tool.poetry.dev-dependencies]
