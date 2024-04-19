@@ -1,0 +1,20 @@
+{
+  "id": "5b39ba88-e5ab-4be2-89f5-5a016473b53c",
+  "object_type": "extras.dynamicgroup",
+  "display": "test-group",
+  "url": "http://localhost:8000/api/extras/dynamic-groups/5b39ba88-e5ab-4be2-89f5-5a016473b53c/",
+  "natural_slug": "test-group_e755",
+  "content_type": "dcim.device",
+  "name": "test-group",
+  "description": "",
+  "filter": {
+    "rack": [
+      "0a372aaf-b25b-4fdc-be09-cc857981a7bb"
+    ]
+  },
+  "children": [],
+  "created": "2024-04-19T12:57:16.695546Z",
+  "last_updated": "2024-04-19T12:57:49.122196Z",
+  "notes_url": "http://localhost:8000/api/extras/dynamic-groups/5b39ba88-e5ab-4be2-89f5-5a016473b53c/notes/",
+  "custom_fields": {}
+}
