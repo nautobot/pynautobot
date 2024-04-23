@@ -156,7 +156,10 @@ class Api(object):
         >>>
         """
         version = Request(
-            base=self.base_url, http_session=self.http_session, api_version=self.api_version
+            base=self.base_url,
+            http_session=self.http_session,
+            api_version=self.api_version,
+            auth_header=self.auth_header
         ).get_version()
         return version
 
@@ -181,6 +184,7 @@ class Api(object):
             base=self.base_url,
             http_session=self.http_session,
             api_version=self.api_version,
+            auth_header=self.auth_header
         ).get_openapi()
 
     def status(self):

@@ -171,6 +171,8 @@ class Request(object):
 
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
+        if self.auth_header:
+            headers["authorization"] = self.auth_header
 
         try:
             req = self.http_session.get(
@@ -198,7 +200,8 @@ class Request(object):
         headers = {"Content-Type": "application/json;"}
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
-
+        if self.auth_header:
+            headers["authorization"] = self.auth_header
         try:
             req = self.http_session.get(
                 self.normalize_url(self.base),
