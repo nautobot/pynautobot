@@ -43,6 +43,16 @@ Sphinx = "*"
 [tool.poetry.extras]
 docs = ["sphinx"]
 
+[tool.poetry.group.dev.dependencies]
+requests-mock = "^1.12.1"
+pytest = "^8.1.1"
+mkdocs = "^1.6.0"
+watchdog = "^4.0.0"
+mkdocs-material = "^9.5.19"
+mkdocstrings = "^0.24.3"
+mkdocstrings-python = "^1.10.0"
+markdown-data-tables = "^1.0.0"
+
 [tool.black]
 line-length = 120
 target-version = ['py37']
