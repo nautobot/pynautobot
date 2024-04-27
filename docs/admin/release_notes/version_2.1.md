@@ -8,3 +8,9 @@
 ### Fixed
 
 - (#162) Corrects signature of `RODetailEndpoint.create` to provide a proper error that it is not implemented when using `api_version`
+
+## v2.1.1
+
+### Fixed
+
+- (#173) Fixes for authentication change in Nautobot.

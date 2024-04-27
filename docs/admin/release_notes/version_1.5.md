@@ -19,3 +19,9 @@
       },
     )
 ```
+
+## v1.5.2
+
+### Fixed
+
+- (#174) Fixes for authentication change in Nautobot.
