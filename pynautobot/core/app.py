@@ -194,13 +194,14 @@ class App(object):
 
 class PluginsApp(object):
     """Add plugins to the URL path.
-    
+
     Basically, valid plugins API could be handled by the same App class,
     but you need to add "plugins" to the request URL path.
 
     Returns:
         App: With "plugins" added to the path.
     """
+
     def __init__(self, api):
         self.api = api
 

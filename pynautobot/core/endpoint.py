@@ -50,7 +50,6 @@ class Endpoint(object):
         `nb.ipam.ip_addresses.all()`.)
     """
 
-
     def __init__(self, api, app, name, model=None):
         self.return_obj = self._lookup_ret_obj(name, model)
         self.name = name.replace("_", "-")

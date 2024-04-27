@@ -69,8 +69,7 @@ class Api(object):
         ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
         ... )
         >>> nb.dcim.devices.all()
-"""
-
+    """
 
     def __init__(
         self,

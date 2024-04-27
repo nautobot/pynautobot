@@ -190,7 +190,7 @@ class Request(object):
 
         Raises:
             RequestError: If req.ok returns false.
-        
+
         Returns:
             str: Version number as a string. Empty string if version is not present in the headers.
         """
