@@ -3,6 +3,8 @@
 # Change dev address
 dev_addr: "0.0.0.0:8002"
 site_name: "pynautobot Docs"
+site_url: "https://pynautobot.readthedocs.io/en/latest/"
+repo_url: "https://github.com/nautobot/pynautobot/"
 copyright: "Copyright &copy; The Authors"
 theme:
   name: "material"
@@ -13,6 +15,7 @@ theme:
     - "yaml"
   features:
     - "content.code.copy"
+    - "navigation.indexes"
     - "navigation.footer"
     - "navigation.tabs"
     - "navigation.tabs.sticky"

@@ -1,4 +1,4 @@
-![pynautobot](docs/nautobot_logo.png "Nautobot logo")
+![pynautobot](docs/assets/nautobot_logo.png "Nautobot logo")
 
 # Pynautobot
 
