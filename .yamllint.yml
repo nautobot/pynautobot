@@ -2,6 +2,7 @@
 extends: "default"
 rules:
   comments: "enable"
+  min-spaces-from-content: 1
   empty-values: "enable"
   indentation:
     indent-sequences: "consistent"

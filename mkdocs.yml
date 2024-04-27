@@ -45,9 +45,9 @@ exclude_docs: |
   /media/*.gif
 
 validation:
-  absolute_links: warn
-  omitted_files: warn
-  unrecognized_links: warn
+  absolute_links: "warn"
+  omitted_files: "warn"
+  unrecognized_links: "warn"
 
 extra_css:
   - "assets/extra.css"
