@@ -415,7 +415,6 @@ class Request(object):
         """
         return self._make_call(verb="delete", data=data)
 
-
     def patch(self, data: dict) -> dict:
         """Makes a PATCH request to the Nautobot API.
 
