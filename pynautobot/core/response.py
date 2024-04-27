@@ -251,7 +251,7 @@ class Record(object):
         for k, v in values.items():
             if isinstance(v, dict):
                 lookup = getattr(self.__class__, k, None)
-                if k in ["custom_fields", "local_context_data"] or hasattr(lookup, "_json_field"):
+                if k in ["custom_fields", "local_config_context_data"] or hasattr(lookup, "_json_field"):
                     self._add_cache((k, v.copy()))
                     setattr(self, k, v)
                     continue
