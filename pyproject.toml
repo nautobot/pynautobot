@@ -52,6 +52,7 @@ mkdocs-material = "^9.5.19"
 mkdocstrings = "^0.24.3"
 mkdocstrings-python = "^1.10.0"
 markdown-data-tables = "^1.0.0"
+mkdocs-version-annotations = "^1.0.0"
 
 [tool.black]
 line-length = 120

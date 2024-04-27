@@ -728,6 +728,17 @@ files = [
 ]
 
 [[package]]
+name = "mkdocs-version-annotations"
+version = "1.0.0"
+description = "MkDocs plugin to add custom admonitions for documenting version differences"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "mkdocs-version-annotations-1.0.0.tar.gz", hash = "sha256:6786024b37d27b330fda240b76ebec8e7ce48bd5a9d7a66e99804559d088dffa"},
+    {file = "mkdocs_version_annotations-1.0.0-py3-none-any.whl", hash = "sha256:385004eb4a7530dd87a227e08cd907ce7a8fe21fdf297720a4149c511bcf05f5"},
+]
+
+[[package]]
 name = "mkdocstrings"
 version = "0.24.3"
 description = "Automatic documentation from sources, for MkDocs."
@@ -1565,4 +1576,4 @@ docs = []
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "9f05b6ad17f85b6814cff916f4f1e7389999079da077921533daa8925939c8c1"
+content-hash = "27509c1f1a61ce8384aac441a66f908dd7a5377512198d7c260453a91120894b"
