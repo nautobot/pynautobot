@@ -13,7 +13,6 @@ def test_create_manufacturer(nb_client):
 
 
 class TestSimpleServerRackingAndConnecting:
-
     """Verify we can create, rack, and connect a server."""
 
     @pytest.fixture

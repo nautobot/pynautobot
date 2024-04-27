@@ -15,6 +15,7 @@ limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
 """
+
 from requests.utils import urlparse
 
 from pynautobot.core.query import Request

@@ -1,4 +1,5 @@
 """GraphQL endpoint for making queries to the Nautobot GraphQL endpoint."""
+
 from typing import Optional, Dict, Any
 
 
