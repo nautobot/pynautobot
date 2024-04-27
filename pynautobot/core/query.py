@@ -1,4 +1,5 @@
 """
+```
 (c) 2017 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 This file has been modified by NetworktoCode, LLC.
+```
 """
 
 try:
@@ -34,16 +36,14 @@ class RequestError(Exception):
 
     More detailed exception that returns the original requests object
     for inspection. Along with some attributes with specific details
-    from the requests object. If return is json we decode and add it
+    from the requests object. If return is JSON we decode and add it
     to the message.
 
-    :Example:
-
-    >>> try:
-    ...   nb.dcim.devices.create(name="destined-for-failure")
-    ... except pynautobot.RequestError as e:
-    ...   print(e.error)
-
+    Examples:
+        >>> try:
+        ...     nb.dcim.devices.create(name="destined-for-failure")
+        ... except pynautobot.RequestError as e:
+        ...     print(e.error)
     """
 
     def __init__(self, message):
@@ -112,18 +112,19 @@ class ContentError(Exception):
 
 
 class Request(object):
-    """Creates requests to the Nautobot API
+    """Creates requests to the Nautobot API.
 
-    Responsible for building the url and making the HTTP(S) requests to
-    Nautobot's API
+    Responsible for building the URL and making the HTTP(S) requests to
+    Nautobot's API.
 
-    :param base: (str) Base URL passed in api() instantiation.
-    :param filters: (dict, optional) contains key/value pairs that
-        correlate to the filters a given endpoint accepts.
-        In (e.g. /api/dcim/devices/?name='test') 'name': 'test'
-        would be in the filters dict.
-    :param int,optional max_workers: Set the maximum workers for threading in ``.all()``
-        and ``.filter()`` requests.
+    Args:
+        base (str): Base URL passed in api() instantiation.
+        filters (dict, optional): Contains key/value pairs that
+            correlate to the filters a given endpoint accepts.
+            In (e.g. /api/dcim/devices/?name='test'), 'name': 'test'
+            would be in the filters dict.
+        max_workers (int, optional): Set the maximum workers for threading in ``.all()``
+            and ``.filter()`` requests.
     """
 
     def __init__(
@@ -137,8 +138,7 @@ class Request(object):
         max_workers=4,
         api_version=None,
     ):
-        """
-        Instantiates a new Request object
+        """Instantiates a new Request object
 
         Args:
             base (string): Base URL passed in api() instantiation.
@@ -188,9 +188,11 @@ class Request(object):
         Issues a GET request to the base URL to read the API version from the
         response headers.
 
-        :Raises: RequestError if req.ok returns false.
-        :Returns: Version number as a string. Empty string if version is not
-        present in the headers.
+        Raises:
+            RequestError: If req.ok returns false.
+        
+        Returns:
+            str: Version number as a string. Empty string if version is not present in the headers.
         """
         headers = {
             "Content-Type": "application/json;",
@@ -215,9 +217,13 @@ class Request(object):
     def get_status(self):
         """Gets the status from /api/status/ endpoint in Nautobot.
 
-        :Returns: Dictionary as returned by Nautobot.
-        :Raises: RequestError if request is not successful.
+        Returns:
+            dict: Dictionary as returned by Nautobot.
+
+        Raises:
+            RequestError: If request is not successful.
         """
+
         headers = {
             "Content-Type": "application/json;",
             "Authorization": f"Token {self.token}",
@@ -304,11 +310,13 @@ class Request(object):
         Makes a GET request to Nautobot's API, and automatically recurses
         any paginated results.
 
-        :raises: RequestError if req.ok returns false.
-        :raises: ContentError if response is not json.
+        Raises:
+            RequestError: If req.ok returns false.
+            ContentError: If response is not JSON.
 
-        :Returns: List of `Response` objects returned from the
-            endpoint.
+        Returns:
+            List[Response]: List of `Response` objects returned from the
+                endpoint.
         """
 
         def req_all():
@@ -356,85 +364,108 @@ class Request(object):
 
         return req_all()
 
-    def put(self, data):
-        """Makes PUT request.
+    def put(self, data: dict) -> dict:
+        """Makes a PUT request to the Nautobot API.
 
-        Makes a PUT request to Nautobot's API.
+        Args:
+            data: (dict) The data to be sent in the PUT request body. It will be
+                serialized to JSON before sending.
 
-        :param data: (dict) Contains a dict that will be turned into a
-            json object and sent to the API.
-        :raises: RequestError if req.ok returns false.
-        :raises: ContentError if response is not json.
-        :returns: Dict containing the response from Nautobot's API.
+        Raises:
+            RequestError: If the request fails (i.e., req.ok returns False).
+            ContentError: If the response cannot be deserialized from JSON.
+
+        Returns:
+            dict: The deserialized JSON response from the Nautobot API.
         """
         return self._make_call(verb="put", data=data)
 
-    def post(self, data):
-        """Makes POST request.
+    def post(self, data: dict) -> dict:
+        """Makes a POST request to the Nautobot API.
 
-        Makes a POST request to Nautobot's API.
+        Args:
+            data: (dict) The data to be sent in the POST request body. It will be
+                serialized to JSON before sending.
 
-        :param data: (dict) Contains a dict that will be turned into a
-            json object and sent to the API.
-        :raises: RequestError if req.ok returns false.
-        :raises: AllocationError if req.status_code is 204 (No Content)
-            as with available-ips and available-prefixes when there is
-            no room for the requested allocation.
-        :raises: ContentError if response is not json.
-        :Returns: Dict containing the response from Nautobot's API.
+        Raises:
+            RequestError: If the request fails (i.e., req.ok returns False).
+            AllocationError: If the status code is 204 (No Content), indicating
+                no available resources for allocation (e.g., available IPs or prefixes).
+            ContentError: If the response cannot be deserialized from JSON.
+
+        Returns:
+            dict: The deserialized JSON response from the Nautobot API.
         """
         return self._make_call(verb="post", data=data)
 
-    def delete(self, data=None):
-        """Makes DELETE request.
+    def delete(self, data: Optional[list[dict]] = None) -> bool:
+        """Makes a DELETE request to the Nautobot API.
 
-        Makes a DELETE request to Nautobot's API.
-
-        :param data: (list) Contains a dict that will be turned into a
-            json object and sent to the API.
-        Returns:
-            True if successful.
+        Args:
+            data: (Optional[list[dict]]) A list of dictionaries representing the
+                objects to be deleted. If None, an empty DELETE request is sent.
 
         Raises:
-            RequestError if req.ok doesn't return True.
+            RequestError: If the request fails (i.e., req.ok doesn't return True).
+
+        Returns:
+            bool: True if the request is successful, False otherwise.
         """
         return self._make_call(verb="delete", data=data)
 
-    def patch(self, data):
-        """Makes PATCH request.
+    def patch(self, data: dict) -> dict:
+        """Makes a PATCH request to the Nautobot API.
 
-        Makes a PATCH request to Nautobot's API.
+        Args:
+            data: (dict) The data to be sent in the PATCH request body. It will be
+                serialized to JSON before sending.
 
-        :param data: (dict) Contains a dict that will be turned into a
-            json object and sent to the API.
-        :raises: RequestError if req.ok returns false.
-        :raises: ContentError if response is not json.
-        :returns: Dict containing the response from Nautobot's API.
+        Raises:
+            RequestError: If the request fails (i.e., req.ok returns False).
+            ContentError: If the response cannot be deserialized from JSON.
+
+        Returns:
+            dict: The deserialized JSON response from the Nautobot API.
         """
         return self._make_call(verb="patch", data=data)
 
-    def options(self):
-        """Makes an OPTIONS request.
+    def options(self) -> dict:
+        """Retrieves allowed HTTP methods for a Nautobot API endpoint.
 
-        Makes an OPTIONS request to Nautobot's API.
+        Makes an OPTIONS request to determine the allowed HTTP methods
+        supported by a specific Nautobot API endpoint.
 
-        :raises: RequestError if req.ok returns false.
-        :raises: ContentError if response is not json.
+        Raises:
+            RequestError: If the request fails (i.e., req.ok returns False).
+            ContentError: If the response cannot be deserialized from JSON.
 
-        :returns: Dict containing the response from Nautobot's API.
+        Returns:
+            dict: The deserialized JSON response from the Nautobot API,
+                containing information about allowed methods.
         """
+
         return self._make_call(verb="options")
 
-    def get_count(self, *args, **kwargs):
-        """Returns object count for query
+    def get_count(self, *args, **kwargs) -> int:
+        """Retrieves the number of objects matching a query in the Nautobot API.
 
-        Makes a query to the endpoint with ``limit=1`` set and only
-        returns the value of the "count" field.
+        Makes a GET request to the specified endpoint with a limited response
+        (limit=1) and extracts the "count" field from the response to determine
+        the total number of objects that would be returned by a full query
+        with the same parameters.
 
-        :raises: RequestError if req.ok returns false.
-        :raises: ContentError if response is not json.
+        Args:
+            *args: Additional positional arguments to be passed to the
+                Nautobot API endpoint.
+            **kwargs: Additional keyword arguments to be passed to the
+                Nautobot API endpoint.
 
-        :returns: Int of number of objects query returned.
+        Raises:
+            RequestError: If the request fails (i.e., req.ok returns False).
+            ContentError: If the response cannot be deserialized from JSON.
+
+        Returns:
+            int: The total number of objects that would match the provided query.
         """
 
         return self._make_call(add_params={"limit": 1})["count"]

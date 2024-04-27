@@ -33,23 +33,23 @@ def response_loader(req, return_obj, endpoint):
 class Endpoint(object):
     """Represent actions available on endpoints in the Nautobot API.
 
-    Takes ``name`` and ``app`` passed from App() and builds the correct
-    url to make queries to and the proper Response object to return
+    Takes `name` and `app` passed from `App()` and builds the correct
+    URL to make queries to and the proper Response object to return
     results in.
 
-    :arg obj api: Takes :py:class:`.Api` created at instantiation.
-    :arg obj app: Takes :py:class:`.App`.
-    :arg str name: Name of endpoint passed to App().
-    :arg obj,optional model: Custom model for given app.
+    Args:
+        api (object): Takes `Api` created at instantiation.
+        app (object): Takes `App`.
+        name (str): Name of endpoint passed to `App()`.
+        model (object, optional): Custom model for given app.
 
-    .. note::
-
+    Note:
         In order to call Nautobot endpoints with dashes in their
         names you should convert the dash to an underscore.
         (E.g. querying the ip-addresses endpoint is done with
-        ``nb.ipam.ip_addresses.all()``.)
-
+        `nb.ipam.ip_addresses.all()`.)
     """
+
 
     def __init__(self, api, app, name, model=None):
         self.return_obj = self._lookup_ret_obj(name, model)
@@ -68,13 +68,14 @@ class Endpoint(object):
         """Loads unique Response objects.
 
         This method loads a unique response object for an endpoint if
-        it exists. Otherwise return a generic `Record` object.
+        it exists. Otherwise, it returns a generic `Record` object.
 
-        :arg str name: Endpoint name.
-        :arg obj model: The application model that
-            contains unique Record objects.
+        Args:
+            name (str): Endpoint name.
+            model (obj): The application model that contains unique Record objects.
 
-        :Returns: Record (obj)
+        Returns:
+            Record: Unique response object if exists, otherwise a generic `Record` object.
         """
         if model:
             name = name.title().replace("_", "").replace("-", "")
@@ -88,16 +89,16 @@ class Endpoint(object):
 
         Returns all objects from an endpoint.
 
-        :arg str,optional api_version: Override default or globally-set Nautobot REST API
-            version for this single request.
+        Args:
+            api_version (str, optional): Override default or globally-set Nautobot REST API
+                version for this single request.
 
-        :Returns: List of :py:class:`.Record` objects.
+        Returns:
+            list: List of :py:class:`.Record` objects.
 
-        :Examples:
-
-        >>> nb.dcim.devices.all()
-        [test1-a3-oobsw2, test1-a3-oobsw3, test1-a3-oobsw4]
-        >>>
+        Examples:
+            >>> nb.dcim.devices.all()
+            [test1-a3-oobsw2, test1-a3-oobsw3, test1-a3-oobsw4]
         """
 
         api_version = api_version or self.api.api_version
@@ -113,35 +114,29 @@ class Endpoint(object):
         return response_loader(req.get(), self.return_obj, self)
 
     def get(self, *args, **kwargs):
-        r"""Queries the DetailsView of a given endpoint.
+        """Queries the DetailsView of a given endpoint.
 
-        :arg int,optional key: id for the item to be
-            retrieved.
+        Args:
+            key (int, optional): ID for the item to be retrieved.
+            **kwargs (str, optional): Accepts the same keyword args as filter().
+                Any search argument the endpoint accepts can be added as a keyword arg.
+            api_version (str, optional): Override default or globally-set Nautobot REST API
+                version for this single request.
 
-        :arg str,optional \**kwargs: Accepts the same keyword args as
-            filter(). Any search argument the endpoint accepts can
-            be added as a keyword arg.
+        Returns:
+            Union[Record, None]: A single :py:class:`.Record` object or None.
 
-        :arg str,optional api_version: Override default or globally-set Nautobot REST API
-            version for this single request.
+        Raises:
+            ValueError: If kwarg search returns more than one value.
 
-        :returns: A single :py:class:`.Record` object or None
+        Examples:
+            Referencing with a kwarg that only returns one value.
+            >>> nb.dcim.devices.get(name='test1-a3-tor1b')
+            test1-a3-tor1b
 
-        :raises ValueError: if kwarg search return more than one value.
-
-        :Examples:
-
-        Referencing with a kwarg that only returns one value.
-
-        >>> nb.dcim.devices.get(name='test1-a3-tor1b')
-        test1-a3-tor1b
-        >>>
-
-        Referencing with an id.
-
-        >>> nb.dcim.devices.get(1)
-        test1-edge1
-        >>>
+            Referencing with an id.
+            >>> nb.dcim.devices.get(1)
+            test1-edge1
         """
 
         try:
@@ -184,47 +179,40 @@ class Endpoint(object):
         return response_loader(resp, self.return_obj, self)
 
     def filter(self, *args, api_version=None, **kwargs):
-        r"""Queries the 'ListView' of a given endpoint.
+        """Queries the 'ListView' of a given endpoint.
 
         Takes named arguments that match the usable filters on a
         given endpoint. If an argument is passed then it's used as a
         freeform search argument if the endpoint supports it.
 
-        :arg str,optional \*args: Freeform search string that's
-            accepted on given endpoint.
-        :arg str,optional \**kwargs: Any search argument the
-            endpoint accepts can be added as a keyword arg.
-        :arg str,optional api_version: Override default or globally-set
-            Nautobot REST API version for this single request.
+        Args:
+            *args (str, optional): Freeform search string that's
+                accepted on given endpoint.
+            **kwargs (str, optional): Any search argument the
+                endpoint accepts can be added as a keyword arg.
+            api_version (str, optional): Override default or globally-set
+                Nautobot REST API version for this single request.
 
-        :Returns: A list of :py:class:`.Record` objects.
+        Returns:
+            list: A list of :py:class:`.Record` objects.
 
-        :Examples:
+        Examples:
+            To return a list of objects matching a named argument filter.
+            >>> nb.dcim.devices.filter(role='leaf-switch')
+            [test1-a3-tor1b, test1-a3-tor1c, test1-a3-tor1d, test1-a3-tor2a]
 
-        To return a list of objects matching a named argument filter.
+            Using a freeform query along with a named argument.
+            >>> nb.dcim.devices.filter('a3', role='leaf-switch')
+            [test1-a3-tor1b, test1-a3-tor1c, test1-a3-tor1d, test1-a3-tor2a]
 
-        >>> nb.dcim.devices.filter(role='leaf-switch')
-        [test1-a3-tor1b, test1-a3-tor1c, test1-a3-tor1d, test1-a3-tor2a]
-        >>>
+            Chaining multiple named arguments.
+            >>> nb.dcim.devices.filter(role='leaf-switch', status=True)
+            [test1-leaf2]
 
-        Using a freeform query along with a named argument.
-
-        >>> nb.dcim.devices.filter('a3', role='leaf-switch')
-        [test1-a3-tor1b, test1-a3-tor1c, test1-a3-tor1d, test1-a3-tor2a]
-        >>>
-
-        Chaining multiple named arguments.
-
-        >>> nb.dcim.devices.filter(role='leaf-switch', status=True)
-        [test1-leaf2]
-        >>>
-
-        Passing a list as a named argument adds multiple filters of the
-        same value.
-
-        >>> nb.dcim.devices.filter(role=['leaf-switch', 'spine-switch'])
-        [test1-a3-spine1, test1-a3-spine2, test1-a3-leaf1]
-        >>>
+            Passing a list as a named argument adds multiple filters of the
+            same value.
+            >>> nb.dcim.devices.filter(role=['leaf-switch', 'spine-switch'])
+            [test1-a3-spine1, test1-a3-spine2, test1-a3-leaf1]
         """
 
         if args:
@@ -248,56 +236,53 @@ class Endpoint(object):
         return response_loader(req.get(), self.return_obj, self)
 
     def create(self, *args, api_version=None, **kwargs):
-        r"""Creates an object on an endpoint.
+        """Creates an object on an endpoint.
 
         Allows for the creation of new objects on an endpoint. Named
-        arguments are converted to json properties, and a single object
+        arguments are converted to JSON properties, and a single object
         is created. Nautobot's bulk creation capabilities can be used by
         passing a list of dictionaries as the first argument.
 
-        .. note:
+        Note:
+            Any positional arguments will supersede named ones.
 
-            Any positional arguments will supercede named ones.
+        Args:
+            *args (list): A list of dictionaries containing the
+                properties of the objects to be created.
+            **kwargs (str): Key/value strings representing
+                properties on a JSON object.
+            api_version (str, optional): Override default or globally-set
+                Nautobot REST API version for this single request.
 
-        :arg list \*args: A list of dictionaries containing the
-            properties of the objects to be created.
-        :arg str \**kwargs: key/value strings representing
-            properties on a json object.
-        :arg str,optional api_version: Override default or globally-set
-            Nautobot REST API version for this single request.
+        Returns:
+            Union[Record, List[Record]]: A list or single :py:class:`.Record` object depending
+                on whether a bulk creation was requested.
 
-        :returns: A list or single :py:class:`.Record` object depending
-            on whether a bulk creation was requested.
+        Examples:
+            Creating an object on the `devices` endpoint you can look up a
+            device_role's name with:
+            >>> nautobot.dcim.devices.create(
+            ...    name='test',
+            ...    device_role=1,
+            ... )
 
-        :Examples:
-
-        Creating an object on the `devices` endpoint you can lookup a
-        device_role's name with:
-
-        >>> nautobot.dcim.devices.create(
-        ...    name='test',
-        ...    device_role=1,
-        ... )
-        >>>
-
-        Use bulk creation by passing a list of dictionaries:
-
-        >>> nb.dcim.devices.create([
-        ...     {
-        ...         "name": "test1-core3",
-        ...         "device_role": 3,
-        ...         "site": 1,
-        ...         "device_type": 1,
-        ...         "status": 1
-        ...     },
-        ...     {
-        ...         "name": "test1-core4",
-        ...         "device_role": 3,
-        ...         "site": 1,
-        ...         "device_type": 1,
-        ...         "status": 1
-        ...     }
-        ... ])
+            Use bulk creation by passing a list of dictionaries:
+            >>> nb.dcim.devices.create([
+            ...     {
+            ...         "name": "test1-core3",
+            ...         "device_role": 3,
+            ...         "site": 1,
+            ...         "device_type": 1,
+            ...         "status": 1
+            ...     },
+            ...     {
+            ...         "name": "test1-core4",
+            ...         "device_role": 3,
+            ...         "site": 1,
+            ...         "device_type": 1,
+            ...         "status": 1
+            ...     }
+            ... ])
         """
 
         api_version = api_version or self.api.api_version
@@ -312,55 +297,49 @@ class Endpoint(object):
         return response_loader(req, self.return_obj, self)
 
     def update(self, *args, **kwargs):
-        r"""
-        Update a single resource with a dictionary or bulk update a list of objects.
+        """Update a single resource with a dictionary or bulk update a list of objects.
 
         Allows for bulk updating of existing objects on an endpoint.
-        Objects is a list which contain either json/dicts or Record
+        Objects is a list which contain either JSON/dicts or Record
         derived objects, which contain the updates to apply.
-        If json/dicts are used, then the id of the object *must* be
-        included
+        If JSON/dicts are used, then the id of the object *must* be
+        included.
 
-        :arg list,optional \*args: A list of dicts or a list of Record
+        Args:
+            *args (list, optional): A list of dicts or a list of Record.
+            **kwargs (str, optional): See Below.
 
-        :arg str,optional \**kwargs:
-            See Below
+        Keyword Arguments:
+            * *id* (``string``) -- Identifier of the object being updated.
+            * *data* (``dict``) -- Key/value pairs to update the record object with.
 
-        :Keyword Arguments:
-            * *id* (``string``) -- Identifier of the object being updated
-            * *data* (``dict``) -- k/v to update the record object with
+        Returns:
+            Union[Record, List[Record]]: A list or single :py:class:`.Record` object depending
+                on whether a bulk update was requested.
 
-        :returns: A list or single :py:class:`.Record` object depending
-            on whether a bulk update was requested.
-        :example:
+        Examples:
+            Accepts the id of the object that needs to be updated as well as a
+            dictionary of k/v pairs used to update an object.
+            >>> nb.dcim.devices.update(id="0238a4e3-66f2-455a-831f-5f177215de0f", data={
+            ...     "name": "test",
+            ...     "serial": "1234",
+            ...     "location": "9b1f53c7-89fa-4fb2-a89a-b97364fef50c",
+            ... })
 
-        Accepts the id of the object that needs to be updated as well as a
-            dictionary of k/v pairs used to update an object
-        >>> nb.dcim.devices.update(id="0238a4e3-66f2-455a-831f-5f177215de0f", data={
-        ...     "name": "test",
-        ...     "serial": "1234",
-        ...     "location": "9b1f53c7-89fa-4fb2-a89a-b97364fef50c",
-        ... })
-        >>>
+            Use bulk update by passing a list of dicts:
+            >>> devices = nb.dcim.devices.update([
+            ...    {'id': "db8770c4-61e5-4999-8372-e7fa576a4f65", 'name': 'test'},
+            ...    {'id': "e9b5f2e0-4f20-41ad-9179-90a4987f743e", 'name': 'test2'},
+            ... ])
 
-        Use bulk update by passing a list of dicts:
-
-        >>> devices = nb.dcim.devices.update([
-        ...    {'id': "db8770c4-61e5-4999-8372-e7fa576a4f65", 'name': 'test'},
-        ...    {'id': "e9b5f2e0-4f20-41ad-9179-90a4987f743e", 'name': 'test2'},
-        ... ])
-        >>>
-
-        Use bulk update by passing a list of Records:
-
-        >>> devices = list(nb.dcim.devices.filter())
-        >>> devices
-        [Device1, Device2, Device3]
-        >>> for d in devices:
-        ...     d.name = d.name+'-test'
-        ...
-        >>> nb.dcim.devices.update(devices)
-        >>>
+            Use bulk update by passing a list of Records:
+            >>> devices = list(nb.dcim.devices.filter())
+            >>> devices
+            [Device1, Device2, Device3]
+            >>> for d in devices:
+            ...     d.name = d.name+'-test'
+            ...
+            >>> nb.dcim.devices.update(devices)
         """
         if not args and not kwargs:
             raise ValueError("You must provide either a UUID and data dict or a list of objects to update")
@@ -386,17 +365,19 @@ class Endpoint(object):
         return False
 
     def bulk_update(self, objects: List[Dict[str, Any]]):
-        r"""This method is called from the update() method if a bulk
+        """This method is called from the update() method if a bulk
         update is detected.
 
         Allows for bulk updating of existing objects on an endpoint.
-        Objects is a list which contain either json/dicts or Record
+        Objects is a list which contain either JSON/dicts or Record
         derived objects, which contain the updates to apply.
-        If json/dicts are used, then the id of the object *must* be
-        included
+        If JSON/dicts are used, then the id of the object *must* be
+        included.
 
-        :arg list,optional \*args: A list of dicts or a list of Record
+        Args:
+            objects (list): A list of dicts or a list of Record.
         """
+
         if not isinstance(objects, list):
             raise ValueError("objects must be a list[dict()|Record] not " + str(type(objects)))
 
@@ -426,36 +407,35 @@ class Endpoint(object):
         return response_loader(req, self.return_obj, self)
 
     def delete(self, objects):
-        r"""Bulk deletes objects on an endpoint.
+        """Bulk deletes objects on an endpoint.
 
         Allows for batch deletion of multiple objects from
-        a single endpoint
+        a single endpoint.
 
-        :arg list objects: A list of either ids or Records to delete.
-        :returns: True if bulk DELETE operation was successful.
+        Args:
+            objects (list): A list of either IDs or Records to delete.
 
-        :Examples:
+        Returns:
+            bool: True if bulk DELETE operation was successful.
 
-        Deleting all `devices`:
+        Examples:
+            Deleting all `devices`:
+            >>> pynautobot.dcim.devices.delete(pynautobot.dcim.devices.all())
 
-        >>> pynautobot.dcim.devices.delete(pynautobot.dcim.devices.all())
-        >>>
+            Use bulk deletion by passing a list of IDs:
+            >>> pynautobot.dcim.devices.delete([
+            ...     "db8770c4-61e5-4999-8372-e7fa576a4f65",
+            ...     "e9b5f2e0-4f20-41ad-9179-90a4987f743e"
+            ... ])
 
-        Use bulk deletion by passing a list of ids:
-
-        >>> pynautobot.dcim.devices.delete(["db8770c4-61e5-4999-8372-e7fa576a4f65"
-        ...                                  ,"e9b5f2e0-4f20-41ad-9179-90a4987f743e"])
-        >>>
-
-        Use bulk deletion to delete objects eg. when filtering
-        on a `custom_field`:
-
-        >>> pynautobot.dcim.devices.delete([
-        ...         d for d in pynautobot.dcim.devices.all()
-        ...             if d.custom_fields.get("field", False)
-        ...     ])
-        >>>
+            Use bulk deletion to delete objects e.g. when filtering
+            on a `custom_field`:
+            >>> pynautobot.dcim.devices.delete([
+            ...     d for d in pynautobot.dcim.devices.all()
+            ...     if d.custom_fields.get("field", False)
+            ... ])
         """
+
         ids = []
         if not isinstance(objects, list):
             raise ValueError("objects must be a list[str(id)|Record] not " + str(type(objects)))
@@ -491,28 +471,28 @@ class Endpoint(object):
         long-running applications, consider restarting them whenever Nautobot is
         upgraded, to prevent using stale choices data.
 
-        :arg str,optional api_version: Override default or globally-set
-            Nautobot REST API version for this single request.
+        Args:
+            api_version (str, optional): Override default or globally-set
+                Nautobot REST API version for this single request.
 
-        :Returns: Dict containing the available choices.
+        Returns:
+            dict: Dict containing the available choices.
 
-        :Example (from Nautobot 2.8.x):
-
-        >>> from pprint import pprint
-        >>> pprint(nb.ipam.ip_addresses.choices())
-        {'role': [{'display_name': 'Loopback', 'value': 'loopback'},
-                  {'display_name': 'Secondary', 'value': 'secondary'},
-                  {'display_name': 'Anycast', 'value': 'anycast'},
-                  {'display_name': 'VIP', 'value': 'vip'},
-                  {'display_name': 'VRRP', 'value': 'vrrp'},
-                  {'display_name': 'HSRP', 'value': 'hsrp'},
-                  {'display_name': 'GLBP', 'value': 'glbp'},
-                  {'display_name': 'CARP', 'value': 'carp'}],
-         'status': [{'display_name': 'Active', 'value': 'active'},
-                    {'display_name': 'Reserved', 'value': 'reserved'},
-                    {'display_name': 'Deprecated', 'value': 'deprecated'},
-                    {'display_name': 'DHCP', 'value': 'dhcp'}]}
-        >>>
+        Example (from Nautobot 2.8.x):
+            >>> from pprint import pprint
+            >>> pprint(nb.ipam.ip_addresses.choices())
+            {'role': [{'display_name': 'Loopback', 'value': 'loopback'},
+                    {'display_name': 'Secondary', 'value': 'secondary'},
+                    {'display_name': 'Anycast', 'value': 'anycast'},
+                    {'display_name': 'VIP', 'value': 'vip'},
+                    {'display_name': 'VRRP', 'value': 'vrrp'},
+                    {'display_name': 'HSRP', 'value': 'hsrp'},
+                    {'display_name': 'GLBP', 'value': 'glbp'},
+                    {'display_name': 'CARP', 'value': 'carp'}],
+            'status': [{'display_name': 'Active', 'value': 'active'},
+                        {'display_name': 'Reserved', 'value': 'reserved'},
+                        {'display_name': 'Deprecated', 'value': 'deprecated'},
+                        {'display_name': 'DHCP', 'value': 'dhcp'}]}
         """
         if self._choices:
             return self._choices
@@ -537,7 +517,7 @@ class Endpoint(object):
         return self._choices
 
     def count(self, *args, api_version=None, **kwargs):
-        r"""Returns the count of objects in a query.
+        """Returns the count of objects in a query.
 
         Takes named arguments that match the usable filters on a
         given endpoint. If an argument is passed then it's used as a
@@ -545,28 +525,25 @@ class Endpoint(object):
         arguments are passed the count for all objects on an endpoint
         are returned.
 
-        :arg str,optional \*args: Freeform search string that's
-            accepted on given endpoint.
-        :arg str,optional \**kwargs: Any search argument the
-            endpoint accepts can be added as a keyword arg.
-        :arg str,optional api_version: Override default or globally-set
-            Nautobot REST API version for this single request.
+        Args:
+            *args (str, optional): Freeform search string that's
+                accepted on given endpoint.
+            **kwargs (str, optional): Any search argument the
+                endpoint accepts can be added as a keyword arg.
+            api_version (str, optional): Override default or globally-set
+                Nautobot REST API version for this single request.
 
-        :Returns: Integer with count of objects returns by query.
+        Returns:
+            int: Integer with count of objects returned by query.
 
-        :Examples:
+        Examples:
+            To return a count of objects matching a named argument filter.
+            >>> nb.dcim.devices.count(site='tst1')
+            5827
 
-        To return a count of objects matching a named argument filter.
-
-        >>> nb.dcim.devices.count(site='tst1')
-        5827
-        >>>
-
-        To return a count of objects on an entire endpoint.
-
-        >>> nb.dcim.devices.count()
-        87382
-        >>>
+            To return a count of objects on an entire endpoint.
+            >>> nb.dcim.devices.count()
+            87382
         """
 
         if args:
@@ -603,22 +580,19 @@ class DetailEndpoint(object):
         )
 
     def list(self, api_version=None, **kwargs):
-        r"""The view operation for a detail endpoint
+        """The view operation for a detail endpoint.
 
         Returns the response from Nautobot for a detail endpoint.
 
         Args:
+            api_version (str, optional): Override default or globally set Nautobot REST API version for this single request.
+            **kwargs: Key/value pairs that get converted into URL parameters when passed to the endpoint.
+                E.g. ``.list(method='get_facts')`` would be converted to ``.../?method=get_facts``.
 
-        :arg str,optional api_version: Override default or globally set Nautobot REST API version for this single request.
-        :arg \**kwargs:
-            See below
-
-        :Keyword Arugments:
-            key/value pairs that get converted into url parameters when passed to the endpoint.
-            E.g. ``.list(method='get_facts')`` would be converted to ``.../?method=get_facts``.
-
-        :returns: A dictionary or list of dictionaries retrieved from Nautobot.
+        Returns:
+            Union[Dict, List[Dict]]: A dictionary or list of dictionaries retrieved from Nautobot.
         """
+
         api_version = api_version or self.parent_obj.api.api_version
 
         req = Request(api_version=api_version, **self.request_kwargs).get(add_params=kwargs)
@@ -632,15 +606,17 @@ class DetailEndpoint(object):
 
         Creates objects on a detail endpoint in Nautobot.
 
-        :arg dict/list,optional data: A dictionary containing the
-            key/value pair of the items you're creating on the parent
-            object. Defaults to empty dict which will create a single
-            item with default values.
-        :args str,optional api_version: Override default or globally set
-            Nautobot REST API version for this single request.
+        Args:
+            data (dict or list, optional): A dictionary containing the
+                key/value pairs of the items you're creating on the parent
+                object. Defaults to an empty dict, which will create a single
+                item with default values.
+            api_version (str, optional): Override default or globally set
+                Nautobot REST API version for this single request.
 
-        :returns: A dictionary or list of dictionaries its created in
-            Nautobot.
+        Returns:
+            Union[Dict, List[Dict]]: A dictionary or list of dictionaries representing
+                the items created in Nautobot.
         """
         data = data or {}
         api_version = api_version or self.parent_obj.api.api_version
@@ -660,29 +636,28 @@ class JobsEndpoint(Endpoint):
     """Extend Endpoint class to support run method only for jobs."""
 
     def run(self, *args, api_version=None, **kwargs):
-        r"""Runs a job based on the class_path provided to the job.
+        """Runs a job based on the class_path provided to the job.
 
         Takes a kwarg of `class_path` or `job_id` to specify the job that should be run.
 
-        :arg str,optional \*args: Freeform search string that's
-            accepted on given endpoint.
-        :arg str,optional \**kwargs: Any search argument the
-            endpoint accepts can be added as a keyword arg.
-        :arg str,optional api_version: Override default or globally-set
-            Nautobot REST API version for this single request.
+        Args:
+            *args (str, optional): Freeform search string that's
+                accepted on given endpoint.
+            **kwargs (str, optional): Any search argument the
+                endpoint accepts can be added as a keyword arg.
+            api_version (str, optional): Override default or globally-set
+                Nautobot REST API version for this single request.
 
-        :Returns: Job details: job_result object uuid found at `obj.result.id`.
+        Returns:
+            obj: Job details: job_result object uuid found at `obj.result.id`.
 
-        :Examples:
-
-        To return a count of objects matching a named argument filter.
-
-        >>> nb.extras.jobs.run(
-                class_path="local/data_quality/VerifyHostnames",
-                data={"hostname_regex": ".*"},
-                commit=True,
-            )
-        >>>
+        Examples:
+            To run a job for verifying hostnames:
+            >>> nb.extras.jobs.run(
+                    class_path="local/data_quality/VerifyHostnames",
+                    data={"hostname_regex": ".*"},
+                    commit=True,
+                )
         """
         api_version = api_version or self.api.api_version or self.api.version
 
