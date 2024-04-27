@@ -162,16 +162,16 @@ class App(object):
             http_session=self.api.http_session,
         ).get()
 
-    def get_config_response_from_app():
+    def config(self):
         """Returns config response from app.
 
         Returns:
-            Raw response from Nautobot's config endpoint.
+            dict: Raw response from Nautobot's config endpoint.
 
         Raises:
             RequestError: If called for an invalid endpoint.
 
-        Examples:
+        Example:
             >>> pprint.pprint(nb.users.config())
             {'tables': {'DeviceTable': {'columns': ['name',
                                                     'status',
@@ -181,6 +181,7 @@ class App(object):
                                                     'primary_ip',
                                                     'tags']}}}
         """
+
         config = Request(
             base="{}/{}/config/".format(
                 self.api.base_url,

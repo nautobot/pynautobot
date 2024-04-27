@@ -398,20 +398,23 @@ class Request(object):
         """
         return self._make_call(verb="post", data=data)
 
-    def delete(self, data: Optional[list[dict]] = None) -> bool:
-        """Makes a DELETE request to the Nautobot API.
+    def delete(self, data=None):
+        """Makes DELETE request.
+
+        Makes a DELETE request to Nautobot's API.
 
         Args:
-            data: (Optional[list[dict]]) A list of dictionaries representing the
-                objects to be deleted. If None, an empty DELETE request is sent.
-
-        Raises:
-            RequestError: If the request fails (i.e., req.ok doesn't return True).
+            data (list): Contains a dict that will be turned into a json object
+                and sent to the API.
 
         Returns:
-            bool: True if the request is successful, False otherwise.
+            bool: True if successful.
+
+        Raises:
+            RequestError: If req.ok doesn't return True.
         """
         return self._make_call(verb="delete", data=data)
+
 
     def patch(self, data: dict) -> dict:
         """Makes a PATCH request to the Nautobot API.
