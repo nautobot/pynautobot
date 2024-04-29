@@ -1,4 +1,4 @@
-mkdocs==1.5.2
+mkdocs==1.6.0
 # Material for MkDocs theme
 mkdocs-material==9.5.19
 # Render custom markdown for version added/changed/remove notes
