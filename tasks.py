@@ -124,7 +124,9 @@ def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, service=_DEFAULT_SERVICE, por
     else:
         print(f"DOCKER - Running command: {exec_cmd} service: {service}")
         if port:
-            result = context.run(f"docker compose run --rm --publish {port} -- {service} {exec_cmd}", env=_DOCKER_COMPOSE_ENV, pty=True)
+            result = context.run(
+                f"docker compose run --rm --publish {port} -- {service} {exec_cmd}", env=_DOCKER_COMPOSE_ENV, pty=True
+            )
         else:
             result = context.run(f"docker compose run --rm -- {service} {exec_cmd}", env=_DOCKER_COMPOSE_ENV, pty=True)
 
