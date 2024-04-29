@@ -1,7 +1,7 @@
 ---
 # TODO
 # Change dev address
-dev_addr: "0.0.0.0:8002"
+dev_addr: "127.0.0.1:8001"
 site_name: "pynautobot Docs"
 site_url: "https://pynautobot.readthedocs.io/en/latest/"
 repo_url: "https://github.com/nautobot/pynautobot/"
