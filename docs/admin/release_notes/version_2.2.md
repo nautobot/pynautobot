@@ -2,7 +2,7 @@
 
 ## Added
 
-(#182) Added Members Detail Endpoint
+(#182) Added Dynamic Group Members Detail Endpoint
 
 ## Documentation Updates
 
