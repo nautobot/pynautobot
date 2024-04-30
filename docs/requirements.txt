@@ -1,0 +1,9 @@
+mkdocs==1.6.0
+# Material for MkDocs theme
+mkdocs-material==9.5.19
+# Render custom markdown for version added/changed/remove notes
+mkdocs-version-annotations==1.0.0
+# Automatic documentation from sources, for MkDocs
+mkdocstrings==0.24.3
+mkdocstrings-python==1.10.0
+markdown-data-tables==1.0.0

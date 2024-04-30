@@ -1,0 +1,169 @@
+---
+# TODO
+# Change dev address
+dev_addr: "127.0.0.1:8001"
+site_name: "pynautobot Docs"
+site_url: "https://pynautobot.readthedocs.io/en/latest/"
+repo_url: "https://github.com/nautobot/pynautobot/"
+copyright: "Copyright &copy; The Authors"
+theme:
+  name: "material"
+  navigation_depth: 4
+  # custom_dir: "docs/assets/overrides"
+  hljs_languages:
+    - "django"
+    - "yaml"
+  features:
+    - "content.code.copy"
+    - "navigation.indexes"
+    - "navigation.footer"
+    - "navigation.tabs"
+    - "navigation.tabs.sticky"
+    - "navigation.tracking"
+    - "search.highlight"
+    - "search.share"
+    - "search.suggest"
+  favicon: "assets/favicon.ico"
+  logo: "assets/nautobot_logo.svg"
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: "default"
+      primary: "black"
+      toggle:
+        icon: "material/weather-sunny"
+        name: "Switch to dark mode"
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: "slate"
+      primary: "black"
+      toggle:
+        icon: "material/weather-night"
+        name: "Switch to light mode"
+
+# The animated *.gif files in nautobot/docs/media are only used in the README.
+# Since their file size is quite large, we exclude them from the built docs.
+exclude_docs: |
+  /media/*.gif
+
+validation:
+  absolute_links: "warn"
+  omitted_files: "warn"
+  unrecognized_links: "warn"
+
+extra_css:
+  - "assets/extra.css"
+
+# needed for RTD version flyout menu
+# jquery is not (yet) injected by RTD automatically and it might be dropped
+# as a dependency in the future
+extra_javascript:
+  - "https://code.jquery.com/jquery-3.7.1.min.js"
+
+extra:
+  generator: false
+  ntc_sponsor: true
+  social:
+    - icon: "fontawesome/solid/rss"
+      link: "https://blog.networktocode.com/blog/tags/nautobot"
+      name: "Network to Code Blog"
+    - icon: "fontawesome/brands/youtube"
+      link: "https://www.youtube.com/playlist?list=PLjA0bhxgryJ2Ts4GJMDA-tPzVWEncv4pb"
+      name: "Nautobot Videos"
+    - icon: "fontawesome/brands/slack"
+      link: "https://www.networktocode.com/community/"
+      name: "Network to Code Community"
+    - icon: "fontawesome/brands/github"
+      link: "https://github.com/nautobot/nautobot"
+      name: "GitHub Repo"
+    - icon: "fontawesome/brands/twitter"
+      link: "https://twitter.com/networktocode"
+      name: "Network to Code Twitter"
+markdown_extensions:
+  - "admonition"
+  - "toc":
+      permalink: true
+  - "attr_list"
+  - "markdown_data_tables":
+      base_path: "docs"
+  - "md_in_html"
+  - "pymdownx.details"
+  - "pymdownx.highlight":
+      anchor_linenums: true
+  - "pymdownx.inlinehilite"
+  - "pymdownx.snippets"
+  - "pymdownx.superfences":
+      custom_fences:
+        - name: "mermaid"
+          class: "mermaid"
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - "pymdownx.tabbed":
+      "alternate_style": true
+
+nav:
+  - Overview: "index.md"
+  - User Guide:
+      - Library Overview: "user/lib_overview.md"
+  - Adminsitrator Guide:
+      - Install and Configure: "admin/install.md"
+      - Upgrade: "admin/upgrade.md"
+      - Uninstall: "admin/uninstall.md"
+      - Release Notes:
+          - "admin/release_notes/index.md"
+          - v2.1: "admin/release_notes/version_2.1.md"
+          - v2.0: "admin/release_notes/version_2.0.md"
+          - v1.5: "admin/release_notes/version_1.5.md"
+          - v1.4: "admin/release_notes/version_1.4.md"
+          - v1.3: "admin/release_notes/version_1.3.md"
+          - v1.2: "admin/release_notes/version_1.2.md"
+          - v1.1: "admin/release_notes/version_1.1.md"
+          - v1.0: "admin/release_notes/version_1.0.md"
+  - Developer Guide:
+      - Basic:
+          - "dev/basic/index.md"
+          - API Basic: "dev/basic/api.md"
+          - Nautobot App Access: "dev/basic/nautobot_apps.md"
+          - CRUD Operations:
+              - "dev/basic/crud/index.md"
+              - Create: "dev/basic/crud/create.md"
+              - Delete: "dev/basic/crud/delete.md"
+              - Read: "dev/basic/crud/read.md"
+              - Update: "dev/basic/crud/update.md"
+      - Advanced:
+          - "dev/advanced/index.md"
+          - Create: "dev/advanced/create.md"
+          - Delete: "dev/advanced/delete.md"
+          - GraphQL: "dev/advanced/graphql.md"
+          - Read: "dev/advanced/read.md"
+          - Record: "dev/advanced/record.md"
+          - Session: "dev/advanced/session.md"
+          - Update: "dev/advanced/update.md"
+      - Code Reference:
+          - Core:
+              - API: "dev/code_reference/core/api.md"
+              - App: "dev/code_reference/core/app.md"
+              - Endpoint: "dev/code_reference/core/endpoint.md"
+              - GraphQL: "dev/code_reference/core/graphql.md"
+              - Query: "dev/code_reference/core/query.md"
+              - Response: "dev/code_reference/core/response.md"
+              - Util: "dev/code_reference/core/util.md"
+          - Models:
+              - Circuits: "dev/code_reference/models/circuits.md"
+              - DCIM: "dev/code_reference/models/dcim.md"
+              - Extras: "dev/code_reference/models/extras.md"
+              - IPAM: "dev/code_reference/models/ipam.md"
+              - Users: "dev/code_reference/models/users.md"
+              - Virtualization: "dev/code_reference/models/virtualization.md"
+plugins:
+  - "search"
+  - "mkdocstrings":
+      default_handler: "python"
+      handlers:
+        python:
+          paths: ["."]
+          options:
+            heading_level: 1
+            show_root_heading: true
+            show_root_members_full_path: true
+            show_source: false
