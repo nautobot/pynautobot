@@ -1,11 +1,19 @@
-![pynautobot](docs/nautobot_logo.svg "Nautobot logo")
+<p align="center">
+  <img src="https://raw.githubusercontent.com/nautobot/pynautobot/develop/docs/nautobot_logo.png" class="logo" height="200px">
+  <br>
+  <a href="https://github.com/nautobot/pynautobot/actions"><img src="https://github.com/nautobot/pynautobot/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+  <a href="https://pynautobot.readthedocs.io/en/latest"><img src="https://readthedocs.org/projects/pynautobot/badge/"></a>
+  <a href="https://pypi.org/project/pynautobot/"><img src="https://img.shields.io/pypi/v/pynautobot"></a>
+  <a href="https://pypi.org/project/pynautobot/"><img src="https://img.shields.io/pypi/dm/pynautobot"></a>
+  <br>
+</p>
 
-# Pynautobot
+# pynautobot
 
 Python API client library for [Nautobot](https://github.com/nautobot/nautobot).
 
-> Pynautobot was initially developed as a fork of [pynetbox](https://github.com/digitalocean/pynetbox/).
-> Pynetbox was originally developed by Zach Moody at DigitalOcean and the NetBox Community.
+> pynautobot was initially developed as a fork of [pynetbox](https://github.com/digitalocean/pynetbox/).
+> pynetbox was originally developed by Zach Moody at DigitalOcean and the NetBox Community.
 
 The complete documentation for pynautobot can be found at [Read the Docs](https://pynautobot.readthedocs.io/en/stable/).
 
