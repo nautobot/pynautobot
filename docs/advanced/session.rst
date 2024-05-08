@@ -13,22 +13,21 @@ A few examples are provided below:
 Headers
 -------
 
-Adding or updating headers is done by updating the ``headers`` dictionary on the ``http_response`` object.
-The example below shows how to update a Token if it has been cycled.
+HTTP headers can be modified using the ``headers`` argument, which is a dictionary of all key/value pairs. The example below shows how to set a custom user agent.
 
 .. code-block:: python
 
-    import os
     from pynautobot import api
+
+    headers = {
+        "User-Agent": "my-user-agent"
+    }
 
     nautobot = api(
         url='http://localhost:8000',
-        token=os.environ["NAUTOBOT_TOKEN"]
+        token=os.environ["NAUTOBOT_TOKEN"],
+        headers=headers
     )
-    new_token = f"Token {os.environ['NEW_NAUTOBOT_TOKEN']}"
-
-    # Update Session object with new header
-    nautobot.http_session.headers["Authorization"] = new_token
 
 SSL Verification
 ----------------
