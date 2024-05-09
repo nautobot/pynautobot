@@ -116,6 +116,25 @@ nav:
   - Overview: "index.md"
   - User Guide:
       - Library Overview: "user/lib_overview.md"
+      - Basic:
+          - "user/basic/index.md"
+          - API Basic: "user/basic/api.md"
+          - Nautobot App Access: "user/basic/nautobot_apps.md"
+          - CRUD Operations:
+              - "user/basic/crud/index.md"
+              - Create: "user/basic/crud/create.md"
+              - Delete: "user/basic/crud/delete.md"
+              - Read: "user/basic/crud/read.md"
+              - Update: "user/basic/crud/update.md"
+      - Advanced:
+          - "user/advanced/index.md"
+          - Create: "user/advanced/create.md"
+          - Delete: "user/advanced/delete.md"
+          - GraphQL: "user/advanced/graphql.md"
+          - Read: "user/advanced/read.md"
+          - Record: "user/advanced/record.md"
+          - Session: "user/advanced/session.md"
+          - Update: "user/advanced/update.md"
   - Administrator Guide:
       - Install and Configure: "admin/install.md"
       - Upgrade: "admin/upgrade.md"
@@ -132,25 +151,6 @@ nav:
           - v1.1: "admin/release_notes/version_1.1.md"
           - v1.0: "admin/release_notes/version_1.0.md"
   - Developer Guide:
-      - Basic:
-          - "dev/basic/index.md"
-          - API Basic: "dev/basic/api.md"
-          - Nautobot App Access: "dev/basic/nautobot_apps.md"
-          - CRUD Operations:
-              - "dev/basic/crud/index.md"
-              - Create: "dev/basic/crud/create.md"
-              - Delete: "dev/basic/crud/delete.md"
-              - Read: "dev/basic/crud/read.md"
-              - Update: "dev/basic/crud/update.md"
-      - Advanced:
-          - "dev/advanced/index.md"
-          - Create: "dev/advanced/create.md"
-          - Delete: "dev/advanced/delete.md"
-          - GraphQL: "dev/advanced/graphql.md"
-          - Read: "dev/advanced/read.md"
-          - Record: "dev/advanced/record.md"
-          - Session: "dev/advanced/session.md"
-          - Update: "dev/advanced/update.md"
       - Code Reference:
           - Core:
               - API: "dev/code_reference/core/api.md"
