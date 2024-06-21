@@ -202,7 +202,7 @@ class Record(object):
         return dict(self)[k]
 
     def __str__(self):
-        return getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or ""
+        return str(getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or "")
 
     def __repr__(self):
         return "<{}.{} ('{}') at {}>".format(self.__class__.__module__, self.__class__.__name__, self, hex(id(self)))
