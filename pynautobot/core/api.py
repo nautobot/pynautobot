@@ -21,6 +21,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
+import pynautobot
 from pynautobot.core.query import Request
 from pynautobot.core.app import App, PluginsApp
 from pynautobot.core.graphql import GraphQLQuery
@@ -90,6 +91,7 @@ class Api(object):
         self.base_url = base_url
         self.http_session = requests.Session()
         self.http_session.verify = verify
+        self.http_session.headers.update({"User-Agent": f"python-pynautobot/{pynautobot.__version__}"})
         if retries:
             _adapter = HTTPAdapter(
                 max_retries=Retry(
