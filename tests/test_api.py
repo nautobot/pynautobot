@@ -55,7 +55,9 @@ class ApiTestCase(unittest.TestCase):
     @patch("pynautobot.api.version", "1.999")
     def test_useragent_set(self, *_):
         api = pynautobot.api("http://localhost:8000/", **def_kwargs)
-        self.assertEqual(api.http_session.headers["user-agent"], f"python-pynautobot/{pynautobot.__version__}")
+        self.assertEqual(
+            api.http_session.headers["user-agent"], f"python-pynautobot/{pynautobot.__version__}"
+        )
 
 
 class ApiVersionTestCase(unittest.TestCase):
