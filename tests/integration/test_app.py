@@ -41,7 +41,6 @@ def test_app_dir(nb_client, app_name):
     assert app_dir
 
     for endpoint_name in app_endpoints:
-        print(endpoint_name)
         assert endpoint_name in app_dir
         if endpoint_name in ["connected_device"]:
             # Certain endpoints require additional parameters to be passed
