@@ -65,6 +65,12 @@ class App(object):
             return JobsEndpoint(self.api, self, name, model=self.model)
         return Endpoint(self.api, self, name, model=self.model)
 
+    def __dir__(self):
+        endpoints = self._get_api_endpoints()
+        # We replace all hyphens with underscores so they can be used as attributes
+        endpoint_attrs = [e.replace("-", "_") for e in endpoints.keys()]
+        return super().__dir__() + endpoint_attrs
+
     def choices(self):
         """Returns _choices response from App.
 
@@ -188,6 +194,17 @@ class App(object):
         ).get()
         return config
 
+    def _get_api_endpoints(self):
+        """Returns the API endpoints available for the app."""
+        return Request(
+            base="{}/{}/".format(
+                self.api.base_url,
+                self.name,
+            ),
+            token=self.api.token,
+            http_session=self.api.http_session,
+        ).get()
+
 
 class PluginsApp(object):
     """Add plugins to the URL path.
@@ -204,6 +221,12 @@ class PluginsApp(object):
 
     def __getattr__(self, name):
         return App(self.api, f"plugins/{name.replace('_', '-')}")
+
+    def __dir__(self):
+        endpoints = self._get_api_endpoints()
+        # We replace all hyphens with underscores so they can be used as attributes
+        endpoint_attrs = [e.replace("-", "_") for e in endpoints.keys()]
+        return super().__dir__() + endpoint_attrs
 
     def installed_plugins(self):
         """Returns raw response with installed plugins.
@@ -229,3 +252,13 @@ class PluginsApp(object):
             http_session=self.api.http_session,
         ).get()
         return installed_plugins
+
+    def _get_api_endpoints(self):
+        """Returns any plugin API endpoints available."""
+        return Request(
+            base="{}/plugins/".format(
+                self.api.base_url,
+            ),
+            token=self.api.token,
+            http_session=self.api.http_session,
+        ).get()
