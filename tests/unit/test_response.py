@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch, PropertyMock
 
 from pynautobot.core.response import Record
 
+
 class RecordTestCase(unittest.TestCase):
     def test_attribute_access(self):
         test_values = {
@@ -367,6 +368,5 @@ class RecordTestCase(unittest.TestCase):
 
     @patch("pynautobot.core.response.Record.notes", new_callable=PropertyMock, return_value=["test"])
     def test_notes_property_exists(self, mock):
-        """Add test to ensure notes property exist
-        """
+        """Add test to ensure notes property exist"""
         self.assertEqual(mock.return_value, ["test"])
