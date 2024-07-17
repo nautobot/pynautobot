@@ -13,4 +13,4 @@ __all__ = ["RequestError", "AllocationError", "ContentError", "api", "__version_
 try:
     __version__ = version(__package__)
 except PackageNotFoundError:
-    pass
+    __version__ = "Unable to determine version; no package found"
