@@ -33,3 +33,17 @@ class TestCustomField:
 
     def test_custom_field_choice_to_cf(self, create_custom_field_choices, create_custom_field):
         assert create_custom_field_choices["custom_field"]["id"] == create_custom_field["id"]
+
+
+class TestJobRun:
+    """Verify we can run a job."""
+
+    def test_job_run(self, nb_client):
+        content_type = nb_client.extras.content_types.get(model="circuit")
+        job_to_run = nb_client.extras.jobs.get("Import Objects")
+        assert nb_client.extras.jobs.run(
+            job_id=job_to_run.id, data={"content_type": content_type.id, "csv_data": "cid,circuit_type,provider,status"}
+        )
+
+    def test_job_ran_successfully(self, nb_client):
+        assert nb_client.extras.job_results.all()[0].status.value == "SUCCESS"
