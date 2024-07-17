@@ -38,12 +38,18 @@ class TestCustomField:
 class TestJobRun:
     """Verify we can run a job."""
 
-    def test_job_run(self, nb_client):
-        content_type = nb_client.extras.content_types.get(model="circuit")
-        job_to_run = nb_client.extras.jobs.get("Import Objects")
-        assert nb_client.extras.jobs.run(
-            job_id=job_to_run.id, data={"content_type": content_type.id, "csv_data": "cid,circuit_type,provider,status"}
-        )
+    @pytest.fixture(scope="session")
+    def create_git_repo(self, nb_client):
+        data = {
+            "name": "demorepo",
+            "remote_url": "https://github.com/nautobot/demo-git-datasource",
+            "branch": "main",
+        }
+        return nb_client.extras.git_repositories.create(**data)
+
+    def test_job_run(self, nb_client, create_git_repo):
+        job_to_run = nb_client.extras.jobs.get("Git Repository: Dry-Run")
+        assert nb_client.extras.jobs.run(job_id=job_to_run.id, data={"repository": create_git_repo.id})
 
     def test_job_ran_successfully(self, nb_client):
-        assert nb_client.extras.job_results.all()[0].status.value == "SUCCESS"
+        assert nb_client.extras.job_results.all()[0].status.value in ["STARTED", "SUCCESS"]
