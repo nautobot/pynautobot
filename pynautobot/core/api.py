@@ -84,12 +84,15 @@ class Api(object):
         retries=0,
         verify=True,
     ):
+        from pynautobot import __version__
+
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
         self.token = token
         self.headers = {"Authorization": f"Token {self.token}"}
         self.base_url = base_url
         self.http_session = requests.Session()
         self.http_session.verify = verify
+        self.http_session.headers.update({"User-Agent": f"python-pynautobot/{__version__}"})
         if retries:
             _adapter = HTTPAdapter(
                 max_retries=Retry(

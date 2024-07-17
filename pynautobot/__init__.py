@@ -12,4 +12,4 @@ __all__ = ["RequestError", "AllocationError", "ContentError", "api"]
 try:
     __version__ = get_distribution(__name__).version
 except DistributionNotFound:
-    pass
+    __version__ = "Unable to determine version; no package found"
