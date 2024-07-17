@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.3
+
+- (#206) Added python-pynautobot version to default headers.
+
 ## v1.5.2
 
 - (#174) Fixes for authentication change in Nautobot.
