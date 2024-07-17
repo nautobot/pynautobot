@@ -500,7 +500,7 @@ class Record(object):
         Create new note on device object:
 
         >>> device = nb.dcim.devices.get(name="test")
-        >>> device.create({"note": "foo bar"})
+        >>> device.notes.create({"note": "foo bar"})
         [<pynautobot.core.response.Record ('test - 2024-07-16T18:45:07.653263+00:00')...]
 
         """
