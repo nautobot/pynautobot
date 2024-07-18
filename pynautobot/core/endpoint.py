@@ -101,7 +101,7 @@ class Endpoint(object):
             >>> nb.dcim.devices.all()
             [test1-a3-oobsw2, test1-a3-oobsw3, test1-a3-oobsw4]
         """
-        if limit == 0 and offset is not None:
+        if not limit and offset is not None:
             raise ValueError("offset requires a positive limit value")
         api_version = api_version or self.api.api_version
         req = Request(
@@ -228,7 +228,7 @@ class Endpoint(object):
             raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
         limit = kwargs.pop("limit") if "limit" in kwargs else None
         offset = kwargs.pop("offset") if "offset" in kwargs else None
-        if limit == 0 and offset is not None:
+        if not limit and offset is not None:
             raise ValueError("offset requires a positive limit value")
         api_version = api_version or self.api.api_version
         req = Request(

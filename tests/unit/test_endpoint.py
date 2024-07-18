@@ -29,6 +29,24 @@ class EndPointTestCase(unittest.TestCase):
         with self.assertRaises(ValueError) as _:
             test_obj.filter(pk=1)
 
+    def test_all_none_limit_offset(self):
+        with patch("pynautobot.core.query.Request.get", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            mock.return_value = [{"id": 123}, {"id": 321}]
+            test_obj = Endpoint(api, app, "test")
+            with self.assertRaises(ValueError) as _:
+                test_obj.all(limit=None, offset=1)
+
+    def test_filter_zero_limit_offset(self):
+        with patch("pynautobot.core.query.Request.get", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            mock.return_value = [{"id": 123}, {"id": 321}]
+            test_obj = Endpoint(api, app, "test")
+            with self.assertRaises(ValueError) as _:
+                test_obj.filter(test="test", limit=0, offset=1)
+
     def test_choices(self):
         with patch("pynautobot.core.query.Request.options", return_value=Mock()) as mock:
             api = Mock(base_url="http://localhost:8000/api")
