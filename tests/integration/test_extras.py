@@ -33,3 +33,26 @@ class TestCustomField:
 
     def test_custom_field_choice_to_cf(self, create_custom_field_choices, create_custom_field):
         assert create_custom_field_choices["custom_field"]["id"] == create_custom_field["id"]
+
+
+class TestNotes:
+    """Verify we can list and create notes as detailed endpoints."""
+
+    @pytest.fixture(scope="session")
+    def create_test_object(self, nb_client):
+        return nb_client.dcim.manufacturers.create(name="test_manufacturer")
+
+    def test_create_object_note(self, create_test_object):
+        test_obj = create_test_object
+        assert len(test_obj.notes.list()) == 0
+        test_obj.notes.create({"note": "foo bar"})
+        assert len(test_obj.notes.list()) == 1
+
+    def test_get_object_note(self, create_test_object):
+        test_obj = create_test_object
+        assert test_obj.notes.list()[0].note == "foo bar"
+
+    def test_get_note_on_invalid_object(self, nb_client):
+        test_obj = nb_client.extras.content_types.get(model="manufacturer")
+        with pytest.raises(Exception, match="The requested url: .* could not be found."):
+            test_obj.notes.list()
