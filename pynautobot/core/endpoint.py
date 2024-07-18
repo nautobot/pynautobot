@@ -81,7 +81,7 @@ class Endpoint(object):
             ret = Record
         return ret
 
-    def all(self, api_version=None, limit=0, offset=None):
+    def all(self, api_version=None, limit=None, offset=None):
         """Queries the 'ListView' of a given endpoint.
 
         Returns all objects from an endpoint.
@@ -226,7 +226,7 @@ class Endpoint(object):
             raise ValueError("filter must be passed kwargs. Perhaps use all() instead.")
         if any(i in RESERVED_KWARGS for i in kwargs):
             raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
-        limit = kwargs.pop("limit") if "limit" in kwargs else 0
+        limit = kwargs.pop("limit") if "limit" in kwargs else None
         offset = kwargs.pop("offset") if "offset" in kwargs else None
         if limit == 0 and offset is not None:
             raise ValueError("offset requires a positive limit value")
