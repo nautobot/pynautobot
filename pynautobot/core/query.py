@@ -347,7 +347,7 @@ class Request(object):
                 if req.get("next"):
                     page_size = len(req["results"])
                     pages = calc_pages(page_size, req["count"], self.offset or 0)
-                    page_offsets = [((increment * page_size) + self.offset or 0) for increment in range(1, pages)]
+                    page_offsets = [((increment * page_size) + (self.offset or 0)) for increment in range(1, pages)]
                     if pages == 1:
                         req = self._make_call(url_override=req.get("next"))
                         ret.extend(req["results"])
