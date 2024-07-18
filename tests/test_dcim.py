@@ -159,12 +159,13 @@ class InterfaceTestCase(Generic.Tests):
         ],
     )
     def test_get_all(self, mock):
-        ret = self.endpoint.all()
+        ret = self.endpoint.all(limit=221, offset=50)
+        next_url = "http://localhost:8000/api/dcim/interfaces/?limit=221&offset=100"
         self.assertTrue(ret)
         self.assertIsInstance(ret, list)
         self.assertIsInstance(ret[0], self.ret)
         self.assertEqual(len(ret), 71)
-        mock.assert_called_with(self.bulk_uri, params={"limit": 221, "offset": 50}, json=None, headers=HEADERS)
+        mock.assert_called_with(next_url, params={}, json=None, headers=HEADERS)
 
     @patch(
         "requests.sessions.Session.get",
