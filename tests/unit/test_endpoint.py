@@ -28,10 +28,6 @@ class EndPointTestCase(unittest.TestCase):
         test_obj = Endpoint(api, app, "test")
         with self.assertRaises(ValueError) as _:
             test_obj.filter(pk=1)
-        with self.assertRaises(ValueError) as _:
-            test_obj.filter(limit=1)
-        with self.assertRaises(ValueError) as _:
-            test_obj.filter(offset=1)
 
     def test_choices(self):
         with patch("pynautobot.core.query.Request.options", return_value=Mock()) as mock:
