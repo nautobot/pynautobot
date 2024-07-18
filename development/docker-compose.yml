@@ -1,6 +1,4 @@
 ---
-version: "3"
-
 x-common: &common
   image: "${IMAGE_NAME}:${IMAGE_VER}"
   volumes:
