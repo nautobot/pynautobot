@@ -198,3 +198,42 @@ The following two pages cover interacting with the returned
 `~pynautobot.core.response.Record`{.interpreted-text role="py:class"}
 objects. The next page covers additional Update operations, which is
 followed by a discussion of other features and methods.
+
+## Using Pagination
+
+The Nautobot API supports pagination.  Pynautobot supports this by extending the `filter` and `all` methods the following arguments:
+
+-   limit
+-   offset
+
+The `offset` argument can only be used when specifying a `limit`.  However, `limit` can be used without specifying an `offset`.  You could use this to prevent timeouts that result from larger datasets. (By default, pynautobot will request the maximum limit supported by the server)  You can combine this with [threading](../../index.md#threading) to overcome most performance problems.  
+
+This example shows how you could chunk the same large dataset using limit.
+```python
+>>> devices = nautobot.dcim.devices.all()
+>>> len(devices)
+100
+>>> devices = nautobot.dcim.devices.all(limit=10) # Same result, but chunks to 10 requests
+>>> len(devices)
+100
+```
+
+This example shows how you could offset the results in the same scenario.
+```python
+>>> devices = nautobot.dcim.devices.all()
+>>> len(devices)
+100
+>>> devices = nautobot.dcim.devices.all(limit=10, offset=10) # Skip the first 10 devices
+>>> len(devices)
+90
+```
+
+This example shows how you could filter and chunk at the same time.
+```python
+>>> devices = nautobot.dcim.devices.filter(location="DC")
+>>> len(devices)
+20
+>>> devices = nautobot.dcim.devices.filter(location="DC", limit=5) # 4 requests
+>>> len(devices)
+20
+```
