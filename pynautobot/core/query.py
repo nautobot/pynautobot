@@ -24,7 +24,6 @@ import requests
 
 def calc_pages(limit, count, offset):
     """Calculate number of pages required for full results set."""
-    print(limit, count, offset)
     return int((count - offset) / limit) + (limit % count > 0)
 
 
