@@ -18,7 +18,7 @@ services:
       nautobot:
         condition: "service_healthy"
   nautobot:
-    image: "ghcr.io/nautobot/nautobot-dev:${NAUTOBOT_VER:-2.0}-py${NAUTOBOT_PYTHON_VER:-3.8}"
+    image: "ghcr.io/nautobot/nautobot-dev:${NAUTOBOT_VER:-2.0}"
     command: "nautobot-server runserver 0.0.0.0:8000 --insecure"
     ports:
       - "8000:8000"

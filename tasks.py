@@ -16,8 +16,6 @@ TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 NAUTOBOT_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_VER", os.getenv("NAUTOBOT_VER", "1.6"))
 # Can be set to a separate Python version to be used for launching or building image
 PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.8"))
-# This is the version that Nautobot will run on, not the version of Python that will be used to build the pynautobot image.
-NAUTOBOT_PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_PYTHON_VER", os.getenv("NAUTOBOT_PYTHON_VER", "3.8"))
 
 
 def _get_image_name_and_tag():
@@ -49,7 +47,6 @@ _DOCKER_COMPOSE_ENV = {
     "IMAGE_VER": IMAGE_VER,
     "NAUTOBOT_VER": NAUTOBOT_VER,
     "PYTHON_VER": PYTHON_VER,
-    "NAUTOBOT_PYTHON_VER": NAUTOBOT_PYTHON_VER,
 }
 
 
