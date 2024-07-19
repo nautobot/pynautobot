@@ -12,9 +12,11 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         nautobot-version: ["1.6"]
+        nautobot-python-version: ["3.8", "3.9", "3.10", "3.11"]
     env:
       PYTHON_VER: "${{ matrix.python-version }}"
       NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
+      NAUTOBOT_PYTHON_VER: "${{ matrix.nautobot-python-version }}"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"

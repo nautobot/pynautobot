@@ -19,7 +19,7 @@ homepage = "https://nautobot.com"
 documentation = "https://pynautobot.readthedocs.io"
 
 [tool.poetry.dependencies]
-python = ">=3.8.1"
+python = "^3.8.1"
 requests = "^2.30.0"
 # requests doesn't support `urllib3` 2.0 yet see: https://github.com/psf/requests/issues/6432
 urllib3 = ">=1.21.1 <1.27"
