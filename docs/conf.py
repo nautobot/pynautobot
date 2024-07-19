@@ -18,7 +18,7 @@
 #
 import os
 import sys
-from pkg_resources import get_distribution
+from importlib.metadata import version
 
 sys.path.insert(0, os.path.abspath("../"))
 
@@ -69,7 +69,7 @@ author = "Network to Code"  # "Zach Moody"
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 # The full version, including alpha/beta/rc tags.
-release = get_distribution("pynautobot").version
+release = version("pynautobot")
 #
 # The short X.Y version.
 version = ".".join(release.split(".")[:2])
