@@ -45,18 +45,23 @@ class Prefixes(Record):
 
             >>> prefix = nb.ipam.prefixes.get(prefix="10.0.192.0/18")
             >>> prefix.available_ips.list()
-            [<pynautobot.models.ipam.IpAddresses ('10.0.192.1/18') at 0x103cb59d0>, <pynautobot.models.ipam.IpAddresses ('10.0.192.2/18') at 0x103cefb90>,...]
+            [
+                <pynautobot.models.ipam.IpAddresses ('10.0.192.1/18') at 0x103cb59d0>,
+                <pynautobot.models.ipam.IpAddresses ('10.0.192.2/18') at 0x103cefb90>,
+                ...
+            ]
 
             To create a single IP:
 
             >>> prefix = nb.ipam.prefixes.get(prefix="10.0.192.0/18")
-            >>> prefix.available_ips.create()
-            {u'status': 1, u'description': u'', u'nat_inside': None...}
+            >>> ip_address = prefix.available_ips.create({"status": "Active"})
+            >>> ip_address
+            <pynautobot.models.ipam.IpAddresses ('10.0.192.1/18') at 0x7f7b595e6160>
 
             To create multiple IPs:
 
             >>> prefix = nb.ipam.prefixes.get(prefix="10.0.192.0/18")
-            >>> create = prefix.available_ips.create([{} for i in range(2)])
+            >>> ip_addresses = prefix.available_ips.create([{"status": "Active"} for i in range(2)])
             >>> len(create)
             2
         """
@@ -72,7 +77,7 @@ class Prefixes(Record):
         viewing and creating prefixes inside a parent prefix.
 
         Very similar to :py:meth:`~pynautobot.ipam.Prefixes.available_ips`,
-        except that the dict (or list of dicts) passed to ``.create()`` 
+        except that the dict (or list of dicts) passed to ``.create()``
         needs to have a ``prefix_length`` key/value specified.
 
         Returns:
@@ -81,14 +86,18 @@ class Prefixes(Record):
         Examples:
             List available prefixes:
 
+            >>> prefix = nb.ipam.prefixes.get(prefix="10.0.0.0/16")
             >>> prefix.available_prefixes.list()
-            [{u'prefix': u'10.1.1.44/30', u'vrf': None, u'family': 4}]
+            [<pynautobot.models.ipam.Prefixes ('10.1.0.0/16') at 0x7f7b595f0b80>]
 
             Creating a single child prefix:
 
-            >>> prefix = nb.ipam.prefixes.get(prefix="10.0.192.0/18")
-            >>> new_prefix = prefix.available_prefixes.create({'prefix_length': 29, 'status': 'Active'})
-            >>> new_prefix.prefix
-            '10.0.192.40/29'
+            >>> new_prefix = prefix.available_prefixes.create({
+                'prefix_length': 24,
+                'status': 'Active',
+                'type': 'network',
+            })
+            >>> new_prefix
+            <pynautobot.models.ipam.Prefixes ('10.0.0.0/24') at 0x7f7b595e6c70>
         """
         return DetailEndpoint(self, "available-prefixes", custom_return=Prefixes)
