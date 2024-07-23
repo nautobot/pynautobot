@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.4
+
+- (#219) Replaced `pkg_resources` with `importlib.metadata` to enable Python 3.12 support.
+
 ## v1.5.3
 
 - (#206) Added python-pynautobot version to default headers.
