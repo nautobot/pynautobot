@@ -89,7 +89,7 @@ def down(context, remove=False):
     }
 )
 def logs(context, service="", follow=False, tail=None):
-    """View the logs of a docker-compose service."""
+    """View the logs of a docker compose service."""
     command = [
         "docker compose logs",
         "--follow" if follow else "",
@@ -319,7 +319,7 @@ def wait(context):
 @task
 def export(context):
     """Export compose configuration to `compose.yaml` file."""
-    context.run("docker-compose convert > compose.yaml", env=_DOCKER_COMPOSE_ENV, pty=True)
+    context.run("docker compose convert > compose.yaml", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task
