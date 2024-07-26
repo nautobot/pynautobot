@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 # This file has been modified by NetworktoCode, LLC.
-
+from functools import cached_property
 from packaging import version
 import requests
 from requests.adapters import HTTPAdapter
@@ -110,15 +110,13 @@ class Api(object):
         self.users = App(self, "users")
         self.plugins = PluginsApp(self)
         self.graphql = GraphQLQuery(self)
-        self._validate_version()
 
-    def _validate_version(self):
+    def _validate_version(self, api_version: str) -> None:
         """Validate API version if eq or ge than 2.0 raise an error."""
-        api_version = self.version
         if api_version.replace(".", "").isnumeric() and version.parse(api_version) < version.parse("2.0"):
             raise ValueError("Nautobot version 1 detected, please downgrade pynautobot to version 1.x")
 
-    @property
+    @cached_property
     def version(self):
         """Retrieves the version of the Nautobot REST API that the connected instance is using.
 
@@ -142,12 +140,15 @@ class Api(object):
             '1.0'
         """
 
-        return Request(
+        v = Request(
             base=self.base_url,
             http_session=self.http_session,
             api_version=self.api_version,
             token=self.token,
         ).get_version()
+        self._validate_version(v)
+
+        return v
 
     def openapi(self):
         """Retrieves the OpenAPI specification (OAS) document for the connected Nautobot instance.
