@@ -69,7 +69,7 @@ class ApiVersionTestCase(unittest.TestCase):
     )
     def test_api_version(self, *_):
         with self.assertRaises(ValueError) as error:
-            pynautobot.api(host)
+            pynautobot.api(host).version
         self.assertEqual(
             str(error.exception), "Nautobot version 1 detected, please downgrade pynautobot to version 1.x"
         )
@@ -124,6 +124,31 @@ class ApiStatusTestCase(unittest.TestCase):
         self.assertEqual(api.status()["nautobot-version"], "1.3.2")
 
 
+class ApiLazyLoadVersionTestCase(unittest.TestCase):
+    """
+    Tests that version is lazy loaded on the first API call, rather than on instantiation
+    """
+
+    @patch("urllib3.connectionpool.HTTPConnectionPool._get_conn")
+    def test_lazy_load_version(self, getconn_mock):
+        getconn_mock.return_value.getresponse.side_effect = [
+            Mock(status=200, msg=HTTPMessage()),
+        ]
+
+        api = pynautobot.api(
+            "http://any.url/",
+            retries=2,
+        )
+
+        assert getconn_mock.return_value.request.mock_calls == []
+
+        api.version
+
+        assert getconn_mock.return_value.request.mock_calls == [
+            call("GET", "/api/", body=None, headers=ANY),
+        ]
+
+
 class ApiRetryTestCase(unittest.TestCase):
     class ResponseWithStatus:
         ok = False
@@ -137,12 +162,10 @@ class ApiRetryTestCase(unittest.TestCase):
             Mock(status=200, msg=HTTPMessage()),
         ]
 
-        api = pynautobot.api(
+        pynautobot.api(
             "http://any.url/",
             retries=2,
-        )
-        with patch("pynautobot.api.version", "2.0"):
-            api.version
+        ).version
 
         assert getconn_mock.return_value.request.mock_calls == [
             call("GET", "/api/", body=None, headers=ANY),
