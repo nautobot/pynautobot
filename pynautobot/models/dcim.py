@@ -213,16 +213,12 @@ class Termination(Record):
         # hacky check to see if we're a circuit termination to
         # avoid another call to Nautobot because of a non-existent attr
         # in self.name
-        # Fetch details for the circuit if it doesn't have them
         if "circuit" in str(self.url):
-            if not self.has_details:
-                self.full_details()
             return self.circuit.cid
 
         return self.name
 
     device = Devices
-    circuit = Circuits
 
 
 class Cables(Record):
