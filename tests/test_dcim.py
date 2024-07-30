@@ -354,7 +354,7 @@ class CablesTestCase(Generic.Tests):
                         "url": "http://localhost:8000/api/circuits/circuits/1/",
                     },
                     "term_side": "A",
-                    "display": "TEST123321"
+                    "display": "TEST123321",
                 },
                 "termination_b_type": "dcim.interface",
                 "termination_b_id": 2,
