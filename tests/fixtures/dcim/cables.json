@@ -17,7 +17,8 @@
                     "display_name": "tst1-test1"
                 },
                 "name": "Console",
-                "cable": 1
+                "cable": 1,
+                "display": "foo"
             },
             "termination_b_type": "dcim.consoleserverport",
             "termination_b_id": 2,
@@ -31,7 +32,8 @@
                     "display_name": "tst1-test2"
                 },
                 "name": "Port 10",
-                "cable": 1
+                "cable": 1,
+                "display": "foo"
             },
             "type": null,
             "status": {
@@ -57,7 +59,8 @@
                     "display_name": "tst1-test3"
                 },
                 "name": "Console",
-                "cable": 2
+                "cable": 2,
+                "display": "foo"
             },
             "termination_b_type": "dcim.consoleserverport",
             "termination_b_id": 4,
@@ -71,7 +74,8 @@
                     "display_name": "tst1-test4"
                 },
                 "name": "Port 11",
-                "cable": 2
+                "cable": 2,
+                "display": "foo"
             },
             "type": null,
             "status": {
@@ -97,7 +101,8 @@
                     "display_name": "tst1-test5"
                 },
                 "name": "Console",
-                "cable": 3
+                "cable": 3,
+                "display": "foo"
             },
             "termination_b_type": "dcim.consoleserverport",
             "termination_b_id": 6,
@@ -111,7 +116,8 @@
                     "display_name": "tst1-test6"
                 },
                 "name": "Port 1",
-                "cable": 3
+                "cable": 3,
+                "display": "foo"
             },
             "type": null,
             "status": {

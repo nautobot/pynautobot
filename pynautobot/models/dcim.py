@@ -210,13 +210,7 @@ class Racks(Record):
 
 class Termination(Record):
     def __str__(self):
-        # hacky check to see if we're a circuit termination to
-        # avoid another call to Nautobot because of a non-existent attr
-        # in self.name
-        if "circuit" in str(self.url):
-            return self.circuit.cid
-
-        return self.name
+        return self.display
 
     device = Devices
     circuit = Circuits

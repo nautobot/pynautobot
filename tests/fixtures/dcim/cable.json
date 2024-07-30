@@ -12,7 +12,8 @@
             "display_name": "tst1-test1"
         },
         "name": "Console",
-        "cable": 1
+        "cable": 1,
+        "display": "foo"
     },
     "termination_b_type": "dcim.consoleserverport",
     "termination_b_id": 2,
@@ -26,7 +27,8 @@
             "display_name": "tst1-test2"
         },
         "name": "Port 10",
-        "cable": 1
+        "cable": 1,
+        "display": "foo"
     },
     "type": null,
     "status": {
