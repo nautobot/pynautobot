@@ -22,9 +22,9 @@ import json
 import requests
 
 
-def calc_pages(limit, count, offset):
+def calc_pages(limit, count):
     """Calculate number of pages required for full results set."""
-    return int((count - offset) / limit) + (limit % count > 0)
+    return int(count / limit) + (limit % count > 0)
 
 
 class RequestError(Exception):
@@ -327,7 +327,7 @@ class Request(object):
             req = self._make_call(add_params=add_params)
             if isinstance(req, dict) and req.get("results") is not None:
                 ret = req["results"]
-                while req["next"]:
+                while req["next"] and self.offset is None:
                     if not add_params:
                         req = self._make_call(add_params={"limit": req["count"], "offset": len(req["results"])})
                     else:
@@ -344,10 +344,10 @@ class Request(object):
             req = self._make_call(add_params=add_params)
             if isinstance(req, dict) and req.get("results") is not None:
                 ret = req["results"]
-                if req.get("next"):
+                if req.get("next") and self.offset is None:
                     page_size = len(req["results"])
-                    pages = calc_pages(page_size, req["count"], self.offset or 0)
-                    page_offsets = [((increment * page_size) + (self.offset or 0)) for increment in range(1, pages)]
+                    pages = calc_pages(page_size, req["count"])
+                    page_offsets = [increment * page_size for increment in range(1, pages)]
                     if pages == 1:
                         req = self._make_call(url_override=req.get("next"))
                         ret.extend(req["results"])
