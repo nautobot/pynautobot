@@ -1,7 +1,7 @@
 {
     "count": 221,
     "next": null,
-    "previous": "http://localhost:8000/api/dcim/interfaces/?limit=50&offset=150",
+    "previous": "http://localhost:8000/api/dcim/interfaces/?limit=50&offset=0",
     "results": [
         {
             "id": 162,
