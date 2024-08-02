@@ -218,14 +218,14 @@ This example shows how you could chunk the same large dataset using limit.
 100
 ```
 
-This example shows how you could offset the results in the same scenario.
+This example shows how you could use offset to retrieve a single chunk of devices.
 ```python
 >>> devices = nautobot.dcim.devices.all()
 >>> len(devices)
 100
->>> devices = nautobot.dcim.devices.all(limit=10, offset=10) # Skip the first 10 devices
+>>> devices = nautobot.dcim.devices.all(limit=10, offset=10) # Retrieve devices 11-20
 >>> len(devices)
-90
+10
 ```
 
 This example shows how you could filter and chunk at the same time.
