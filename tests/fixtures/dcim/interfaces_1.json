@@ -1,6 +1,6 @@
 {
     "count": 221,
-    "next": "http://localhost:8000/api/dcim/interfaces/?limit=221&offset=100",
+    "next": "http://localhost:8000/api/dcim/interfaces/?limit=50&offset=50",
     "previous": null,
     "results": [
         {
