@@ -327,3 +327,7 @@ def docs(context, local=INVOKE_LOCAL):
     """Build and serve docs locally for development."""
     exec_cmd = "mkdocs serve -v --dev-addr=0.0.0.0:8001"
     run_cmd(context, exec_cmd, local, port="8001:8001")
+
+@task
+def check_migrations(context):
+    """Upstream CI test runs check-migration test, but pynautobot has no migration to be tested; Hence including to pass CI test"""
