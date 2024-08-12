@@ -356,7 +356,7 @@ class CablesTestCase(Generic.Tests):
     app = "dcim"
     name = "cables"
 
-    def test_get_circuit(self):
+    def test_get_cable_between_device_and_circuit(self):
         response_obj = Response(
             content={
                 "id": self.uuid,
@@ -368,9 +368,9 @@ class CablesTestCase(Generic.Tests):
                     "circuit": {
                         "id": 346,
                         "url": "http://localhost:8000/api/circuits/circuits/1/",
-                        "cid": "TEST123321",
                     },
                     "term_side": "A",
+                    "display": "TEST123321",
                 },
                 "termination_b_type": "dcim.interface",
                 "termination_b_id": 2,
@@ -384,6 +384,7 @@ class CablesTestCase(Generic.Tests):
                         "display_name": "tst1-test2",
                     },
                     "name": "xe-0/0/0",
+                    "display": "xe-0/0/0",
                     "cable": 1,
                 },
                 "type": None,
