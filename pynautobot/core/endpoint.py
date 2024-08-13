@@ -731,4 +731,3 @@ class JobsEndpoint(Endpoint):
 
             if status not in active_job_statuses:
                 return req
-
