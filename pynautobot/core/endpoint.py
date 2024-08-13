@@ -21,8 +21,6 @@ from uuid import UUID
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
 
-from nautobot.extras.choices import JobResultStatusChoices
-
 RESERVED_KWARGS = ("pk",)
 
 
@@ -707,10 +705,10 @@ class JobsEndpoint(Endpoint):
         # Job statuses which indicate a job not yet started or in progress.
         # If the job status is not in this list, it will consider the job complete and return the job result object.
         active_job_statuses = (
-            JobResultStatusChoices.STATUS_RECEIVED,
-            JobResultStatusChoices.STATUS_PENDING,
-            JobResultStatusChoices.STATUS_STARTED,
-            JobResultStatusChoices.STATUS_RETRY,
+            "RECEIVED",
+            "PENDING",
+            "STARTED",
+            "RETRY",
         )
 
         interval_counter = 0
