@@ -14,10 +14,14 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
+from time import sleep
+
 from typing import List, Dict, Any
 from uuid import UUID
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
+
+from nautobot.extras.choices import JobResultStatusChoices
 
 RESERVED_KWARGS = ("pk",)
 
@@ -690,3 +694,41 @@ class JobsEndpoint(Endpoint):
         ).post(args[0] if args else kwargs)
 
         return response_loader(req, self.return_obj, self)
+
+    def run_and_wait(self, *args, api_version=None, interval=5, max_rechecks=50, **kwargs):
+        """Runs a job and waits for the response."""
+        if max_rechecks <= 0:
+            raise ValueError("Attribute `max_rechecks` must be a postive integer to prevent recursive loops.")
+
+        job_obj = self.run(*args, api_version=api_version, **kwargs)
+        job_result_id = job_obj.job_result.id
+        job_result_url = f"{self.base_url}/extras/job-results/{job_result_id}/"
+
+        # Job statuses which indicate a job not yet started or in progress.
+        # If the job status is not in this list, it will consider the job complete and return the job result object.
+        active_job_statuses = (
+            JobResultStatusChoices.STATUS_RECEIVED,
+            JobResultStatusChoices.STATUS_PENDING,
+            JobResultStatusChoices.STATUS_STARTED,
+            JobResultStatusChoices.STATUS_RETRY,
+        )
+
+        interval_counter = 0
+
+        while interval_counter <= max_rechecks:
+            # Sleep for interval and increment counter
+            sleep(interval)
+            interval_counter += 1
+
+            req = Request(
+                base=job_result_url,
+                token=self.token,
+                http_session=self.api.http_session,
+                api_version=api_version,
+            ).get()
+
+            status = req.get("status", {}).get("value")
+
+            if status not in active_job_statuses:
+                return req
+
