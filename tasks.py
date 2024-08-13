@@ -1,4 +1,5 @@
 """Tasks for use with Invoke."""
+
 import os
 import sys
 from distutils.util import strtobool
@@ -53,13 +54,13 @@ _DOCKER_COMPOSE_ENV = {
 @task
 def start(context):
     print("Starting Nautobot in detached mode...")
-    return context.run("docker-compose up -d", env=_DOCKER_COMPOSE_ENV, pty=True)
+    return context.run("docker compose up -d", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task
 def stop(context):
     print("Stopping Nautobot...")
-    return context.run("docker-compose stop", env=_DOCKER_COMPOSE_ENV, pty=True)
+    return context.run("docker compose stop", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task
@@ -71,7 +72,7 @@ def destroy(context):
 def down(context, remove=False):
     print("Stopping Nautobot and removing resources...")
     command = [
-        "docker-compose",
+        "docker compose",
         "down",
         "--remove-orphans",
         "--rmi local" if remove else "",
@@ -82,15 +83,15 @@ def down(context, remove=False):
 
 @task(
     help={
-        "service": "Docker-compose service name to view (default: nautobot)",
+        "service": "Docker compose service name to view (default: nautobot)",
         "follow": "Follow logs",
         "tail": "Tail N number of lines or 'all'",
     }
 )
 def logs(context, service="", follow=False, tail=None):
-    """View the logs of a docker-compose service."""
+    """View the logs of a docker compose service."""
     command = [
-        "docker-compose logs",
+        "docker compose logs",
         "--follow" if follow else "",
         f"--tail={tail}" if tail else "",
         service if service else "",
@@ -102,7 +103,7 @@ def logs(context, service="", follow=False, tail=None):
 @task
 def debug(context, service=_DEFAULT_SERVICE):
     print("Starting Nautobot in debug mode...")
-    return context.run(f"docker-compose up -- {service}", env=_DOCKER_COMPOSE_ENV, pty=True)
+    return context.run(f"docker compose up -- {service}", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, service=_DEFAULT_SERVICE):
@@ -122,7 +123,7 @@ def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, service=_DEFAULT_SERVICE):
         result = context.run(exec_cmd, pty=True)
     else:
         print(f"DOCKER - Running command: {exec_cmd} service: {service}")
-        result = context.run(f"docker-compose run --rm -- {service} {exec_cmd}", env=_DOCKER_COMPOSE_ENV, pty=True)
+        result = context.run(f"docker compose run --rm -- {service} {exec_cmd}", env=_DOCKER_COMPOSE_ENV, pty=True)
 
     return result
 
@@ -138,7 +139,7 @@ def build(context, nocache=False, service=_DEFAULT_SERVICE):
     """
 
     command = [
-        "docker-compose build",
+        "docker compose build",
         "--progress=plain",
         "--no-cache" if nocache else "",
         "--",
@@ -157,7 +158,7 @@ def clean(context, remove=True):
     Args:
         context (obj): Used to run specific commands
     """
-    print("Attempting to remove all docker-compose resources")
+    print("Attempting to remove all docker compose resources")
     down(context, remove)
 
 
@@ -167,7 +168,7 @@ def rebuild(context, remove=False):
 
     Args:
         context (obj): Used to run specific commands
-        remove (bool): Remove docker-compose resources
+        remove (bool): Remove docker compose resources
     """
     clean(context, remove)
     build(context, nocache=True)
@@ -313,4 +314,4 @@ def wait(context):
 @task
 def export(context):
     """Export compose configuration to `compose.yaml` file."""
-    context.run("docker-compose convert > compose.yaml", env=_DOCKER_COMPOSE_ENV, pty=True)
+    context.run("docker compose convert > compose.yaml", env=_DOCKER_COMPOSE_ENV, pty=True)
