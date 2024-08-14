@@ -694,7 +694,31 @@ class JobsEndpoint(Endpoint):
         return response_loader(req, self.return_obj, self)
 
     def run_and_wait(self, *args, api_version=None, interval=5, max_rechecks=50, **kwargs):
-        """Runs a job and waits for the response."""
+        """Runs a job and waits for the response.
+
+        Args:
+            *args (str, optional): Freeform search string that's
+                accepted on given endpoint.
+            **kwargs (str, optional): Any search argument the
+                endpoint accepts can be added as a keyword arg.
+            api_version (str, optional): Override default or globally-set
+                Nautobot REST API version for this single request.
+            interval (int, optional): Time in seconds to wait between 
+                checking job results.
+            max_rechecks (int, optional): Number of times to check job result
+                before exiting the method.
+
+        Returns:
+            obj: Job details: job_result object uuid found at `obj.result.id`.
+
+        Examples:
+            To run a job for verifying hostnames:
+            >>> nb.extras.jobs.run(
+                    class_path="local/data_quality/VerifyHostnames",
+                    data={"hostname_regex": ".*"},
+                    commit=True,
+        
+        """
         if max_rechecks <= 0:
             raise ValueError("Attribute `max_rechecks` must be a postive integer to prevent recursive loops.")
 
