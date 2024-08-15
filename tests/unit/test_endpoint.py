@@ -248,3 +248,39 @@ class JobEndPointTestCase(unittest.TestCase):
             test_obj = JobsEndpoint(api, app, "test")
             test = test_obj.run(job_id="test")
             self.assertEqual(len(test), 1)
+
+    # Run and Wait Tests
+    # =================================================
+
+    @patch("pynautobot.core.query.Request.get", return_value=Mock())
+    @patch("pynautobot.core.query.Request.post", return_value=Mock())
+    def test_run_and_wait_less_v1_3(self, mock_post, mock_get):
+        api = Mock(base_url="http://localhost:8000/api", api_version="1.2")
+        app = Mock(name="test")
+        test_obj = JobsEndpoint(api, app, "test")
+        mock_post.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
+        mock_get.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "SUCCESS"}}}
+        test = test_obj.run_and_wait(class_path="test", interval=1, max_rechecks=5)
+        self.assertEqual(test.job_result.status.value, "SUCCESS")
+
+    @patch("pynautobot.core.query.Request.get", return_value=Mock())
+    @patch("pynautobot.core.query.Request.post", return_value=Mock())
+    def test_run_and_wait_greater_v1_3(self, mock_post, mock_get):
+        api = Mock(base_url="http://localhost:8000/api", api_version="1.3")
+        app = Mock(name="test")
+        test_obj = JobsEndpoint(api, app, "test")
+        mock_post.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
+        mock_get.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "SUCCESS"}}}
+        test = test_obj.run_and_wait(job_id="test", interval=1, max_rechecks=5)
+        self.assertEqual(test.job_result.status.value, "SUCCESS")
+
+    @patch("pynautobot.core.query.Request.get", return_value=Mock())
+    @patch("pynautobot.core.query.Request.post", return_value=Mock())
+    def test_run_and_wait_no_complete(self, mock_post, mock_get):
+        api = Mock(base_url="http://localhost:8000/api", api_version="1.3")
+        app = Mock(name="test")
+        test_obj = JobsEndpoint(api, app, "test")
+        mock_post.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
+        mock_get.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
+        with self.assertRaises(ValueError):
+            test = test_obj.run_and_wait(job_id="test", interval=1, max_rechecks=2)

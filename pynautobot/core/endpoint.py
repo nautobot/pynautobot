@@ -713,11 +713,13 @@ class JobsEndpoint(Endpoint):
 
         Examples:
             To run a job for verifying hostnames:
-            >>> nb.extras.jobs.run(
+            >>> nb.extras.jobs.run_and_wait(
                     class_path="local/data_quality/VerifyHostnames",
                     data={"hostname_regex": ".*"},
                     commit=True,
-
+                    interval=5,
+                    max_rechecks=10,
+                )
         """
         if max_rechecks <= 0:
             raise ValueError("Attribute `max_rechecks` must be a postive integer to prevent recursive loops.")
@@ -749,7 +751,10 @@ class JobsEndpoint(Endpoint):
                 api_version=api_version,
             ).get()
 
-            status = req.get("status", {}).get("value")
+            result = req.get("job_result", {})
+            status = result.get("status", {}).get("value")
 
             if status not in active_job_statuses:
-                return req
+                return response_loader(req, self.return_obj, self)
+
+        raise ValueError("Did not receieve completed job result for job.")
