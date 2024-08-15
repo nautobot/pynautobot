@@ -703,7 +703,7 @@ class JobsEndpoint(Endpoint):
                 endpoint accepts can be added as a keyword arg.
             api_version (str, optional): Override default or globally-set
                 Nautobot REST API version for this single request.
-            interval (int, optional): Time in seconds to wait between 
+            interval (int, optional): Time in seconds to wait between
                 checking job results.
             max_rechecks (int, optional): Number of times to check job result
                 before exiting the method.
@@ -717,7 +717,7 @@ class JobsEndpoint(Endpoint):
                     class_path="local/data_quality/VerifyHostnames",
                     data={"hostname_regex": ".*"},
                     commit=True,
-        
+
         """
         if max_rechecks <= 0:
             raise ValueError("Attribute `max_rechecks` must be a postive integer to prevent recursive loops.")
