@@ -283,4 +283,4 @@ class JobEndPointTestCase(unittest.TestCase):
         mock_post.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
         mock_get.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
         with self.assertRaises(ValueError):
-            test = test_obj.run_and_wait(job_id="test", interval=1, max_rechecks=2)
+            test_obj.run_and_wait(job_id="test", interval=1, max_rechecks=2)
