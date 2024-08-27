@@ -315,3 +315,8 @@ def wait(context):
 def export(context):
     """Export compose configuration to `compose.yaml` file."""
     context.run("docker compose convert > compose.yaml", env=_DOCKER_COMPOSE_ENV, pty=True)
+
+
+@task
+def check_migrations(context):
+    """Upstream CI test runs check-migration test, but pynautobot has no migration to be tested; Hence including to pass CI test"""
