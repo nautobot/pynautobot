@@ -45,9 +45,9 @@ class Jobs(Record):
 
 
 class GraphqlQueries(Record):
-    def run(self, **kwargs):
+    def run(self, *args, **kwargs):
         """Run a graphql query from a saved graphql instance."""
-        return GraphqlEndpoint(self.api, self.api.extras, "graphql_queries").run(query_id=self.id, **kwargs)
+        return GraphqlEndpoint(self.api, self.api.extras, "graphql_queries").run(query_id=self.id, *args, **kwargs)
 
 
 class DynamicGroups(Record):
