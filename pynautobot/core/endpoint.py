@@ -690,3 +690,39 @@ class JobsEndpoint(Endpoint):
         ).post(args[0] if args else kwargs)
 
         return response_loader(req, self.return_obj, self)
+
+
+class GraphqlEndpoint(Endpoint):
+    """Extend Endpoint class to support run method for graphql queries."""
+
+    def run(self, *args, **kwargs):
+        """Runs a saved graphql query based on the query_id provided.
+
+        Takes a kwarg of `query_id` to specify the query that should be run.
+
+        Args:
+            *args (str, optional): Used as payload for POST method
+                to the API if provided.
+            **kwargs (str, optional): Any search argument the
+                endpoint accepts can be added as a keyword arg.
+
+        Returns:
+            An API response from the execution of the saved graphql query.
+
+        Examples:
+            To run a query with the following variables:
+            >>> query = nb.extras.graphql_queries.get("Example")
+            >>> query.run(
+                    variables={"foo": "bar"})
+                )
+        """
+
+        if not kwargs.get("query_id"):
+            raise ValueError('Keyword Argument "query_id" is required to run a query.')
+        query_run_url = f"{self.url}/{kwargs['query_id']}/run/"
+
+        return Request(
+            base=query_run_url,
+            token=self.token,
+            http_session=self.api.http_session,
+        ).post(args[0] if args else kwargs)

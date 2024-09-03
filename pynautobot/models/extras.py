@@ -14,7 +14,7 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from pynautobot.core.endpoint import JobsEndpoint, DetailEndpoint
+from pynautobot.core.endpoint import JobsEndpoint, DetailEndpoint, GraphqlEndpoint
 from pynautobot.core.response import JsonField, Record
 
 
@@ -42,6 +42,12 @@ class Jobs(Record):
     def run(self, **kwargs):
         """Run a job from within a job instance."""
         return JobsEndpoint(self.api, self.api.extras, "jobs").run(class_path=self.id, **kwargs)
+
+
+class GraphqlQueries(Record):
+    def run(self, **kwargs):
+        """Run a graphql query from a saved graphql instance."""
+        return GraphqlEndpoint(self.api, self.api.extras, "graphql_queries").run(query_id=self.id, **kwargs)
 
 
 class DynamicGroups(Record):

@@ -56,3 +56,32 @@ class TestNotes:
         test_obj = nb_client.extras.content_types.get(model="manufacturer")
         with pytest.raises(Exception, match="The requested url: .* could not be found."):
             test_obj.notes.list()
+
+
+class TestGraphqlQueries:
+    """Verify we can create and run a saved graphql query"""
+
+    @pytest.fixture(scope="session")
+    def create_graphql_query(self, nb_client):
+        query = """
+            query Example($devicename: [String] = "server.networktocode.com"){
+                devices(name: $devicename) {
+                    name
+                    serial
+                }
+            }
+        """
+        data = {"name": "foobar", "query": query}
+        return nb_client.extras.graphql_queries.create(**data)
+
+    def test_graphql_query_run(self, create_graphql_query):
+        query = create_graphql_query
+        data = query.run()
+        assert len(data.get("data", {}).get("devices")) == 1
+        assert data.get("data", {}).get("devices")[0].get("name") == "server.networktocode.com"
+
+    def test_graphql_query_run_with_variable(self, create_graphql_query):
+        query = create_graphql_query
+        data = query.run(variables={"devicename": "dev-1"})
+        assert len(data.get("data", {}).get("devices")) == 1
+        assert data.get("data", {}).get("devices")[0].get("name") == "dev-1"
