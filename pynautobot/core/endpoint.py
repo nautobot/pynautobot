@@ -695,7 +695,7 @@ class JobsEndpoint(Endpoint):
 class GraphqlEndpoint(Endpoint):
     """Extend Endpoint class to support run method for graphql queries."""
 
-    def run(self, *args, query_id=None, **kwargs):
+    def run(self, query_id, *args, **kwargs):
         """Runs a saved graphql query based on the query_id provided.
 
         Takes a kwarg of `query_id` to specify the query that should be run.
@@ -728,11 +728,7 @@ class GraphqlEndpoint(Endpoint):
                     {"variables":{"foo":"bar"}}
                 )
         """
-
-        if not query_id:
-            raise ValueError('Keyword Argument "query_id" is required to run a query.')
         query_run_url = f"{self.url}/{query_id}/run/"
-
         return Request(
             base=query_run_url,
             token=self.token,

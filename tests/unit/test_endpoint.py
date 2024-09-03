@@ -252,7 +252,9 @@ class JobEndPointTestCase(unittest.TestCase):
 
 class GraphqlEndPointTestCase(unittest.TestCase):
     def test_invalid_arg(self):
-        with self.assertRaises(ValueError, msg='Keyword Argument "query_id" is required to run a query.'):
+        with self.assertRaises(
+            TypeError, msg="GraphqlEndpoint.run() missing 1 required positional argument: 'query_id'"
+        ):
             api = Mock(base_url="http://localhost:8000/api")
             app = Mock(name="test")
             test_obj = GraphqlEndpoint(api, app, "test")
