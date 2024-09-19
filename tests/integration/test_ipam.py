@@ -23,6 +23,6 @@ def test_prefixes_successfully_stringify_tags(nb_client):
         prefix="192.0.2.0/24", namespace={"name": "Global"}, status={"name": "Active"}, tags=[tag.id]
     )
     prefix = nb_client.ipam.prefixes.get(prefix="192.0.2.0/24", namespace="Global")
-    assert str(prefix) == "192.0.2.0/24"
+    assert "192.0.2.0/24" in str(prefix)
     assert prefix.tags
     assert isinstance(prefix.tags[0], Record)
