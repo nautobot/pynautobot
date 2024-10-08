@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from pynautobot.core.endpoint import Endpoint, JobsEndpoint
+from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
 from pynautobot.core.response import Record
 
 
@@ -248,3 +248,14 @@ class JobEndPointTestCase(unittest.TestCase):
             test_obj = JobsEndpoint(api, app, "test")
             test = test_obj.run(job_id="test")
             self.assertEqual(len(test), 1)
+
+
+class GraphqlEndPointTestCase(unittest.TestCase):
+    def test_invalid_arg(self):
+        with self.assertRaises(
+            TypeError, msg="GraphqlEndpoint.run() missing 1 required positional argument: 'query_id'"
+        ):
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            test_obj = GraphqlEndpoint(api, app, "test")
+            test_obj.run()

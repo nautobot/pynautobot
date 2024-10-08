@@ -16,7 +16,7 @@
 
 import logging
 
-from pynautobot.core.endpoint import Endpoint, JobsEndpoint
+from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
 from pynautobot.core.query import Request
 from pynautobot.models import circuits, dcim, extras, ipam, users, virtualization
 
@@ -63,6 +63,8 @@ class App(object):
     def __getattr__(self, name):
         if name == "jobs":
             return JobsEndpoint(self.api, self, name, model=self.model)
+        elif name == "graphql_queries":
+            return GraphqlEndpoint(self.api, self, name, model=self.model)
         return Endpoint(self.api, self, name, model=self.model)
 
     def __dir__(self):
