@@ -743,6 +743,7 @@ class JobsEndpoint(Endpoint):
 
         raise ValueError("Did not receieve completed job result for job.")
 
+
 class GraphqlEndpoint(Endpoint):
     """Extend Endpoint class to support run method for graphql queries."""
 

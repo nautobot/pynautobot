@@ -294,6 +294,7 @@ class JobEndPointTestCase(unittest.TestCase):
         with self.assertRaises(ValueError):
             test_obj.run_and_wait(job_id="test", interval=1, max_rechecks=2)
 
+
 class GraphqlEndPointTestCase(unittest.TestCase):
     def test_invalid_arg(self):
         with self.assertRaises(
