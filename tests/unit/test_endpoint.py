@@ -15,13 +15,6 @@ class EndPointTestCase(unittest.TestCase):
             test = test_obj.filter(test="test")
             self.assertEqual(len(test), 2)
 
-    def test_filter_empty_kwargs(self):
-        api = Mock(base_url="http://localhost:8000/api")
-        app = Mock(name="test")
-        test_obj = Endpoint(api, app, "test")
-        with self.assertRaises(ValueError) as _:
-            test_obj.filter()
-
     def test_filter_reserved_kwargs(self):
         api = Mock(base_url="http://localhost:8000/api")
         app = Mock(name="test")
@@ -37,6 +30,22 @@ class EndPointTestCase(unittest.TestCase):
             test_obj = Endpoint(api, app, "test")
             with self.assertRaises(ValueError) as _:
                 test_obj.all(limit=None, offset=1)
+
+    def test_all_equals_filter_empty_kwargs(self):
+        with patch("pynautobot.core.query.Request.get", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            mock.return_value = [{"id": 123}, {"id": 321}]
+            test_obj = Endpoint(api, app, "test")
+            self.assertEqual(test_obj.all(), test_obj.filter())
+
+    def test_all_accepts_kwargs(self):
+        with patch("pynautobot.core.endpoint.Endpoint.filter", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            test_obj = Endpoint(api, app, "test")
+            test_obj.all(include=["config_context"])
+            mock.assert_called_with(include=["config_context"])
 
     def test_filter_zero_limit_offset(self):
         with patch("pynautobot.core.query.Request.get", return_value=Mock()) as mock:
