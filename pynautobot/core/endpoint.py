@@ -83,7 +83,7 @@ class Endpoint(object):
             ret = Record
         return ret
 
-    def all(self, api_version=None, limit=None, offset=None):
+    def all(self, *args, **kwargs):
         """Queries the 'ListView' of a given endpoint.
 
         Returns all objects from an endpoint.
@@ -103,21 +103,7 @@ class Endpoint(object):
             >>> nb.dcim.devices.all()
             [test1-a3-oobsw2, test1-a3-oobsw3, test1-a3-oobsw4]
         """
-        if not limit and offset is not None:
-            raise ValueError("offset requires a positive limit value")
-        api_version = api_version or self.api.api_version
-        req = Request(
-            base="{}/".format(self.url),
-            token=self.token,
-            http_session=self.api.http_session,
-            threading=self.api.threading,
-            max_workers=self.api.max_workers,
-            api_version=api_version,
-            limit=limit,
-            offset=offset,
-        )
-
-        return response_loader(req.get(), self.return_obj, self)
+        return self.filter(*args, **kwargs)
 
     def get(self, *args, **kwargs):
         """Queries the DetailsView of a given endpoint.
@@ -224,8 +210,6 @@ class Endpoint(object):
         if args:
             kwargs.update({"q": args[0]})
 
-        if not kwargs:
-            raise ValueError("filter must be passed kwargs. Perhaps use all() instead.")
         if any(i in RESERVED_KWARGS for i in kwargs):
             raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
         limit = kwargs.pop("limit") if "limit" in kwargs else None
@@ -758,3 +742,46 @@ class JobsEndpoint(Endpoint):
                 return response_loader(req, self.return_obj, self)
 
         raise ValueError("Did not receieve completed job result for job.")
+
+class GraphqlEndpoint(Endpoint):
+    """Extend Endpoint class to support run method for graphql queries."""
+
+    def run(self, query_id, *args, **kwargs):
+        """Runs a saved graphql query based on the query_id provided.
+
+        Takes a kwarg of `query_id` to specify the query that should be run.
+
+        Args:
+            *args (str, optional): Used as payload for POST method
+                to the API if provided.
+            **kwargs (str, optional): Any additional argument the
+                endpoint accepts can be added as a keyword arg.
+            query_id (str, required): The UUID of the query object
+                that is being ran.
+
+        Returns:
+            An API response from the execution of the saved graphql query.
+
+        Examples:
+            To run a query no variables:
+            >>> query = nb.extras.graphql_queries.get("Example")
+            >>> query.run()
+
+            To run a query with `variables` as kwarg:
+            >>> query = nb.extras.graphql_queries.get("Example")
+            >>> query.run(
+                    variables={"foo": "bar"})
+                )
+
+            To run a query with JSON payload as an arg:
+            >>> query = nb.extras.graphql_queries.get("Example")
+            >>> query.run(
+                    {"variables":{"foo":"bar"}}
+                )
+        """
+        query_run_url = f"{self.url}/{query_id}/run/"
+        return Request(
+            base=query_run_url,
+            token=self.token,
+            http_session=self.api.http_session,
+        ).post(args[0] if args else kwargs)
