@@ -192,7 +192,7 @@ class Request(object):
             RequestError: If req.ok returns false.
 
         Returns:
-            str: Version number as a string. Empty string if version is not present in the headers.
+            (str): Version number as a string. Empty string if version is not present in the headers.
         """
         headers = {
             "Content-Type": "application/json;",
@@ -218,7 +218,7 @@ class Request(object):
         """Gets the status from /api/status/ endpoint in Nautobot.
 
         Returns:
-            dict: Dictionary as returned by Nautobot.
+            (dict): Dictionary as returned by Nautobot.
 
         Raises:
             RequestError: If request is not successful.
@@ -315,7 +315,7 @@ class Request(object):
             ContentError: If response is not JSON.
 
         Returns:
-            List[Response]: List of `Response` objects returned from the
+            (List[Response]): List of `Response` objects returned from the
                 endpoint.
         """
         if not add_params and self.limit is not None:
@@ -375,7 +375,7 @@ class Request(object):
             ContentError: If the response cannot be deserialized from JSON.
 
         Returns:
-            dict: The deserialized JSON response from the Nautobot API.
+            (dict): The deserialized JSON response from the Nautobot API.
         """
         return self._make_call(verb="put", data=data)
 
@@ -393,7 +393,7 @@ class Request(object):
             ContentError: If the response cannot be deserialized from JSON.
 
         Returns:
-            dict: The deserialized JSON response from the Nautobot API.
+            (dict): The deserialized JSON response from the Nautobot API.
         """
         return self._make_call(verb="post", data=data)
 
@@ -407,7 +407,7 @@ class Request(object):
                 and sent to the API.
 
         Returns:
-            bool: True if successful.
+            (bool): True if successful.
 
         Raises:
             RequestError: If req.ok doesn't return True.
@@ -441,7 +441,7 @@ class Request(object):
             ContentError: If the response cannot be deserialized from JSON.
 
         Returns:
-            dict: The deserialized JSON response from the Nautobot API,
+            (dict): The deserialized JSON response from the Nautobot API,
                 containing information about allowed methods.
         """
 
@@ -456,9 +456,9 @@ class Request(object):
         with the same parameters.
 
         Args:
-            *args: Additional positional arguments to be passed to the
+            *args (list): Additional positional arguments to be passed to the
                 Nautobot API endpoint.
-            **kwargs: Additional keyword arguments to be passed to the
+            **kwargs (dict): Additional keyword arguments to be passed to the
                 Nautobot API endpoint.
 
         Raises:
@@ -466,7 +466,7 @@ class Request(object):
             ContentError: If the response cannot be deserialized from JSON.
 
         Returns:
-            int: The total number of objects that would match the provided query.
+            (int): The total number of objects that would match the provided query.
         """
 
         return self._make_call(add_params={"limit": 1})["count"]
