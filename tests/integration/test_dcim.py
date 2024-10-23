@@ -183,6 +183,7 @@ class TestSimpleServerRackingAndConnecting:
             role={"name": "Leaf Switch"},
             location=location.id,
             status={"name": "Active"},
+            local_config_context_data={"foo": "bar"},
         )
         vc = nb_client.dcim.virtual_chassis.create(name="VC1", master=dev1.id)
         nb_client.dcim.devices.create(
@@ -193,6 +194,7 @@ class TestSimpleServerRackingAndConnecting:
             status={"name": "Active"},
             virtual_chassis=vc.id,
             vc_position=2,
+            local_config_context_data={"foo": "bar"},
         )
         all_vcs = nb_client.dcim.virtual_chassis.all()
         assert len(all_vcs) == 1

@@ -32,12 +32,9 @@ def get_return(lookup, return_fields=None):
     """Returns simple representations for items passed to lookup.
 
     Args:
-        lookup: The object or collection to retrieve representations for.
+        lookup (dict|Record): The object or collection to retrieve representations for.
         return_fields (list, optional): A list of fields to reference when
             calling values on lookup.
-
-    Returns:
-        The simple representation of the object or collection.
 
     Note:
         Used to return a "simple" representation of objects and collections
@@ -171,7 +168,7 @@ class Record(object):
             k (str): The name of the attribute.
 
         Returns:
-            Any: The value of the requested attribute.
+            (Any): The value of the requested attribute.
 
         Raises:
             AttributeError: If the attribute is not found.
@@ -299,8 +296,7 @@ class Record(object):
         attribute when it's called to prevent being called more
         than once.
 
-        Returns:
-            True
+        Returns: (bool)
         """
         if self.url:
             req = Request(
@@ -325,7 +321,7 @@ class Record(object):
             init (bool): Whether to include initialization attributes in the serialization. Default is False.
 
         Returns:
-            dict: A dictionary representation of the serialized object.
+            (dict): A dictionary representation of the serialized object.
 
         Note:
             Using this method to get a dictionary representation of the record
@@ -377,7 +373,7 @@ class Record(object):
         have been made.
 
         Returns:
-            dict: A dictionary containing the changes made to the object.
+            (dict): A dictionary containing the changes made to the object.
 
         Examples:
             >>> x = nb.dcim.devices.get(name='test1234')
@@ -401,7 +397,7 @@ class Record(object):
         and sends them as a dictionary to Request.patch().
 
         Returns:
-            bool: True if the PATCH request was successful.
+            (bool): True if the PATCH request was successful.
 
         Examples:
             >>> x = nb.dcim.devices.get(name='test1-a3-tor1b')
@@ -439,7 +435,7 @@ class Record(object):
                 the record object with.
 
         Returns:
-            bool: True if the PATCH request was successful.
+            (bool): True if the PATCH request was successful.
 
         Examples:
             >>> x = nb.dcim.devices.get(1)
@@ -458,7 +454,7 @@ class Record(object):
         """Deletes an existing object.
 
         Returns:
-            bool: True if the DELETE operation was successful.
+            (bool): True if the DELETE operation was successful.
 
         Examples:
             >>> x = nb.dcim.devices.get(name='test1-a3-tor1b')

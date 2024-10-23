@@ -72,7 +72,7 @@ class Endpoint(object):
             model (obj): The application model that contains unique Record objects.
 
         Returns:
-            Record: Unique response object if exists, otherwise a generic `Record` object.
+            (Record): Unique response object if exists, otherwise a generic `Record` object.
         """
         if model:
             name = name.title().replace("_", "").replace("-", "")
@@ -81,12 +81,12 @@ class Endpoint(object):
             ret = Record
         return ret
 
-    def all(self, api_version=None, limit=None, offset=None):
+    def all(self, *args, **kwargs):
         """Queries the 'ListView' of a given endpoint.
 
         Returns all objects from an endpoint.
 
-        Args:
+        Optional Args:
             api_version (str, optional): Override default or globally-set Nautobot REST API
                 version for this single request.
             limit (int, optional): Overrides the max page size on
@@ -95,32 +95,18 @@ class Endpoint(object):
                 will be made as you iterate through the result set.
             offset (int, optional): Overrides the offset on paginated returns.
         Returns:
-            list: List of :py:class:`.Record` objects.
+            (list): List of :py:class:`.Record` objects.
 
         Examples:
             >>> nb.dcim.devices.all()
             [test1-a3-oobsw2, test1-a3-oobsw3, test1-a3-oobsw4]
         """
-        if not limit and offset is not None:
-            raise ValueError("offset requires a positive limit value")
-        api_version = api_version or self.api.api_version
-        req = Request(
-            base="{}/".format(self.url),
-            token=self.token,
-            http_session=self.api.http_session,
-            threading=self.api.threading,
-            max_workers=self.api.max_workers,
-            api_version=api_version,
-            limit=limit,
-            offset=offset,
-        )
-
-        return response_loader(req.get(), self.return_obj, self)
+        return self.filter(*args, **kwargs)
 
     def get(self, *args, **kwargs):
         """Queries the DetailsView of a given endpoint.
 
-        Args:
+        Optional Args:
             key (int, optional): ID for the item to be retrieved.
             **kwargs (str, optional): Accepts the same keyword args as filter().
                 Any search argument the endpoint accepts can be added as a keyword arg.
@@ -128,7 +114,7 @@ class Endpoint(object):
                 version for this single request.
 
         Returns:
-            Union[Record, None]: A single :py:class:`.Record` object or None.
+            (Union[Record, None]): A single :py:class:`.Record` object or None.
 
         Raises:
             ValueError: If kwarg search returns more than one value.
@@ -198,7 +184,7 @@ class Endpoint(object):
                 Nautobot REST API version for this single request.
 
         Returns:
-            list: A list of :py:class:`.Record` objects.
+            (list): A list of :py:class:`.Record` objects.
 
         Examples:
             To return a list of objects matching a named argument filter.
@@ -222,8 +208,6 @@ class Endpoint(object):
         if args:
             kwargs.update({"q": args[0]})
 
-        if not kwargs:
-            raise ValueError("filter must be passed kwargs. Perhaps use all() instead.")
         if any(i in RESERVED_KWARGS for i in kwargs):
             raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
         limit = kwargs.pop("limit") if "limit" in kwargs else None
@@ -264,7 +248,7 @@ class Endpoint(object):
                 Nautobot REST API version for this single request.
 
         Returns:
-            Union[Record, List[Record]]: A list or single :py:class:`.Record` object depending
+            (Union[Record, List[Record]]): A list or single :py:class:`.Record` object depending
                 on whether a bulk creation was requested.
 
         Examples:
@@ -319,11 +303,11 @@ class Endpoint(object):
             **kwargs (str, optional): See Below.
 
         Keyword Arguments:
-            * *id* (``string``) -- Identifier of the object being updated.
-            * *data* (``dict``) -- Key/value pairs to update the record object with.
+            id (string): Identifier of the object being updated.
+            data (dict): Key/value pairs to update the record object with.
 
         Returns:
-            Union[Record, List[Record]]: A list or single :py:class:`.Record` object depending
+            (Union[Record, List[Record]]): A list or single :py:class:`.Record` object depending
                 on whether a bulk update was requested.
 
         Examples:
@@ -425,7 +409,7 @@ class Endpoint(object):
             objects (list): A list of either IDs or Records to delete.
 
         Returns:
-            bool: True if bulk DELETE operation was successful.
+            (bool): True if bulk DELETE operation was successful.
 
         Examples:
             Deleting all `devices`:
@@ -485,7 +469,7 @@ class Endpoint(object):
                 Nautobot REST API version for this single request.
 
         Returns:
-            dict: Dict containing the available choices.
+            (dict): Dict containing the available choices.
 
         Example (from Nautobot 2.8.x):
             >>> from pprint import pprint
@@ -543,7 +527,7 @@ class Endpoint(object):
                 Nautobot REST API version for this single request.
 
         Returns:
-            int: Integer with count of objects returned by query.
+            (int): Integer with count of objects returned by query.
 
         Examples:
             To return a count of objects matching a named argument filter.
@@ -595,11 +579,11 @@ class DetailEndpoint(object):
 
         Args:
             api_version (str, optional): Override default or globally set Nautobot REST API version for this single request.
-            **kwargs: Key/value pairs that get converted into URL parameters when passed to the endpoint.
+            **kwargs (dict): Key/value pairs that get converted into URL parameters when passed to the endpoint.
                 E.g. ``.list(method='get_facts')`` would be converted to ``.../?method=get_facts``.
 
         Returns:
-            Union[Dict, List[Dict]]: A dictionary or list of dictionaries retrieved from Nautobot.
+            (Union[Dict, List[Dict]]): A dictionary or list of dictionaries retrieved from Nautobot.
         """
 
         api_version = api_version or self.parent_obj.api.api_version
@@ -624,7 +608,7 @@ class DetailEndpoint(object):
                 Nautobot REST API version for this single request.
 
         Returns:
-            Union[Dict, List[Dict]]: A dictionary or list of dictionaries representing
+            (Union[Dict, List[Dict]]): A dictionary or list of dictionaries representing
                 the items created in Nautobot.
         """
         data = data or {}
@@ -658,7 +642,7 @@ class JobsEndpoint(Endpoint):
                 Nautobot REST API version for this single request.
 
         Returns:
-            obj: Job details: job_result object uuid found at `obj.result.id`.
+            obj (str): Job details: job_result object uuid found at `obj.result.id`.
 
         Examples:
             To run a job for verifying hostnames:
@@ -709,7 +693,7 @@ class GraphqlEndpoint(Endpoint):
                 that is being ran.
 
         Returns:
-            An API response from the execution of the saved graphql query.
+            (Response): An API response from the execution of the saved graphql query.
 
         Examples:
             To run a query no variables:
