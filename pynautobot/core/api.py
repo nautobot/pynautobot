@@ -103,6 +103,7 @@ class Api(object):
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")
+        self.cloud = App(self, "cloud")
         self.circuits = App(self, "circuits")
         self.tenancy = App(self, "tenancy")
         self.extras = App(self, "extras")
