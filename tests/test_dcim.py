@@ -159,12 +159,28 @@ class InterfaceTestCase(Generic.Tests):
         ],
     )
     def test_get_all(self, mock):
-        ret = self.endpoint.all()
+        ret = self.endpoint.all(limit=50)
+        next_url = "http://localhost:8000/api/dcim/interfaces/?limit=50&offset=50"
         self.assertTrue(ret)
         self.assertIsInstance(ret, list)
         self.assertIsInstance(ret[0], self.ret)
         self.assertEqual(len(ret), 71)
-        mock.assert_called_with(self.bulk_uri, params={"limit": 221, "offset": 50}, json=None, headers=HEADERS)
+        mock.assert_called_with(next_url, params={}, json=None, headers=HEADERS)
+
+    @patch(
+        "requests.sessions.Session.get",
+        side_effect=[
+            Response(fixture="dcim/{}.json".format(name + "_1")),
+            Response(fixture="dcim/{}.json".format(name + "_2")),
+        ],
+    )
+    def test_get_chunk(self, mock):
+        ret = self.endpoint.all(limit=50, offset=0)
+        self.assertTrue(ret)
+        self.assertIsInstance(ret, list)
+        self.assertIsInstance(ret[0], self.ret)
+        self.assertEqual(len(ret), 50)
+        mock.assert_called_with(self.bulk_uri, params={"limit": 50, "offset": 0}, json=None, headers=HEADERS)
 
     @patch(
         "requests.sessions.Session.get",
@@ -340,7 +356,7 @@ class CablesTestCase(Generic.Tests):
     app = "dcim"
     name = "cables"
 
-    def test_get_circuit(self):
+    def test_get_cable_between_device_and_circuit(self):
         response_obj = Response(
             content={
                 "id": self.uuid,
@@ -352,9 +368,9 @@ class CablesTestCase(Generic.Tests):
                     "circuit": {
                         "id": 346,
                         "url": "http://localhost:8000/api/circuits/circuits/1/",
-                        "cid": "TEST123321",
                     },
                     "term_side": "A",
+                    "display": "TEST123321",
                 },
                 "termination_b_type": "dcim.interface",
                 "termination_b_id": 2,
@@ -368,6 +384,7 @@ class CablesTestCase(Generic.Tests):
                         "display_name": "tst1-test2",
                     },
                     "name": "xe-0/0/0",
+                    "display": "xe-0/0/0",
                     "cable": 1,
                 },
                 "type": None,

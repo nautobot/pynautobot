@@ -77,12 +77,15 @@ class Api(object):
         retries=0,
         verify=True,
     ):
+        from pynautobot import __version__
+
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
         self.token = token
         self.headers = {"Authorization": f"Token {self.token}"}
         self.base_url = base_url
         self.http_session = requests.Session()
         self.http_session.verify = verify
+        self.http_session.headers.update({"User-Agent": f"python-pynautobot/{__version__}"})
         if retries:
             _adapter = HTTPAdapter(
                 max_retries=Retry(
@@ -123,7 +126,7 @@ class Api(object):
         if specific features or syntaxes are available.
 
         Returns:
-            str: The Nautobot API version string.
+            (str): The Nautobot API version string.
 
         Raises:
             requests.exceptions.RequestException: If there is an error fetching the
@@ -155,7 +158,7 @@ class Api(object):
         This can be useful for tools like code generation or API clients in other languages.
 
         Returns:
-            dict: The OpenAPI specification document as a Python dictionary.
+            (dict): The OpenAPI specification document as a Python dictionary.
 
         Raises:
             requests.exceptions.RequestException: If there is an error fetching the
@@ -193,7 +196,7 @@ class Api(object):
         **Availability:** Requires Nautobot version 2.10.0 or newer.
 
         Returns:
-            dict: A dictionary containing the status information as returned by Nautobot.
+            (dict): A dictionary containing the status information as returned by Nautobot.
 
         Raises:
             pynautobot.exceptions.RequestError: If the request to Nautobot fails.

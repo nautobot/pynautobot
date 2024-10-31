@@ -118,6 +118,46 @@ location name is now derived using variables.
 GraphQLRecord(json={'data': {'locations': [{'id': ..., 'name': 'HQ', 'parent': {'name': 'US'}}]}}, status_code=200)
 ```
 
+## Making a GraphQL Query with a Saved Query
+
+Nautobot supports saving your graphql queries and executing them later.
+Here is an example of saving a query using pynautobot.
+
+```python
+>>> query = """
+... query ($location_name:String!) {
+...   locations (name: [$location_name]) {
+...     id
+...     name
+...     parent {
+...       name
+...     }
+...   }
+... }
+... """
+>>> data = {"name": "Foobar", "query": query}
+>>> nautobot.extras.graphql_queries.create(**data)
+```
+
+Now that we have a query saved with the name `Foobar`, we can execute it using pynautobot.
+
+```python
+>>> # Create a variables dictionary
+>>> variables = {"location_name": "HQ"}
+>>>
+>>> # Get the query object that was created
+>>> query_object = nautobot.extras.graphql_queries.get("Foobar")
+>>>
+>>> # Call the run method to execute query
+>>> query_object.run()
+>>>
+>>> # To execute a query with variables
+>>> query_object.run(variables=variables)
+>>>
+>>> # To execute a query with custom payload
+>>> query_object.run({"variables": variables, "foo": "bar"})
+```
+
 ## The GraphQLRecord Object
 
 The `~pynautobot.core.graphql.GraphQLRecord`{.interpreted-text

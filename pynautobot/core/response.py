@@ -19,6 +19,7 @@ from collections import OrderedDict
 
 import pynautobot.core.app
 from requests.utils import urlparse
+import pynautobot.core.endpoint
 from pynautobot.core.query import Request
 from pynautobot.core.util import Hashabledict
 
@@ -31,12 +32,9 @@ def get_return(lookup, return_fields=None):
     """Returns simple representations for items passed to lookup.
 
     Args:
-        lookup: The object or collection to retrieve representations for.
+        lookup (dict|Record): The object or collection to retrieve representations for.
         return_fields (list, optional): A list of fields to reference when
             calling values on lookup.
-
-    Returns:
-        The simple representation of the object or collection.
 
     Note:
         Used to return a "simple" representation of objects and collections
@@ -170,7 +168,7 @@ class Record(object):
             k (str): The name of the attribute.
 
         Returns:
-            Any: The value of the requested attribute.
+            (Any): The value of the requested attribute.
 
         Raises:
             AttributeError: If the attribute is not found.
@@ -298,8 +296,7 @@ class Record(object):
         attribute when it's called to prevent being called more
         than once.
 
-        Returns:
-            True
+        Returns: (bool)
         """
         if self.url:
             req = Request(
@@ -324,7 +321,7 @@ class Record(object):
             init (bool): Whether to include initialization attributes in the serialization. Default is False.
 
         Returns:
-            dict: A dictionary representation of the serialized object.
+            (dict): A dictionary representation of the serialized object.
 
         Note:
             Using this method to get a dictionary representation of the record
@@ -376,7 +373,7 @@ class Record(object):
         have been made.
 
         Returns:
-            dict: A dictionary containing the changes made to the object.
+            (dict): A dictionary containing the changes made to the object.
 
         Examples:
             >>> x = nb.dcim.devices.get(name='test1234')
@@ -400,7 +397,7 @@ class Record(object):
         and sends them as a dictionary to Request.patch().
 
         Returns:
-            bool: True if the PATCH request was successful.
+            (bool): True if the PATCH request was successful.
 
         Examples:
             >>> x = nb.dcim.devices.get(name='test1-a3-tor1b')
@@ -438,7 +435,7 @@ class Record(object):
                 the record object with.
 
         Returns:
-            bool: True if the PATCH request was successful.
+            (bool): True if the PATCH request was successful.
 
         Examples:
             >>> x = nb.dcim.devices.get(1)
@@ -457,7 +454,7 @@ class Record(object):
         """Deletes an existing object.
 
         Returns:
-            bool: True if the DELETE operation was successful.
+            (bool): True if the DELETE operation was successful.
 
         Examples:
             >>> x = nb.dcim.devices.get(name='test1-a3-tor1b')
@@ -472,3 +469,35 @@ class Record(object):
             api_version=self.api.api_version,
         )
         return True if req.delete() else False
+
+    @property
+    def notes(self):
+        """Represents the ``notes`` detail endpoint.
+
+        Returns a list of DetailEndpoint objects that are
+        related to the passed in object
+
+        :returns: :py:class:`.DetailEndpoint`
+
+        :Examples:
+
+        Notes associated to a device object:
+
+        >>> device = nb.dcim.devices.get(name="test")
+        >>> device.notes.list()
+        [<pynautobot.core.response.Record ('test - 2024-07-16T11:59:00.169296+00:00')...]
+
+        Notes associated to a controller object:
+
+        >>> controller = nb.dcim.controllers.get(name="test")
+        >>> controller.notes.list()
+        [<pynautobot.core.response.Record ('test - 2024-07-16T11:59:00.169296+00:00')...]
+
+        Create new note on device object:
+
+        >>> device = nb.dcim.devices.get(name="test")
+        >>> device.notes.create({"note": "foo bar"})
+        [<pynautobot.core.response.Record ('test - 2024-07-16T18:45:07.653263+00:00')...]
+
+        """
+        return pynautobot.core.endpoint.DetailEndpoint(self, "notes", custom_return=Record)

@@ -16,7 +16,7 @@
 
 import logging
 
-from pynautobot.core.endpoint import Endpoint, JobsEndpoint
+from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
 from pynautobot.core.query import Request
 from pynautobot.models import circuits, dcim, extras, ipam, users, virtualization
 
@@ -29,7 +29,7 @@ class App(object):
     Calls to attributes are returned as Endpoint objects.
 
     Returns:
-        Endpoint: Matching requested attribute.
+        (Endpoint): Matching requested attribute.
 
     Raises:
         RequestError: If requested endpoint doesn't exist.
@@ -63,13 +63,21 @@ class App(object):
     def __getattr__(self, name):
         if name == "jobs":
             return JobsEndpoint(self.api, self, name, model=self.model)
+        elif name == "graphql_queries":
+            return GraphqlEndpoint(self.api, self, name, model=self.model)
         return Endpoint(self.api, self, name, model=self.model)
+
+    def __dir__(self):
+        endpoints = self._get_api_endpoints()
+        # We replace all hyphens with underscores so they can be used as attributes
+        endpoint_attrs = [e.replace("-", "_") for e in endpoints.keys()]
+        return super().__dir__() + endpoint_attrs
 
     def choices(self):
         """Returns _choices response from App.
 
         Returns:
-            Raw response from Nautobot's _choices endpoint.
+            (List[Response]): Raw response from Nautobot's _choices endpoint.
         """
         if self._choices:
             return self._choices
@@ -86,7 +94,7 @@ class App(object):
         """Returns custom-fields response from app.
 
         Returns:
-            Raw response from Nautobot's custom-fields endpoint.
+            (List[Response]): Raw response from Nautobot's custom-fields endpoint.
 
         Raises:
             RequestError: If called for an invalid endpoint.
@@ -127,7 +135,7 @@ class App(object):
         """Returns custom-field-choices response from app.
 
         Returns:
-            Raw response from Nautobot's custom-field-choices endpoint.
+            (List[Response]): Raw response from Nautobot's custom-field-choices endpoint.
 
         Raises:
             RequestError: If called for an invalid endpoint.
@@ -162,7 +170,7 @@ class App(object):
         """Returns config response from app.
 
         Returns:
-            dict: Raw response from Nautobot's config endpoint.
+            (dict): Raw response from Nautobot's config endpoint.
 
         Raises:
             RequestError: If called for an invalid endpoint.
@@ -188,6 +196,17 @@ class App(object):
         ).get()
         return config
 
+    def _get_api_endpoints(self):
+        """Returns the API endpoints available for the app."""
+        return Request(
+            base="{}/{}/".format(
+                self.api.base_url,
+                self.name,
+            ),
+            token=self.api.token,
+            http_session=self.api.http_session,
+        ).get()
+
 
 class PluginsApp(object):
     """Add plugins to the URL path.
@@ -196,7 +215,7 @@ class PluginsApp(object):
     but you need to add "plugins" to the request URL path.
 
     Returns:
-        App: With "plugins" added to the path.
+        (App): With "plugins" added to the path.
     """
 
     def __init__(self, api):
@@ -205,11 +224,17 @@ class PluginsApp(object):
     def __getattr__(self, name):
         return App(self.api, f"plugins/{name.replace('_', '-')}")
 
+    def __dir__(self):
+        endpoints = self._get_api_endpoints()
+        # We replace all hyphens with underscores so they can be used as attributes
+        endpoint_attrs = [e.replace("-", "_") for e in endpoints.keys()]
+        return super().__dir__() + endpoint_attrs
+
     def installed_plugins(self):
         """Returns raw response with installed plugins.
 
         Returns:
-            Raw response from Nautobot's installed plugins.
+            (List[Response]): Raw response from Nautobot's installed plugins.
 
         Examples:
             >>> nb.plugins.installed_plugins()
@@ -229,3 +254,13 @@ class PluginsApp(object):
             http_session=self.api.http_session,
         ).get()
         return installed_plugins
+
+    def _get_api_endpoints(self):
+        """Returns any plugin API endpoints available."""
+        return Request(
+            base="{}/plugins/".format(
+                self.api.base_url,
+            ),
+            token=self.api.token,
+            http_session=self.api.http_session,
+        ).get()

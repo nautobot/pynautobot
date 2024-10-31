@@ -128,6 +128,8 @@ class Request(object):
         base,
         http_session,
         filters=None,
+        limit=None,
+        offset=None,
         key=None,
         token=None,
         threading=False,
@@ -154,6 +156,8 @@ class Request(object):
         self.threading = threading
         self.max_workers = max_workers
         self.api_version = api_version
+        self.limit = limit
+        self.offset = offset
 
     def get_openapi(self):
         """Gets the OpenAPI Spec"""
@@ -188,7 +192,7 @@ class Request(object):
             RequestError: If req.ok returns false.
 
         Returns:
-            str: Version number as a string. Empty string if version is not present in the headers.
+            (str): Version number as a string. Empty string if version is not present in the headers.
         """
         headers = {
             "Content-Type": "application/json;",
@@ -214,7 +218,7 @@ class Request(object):
         """Gets the status from /api/status/ endpoint in Nautobot.
 
         Returns:
-            dict: Dictionary as returned by Nautobot.
+            (dict): Dictionary as returned by Nautobot.
 
         Raises:
             RequestError: If request is not successful.
@@ -311,24 +315,23 @@ class Request(object):
             ContentError: If response is not JSON.
 
         Returns:
-            List[Response]: List of `Response` objects returned from the
+            (List[Response]): List of `Response` objects returned from the
                 endpoint.
         """
+        if not add_params and self.limit is not None:
+            add_params = {"limit": self.limit}
+            if self.limit and self.offset is not None:
+                add_params["offset"] = self.offset
 
-        def req_all():
+        def req_all(add_params):
             req = self._make_call(add_params=add_params)
             if isinstance(req, dict) and req.get("results") is not None:
                 ret = req["results"]
-                first_run = True
-                while req["next"]:
-                    # Not worrying about making sure add_params kwargs is
-                    # passed in here because results from detail routes aren't
-                    # paginated, thus far.
-                    if first_run:
+                while req["next"] and self.offset is None:
+                    if not add_params:
                         req = self._make_call(add_params={"limit": req["count"], "offset": len(req["results"])})
                     else:
                         req = self._make_call(url_override=req["next"])
-                    first_run = False
                     ret.extend(req["results"])
                 return ret
             else:
@@ -341,7 +344,7 @@ class Request(object):
             req = self._make_call(add_params=add_params)
             if isinstance(req, dict) and req.get("results") is not None:
                 ret = req["results"]
-                if req.get("next"):
+                if req.get("next") and self.offset is None:
                     page_size = len(req["results"])
                     pages = calc_pages(page_size, req["count"])
                     page_offsets = [increment * page_size for increment in range(1, pages)]
@@ -358,7 +361,7 @@ class Request(object):
         if self.threading:
             return req_all_threaded(add_params)
 
-        return req_all()
+        return req_all(add_params)
 
     def put(self, data: dict) -> dict:
         """Makes a PUT request to the Nautobot API.
@@ -372,7 +375,7 @@ class Request(object):
             ContentError: If the response cannot be deserialized from JSON.
 
         Returns:
-            dict: The deserialized JSON response from the Nautobot API.
+            (dict): The deserialized JSON response from the Nautobot API.
         """
         return self._make_call(verb="put", data=data)
 
@@ -390,7 +393,7 @@ class Request(object):
             ContentError: If the response cannot be deserialized from JSON.
 
         Returns:
-            dict: The deserialized JSON response from the Nautobot API.
+            (dict): The deserialized JSON response from the Nautobot API.
         """
         return self._make_call(verb="post", data=data)
 
@@ -404,7 +407,7 @@ class Request(object):
                 and sent to the API.
 
         Returns:
-            bool: True if successful.
+            (bool): True if successful.
 
         Raises:
             RequestError: If req.ok doesn't return True.
@@ -438,7 +441,7 @@ class Request(object):
             ContentError: If the response cannot be deserialized from JSON.
 
         Returns:
-            dict: The deserialized JSON response from the Nautobot API,
+            (dict): The deserialized JSON response from the Nautobot API,
                 containing information about allowed methods.
         """
 
@@ -453,9 +456,9 @@ class Request(object):
         with the same parameters.
 
         Args:
-            *args: Additional positional arguments to be passed to the
+            *args (list): Additional positional arguments to be passed to the
                 Nautobot API endpoint.
-            **kwargs: Additional keyword arguments to be passed to the
+            **kwargs (dict): Additional keyword arguments to be passed to the
                 Nautobot API endpoint.
 
         Raises:
@@ -463,7 +466,7 @@ class Request(object):
             ContentError: If the response cannot be deserialized from JSON.
 
         Returns:
-            int: The total number of objects that would match the provided query.
+            (int): The total number of objects that would match the provided query.
         """
 
         return self._make_call(add_params={"limit": 1})["count"]
