@@ -43,6 +43,7 @@ class Api(object):
 
     Attributes:
         dcim: An instance of the `App` class providing access to DCIM endpoints.
+        cloud: An instance of the `App` class providing access to Cloud endpoints.
         ipam: An instance of the `App` class providing access to IPAM endpoints.
         circuits: An instance of the `App` class providing access to Circuits endpoints.
         tenancy: An instance of the `App` class providing access to Tenancy endpoints.
