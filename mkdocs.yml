@@ -163,6 +163,7 @@ nav:
               - Util: "dev/code_reference/core/util.md"
           - Models:
               - Circuits: "dev/code_reference/models/circuits.md"
+              - Cloud: "dev/code_reference/models/cloud.md"
               - DCIM: "dev/code_reference/models/dcim.md"
               - Extras: "dev/code_reference/models/extras.md"
               - IPAM: "dev/code_reference/models/ipam.md"

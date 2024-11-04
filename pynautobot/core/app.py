@@ -18,7 +18,7 @@ import logging
 
 from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
 from pynautobot.core.query import Request
-from pynautobot.models import circuits, dcim, extras, ipam, users, virtualization
+from pynautobot.models import circuits, cloud, dcim, extras, ipam, users, virtualization
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +37,7 @@ class App(object):
 
     models = {
         "dcim": dcim,
+        "cloud": cloud,
         "ipam": ipam,
         "circuits": circuits,
         "virtualization": virtualization,

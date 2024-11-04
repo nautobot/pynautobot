@@ -43,6 +43,7 @@ class Api(object):
 
     Attributes:
         dcim: An instance of the `App` class providing access to DCIM endpoints.
+        cloud: An instance of the `App` class providing access to Cloud endpoints.
         ipam: An instance of the `App` class providing access to IPAM endpoints.
         circuits: An instance of the `App` class providing access to Circuits endpoints.
         tenancy: An instance of the `App` class providing access to Tenancy endpoints.
@@ -103,6 +104,7 @@ class Api(object):
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")
+        self.cloud = App(self, "cloud")
         self.circuits = App(self, "circuits")
         self.tenancy = App(self, "tenancy")
         self.extras = App(self, "extras")
