@@ -141,6 +141,7 @@ nav:
       - Uninstall: "admin/uninstall.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+          - v2.4: "admin/release_notes/version_2.4.md"
           - v2.3: "admin/release_notes/version_2.3.md"
           - v2.2: "admin/release_notes/version_2.2.md"
           - v2.1: "admin/release_notes/version_2.1.md"
@@ -163,6 +164,7 @@ nav:
               - Util: "dev/code_reference/core/util.md"
           - Models:
               - Circuits: "dev/code_reference/models/circuits.md"
+              - Cloud: "dev/code_reference/models/cloud.md"
               - DCIM: "dev/code_reference/models/dcim.md"
               - Extras: "dev/code_reference/models/extras.md"
               - IPAM: "dev/code_reference/models/ipam.md"
