@@ -2,7 +2,7 @@
 
 [tool.poetry]
 name = "pynautobot"
-version = "2.3.0"
+version = "2.4.0"
 description = "Nautobot API client library"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 readme = "README.md"
