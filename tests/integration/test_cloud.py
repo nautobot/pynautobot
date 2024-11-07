@@ -20,9 +20,12 @@ class TestCloudResourceType:
 
         # Create
         cloud_resource_type = nb_client.cloud.cloud_resource_types.create(
-            name="Test", provider="Dell", content_types=["cloud.cloudservice"]
+            name="Test", provider="Dell", content_types=["cloud.cloudservice"], config_schema={"Foo": "Bar"}
         )
         assert cloud_resource_type
+
+        # Confirm json field is retrievable
+        assert cloud_resource_type.config_schema == {"Foo": "Bar"}
 
         # Read
         test_cloud_resource_type = nb_client.cloud.cloud_resource_types.get(name="Test")
@@ -72,9 +75,12 @@ class TestCloudResourceType:
         )
         cloud_account = nb_client.cloud.cloud_accounts.create(name="TestAcct", provider="Dell", account_number="424242")
         cloud_service = nb_client.cloud.cloud_services.create(
-            name="TestService", cloud_resource_type="Test", cloud_account="TestAcct"
+            name="TestService", cloud_resource_type="Test", cloud_account="TestAcct", extra_config={"Foo": "Bar"}
         )
         assert cloud_service
+
+        # Confirm json field is retrievable
+        assert cloud_service.extra_config == {"Foo": "Bar"}
 
         # Read
         test_cloud_service = nb_client.cloud.cloud_services.get(name="TestService")
@@ -105,9 +111,12 @@ class TestCloudResourceType:
         )
         cloud_account = nb_client.cloud.cloud_accounts.create(name="TestAcct", provider="Dell", account_number="424242")
         cloud_network = nb_client.cloud.cloud_networks.create(
-            name="TestNetwork", cloud_resource_type="Test", cloud_account="TestAcct"
+            name="TestNetwork", cloud_resource_type="Test", cloud_account="TestAcct", extra_config={"Foo": "Bar"}
         )
         assert cloud_network
+
+        # Confirm json field is retrievable
+        assert cloud_network.extra_config == {"Foo": "Bar"}
 
         # Read
         test_cloud_network = nb_client.cloud.cloud_networks.get(name="TestNetwork")
