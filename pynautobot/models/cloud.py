@@ -14,4 +14,30 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-# Reserved for cloud models
+from pynautobot.core.response import Record, JsonField
+
+
+class CloudResourceTypes(Record):
+    """
+    CloudResourceType object
+    """
+
+    config_schema = JsonField
+
+
+class CloudServices(Record):
+    """
+    CloudService object
+    """
+
+    extra_config = JsonField
+    cloud_resource_type = CloudResourceTypes
+
+
+class CloudNetworks(Record):
+    """
+    CloudNetwork object
+    """
+
+    extra_config = JsonField
+    cloud_resource_type = CloudResourceTypes
