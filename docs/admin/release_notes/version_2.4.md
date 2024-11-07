@@ -3,3 +3,9 @@
 ## Added
 
 (#248) Added support for new cloud models found in Nautobot 2.3+
+
+##v2.4.1
+
+### Fixed
+
+- (#253) Fixed missing json data returned on cloud endpoints
