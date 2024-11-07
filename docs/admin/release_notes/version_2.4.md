@@ -8,4 +8,4 @@
 
 ### Fixed
 
-- (#253) Fixes missing json data returned on cloud endpoints
+- (#253) Fixed missing json data returned on cloud endpoints
