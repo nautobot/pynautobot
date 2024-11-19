@@ -32,9 +32,11 @@ def test_prefixes_successfully_stringify_tags(nb_client):
 @pytest.mark.timeout(120)
 def test_prefixes_pagination_with_max_page_size(nb_client):
     """Validate prefixes are returned when dataset is larger than max_page_size and not in endless loop."""
-    for i in range(0, 256):
-        nb_client.ipam.prefixes.create(
-            prefix=f"192.1.{str(i)}.0/24", namespace={"name": "Global"}, status={"name": "Active"}
-        )
+    nb_client.ipam.prefixes.create(
+        [
+            {"prefix": f"192.1.{str(i)}.0/24", "namespace": {"name": "Global"}, "status": {"name": "Active"}}
+            for i in range(0, 256)
+        ]
+    )
     prefixes = nb_client.ipam.prefixes.all()
-    assert prefixes
+    assert len(prefixes) >= 255
