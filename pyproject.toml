@@ -27,6 +27,7 @@ packaging = "^23.2"
 [tool.poetry.group.dev.dependencies]
 requests-mock = "^1.12.1"
 pytest = "^8.1.1"
+pytest-timeout = "^2.3.1"
 mkdocs = "^1.6.0"
 watchdog = "^4.0.0"
 mkdocs-material = "9.5.32"

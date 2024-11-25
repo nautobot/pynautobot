@@ -327,11 +327,13 @@ class Request(object):
             req = self._make_call(add_params=add_params)
             if isinstance(req, dict) and req.get("results") is not None:
                 ret = req["results"]
+                first_run = True
                 while req["next"] and self.offset is None:
-                    if not add_params:
+                    if not add_params and first_run:
                         req = self._make_call(add_params={"limit": req["count"], "offset": len(req["results"])})
                     else:
                         req = self._make_call(url_override=req["next"])
+                    first_run = False
                     ret.extend(req["results"])
                 return ret
             else:
