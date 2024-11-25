@@ -91,7 +91,7 @@ class TestDynamicGroup:
     """Dynamic group tests."""
 
     def test_dynamic_group_filter_field(self, nb_client):
-        """Verify we can create a dyanmic group and return the filter field."""
+        """Verify we can create a dynamic group and return the filter field."""
 
         # Define filter field
         obj_filter = {"q": "foobar"}
