@@ -85,3 +85,31 @@ class TestGraphqlQueries:
         data = query.run(variables={"devicename": "dev-1"})
         assert len(data.get("data", {}).get("devices")) == 1
         assert data.get("data", {}).get("devices")[0].get("name") == "dev-1"
+
+
+class TestDynamicGroup:
+    """Dynamic group tests."""
+
+    def test_dynamic_group_filter_field(self, nb_client):
+        """Verify we can create a dynamic group and return the filter field."""
+
+        # Define filter field
+        obj_filter = {"q": "foobar"}
+
+        # Create dynamic group
+        nb_client.extras.dynamic_groups.create(
+            [
+                {
+                    "name": "TestDynamicGroup",
+                    "content_type": "dcim.device",
+                    "group_type": "dynamic-filter",
+                    "filter": obj_filter,
+                }
+            ]
+        )
+
+        # Get dynamic group
+        dynamic_group = nb_client.extras.dynamic_groups.get(name="TestDynamicGroup")
+
+        # Assert filter field is returned
+        assert dynamic_group.filter == obj_filter
