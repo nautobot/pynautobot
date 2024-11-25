@@ -1,5 +1,3 @@
-from packaging import version
-
 import pytest
 
 
