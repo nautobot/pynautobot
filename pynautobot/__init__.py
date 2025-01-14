@@ -1,15 +1,16 @@
 """
 This file has been modified by NetworktoCode, LLC.
 """
-from pkg_resources import get_distribution, DistributionNotFound
 
-from pynautobot.core.query import RequestError, AllocationError, ContentError
+from importlib.metadata import PackageNotFoundError, version
+
 from pynautobot.core.api import Api as api
+from pynautobot.core.query import AllocationError, ContentError, RequestError
 
+__all__ = ["RequestError", "AllocationError", "ContentError", "api", "__version__"]
 
-__all__ = ["RequestError", "AllocationError", "ContentError", "api"]
 
 try:
-    __version__ = get_distribution(__name__).version
-except DistributionNotFound:
-    pass
+    __version__ = version(__package__)
+except PackageNotFoundError:
+    __version__ = "Unable to determine version; no package found"

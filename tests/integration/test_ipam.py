@@ -1,3 +1,4 @@
+import pytest
 from pynautobot.core.response import Record
 
 
@@ -23,6 +24,19 @@ def test_prefixes_successfully_stringify_tags(nb_client):
         prefix="192.0.2.0/24", namespace={"name": "Global"}, status={"name": "Active"}, tags=[tag.id]
     )
     prefix = nb_client.ipam.prefixes.get(prefix="192.0.2.0/24", namespace="Global")
-    assert str(prefix) == "192.0.2.0/24"
+    assert "192.0.2.0/24" in str(prefix)
     assert prefix.tags
     assert isinstance(prefix.tags[0], Record)
+
+
+@pytest.mark.timeout(120)
+def test_prefixes_pagination_with_max_page_size(nb_client):
+    """Validate prefixes are returned when dataset is larger than max_page_size and not in endless loop."""
+    nb_client.ipam.prefixes.create(
+        [
+            {"prefix": f"192.1.{str(i)}.0/24", "namespace": {"name": "Global"}, "status": {"name": "Active"}}
+            for i in range(0, 256)
+        ]
+    )
+    prefixes = nb_client.ipam.prefixes.all()
+    assert len(prefixes) >= 255

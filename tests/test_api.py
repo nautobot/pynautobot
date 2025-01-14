@@ -1,8 +1,6 @@
 import unittest
-from unittest.mock import ANY, Mock, patch, call
-from http.client import HTTPMessage
+from unittest.mock import patch
 
-from pynautobot.core.query import RequestErrorFromException
 import pynautobot
 
 host = "http://localhost:8000"
@@ -51,6 +49,11 @@ class ApiTestCase(unittest.TestCase):
         api = pynautobot.api("http://localhost:8000/", verify=False, **def_kwargs)
         self.assertTrue(api)
         self.assertFalse(api.http_session.verify)
+
+    @patch("pynautobot.api.version", "2.0")
+    def test_useragent_set(self, *_):
+        api = pynautobot.api("http://localhost:8000/", **def_kwargs)
+        self.assertEqual(api.http_session.headers["user-agent"], f"python-pynautobot/{pynautobot.__version__}")
 
 
 class ApiVersionTestCase(unittest.TestCase):
@@ -120,44 +123,12 @@ class ApiStatusTestCase(unittest.TestCase):
 
 
 class ApiRetryTestCase(unittest.TestCase):
-    class ResponseWithStatus:
-        ok = False
-        status_code = 429
-
-    @patch("urllib3.connectionpool.HTTPConnectionPool._get_conn")
-    def test_api_retry(self, getconn_mock):
-        getconn_mock.return_value.getresponse.side_effect = [
-            Mock(status=500, msg=HTTPMessage()),
-            Mock(status=429, msg=HTTPMessage()),
-            Mock(status=200, msg=HTTPMessage()),
-        ]
-
-        api = pynautobot.api(
-            "http://any.url/",
-            retries=2,
-        )
-        with patch("pynautobot.api.version", "2.0"):
-            api.version
-
-        assert getconn_mock.return_value.request.mock_calls == [
-            call("GET", "/api/", body=None, headers=ANY),
-            call("GET", "/api/", body=None, headers=ANY),
-            call("GET", "/api/", body=None, headers=ANY),
-        ]
-
-    @patch("urllib3.connectionpool.HTTPConnectionPool._get_conn")
-    def test_api_retry_fails(self, getconn_mock):
-        getconn_mock.return_value.getresponse.side_effect = [
-            Mock(status=500, msg=HTTPMessage()),
-            Mock(status=429, msg=HTTPMessage()),
-            Mock(status=200, msg=HTTPMessage()),
-        ]
-
+    def test_api_retry(self):
         with patch("pynautobot.api.version", "2.0"):
             api = pynautobot.api(
                 "http://any.url/",
-                retries=1,
+                retries=2,
             )
-
-        with self.assertRaises(RequestErrorFromException):
-            api.version
+            # Assert that the retries are set on the session
+            self.assertEqual(api.http_session.adapters["http://"].max_retries.total, 2)
+            self.assertEqual(api.http_session.adapters["https://"].max_retries.total, 2)

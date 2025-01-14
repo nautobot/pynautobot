@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from pynautobot.core.endpoint import Endpoint, JobsEndpoint
+from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
 from pynautobot.core.response import Record
 
 
@@ -15,23 +15,46 @@ class EndPointTestCase(unittest.TestCase):
             test = test_obj.filter(test="test")
             self.assertEqual(len(test), 2)
 
-    def test_filter_empty_kwargs(self):
-        api = Mock(base_url="http://localhost:8000/api")
-        app = Mock(name="test")
-        test_obj = Endpoint(api, app, "test")
-        with self.assertRaises(ValueError) as _:
-            test_obj.filter()
-
     def test_filter_reserved_kwargs(self):
         api = Mock(base_url="http://localhost:8000/api")
         app = Mock(name="test")
         test_obj = Endpoint(api, app, "test")
         with self.assertRaises(ValueError) as _:
             test_obj.filter(pk=1)
-        with self.assertRaises(ValueError) as _:
-            test_obj.filter(limit=1)
-        with self.assertRaises(ValueError) as _:
-            test_obj.filter(offset=1)
+
+    def test_all_none_limit_offset(self):
+        with patch("pynautobot.core.query.Request.get", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            mock.return_value = [{"id": 123}, {"id": 321}]
+            test_obj = Endpoint(api, app, "test")
+            with self.assertRaises(ValueError) as _:
+                test_obj.all(limit=None, offset=1)
+
+    def test_all_equals_filter_empty_kwargs(self):
+        with patch("pynautobot.core.query.Request.get", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            mock.return_value = [{"id": 123}, {"id": 321}]
+            test_obj = Endpoint(api, app, "test")
+            self.assertEqual(test_obj.all(), test_obj.filter())
+
+    def test_all_accepts_kwargs(self):
+        with patch("pynautobot.core.endpoint.Endpoint.filter", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            test_obj = Endpoint(api, app, "test")
+            test_obj.all(include=["config_context"])
+            mock.assert_called_with(include=["config_context"])
+
+    def test_filter_zero_limit_offset(self):
+        with patch("pynautobot.core.query.Request.get", return_value=Mock()) as mock:
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            mock.return_value = [{"id": 123}, {"id": 321}]
+            test_obj = Endpoint(api, app, "test")
+            with self.assertRaises(ValueError) as _:
+                test_obj.filter(test="test", limit=0, offset=1)
 
     def test_choices(self):
         with patch("pynautobot.core.query.Request.options", return_value=Mock()) as mock:
@@ -234,3 +257,14 @@ class JobEndPointTestCase(unittest.TestCase):
             test_obj = JobsEndpoint(api, app, "test")
             test = test_obj.run(job_id="test")
             self.assertEqual(len(test), 1)
+
+
+class GraphqlEndPointTestCase(unittest.TestCase):
+    def test_invalid_arg(self):
+        with self.assertRaises(
+            TypeError, msg="GraphqlEndpoint.run() missing 1 required positional argument: 'query_id'"
+        ):
+            api = Mock(base_url="http://localhost:8000/api")
+            app = Mock(name="test")
+            test_obj = GraphqlEndpoint(api, app, "test")
+            test_obj.run()

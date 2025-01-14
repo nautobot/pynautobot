@@ -1,26 +1,25 @@
-"""
-(c) 2017 DigitalOcean
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-This file has been modified by NetworktoCode, LLC.
-"""
+# (c) 2017 DigitalOcean
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# This file has been modified by NetworktoCode, LLC.
 
 import copy
 from collections import OrderedDict
 
 import pynautobot.core.app
 from requests.utils import urlparse
+import pynautobot.core.endpoint
 from pynautobot.core.query import Request
 from pynautobot.core.util import Hashabledict
 
@@ -32,15 +31,18 @@ LIST_AS_SET = ("tags", "tagged_vlans", "nat_outside")
 def get_return(lookup, return_fields=None):
     """Returns simple representations for items passed to lookup.
 
-    Used to return a "simple" representation of objects and collections
-    sent to it via lookup. Otherwise, we look to see if
-    lookup is a "choices" field (dict with only 'id' and 'value')
-    or a nested_return. Finally, we check if it's a Record, if
-    so simply return a string. Order is important due to nested_return
-    being self-referential.
+    Args:
+        lookup (dict|Record): The object or collection to retrieve representations for.
+        return_fields (list, optional): A list of fields to reference when
+            calling values on lookup.
 
-    :arg list,optional return_fields: A list of fields to reference when
-        calling values on lookup.
+    Note:
+        Used to return a "simple" representation of objects and collections
+        sent to it via lookup. Otherwise, we look to see if
+        lookup is a "choices" field (dict with only 'id' and 'value')
+        or a nested_return. Finally, we check if it's a Record, if
+        so simply return a string. Order is important due to nested_return
+        being self-referential.
     """
 
     for i in return_fields or ["id", "value", "nested_return"]:
@@ -61,102 +63,86 @@ def get_return(lookup, return_fields=None):
 
 
 class JsonField(object):
-    """Explicit field type for values that are not to be converted
-    to a Record object"""
+    """Explicit field type for values that are not to be converted to a Record object."""
 
     _json_field = True
 
 
 class Record(object):
-    """Create python objects from nautobot API responses.
+    """Create Python objects from Nautobot API responses.
 
     Creates an object from a Nautobot response passed as `values`.
     Nested dicts that represent other endpoints are also turned
     into Record objects. All fields are then assigned to the
-    object's attributes. If a missing attr is requested
-    (e.g. requesting a field that's only present on a full response on
-    a Record made from a nested response) the pynautobot will make a
-    request for the full object and return the requsted value.
+    object's attributes. If a missing attribute is requested
+    (e.g., requesting a field that's only present on a full response on
+    a Record made from a nested response), the pynautobot will make a
+    request for the full object and return the requested value.
 
-    :examples:
+    Examples:
+        Default representation of the object usually contains object's
+        class, object's name, and its location in memory
 
-    Default representation of the object usually contains object's
-    class, object's name and it's location in memory
+        >>> x = nb.dcim.devices.get(1)
+        >>> x
+        <pynautobot.models.dcim.Devices ('test1-switch1') at 0x1953d821250>
+        >>>
 
-    >>> x = nb.dcim.devices.get(1)
-    >>> x
-    <pynautobot.models.dcim.Devices ('test1-switch1') at 0x1953d821250>
-    >>>
+        Querying a string field.
 
-    Querying a string field.
+        >>> x = nb.dcim.devices.get(1)
+        >>> x.serial
+        'ABC123'
+        >>>
 
-    >>> x = nb.dcim.devices.get(1)
-    >>> x.serial
-    'ABC123'
-    >>>
+        Querying a field on a nested object.
 
-    Querying a field on a nested object.
+        >>> x = nb.dcim.devices.get(1)
+        >>> x.device_type.model
+        'QFX5100-24Q'
+        >>>
 
-    >>> x = nb.dcim.devices.get(1)
-    >>> x.device_type.model
-    'QFX5100-24Q'
-    >>>
+        Casting the object as a dictionary.
 
-    Casting the object as a dictionary.
+        >>> from pprint import pprint
+        >>> pprint(dict(x))
+        {'asset_tag': None,
+         'cluster': None,
+         'comments': '',
+         'config_context': {},
+         'created': '2018-04-01',
+         'custom_fields': {},
+         'device_role': {...},
+         'device_type': {...},
+         'display_name': 'test1-switch1',
+         'face': {'label': 'Rear', 'value': 1},
+         'id': 1,
+         'name': 'test1-switch1',
+         'parent_device': None,
+         'platform': {...},
+         'position': 1,
+         'primary_ip': {...},
+         'primary_ip4': {...},
+         'primary_ip6': None,
+         'rack': {...},
+         'serial': 'ABC123',
+         'site': {...},
+         'status': {...},
+         'tags': [],
+         'tenant': None,
+         'vc_position': None,
+         'vc_priority': None,
+         'virtual_chassis': None}
 
-    >>> from pprint import pprint
-    >>> pprint(dict(x))
-    {'asset_tag': None,
-     'cluster': None,
-     'comments': '',
-     'config_context': {},
-     'created': '2018-04-01',
-     'custom_fields': {},
-     'device_role': {'id': 1,
-                     'name': 'Test Switch',
-                     'slug': 'test-switch',
-                     'url': 'http://localhost:8000/api/dcim/device-roles/1/'},
-     'device_type': {...},
-     'display_name': 'test1-switch1',
-     'face': {'label': 'Rear', 'value': 1},
-     'id': 1,
-     'name': 'test1-switch1',
-     'parent_device': None,
-     'platform': {...},
-     'position': 1,
-     'primary_ip': {'address': '192.0.2.1/24',
-                    'family': 4,
-                    'id': 1,
-                    'url': 'http://localhost:8000/api/ipam/ip-addresses/1/'},
-     'primary_ip4': {...},
-     'primary_ip6': None,
-     'rack': {'display_name': 'Test Rack',
-              'id': 1,
-              'name': 'Test Rack',
-              'url': 'http://localhost:8000/api/dcim/racks/1/'},
-     'serial': 'ABC123',
-     'site': {'id': 1,
-              'name': 'TEST',
-              'slug': 'TEST',
-              'url': 'http://localhost:8000/api/dcim/sites/1/'},
-     'status': {'label': 'Active', 'value': 1},
-     'tags': [],
-     'tenant': None,
-     'vc_position': None,
-     'vc_priority': None,
-     'virtual_chassis': None}
-     >>>
+        Iterating over a Record object.
 
-     Iterating over a Record object.
-
-    >>> for i in x:
-    ...  print(i)
-    ...
-    ('id', 1)
-    ('name', 'test1-switch1')
-    ('display_name', 'test1-switch1')
-    >>>
-
+        >>> for i in x:
+        ...     print(i)
+        ...
+        ('id', 1)
+        ('name', 'test1-switch1')
+        ('display_name', 'test1-switch1')
+        >>>
     """
 
     url = None
@@ -173,13 +159,23 @@ class Record(object):
             self._parse_values(values)
 
     def __getattr__(self, k):
-        """Default behavior for missing attrs.
+        """Default behavior for missing attributes.
 
         We'll call `full_details()` if we're asked for an attribute
         we don't have.
 
-        In order to prevent non-explicit behavior,`k='keys'` is
-        excluded because casting to dict() calls this attr.
+        Args:
+            k (str): The name of the attribute.
+
+        Returns:
+            (Any): The value of the requested attribute.
+
+        Raises:
+            AttributeError: If the attribute is not found.
+
+        Note:
+            In order to prevent non-explicit behavior, `k='keys'` is
+            excluded because casting to dict() calls this attribute.
         """
         if self.url:
             if self.has_details is False and k != "keys":
@@ -204,7 +200,7 @@ class Record(object):
         return dict(self)[k]
 
     def __str__(self):
-        return getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or ""
+        return str(getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or "")
 
     def __repr__(self):
         return "<{}.{} ('{}') at {}>".format(self.__class__.__module__, self.__class__.__name__, self, hex(id(self)))
@@ -237,10 +233,16 @@ class Record(object):
             self._init_cache.append((key, get_return(value)))
 
     def _parse_values(self, values):
-        """Parses values init arg.
+        """Parses the values provided during initialization.
 
-        Parses values dict at init and sets object attributes with the
-        values within.
+        Args:
+            values (dict): A dictionary containing the values to be set as object attributes.
+
+        Returns:
+            None
+
+        Note:
+            This method sets object attributes using the values within the provided dictionary.
         """
 
         def list_parser(list_item):
@@ -294,7 +296,7 @@ class Record(object):
         attribute when it's called to prevent being called more
         than once.
 
-        :returns: True
+        Returns: (bool)
         """
         if self.url:
             req = Request(
@@ -309,21 +311,22 @@ class Record(object):
         return False
 
     def serialize(self, nested=False, init=False):
-        """Serializes an object
+        """Serializes the object.
 
-        Pulls all the attributes in an object and creates a dict that
-        can be turned into the json that nautobot is expecting.
+        Pulls all the attributes in an object and creates a dictionary
+        that can be turned into the JSON format expected by Nautobot.
 
-        If an attribute's value is a ``Record`` type it's replaced with
-        the ``id`` field of that object.
+        Args:
+            nested (bool): Whether to include nested objects in the serialization. Default is False.
+            init (bool): Whether to include initialization attributes in the serialization. Default is False.
 
-        .. note::
+        Returns:
+            (dict): A dictionary representation of the serialized object.
 
-            Using this to get a dictionary representation of the record
-            is discouraged. It's probably better to cast to dict()
-            instead. See Record docstring for example.
-
-        :returns: dict.
+        Note:
+            Using this method to get a dictionary representation of the record
+            is discouraged. It's probably better to cast to dict() instead.
+            See the Record docstring for an example.
         """
         if nested:
             return get_return(self)
@@ -363,21 +366,22 @@ class Record(object):
         return set([i[0] for i in set(current.items()) ^ set(init.items())])
 
     def updates(self):
-        """Compiles changes for an existing object into a dict.
+        """Compiles changes for an existing object into a dictionary.
 
-        Takes a diff between the objects current state and its state at init
-        and returns them as a dictionary, which will be empty if no changes.
+        Takes a diff between the object's current state and its state at initialization
+        and returns them as a dictionary. Returns an empty dictionary if no changes
+        have been made.
 
-        :returns: dict.
-        :example:
+        Returns:
+            (dict): A dictionary containing the changes made to the object.
 
-        >>> x = nb.dcim.devices.get(name='test1234')
-        >>> x.serial
-        ''
-        >>> x.serial = '1234'
-        >>> x.updates()
-        {'serial': '1234'}
-        >>>
+        Examples:
+            >>> x = nb.dcim.devices.get(name='test1234')
+            >>> x.serial
+            ''
+            >>> x.serial = '1234'
+            >>> x.updates()
+            {'serial': '1234'}
         """
         if self.id:
             diff = self._diff()
@@ -389,19 +393,19 @@ class Record(object):
     def save(self):
         """Saves changes to an existing object.
 
-        Takes a diff between the objects current state and its state at init
+        Takes a diff between the object's current state and its state at initialization
         and sends them as a dictionary to Request.patch().
 
-        :returns: True if PATCH request was successful.
-        :example:
+        Returns:
+            (bool): True if the PATCH request was successful.
 
-        >>> x = nb.dcim.devices.get(name='test1-a3-tor1b')
-        >>> x.serial
-        u''
-        >>> x.serial = '1234'
-        >>> x.save()
-        True
-        >>>
+        Examples:
+            >>> x = nb.dcim.devices.get(name='test1-a3-tor1b')
+            >>> x.serial
+            ''
+            >>> x.serial = '1234'
+            >>> x.save()
+            True
         """
         if self.id:
             diff = self._diff()
@@ -422,22 +426,24 @@ class Record(object):
     def update(self, data):
         """Update an object with a dictionary.
 
-        Accepts a dict and uses it to update the record and call save().
-        For nested and choice fields you'd pass an int the same as
-        if you were modifying the attribute and calling save().
+        Accepts a dictionary and uses it to update the record and call save().
+        For nested and choice fields you'd pass an int the same as if you were
+        modifying the attribute and calling save().
 
-        :arg dict data: Dictionary containing the k/v to update the
-            record object with.
-        :returns: True if PATCH request was successful.
-        :example:
+        Args:
+            data (dict): Dictionary containing the key-value pairs to update
+                the record object with.
 
-        >>> x = nb.dcim.devices.get(1)
-        >>> x.update({
-        ...   "name": "test-switch2",
-        ...   "serial": "ABC321",
-        ... })
-        True
+        Returns:
+            (bool): True if the PATCH request was successful.
 
+        Examples:
+            >>> x = nb.dcim.devices.get(1)
+            >>> x.update({
+            ...   "name": "test-switch2",
+            ...   "serial": "ABC321",
+            ... })
+            True
         """
 
         for k, v in data.items():
@@ -447,13 +453,13 @@ class Record(object):
     def delete(self):
         """Deletes an existing object.
 
-        :returns: True if DELETE operation was successful.
-        :example:
+        Returns:
+            (bool): True if the DELETE operation was successful.
 
-        >>> x = nb.dcim.devices.get(name='test1-a3-tor1b')
-        >>> x.delete()
-        True
-        >>>
+        Examples:
+            >>> x = nb.dcim.devices.get(name='test1-a3-tor1b')
+            >>> x.delete()
+            True
         """
         req = Request(
             key=self.id,
@@ -463,3 +469,35 @@ class Record(object):
             api_version=self.api.api_version,
         )
         return True if req.delete() else False
+
+    @property
+    def notes(self):
+        """Represents the ``notes`` detail endpoint.
+
+        Returns a list of DetailEndpoint objects that are
+        related to the passed in object
+
+        :returns: :py:class:`.DetailEndpoint`
+
+        :Examples:
+
+        Notes associated to a device object:
+
+        >>> device = nb.dcim.devices.get(name="test")
+        >>> device.notes.list()
+        [<pynautobot.core.response.Record ('test - 2024-07-16T11:59:00.169296+00:00')...]
+
+        Notes associated to a controller object:
+
+        >>> controller = nb.dcim.controllers.get(name="test")
+        >>> controller.notes.list()
+        [<pynautobot.core.response.Record ('test - 2024-07-16T11:59:00.169296+00:00')...]
+
+        Create new note on device object:
+
+        >>> device = nb.dcim.devices.get(name="test")
+        >>> device.notes.create({"note": "foo bar"})
+        [<pynautobot.core.response.Record ('test - 2024-07-16T18:45:07.653263+00:00')...]
+
+        """
+        return pynautobot.core.endpoint.DetailEndpoint(self, "notes", custom_return=Record)

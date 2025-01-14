@@ -2,7 +2,7 @@
 
 [tool.poetry]
 name = "pynautobot"
-version = "2.1.1"
+version = "2.4.2"
 description = "Nautobot API client library"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 readme = "README.md"
@@ -19,29 +19,33 @@ homepage = "https://nautobot.com"
 documentation = "https://pynautobot.readthedocs.io"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.8.1"
 requests = "^2.30.0"
-# requests doesn't support `urllib3` 2.0 yet see: https://github.com/psf/requests/issues/6432
-urllib3 = ">=1.21.1 <1.27"
+urllib3 = "^2.2.3"
 packaging = "^23.2"
 
-[tool.poetry.dev-dependencies]
-pytest = "*"
-requests_mock = "*"
-pyyaml = "*"
-pylint = "*"
-pydocstyle = "*"
-yamllint = "*"
-invoke = "*"
-toml = "*"
-flake8 = "*"
-attrs = "*"
-black = "*"
-bandit = "*"
-Sphinx = "*"
-
-[tool.poetry.extras]
-docs = ["sphinx"]
+[tool.poetry.group.dev.dependencies]
+requests-mock = "^1.12.1"
+pytest = "^8.1.1"
+pytest-timeout = "^2.3.1"
+mkdocs = "^1.6.0"
+watchdog = "^4.0.0"
+mkdocs-material = "9.5.32"
+mkdocstrings = "0.25.2"
+mkdocstrings-python = "1.10.8"
+griffe = "1.1.1"
+markdown-data-tables = "^1.0.0"
+mkdocs-version-annotations = "^1.0.0"
+pyyaml = "^6.0.1"
+pylint = "^3.1.0"
+pydocstyle = "^6.3.0"
+yamllint = "^1.35.1"
+invoke = "^2.2.0"
+toml = "^0.10.2"
+flake8 = "^7.0.0"
+attrs = "^23.2.0"
+black = "^24.4.2"
+bandit = "^1.7.8"
 
 [tool.black]
 line-length = 120

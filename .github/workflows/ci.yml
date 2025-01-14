@@ -10,19 +10,19 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
-        nautobot-version: ["2.0", "2.1", "stable"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        nautobot-version: ["2.0", "2.1", "2.2", "2.3", "stable"]
     env:
       PYTHON_VER: "${{ matrix.python-version }}"
       NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
     steps:
       - name: "Check out repository code"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v4"
       - name: "Setup environment"
-        uses: "networktocode/gh-action-setup-poetry-environment@v4"
+        uses: "networktocode/gh-action-setup-poetry-environment@v6"
       - name: "Set up Docker Buildx"
         id: "buildx"
-        uses: "docker/setup-buildx-action@v1"
+        uses: "docker/setup-buildx-action@v3"
       - name: "Tests"
         run: "poetry run invoke tests"
   publish_pypi:
@@ -31,9 +31,9 @@ jobs:
     if: "startsWith(github.ref, 'refs/tags/v')"
     steps:
       - name: "Check out repository code"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v4"
       - name: "Set up Python"
-        uses: "actions/setup-python@v2"
+        uses: "actions/setup-python@v5"
         with:
           python-version: "3.9"
       - name: "Install Python Packages"

@@ -1,22 +1,20 @@
-"""
-(c) 2017 DigitalOcean
+# (c) 2017 DigitalOcean
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# This file has been modified by NetworktoCode, LLC.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-This file has been modified by NetworktoCode, LLC.
-"""
-
-from pynautobot.core.endpoint import JobsEndpoint, DetailEndpoint
+from pynautobot.core.endpoint import JobsEndpoint, DetailEndpoint, GraphqlEndpoint
 from pynautobot.core.response import JsonField, Record
 
 
@@ -46,7 +44,15 @@ class Jobs(Record):
         return JobsEndpoint(self.api, self.api.extras, "jobs").run(class_path=self.id, **kwargs)
 
 
+class GraphqlQueries(Record):
+    def run(self, *args, **kwargs):
+        """Run a graphql query from a saved graphql instance."""
+        return GraphqlEndpoint(self.api, self.api.extras, "graphql_queries").run(self.id, *args, **kwargs)
+
+
 class DynamicGroups(Record):
+    filter = JsonField
+
     def __str__(self):
         parent_record_string = super().__str__()
         return parent_record_string or str(self.id)

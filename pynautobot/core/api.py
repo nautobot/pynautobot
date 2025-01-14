@@ -1,20 +1,18 @@
-"""
-(c) 2017 DigitalOcean
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-This file has been modified by NetworktoCode, LLC.
-"""
+# (c) 2017 DigitalOcean
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# This file has been modified by NetworktoCode, LLC.
 
 from packaging import version
 import requests
@@ -27,51 +25,47 @@ from pynautobot.core.graphql import GraphQLQuery
 
 
 class Api(object):
-    """The API object is the point of entry to pynautobot.
+    """The `Api` object is the primary entry point for interacting with a Nautobot
+    instance using pynautobot.
 
-    After instantiating the Api() with the appropriate named arguments
-    you can specify which app and endpoint you wish to interact with.
+    Args:
+        url (str): The base URL of the Nautobot instance you want to connect to.
+        token (str): Your Nautobot authentication token.
+        threading (bool, optional): Enable threading for `.all()` and `.filter()`
+            requests. Defaults to `False`.
+        max_workers (int, optional): The maximum number of worker threads to use
+            for `.all()` and `.filter()` requests. Defaults to the number of CPU cores.
+        api_version (str, optional): Override the default Nautobot REST API version
+            used for all requests.
+        retries (int, optional): The number of retries for HTTP status codes
+            429, 500, 502, 503, and 504. Defaults to 0 (no retries).
+        verify (bool, optional): Whether to verify SSL certificates. Defaults to `True`.
 
-    Valid attributes currently are:
-        * dcim
-        * ipam
-        * circuits
-        * tenancy
-        * extras
-        * virtualization
-        * users
+    Attributes:
+        dcim: An instance of the `App` class providing access to DCIM endpoints.
+        cloud: An instance of the `App` class providing access to Cloud endpoints.
+        ipam: An instance of the `App` class providing access to IPAM endpoints.
+        circuits: An instance of the `App` class providing access to Circuits endpoints.
+        tenancy: An instance of the `App` class providing access to Tenancy endpoints.
+        extras: An instance of the `App` class providing access to Extras endpoints.
+        virtualization: An instance of the `App` class providing access to Virtualization endpoints.
+        users: An instance of the `App` class providing access to User endpoints.
+        http_session (requests.Session): The underlying HTTP session object used for
+            making requests to Nautobot. You can override the default session with your
+            own to control HTTP behavior such as SSL verification, custom headers,
+            retries, and timeouts. See the documentation on custom sessions
+            for more information.
 
-    Calling any of these attributes will return
-    :py:class:`.App` which exposes endpoints as attributes.
+    Raises:
+        AttributeError: If an invalid application name is provided.
 
-    **Additional Attributes**:
-        *  **http_session(requests.Session)**:
-                Override the default session with your own. This is used to control
-                a number of HTTP behaviors such as SSL verification, custom headers,
-                retires, and timeouts.
-                See `custom sessions <advanced.html#custom-sessions>`__ for more info.
-
-    :param str url: The base URL to the instance of Nautobot you
-        wish to connect to.
-    :param str token: Your Nautobot token.
-    :param bool,optional threading: Set to True to use threading in ``.all()``
-        and ``.filter()`` requests.
-    :param int,optional max_workers: Set the maximum workers for threading in ``.all()``
-        and ``.filter()`` requests.
-    :param str,optional api_version: Set to override the default Nautobot REST API Version
-        for all requests.
-    :param int,optional retries: Number of retries, for HTTP codes 429, 500, 502, 503, 504,
-        this client will try before dropping.
-    :param bool,optional verify: SSL cert verification.
-    :raises AttributeError: If app doesn't exist.
-    :Examples:
-
-    >>> import pynautobot
-    >>> nb = pynautobot.api(
-    ...     'http://localhost:8000',
-    ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
-    ... )
-    >>> nb.dcim.devices.all()
+    Examples:
+        >>> import pynautobot
+        >>> nb = pynautobot.api(
+        ...     'http://localhost:8000',
+        ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
+        ... )
+        >>> nb.dcim.devices.all()
     """
 
     def __init__(
@@ -84,12 +78,15 @@ class Api(object):
         retries=0,
         verify=True,
     ):
+        from pynautobot import __version__
+
         base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
         self.token = token
         self.headers = {"Authorization": f"Token {self.token}"}
         self.base_url = base_url
         self.http_session = requests.Session()
         self.http_session.verify = verify
+        self.http_session.headers.update({"User-Agent": f"python-pynautobot/{__version__}"})
         if retries:
             _adapter = HTTPAdapter(
                 max_retries=Retry(
@@ -107,6 +104,7 @@ class Api(object):
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")
+        self.cloud = App(self, "cloud")
         self.circuits = App(self, "circuits")
         self.tenancy = App(self, "tenancy")
         self.extras = App(self, "extras")
@@ -124,23 +122,28 @@ class Api(object):
 
     @property
     def version(self):
-        """Gets the API version of Nautobot.
+        """Retrieves the version of the Nautobot REST API that the connected instance is using.
 
-        Can be used to check the Nautobot API version if there are
-        version-dependent features or syntaxes in the API.
+        This method can be helpful for checking API compatibility and determining
+        if specific features or syntaxes are available.
 
-        :Returns: Version number as a string.
-        :Example:
+        Returns:
+            (str): The Nautobot API version string.
 
-        >>> import pynautobot
-        >>> nb = pynautobot.api(
-        ...     'http://localhost:8000',
-        ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
-        ... )
-        >>> nb.version
-        '1.0'
-        >>>
+        Raises:
+            requests.exceptions.RequestException: If there is an error fetching the
+                version information from Nautobot.
+
+        Examples:
+            >>> import pynautobot
+            >>> nb = pynautobot.api(
+            ...     'http://localhost:8000',
+            ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
+            ... )
+            >>> nb.version
+            '1.0'
         """
+
         return Request(
             base=self.base_url,
             http_session=self.http_session,
@@ -149,22 +152,30 @@ class Api(object):
         ).get_version()
 
     def openapi(self):
-        """Returns the OpenAPI spec.
+        """Retrieves the OpenAPI specification (OAS) document for the connected Nautobot instance.
 
-        Quick helper function to pull down the entire OpenAPI spec.
+        The OpenAPI specification provides a machine-readable description of the Nautobot REST API,
+        including available endpoints, parameters, request and response formats, and more.
 
-        :Returns: dict
-        :Example:
+        This can be useful for tools like code generation or API clients in other languages.
 
-        >>> import pynautobot
-        >>> nb = pynautobot.api(
-        ...     'http://localhost:8000',
-        ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
-        ... )
-        >>> nb.openapi()
-        {...}
-        >>>
+        Returns:
+            (dict): The OpenAPI specification document as a Python dictionary.
+
+        Raises:
+            requests.exceptions.RequestException: If there is an error fetching the
+                OpenAPI spec from Nautobot.
+
+        Examples:
+            >>> import pynautobot
+            >>> nb = pynautobot.api(
+            ...     'http://localhost:8000',
+            ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
+            ... )
+            >>> nb.openapi()
+            {...}
         """
+
         return Request(
             base=self.base_url,
             http_session=self.http_session,
@@ -173,32 +184,38 @@ class Api(object):
         ).get_openapi()
 
     def status(self):
-        """Gets the status information from Nautobot.
+        """Retrieves status information about the connected Nautobot instance.
 
-        Available in Nautobot 2.10.0 or newer.
+        This method provides various details about the Nautobot instance, including:
 
-        :Returns: Dictionary as returned by Nautobot.
-        :Raises: :py:class:`.RequestError` if the request is not successful.
-        :Example:
+        * Django version
+        * Installed apps and their versions
+        * Nautobot version
+        * Active plugins (if any)
+        * Python version
+        * Number of running RQ workers (if applicable)
 
-        >>> pprint.pprint(nb.status())
-        {'django-version': '3.1.3',
-         'installed-apps': {'cacheops': '5.0.1',
-                            'debug_toolbar': '3.1.1',
-                            'django_filters': '2.4.0',
-                            'django_prometheus': '2.1.0',
-                            'django_rq': '2.4.0',
-                            'django_tables2': '2.3.3',
-                            'drf_yasg': '1.20.0',
-                            'mptt': '0.11.0',
-                            'rest_framework': '3.12.2',
-                            'taggit': '1.3.0',
-                            'timezone_field': '4.0'},
-         'nautobot-version': '1.0.0',
-         'plugins': {},
-         'python-version': '3.7.3',
-         'rq-workers-running': 1}
-        >>>
+        **Availability:** Requires Nautobot version 2.10.0 or newer.
+
+        Returns:
+            (dict): A dictionary containing the status information as returned by Nautobot.
+
+        Raises:
+            pynautobot.exceptions.RequestError: If the request to Nautobot fails.
+
+        Examples:
+            >>> import pprint
+            >>> nb = pynautobot.api(
+            ...     'http://localhost:8000',
+            ...     token='d6f4e314a5b5fefd164995169f28ae32d987704f'
+            ... )
+            >>> pprint.pprint(nb.status())
+            {'django-version': '3.1.3',
+            'installed-apps': {...},
+            'nautobot-version': '1.0.0',
+            'plugins': {},
+            'python-version': '3.7.3',
+            'rq-workers-running': 1}
         """
         return Request(
             base=self.base_url,
