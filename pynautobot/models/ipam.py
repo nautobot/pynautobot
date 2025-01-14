@@ -30,12 +30,15 @@ class Prefixes(Record):
         return parent_record_string or str(self.prefix)
 
     @property
-    def available_ips(self):
+    def available_ips(self) -> DetailEndpoint:
         """
         Represents the ``available-ips`` detail endpoint.
 
         Returns a DetailEndpoint object that is the interface for
         viewing and creating IP addresses inside a prefix.
+
+        Returns:
+            DetailEndpoint: The detail endpoint interface for available IPs.
 
         Examples:
             List available IPs:
@@ -66,7 +69,7 @@ class Prefixes(Record):
         return DetailEndpoint(self, "available-ips", custom_return=IpAddresses)
 
     @property
-    def available_prefixes(self):
+    def available_prefixes(self) -> DetailEndpoint:
         """
         Represents the ``available-prefixes`` detail endpoint.
 
@@ -76,6 +79,9 @@ class Prefixes(Record):
         Very similar to :py:meth:`~pynautobot.ipam.Prefixes.available_ips`,
         except that the dict (or list of dicts) passed to ``.create()``
         needs to have a ``prefix_length`` key/value specified.
+
+        Returns:
+            DetailEndpoint: The detail endpoint interface for available prefixes.
 
         Examples:
             List available prefixes:
