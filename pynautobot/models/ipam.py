@@ -37,9 +37,6 @@ class Prefixes(Record):
         Returns a DetailEndpoint object that is the interface for
         viewing and creating IP addresses inside a prefix.
 
-        Returns:
-            DetailEndpoint: The detail endpoint interface for available IPs.
-
         Examples:
             List available IPs:
 
@@ -79,9 +76,6 @@ class Prefixes(Record):
         Very similar to :py:meth:`~pynautobot.ipam.Prefixes.available_ips`,
         except that the dict (or list of dicts) passed to ``.create()``
         needs to have a ``prefix_length`` key/value specified.
-
-        Returns:
-            DetailEndpoint: The detail endpoint interface for available prefixes.
 
         Examples:
             List available prefixes:
