@@ -7,7 +7,8 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://install.python-poetry.org | python3 - && \
+# Install specific version of Poetry (1.8.5)
+RUN curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.8.5 python3 - && \
     /root/.local/bin/poetry config virtualenvs.create false
 
 WORKDIR /source
