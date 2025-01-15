@@ -17,6 +17,7 @@ NAUTOBOT_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_VER", os.getenv("NAUTOBOT_V
 # Can be set to a separate Python version to be used for launching or building image
 PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.8"))
 
+
 def is_truthy(arg):
     """Convert "truthy" strings into Booleans.
 
