@@ -30,7 +30,7 @@ class Prefixes(Record):
         return parent_record_string or str(self.prefix)
 
     @property
-    def available_ips(self):
+    def available_ips(self) -> DetailEndpoint:
         """
         Represents the ``available-ips`` detail endpoint.
 
@@ -69,7 +69,7 @@ class Prefixes(Record):
         return DetailEndpoint(self, "available-ips", custom_return=IpAddresses)
 
     @property
-    def available_prefixes(self):
+    def available_prefixes(self) -> DetailEndpoint:
         """
         Represents the ``available-prefixes`` detail endpoint.
 
