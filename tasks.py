@@ -15,7 +15,7 @@ TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
 NAUTOBOT_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_VER", os.getenv("NAUTOBOT_VER", "stable"))
 # Can be set to a separate Python version to be used for launching or building image
-PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.8"))
+PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.12"))
 
 
 def is_truthy(arg):
