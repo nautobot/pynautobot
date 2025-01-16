@@ -697,13 +697,15 @@ class JobsEndpoint(Endpoint):
 
         Examples:
             To run a job for verifying hostnames:
-            >>> nb.extras.jobs.run_and_wait(
+            >>> job_response = nb.extras.jobs.run_and_wait(
                     class_path="local/data_quality/VerifyHostnames",
                     data={"hostname_regex": ".*"},
                     commit=True,
                     interval=5,
                     max_rechecks=10,
                 )
+            >>> print(f"Job completed, Job Result ID: {job_response.job_result.id}")
+            Job completed, Job Result ID: 123
         """
         if max_rechecks <= 0:
             raise ValueError("Attribute `max_rechecks` must be a postive integer to prevent recursive loops.")

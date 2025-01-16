@@ -282,6 +282,7 @@ class JobEndPointTestCase(unittest.TestCase):
         mock_get.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "SUCCESS"}}}
         test = test_obj.run_and_wait(job_id="test", interval=1, max_rechecks=5)
         self.assertEqual(test.job_result.status.value, "SUCCESS")
+        self.assertEqual(test.job_result.id, 123)
 
     @patch("pynautobot.core.query.Request.get", return_value=Mock())
     @patch("pynautobot.core.query.Request.post", return_value=Mock())
