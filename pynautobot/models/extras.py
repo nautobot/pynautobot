@@ -51,6 +51,8 @@ class GraphqlQueries(Record):
 
 
 class DynamicGroups(Record):
+    filter = JsonField
+
     def __str__(self):
         parent_record_string = super().__str__()
         return parent_record_string or str(self.id)

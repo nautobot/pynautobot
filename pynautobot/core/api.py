@@ -43,6 +43,7 @@ class Api(object):
 
     Attributes:
         dcim: An instance of the `App` class providing access to DCIM endpoints.
+        cloud: An instance of the `App` class providing access to Cloud endpoints.
         ipam: An instance of the `App` class providing access to IPAM endpoints.
         circuits: An instance of the `App` class providing access to Circuits endpoints.
         tenancy: An instance of the `App` class providing access to Tenancy endpoints.
@@ -103,6 +104,7 @@ class Api(object):
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")
+        self.cloud = App(self, "cloud")
         self.circuits = App(self, "circuits")
         self.tenancy = App(self, "tenancy")
         self.extras = App(self, "extras")
@@ -126,7 +128,7 @@ class Api(object):
         if specific features or syntaxes are available.
 
         Returns:
-            str: The Nautobot API version string.
+            (str): The Nautobot API version string.
 
         Raises:
             requests.exceptions.RequestException: If there is an error fetching the
@@ -158,7 +160,7 @@ class Api(object):
         This can be useful for tools like code generation or API clients in other languages.
 
         Returns:
-            dict: The OpenAPI specification document as a Python dictionary.
+            (dict): The OpenAPI specification document as a Python dictionary.
 
         Raises:
             requests.exceptions.RequestException: If there is an error fetching the
@@ -196,7 +198,7 @@ class Api(object):
         **Availability:** Requires Nautobot version 2.10.0 or newer.
 
         Returns:
-            dict: A dictionary containing the status information as returned by Nautobot.
+            (dict): A dictionary containing the status information as returned by Nautobot.
 
         Raises:
             pynautobot.exceptions.RequestError: If the request to Nautobot fails.

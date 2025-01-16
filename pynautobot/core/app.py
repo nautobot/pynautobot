@@ -18,7 +18,7 @@ import logging
 
 from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
 from pynautobot.core.query import Request
-from pynautobot.models import circuits, dcim, extras, ipam, users, virtualization
+from pynautobot.models import circuits, cloud, dcim, extras, ipam, users, virtualization
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ class App(object):
     Calls to attributes are returned as Endpoint objects.
 
     Returns:
-        Endpoint: Matching requested attribute.
+        (Endpoint): Matching requested attribute.
 
     Raises:
         RequestError: If requested endpoint doesn't exist.
@@ -37,6 +37,7 @@ class App(object):
 
     models = {
         "dcim": dcim,
+        "cloud": cloud,
         "ipam": ipam,
         "circuits": circuits,
         "virtualization": virtualization,
@@ -77,7 +78,7 @@ class App(object):
         """Returns _choices response from App.
 
         Returns:
-            Raw response from Nautobot's _choices endpoint.
+            (List[Response]): Raw response from Nautobot's _choices endpoint.
         """
         if self._choices:
             return self._choices
@@ -94,7 +95,7 @@ class App(object):
         """Returns custom-fields response from app.
 
         Returns:
-            Raw response from Nautobot's custom-fields endpoint.
+            (List[Response]): Raw response from Nautobot's custom-fields endpoint.
 
         Raises:
             RequestError: If called for an invalid endpoint.
@@ -135,7 +136,7 @@ class App(object):
         """Returns custom-field-choices response from app.
 
         Returns:
-            Raw response from Nautobot's custom-field-choices endpoint.
+            (List[Response]): Raw response from Nautobot's custom-field-choices endpoint.
 
         Raises:
             RequestError: If called for an invalid endpoint.
@@ -170,7 +171,7 @@ class App(object):
         """Returns config response from app.
 
         Returns:
-            dict: Raw response from Nautobot's config endpoint.
+            (dict): Raw response from Nautobot's config endpoint.
 
         Raises:
             RequestError: If called for an invalid endpoint.
@@ -215,7 +216,7 @@ class PluginsApp(object):
     but you need to add "plugins" to the request URL path.
 
     Returns:
-        App: With "plugins" added to the path.
+        (App): With "plugins" added to the path.
     """
 
     def __init__(self, api):
@@ -234,7 +235,7 @@ class PluginsApp(object):
         """Returns raw response with installed plugins.
 
         Returns:
-            Raw response from Nautobot's installed plugins.
+            (List[Response]): Raw response from Nautobot's installed plugins.
 
         Examples:
             >>> nb.plugins.installed_plugins()
