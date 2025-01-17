@@ -2,7 +2,6 @@
 
 import os
 import sys
-from distutils.util import strtobool
 from invoke import task
 
 try:
@@ -16,7 +15,29 @@ TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
 NAUTOBOT_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_VER", os.getenv("NAUTOBOT_VER", "stable"))
 # Can be set to a separate Python version to be used for launching or building image
-PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.8"))
+PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.12"))
+
+
+def is_truthy(arg):
+    """Convert "truthy" strings into Booleans.
+    Examples
+    --------
+        >>> is_truthy('yes')
+        True
+    Args:
+        arg (str): Truthy string (True values are y, yes, t, true, on and 1; false values are n, no,
+        f, false, off and 0. Raises ValueError if val is anything else.
+    """
+    if isinstance(arg, bool):
+        return arg
+
+    val = str(arg).lower()
+    if val in ("y", "yes", "t", "true", "on", "1"):
+        return True
+    elif val in ("n", "no", "f", "false", "off", "0"):
+        return False
+    else:
+        raise ValueError(f"Invalid truthy value: `{arg}`")
 
 
 def _get_image_name_and_tag():
@@ -37,7 +58,7 @@ IMAGE_NAME, IMAGE_VER = _get_image_name_and_tag()
 # Gather current working directory for Docker commands
 PWD = os.getcwd()
 # Local or Docker execution provide "local" to run locally without docker execution
-INVOKE_LOCAL = strtobool(os.getenv("INVOKE_LOCAL", "False"))
+INVOKE_LOCAL = is_truthy(os.getenv("INVOKE_LOCAL", "False"))
 
 _DEFAULT_SERVICE = "pynautobot-dev"
 _DOCKER_COMPOSE_ENV = {
@@ -89,7 +110,7 @@ def down(context, remove=False):
     }
 )
 def logs(context, service="", follow=False, tail=None):
-    """View the logs of a docker-compose service."""
+    """View the logs of a docker compose service."""
     command = [
         "docker compose logs",
         "--follow" if follow else "",
@@ -319,7 +340,7 @@ def wait(context):
 @task
 def export(context):
     """Export compose configuration to `compose.yaml` file."""
-    context.run("docker-compose convert > compose.yaml", env=_DOCKER_COMPOSE_ENV, pty=True)
+    context.run("docker compose convert > compose.yaml", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task

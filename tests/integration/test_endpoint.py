@@ -13,6 +13,12 @@ class TestEndpoint:
         devices = nb_client.dcim.devices.filter(device_type="DCS-7050TX3-48C8")
         assert len(devices) == 6
 
+    def test_choices(self, nb_client):
+        choices = nb_client.dcim.devices.choices()
+        # Not testing that we get specific choices back, just in case of changes in the API
+        assert isinstance(choices, dict)
+        assert len(choices) > 0
+
 
 class TestPagination:
     """Verify we can limit and offset results on an endpoint."""
