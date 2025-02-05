@@ -10,7 +10,7 @@ class BaseAppTest:
 
     @pytest.fixture
     def skipif_version(self, nb_status):
-        """Retrieve the current Nautobot version and skip the test if less than 2.3."""
+        """Retrieve the current Nautobot version and skip the test if less than the minimum version."""
         nautobot_version = nb_status.get("nautobot-version")
         if version.parse(nautobot_version) < version.parse(self.min_version):
             pytest.skip(f"{self.app_name} is only in Nautobot {self.min_version}+")
