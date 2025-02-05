@@ -163,3 +163,13 @@ def nb_client(devicetype_library_repo_dirpath):
     populate_nautobot_object_types(nb_api=nb_api, devicetype_library_repo_dirpath=devicetype_library_repo_dirpath)
 
     return nb_api
+
+
+@pytest.fixture(scope="session")
+def nb_status(nb_client):
+    """Cache the status of the Nautobot instance as fixture so we don't have to call it repeatedly."""
+    status = nb_client.status()
+    assert status
+    # Assert that the nautobot-version key is present since we use it to conditionally skip some tests
+    assert status.get("nautobot-version")
+    return status
