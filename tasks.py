@@ -353,3 +353,19 @@ def docs(context, local=INVOKE_LOCAL):
 @task
 def check_migrations(context):
     """Upstream CI test runs check-migration test, but pynautobot has no migration to be tested; Hence including to pass CI test"""
+
+
+@task(
+    help={
+        "version": "Version of pynautobot to generate the release notes for.",
+    }
+)
+def generate_release_notes(context, version=""):
+    """Generate Release Notes using Towncrier."""
+    command = "poetry run towncrier build"
+    if version:
+        command += f" --version {version}"
+    else:
+        command += " --version `poetry version -s`"
+    # Due to issues with git repo ownership in the containers, this must always run locally.
+    context.run(command)
