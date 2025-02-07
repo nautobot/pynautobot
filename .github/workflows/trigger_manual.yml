@@ -1,0 +1,16 @@
+---
+name: "Manual Tests"
+on: # yamllint disable
+  workflow_dispatch:
+    inputs:
+      all-tests:
+        description: "Test all versions of Nautobot and Python"
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  tests:
+    uses: ./.github/workflows/ci.yml
+    with:
+      all-tests: ${{ inputs.all-tests }}

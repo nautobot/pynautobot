@@ -250,3 +250,6 @@ fabric.properties
 ### vscode ###
 .vscode/*
 *.code-workspace
+
+# Invoke
+invoke.yml
