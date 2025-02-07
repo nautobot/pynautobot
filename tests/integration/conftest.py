@@ -1,5 +1,5 @@
 import os
-
+import tempfile
 import yaml
 
 import subprocess as subp
@@ -47,6 +47,9 @@ def git_toplevel():
         str: The path of the top level directory of the current git repo.
 
     """
+    if os.getenv("PYNAUTOBOT_LOCAL", "") == "false":
+        # If running in docker, create a temporary directory for the git repo
+        return tempfile.mkdtemp()
     return subp.check_output(["git", "rev-parse", "--show-toplevel"]).decode("utf-8").splitlines()[0]
 
 
@@ -62,7 +65,7 @@ def devicetype_library_repo_dirpath(git_toplevel):
         subp.check_call(["git", "fetch"], cwd=repo_fpath, stdout=subp.PIPE, stderr=subp.PIPE)
     else:
         subp.check_call(
-            ["git", "clone", "https://github.com/netbox-community/devicetype-library", repo_fpath],
+            ["git", "clone", "https://github.com/nautobot/devicetype-library", repo_fpath],
             cwd=git_toplevel,
             stdout=subp.PIPE,
             stderr=subp.PIPE,
