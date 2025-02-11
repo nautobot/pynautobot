@@ -18,7 +18,8 @@ jobs:
   changelog:
     if: >
       contains(fromJson('["develop","ltm-1.6","next"]'), github.base_ref) &&
-      (github.head_ref != 'main') && (!startsWith(github.head_ref, 'release'))
+      (github.head_ref != 'main') && (!startsWith(github.head_ref, 'release')) &&
+      github.event_name != 'workflow_dispatch'
     runs-on: "ubuntu-24.04"
     steps:
       - name: "Check out repository code"
