@@ -44,12 +44,13 @@ The core Apps are:
 
 -   dcim
 -   ipam
+-   cloud
 -   circuits
 -   tenancy
 -   extras
 -   virtualization
 -   users
-
+-   wireless
 ``` python
 >>> nautobot = api(url=url, token=token)
 >>>

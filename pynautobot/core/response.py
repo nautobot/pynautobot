@@ -246,7 +246,7 @@ class Record(object):
         """
 
         def list_parser(list_item):
-            if isinstance(list_item, dict):
+            if isinstance(list_item, dict) and list_item.get("id"):
                 return self.default_ret(list_item, self.api, self.endpoint)
             return list_item
 

@@ -50,6 +50,7 @@ class Api(object):
         extras: An instance of the `App` class providing access to Extras endpoints.
         virtualization: An instance of the `App` class providing access to Virtualization endpoints.
         users: An instance of the `App` class providing access to User endpoints.
+        wireless: An instance of the `App` class providing access to Wireless endpoints.
         http_session (requests.Session): The underlying HTTP session object used for
             making requests to Nautobot. You can override the default session with your
             own to control HTTP behavior such as SSL verification, custom headers,
@@ -110,6 +111,7 @@ class Api(object):
         self.extras = App(self, "extras")
         self.virtualization = App(self, "virtualization")
         self.users = App(self, "users")
+        self.wireless = App(self, "wireless")
         self.plugins = PluginsApp(self)
         self.graphql = GraphQLQuery(self)
         self._validate_version()
