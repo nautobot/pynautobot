@@ -1,21 +1,9 @@
 """Tasks for use with Invoke."""
 
 import os
-import sys
-from invoke import task
 
-try:
-    import toml
-except ImportError:
-    sys.exit("Please make sure to `pip install toml` or enable the Poetry shell and run `poetry install`.")
-
-
-PYPROJECT_CONFIG = toml.load("pyproject.toml")
-TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
-
-NAUTOBOT_VER = os.getenv("INVOKE_PYNAUTOBOT_NAUTOBOT_VER", os.getenv("NAUTOBOT_VER", "stable"))
-# Can be set to a separate Python version to be used for launching or building image
-PYTHON_VER = os.getenv("INVOKE_PYNAUTOBOT_PYTHON_VER", os.getenv("PYTHON_VER", "3.12"))
+from invoke.collection import Collection
+from invoke.tasks import task as invoke_task
 
 
 def is_truthy(arg):
@@ -40,176 +28,154 @@ def is_truthy(arg):
         raise ValueError(f"Invalid truthy value: `{arg}`")
 
 
-def _get_image_name_and_tag():
-    """Return image name and tag. Necessary to avoid double build in upstream testing"""
+# Use pyinvoke configuration for default values, see http://docs.pyinvoke.org/en/stable/concepts/configuration.html
+# Variables may be overwritten in invoke.yml or by the environment variables INVOKE_PYNAUTOBOT_xxx
+namespace = Collection("pynautobot")
+namespace.configure(
+    {
+        "pynautobot": {
+            "nautobot_ver": "stable",
+            "project_name": "pynautobot",
+            "python_ver": "3.12",
+            "local": False,
+            "compose_dir": os.path.join(os.path.dirname(__file__), "development"),
+            "compose_files": ["docker-compose.yml"],
+            "compose_http_timeout": "86400",
+            "image_name": "pynautobot/nautobot",
+        }
+    }
+)
 
-    workflow_name = os.getenv("GITHUB_WORKFLOW", "")
-    if "upstream" in workflow_name.lower():
-        return "pynautobot/nautobot", f"{NAUTOBOT_VER}-py{PYTHON_VER}"
 
-    image_name = os.getenv("IMAGE_NAME", TOOL_CONFIG["name"])
-    image_tag = os.getenv("IMAGE_VER", f"{TOOL_CONFIG['version']}-py{PYTHON_VER}")
+def task(function=None, *args, **kwargs):
+    """Task decorator to override the default Invoke task decorator and add each task to the invoke namespace."""
 
-    return image_name, image_tag
+    def task_wrapper(function=None):
+        """Wrapper around invoke.task to add the task to the namespace as well."""
+        if args or kwargs:
+            task_func = invoke_task(*args, **kwargs)(function)
+        else:
+            task_func = invoke_task(function)
+        namespace.add_task(task_func)
+        return task_func
+
+    if function:
+        # The decorator was called with no arguments
+        return task_wrapper(function)
+    # The decorator was called with arguments
+    return task_wrapper
 
 
-IMAGE_NAME, IMAGE_VER = _get_image_name_and_tag()
+def docker_compose(context, command, **kwargs):
+    """Helper function for running a specific docker compose command with all appropriate parameters and environment.
+    Args:
+        context (obj): Used to run specific commands
+        command (str): Command string to append to the "docker compose ..." command, such as "build", "up", etc.
+        **kwargs: Passed through to the context.run() call.
+    """
+    build_env = {
+        "NAUTOBOT_VER": context.pynautobot.nautobot_ver,
+        "PYTHON_VER": context.pynautobot.python_ver,
+        "IMAGE_NAME": context.pynautobot.image_name,
+        "IMAGE_VER": f"{context.pynautobot.nautobot_ver}-py{context.pynautobot.python_ver}",
+    }
+    compose_command = f'docker compose --project-name {context.pynautobot.project_name} --project-directory "{context.pynautobot.compose_dir}"'
+    for compose_file in context.pynautobot.compose_files:
+        compose_file_path = os.path.join(context.pynautobot.compose_dir, compose_file)
+        compose_command += f' -f "{compose_file_path}"'
+    compose_command += f" {command}"
+    print(f'Running docker compose command "{command}"')
+    return context.run(compose_command, env=build_env, **kwargs)
 
-# Gather current working directory for Docker commands
-PWD = os.getcwd()
-# Local or Docker execution provide "local" to run locally without docker execution
-INVOKE_LOCAL = is_truthy(os.getenv("INVOKE_LOCAL", "False"))
 
-_DEFAULT_SERVICE = "pynautobot-dev"
-_DOCKER_COMPOSE_ENV = {
-    "COMPOSE_FILE": "development/docker-compose.yml",
-    "COMPOSE_HTTP_TIMEOUT": "86400",
-    "COMPOSE_PROJECT_NAME": "pynautobot",
-    "IMAGE_NAME": IMAGE_NAME,
-    "IMAGE_VER": IMAGE_VER,
-    "NAUTOBOT_VER": NAUTOBOT_VER,
-    "PYTHON_VER": PYTHON_VER,
-}
+def run_command(context, command, service="pynautobot-dev", port=None, **kwargs):
+    """Wrapper to run a command locally or inside the nautobot container."""
+    if is_truthy(context.pynautobot.local):
+        context.run(command, **kwargs)
+    else:
+        # Check if nautobot is running, no need to start another nautobot container to run a command
+        docker_compose_status = "ps --services --filter status=running"
+        results = docker_compose(context, docker_compose_status, hide="out")
+        publish = f" --publish {port}" if port else ""
+        if service in results.stdout:
+            compose_command = f"exec {service} {command}"
+        else:
+            compose_command = f"run --rm --entrypoint '{command}'{publish} {service} "
+
+        docker_compose(context, compose_command, pty=True)
+
+
+# ------------------------------------------------------------------------------
+# BUILD
+# ------------------------------------------------------------------------------
+@task(
+    help={
+        "force_rm": "Always remove intermediate containers",
+        "cache": "Whether to use Docker's cache when building the image (defaults to enabled)",
+    }
+)
+def build(context, force_rm=False, cache=True):
+    """Build Nautobot docker image."""
+    command = "build"
+
+    if not cache:
+        command += " --no-cache"
+    if force_rm:
+        command += " --force-rm"
+
+    print(f"Building Nautobot with Python {context.pynautobot.python_ver}...")
+    print(f"Nautobot Version: {context.pynautobot.nautobot_ver}")
+    docker_compose(context, command)
+
+
+# ------------------------------------------------------------------------------
+# START / STOP / DEBUG
+# ------------------------------------------------------------------------------
+@task
+def debug(context):
+    """Start Nautobot and its dependencies in debug mode."""
+    print("Starting Nautobot in debug mode...")
+    docker_compose(context, "up")
 
 
 @task
 def start(context):
+    """Start Nautobot and its dependencies in detached mode."""
     print("Starting Nautobot in detached mode...")
-    return context.run("docker compose up -d", env=_DOCKER_COMPOSE_ENV, pty=True)
+    docker_compose(context, "up --detach")
+
+
+@task
+def restart(context):
+    """Gracefully restart all containers."""
+    print("Restarting Nautobot...")
+    docker_compose(context, "restart")
 
 
 @task
 def stop(context):
+    """Stop Nautobot and its dependencies."""
     print("Stopping Nautobot...")
-    return context.run("docker compose stop", env=_DOCKER_COMPOSE_ENV, pty=True)
+    docker_compose(context, "down")
 
 
 @task
 def destroy(context):
-    down(context, remove=True)
-
-
-@task
-def down(context, remove=False):
-    print("Stopping Nautobot and removing resources...")
-    command = [
-        "docker compose",
-        "down",
-        "--remove-orphans",
-        "--rmi local" if remove else "",
-        "--volumes" if remove else "",
-    ]
-    return context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
-
-
-@task(
-    help={
-        "service": "docker compose service name to view (default: nautobot)",
-        "follow": "Follow logs",
-        "tail": "Tail N number of lines or 'all'",
-    }
-)
-def logs(context, service="", follow=False, tail=None):
-    """View the logs of a docker compose service."""
-    command = [
-        "docker compose logs",
-        "--follow" if follow else "",
-        f"--tail={tail}" if tail else "",
-        service if service else "",
-    ]
-
-    context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
-
-
-@task
-def debug(context, service=_DEFAULT_SERVICE):
-    print("Starting Nautobot in debug mode...")
-    return context.run(f"docker compose up -- {service}", env=_DOCKER_COMPOSE_ENV, pty=True)
-
-
-def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, service=_DEFAULT_SERVICE, port=None):
-    """Wrapper to run the invoke task commands.
-
-    Args:
-        context ([invoke.task]): Invoke task object.
-        exec_cmd ([str]): Command to run.
-        local (bool): Define as `True` to execute locally
-        service (str): Service to run command in if not local
-
-    Returns:
-        result (obj): Contains Invoke result from running task.
-    """
-    if local:
-        print(f"LOCAL - Running command {exec_cmd}")
-        result = context.run(exec_cmd, pty=True)
-    else:
-        print(f"DOCKER - Running command: {exec_cmd} service: {service}")
-        if port:
-            result = context.run(
-                f"docker compose run --rm --publish {port} -- {service} {exec_cmd}", env=_DOCKER_COMPOSE_ENV, pty=True
-            )
-        else:
-            result = context.run(f"docker compose run --rm -- {service} {exec_cmd}", env=_DOCKER_COMPOSE_ENV, pty=True)
-
-    return result
-
-
-@task
-def build(context, nocache=False, service=_DEFAULT_SERVICE):
-    """Build a Docker image.
-
-    Args:
-        context (obj): Used to run specific commands
-        nocache (bool): Do not use cache when building the image
-        service (str): Service to build
-    """
-
-    command = [
-        "docker compose build",
-        "--progress=plain",
-        "--no-cache" if nocache else "",
-        "--",
-        service,
-    ]
-
-    result = context.run(" ".join(command), env=_DOCKER_COMPOSE_ENV, pty=True)
-    if result.exited != 0:
-        print(f"Failed to build {service} image\nError: {result.stderr}")
-
-
-@task
-def clean(context, remove=True):
-    """Remove the project specific image.
-
-    Args:
-        context (obj): Used to run specific commands
-    """
-    print("Attempting to remove all docker compose resources")
-    down(context, remove)
-
-
-@task
-def rebuild(context, remove=False):
-    """Clean the Docker image and then rebuild without using cache.
-
-    Args:
-        context (obj): Used to run specific commands
-        remove (bool): Remove docker compose resources
-    """
-    clean(context, remove)
-    build(context, nocache=True)
+    """Destroy all containers and volumes."""
+    print("Destroying Nautobot...")
+    docker_compose(context, "down --volumes --remove-orphans")
 
 
 @task(aliases=("unittest",))
-def pytest(context, local=INVOKE_LOCAL, label="", failfast=False, keepdb=False):
+def pytest(context, label="", failfast=False, keepdb=False, stdout=False):
     """Run pytest for the specified name and Python version.
 
     Args:
         context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
         label (str): Label to run tests for
         failfast (bool): Stop on first failure
         keepdb (bool): Keep the database between test runs, not implemented yet, argument is necessary for upstream CI tests
+        stdout (bool): Print the stdout of the pytest command
     """
     if keepdb:
         print("WARNING: `--keepdb` is not implemented yet, ignoring...")
@@ -219,82 +185,86 @@ def pytest(context, local=INVOKE_LOCAL, label="", failfast=False, keepdb=False):
         "--maxfail=1" if failfast else "",
         label,
     ]
-    run_cmd(context, " ".join(command), local, service="pynautobot-dev-tests")
+    if stdout:
+        command.append("-s")
+    if is_truthy(context.pynautobot.local):
+        # No need to destroy the containers for local testing
+        run_command(context, " ".join(command))
+        return
+
+    # Clean up from any previous failed runs
+    destroy(context)
+    # Run tests
+    run_command(context, " ".join(command), service="pynautobot-dev-tests")
+    # Clean up after successfully running tests
+    destroy(context)
 
 
 @task
-def black(context, local=INVOKE_LOCAL, autoformat=False):
+def black(context, autoformat=False):
     """Run black to check that Python files adherence to black standards.
 
     Args:
         context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
         autoformat (bool): Autoformat the code
     """
     exec_cmd = "black ." if autoformat else "black --check --diff ."
-    run_cmd(context, exec_cmd, local)
+    run_command(context, exec_cmd)
 
 
 @task
-def flake8(context, local=INVOKE_LOCAL):
+def flake8(context):
     """Run flake8 for the specified name and Python version.
 
     Args:
         context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
     """
-    # pty is set to true to properly run the docker commands due to the invocation process of docker
-    # https://docs.pyinvoke.org/en/latest/api/runners.html - Search for pty for more information
     exec_cmd = "flake8 ."
-    run_cmd(context, exec_cmd, local)
+    run_command(context, exec_cmd)
 
 
 @task
-def pylint(context, local=INVOKE_LOCAL):
+def pylint(context):
     """Run pylint for the specified name and Python version.
 
     Args:
         context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
     """
-    exec_cmd = 'find . -name "*.py" | xargs pylint'
-    run_cmd(context, exec_cmd, local)
+    exec_cmd = "pylint **/*.py"
+    run_command(context, exec_cmd)
 
 
 @task
-def yamllint(context, local=INVOKE_LOCAL):
+def yamllint(context):
     """Run yamllint to validate formatting adheres to NTC defined YAML standards.
 
     Args:
         context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
     """
     exec_cmd = "yamllint ."
-    run_cmd(context, exec_cmd, local)
+    run_command(context, exec_cmd)
 
 
 @task
-def pydocstyle(context, local=INVOKE_LOCAL):
+def pydocstyle(context):
     """Run pydocstyle to validate docstring formatting adheres to NTC defined standards.
 
     Args:
         context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
     """
     exec_cmd = "pydocstyle ."
-    run_cmd(context, exec_cmd, local)
+    run_command(context, exec_cmd)
 
 
 @task
-def bandit(context, local=INVOKE_LOCAL):
+def bandit(context):
     """Run bandit to validate basic static code security analysis.
 
     Args:
         context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
     """
     exec_cmd = "bandit --recursive ./ --configfile .bandit.yml"
-    run_cmd(context, exec_cmd, local)
+    run_command(context, exec_cmd)
 
 
 @task
@@ -304,54 +274,38 @@ def cli(context):
     Args:
         context (obj): Used to run specific commands
     """
-    run_cmd(context, "bash", False)
+    run_command(context, "bash")
 
 
 @task
-def tests(context, local=INVOKE_LOCAL):
+def tests(context):
     """Run all tests for the specified name and Python version.
 
     Args:
         context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
     """
-    black(context, local)
-    flake8(context, local)
+    black(context)
+    flake8(context)
     # Too much to deal with atm.
-    # pylint(context, local)
-    yamllint(context, local)
+    # pylint(context)
+    yamllint(context)
     # Skipping due to using different doc strings atm.
-    # pydocstyle(context, local)
-    bandit(context, local)
-    pytest(context, local)
+    # pydocstyle(context)
+    bandit(context)
+    pytest(context)
 
     print("All tests have passed!")
 
 
 @task
-def wait(context):
-    """Wait for Nautobot to be ready."""
-
-    context.run(
-        "timeout 300 bash -c 'while [[ \"$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000)\" != \"200\" ]]; do echo \"waiting for Nautobot\"; sleep 5; done' || false"
-    )
-
-
-@task
-def export(context):
-    """Export compose configuration to `compose.yaml` file."""
-    context.run("docker compose convert > compose.yaml", env=_DOCKER_COMPOSE_ENV, pty=True)
-
-
-@task
-def docs(context, local=INVOKE_LOCAL):
+def docs(context):
     """Build and serve docs locally for development."""
     exec_cmd = "mkdocs serve -v --dev-addr=0.0.0.0:8001"
-    run_cmd(context, exec_cmd, local, port="8001:8001")
+    run_command(context, exec_cmd, port="8001:8001")
 
 
 @task
-def check_migrations(context):
+def check_migrations(_):
     """Upstream CI test runs check-migration test, but pynautobot has no migration to be tested; Hence including to pass CI test"""
 
 
