@@ -500,22 +500,15 @@ class Endpoint(object):
             http_session=self.api.http_session,
             api_version=api_version,
         ).options()
-        if req.get("schema", {}).get("properties") is not None:
-            # Nautobot 2.3 and below
+        try:
             post_data = req["schema"]["properties"]
-            self._choices = {
-                prop: [
-                    {"value": x, "display": y} for x, y in zip(post_data[prop]["enum"], post_data[prop]["enumNames"])
-                ]
-                for prop in post_data
-                if "enum" in post_data[prop]
-            }
-        elif req.get("actions", {}).get("POST") is not None:
-            # Nautobot 2.4+
-            post_data = req["actions"]["POST"]
-            self._choices = {prop: post_data[prop]["choices"] for prop in post_data if "choices" in post_data[prop]}
-        else:
+        except (KeyError, TypeError):
             raise ValueError(f"Unexpected format in the OPTIONS response at {self.url}")
+        self._choices = {
+            prop: [{"value": x, "display": y} for x, y in zip(post_data[prop]["enum"], post_data[prop]["enumNames"])]
+            for prop in post_data
+            if "enum" in post_data[prop]
+        }
         return self._choices
 
     def count(self, *args, api_version=None, **kwargs):
@@ -700,7 +693,7 @@ class JobsEndpoint(Endpoint):
                 before exiting the method.
 
         Returns:
-            obj: Job details: job_result object uuid found at `obj.result.id`.
+            obj (str): Job details: job_result object uuid found at `obj.result.id`.
 
         Examples:
             To run a job for verifying hostnames:
