@@ -712,8 +712,6 @@ class JobsEndpoint(Endpoint):
 
         job_obj = self.run(*args, api_version=api_version, **kwargs)
         job_result = job_obj.job_result
-        # job_result_id = job_obj.job_result.id
-        # job_result_url = f"{self.base_url}/extras/job-results/{job_result_id}/"
 
         # Job statuses which indicate a job not yet started or in progress.
         # If the job status is not in this list, it will consider the job complete and return the job result object.
