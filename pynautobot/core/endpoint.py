@@ -711,8 +711,9 @@ class JobsEndpoint(Endpoint):
             raise ValueError("Attribute `max_rechecks` must be a postive integer to prevent recursive loops.")
 
         job_obj = self.run(*args, api_version=api_version, **kwargs)
-        job_result_id = job_obj.job_result.id
-        job_result_url = f"{self.base_url}/extras/job-results/{job_result_id}/"
+        job_result = job_obj.job_result
+        # job_result_id = job_obj.job_result.id
+        # job_result_url = f"{self.base_url}/extras/job-results/{job_result_id}/"
 
         # Job statuses which indicate a job not yet started or in progress.
         # If the job status is not in this list, it will consider the job complete and return the job result object.
@@ -730,17 +731,8 @@ class JobsEndpoint(Endpoint):
             sleep(interval)
             interval_counter += 1
 
-            req = Request(
-                base=job_result_url,
-                token=self.token,
-                http_session=self.api.http_session,
-                api_version=api_version,
-            ).get()
-
-            result = req.get("job_result", {})
-            status = result.get("status", {}).get("value")
-
-            if status not in active_job_statuses:
+            job_result.full_details()
+            if job_result.status not in active_job_statuses:
                 return job_obj
 
         raise ValueError("Did not receieve completed job result for job.")
