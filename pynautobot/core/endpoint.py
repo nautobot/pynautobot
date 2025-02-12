@@ -14,6 +14,8 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
+from time import sleep
+
 from typing import List, Dict, Any
 from uuid import UUID
 from pynautobot.core.query import Request, RequestError
@@ -681,6 +683,61 @@ class JobsEndpoint(Endpoint):
         ).post(args[0] if args else kwargs)
 
         return response_loader(req, self.return_obj, self)
+
+    def run_and_wait(self, *args, api_version=None, interval=5, max_rechecks=50, **kwargs):
+        """Runs a job and waits for the response.
+        Args:
+            *args (str, optional): Freeform search string that's
+                accepted on given endpoint.
+            **kwargs (str, optional): Any search argument the
+                endpoint accepts can be added as a keyword arg.
+            api_version (str, optional): Override default or globally-set
+                Nautobot REST API version for this single request.
+            interval (int, optional): Time in seconds to wait between
+                checking job results.
+            max_rechecks (int, optional): Number of times to check job result
+                before exiting the method.
+        Returns:
+            obj (str): Job details: job_result object uuid found at `obj.result.id`.
+        Examples:
+            To run a job for verifying hostnames:
+            >>> response = nb.extras.jobs.run_and_wait(
+                    class_path="local/data_quality/VerifyHostnames",
+                    data={"hostname_regex": ".*"},
+                    commit=True,
+                    interval=5,
+                    max_rechecks=10,
+                )
+            >>> print(f"Job completed, Job Result ID: {response.job_result.id}")
+            Job completed, Job Result ID: 123
+        """
+        if max_rechecks <= 0:
+            raise ValueError("Attribute `max_rechecks` must be a postive integer to prevent recursive loops.")
+
+        job_obj = self.run(*args, api_version=api_version, **kwargs)
+        job_result = job_obj.job_result
+
+        # Job statuses which indicate a job not yet started or in progress.
+        # If the job status is not in this list, it will consider the job complete and return the job result object.
+        active_job_statuses = (
+            "RECEIVED",
+            "PENDING",
+            "STARTED",
+            "RETRY",
+        )
+
+        interval_counter = 0
+
+        while interval_counter <= max_rechecks:
+            # Sleep for interval and increment counter
+            sleep(interval)
+            interval_counter += 1
+
+            job_result.full_details()
+            if job_result.status not in active_job_statuses:
+                return job_obj
+
+        raise ValueError("Did not receieve completed job result for job.")
 
 
 class GraphqlEndpoint(Endpoint):
