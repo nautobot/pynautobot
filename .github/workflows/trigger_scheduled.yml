@@ -1,0 +1,11 @@
+---
+name: "Scheduled CI"
+on: # yamllint disable
+  schedule:
+    - cron: "20 3 * * 1"
+
+jobs:
+  tests:
+    uses: ./.github/workflows/ci.yml
+    with:
+      all-tests: true

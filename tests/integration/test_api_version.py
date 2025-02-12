@@ -17,15 +17,13 @@ class TestAPIVersioning:
         return nb_api
 
     @pytest.fixture
-    def skipif_version(self, nb_client):
+    def skipif_version(self, nb_status):
         """Retrieve the current Nautobot version and skip the test if less than 1.3."""
-        status = nb_client.status()
-        assert status
-        assert status.get("nautobot-version")
-        if version.parse(status["nautobot-version"]) < version.parse("1.3"):
+        nautobot_version = nb_status["nautobot-version"]
+        if version.parse(nautobot_version) < version.parse("1.3"):
             pytest.skip("API versioning is only in Nautobot 1.3+")
 
-        return status["nautobot-version"]
+        return nautobot_version
 
     @pytest.fixture
     def tag(self, nb_client):

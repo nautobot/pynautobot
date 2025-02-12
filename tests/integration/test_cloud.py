@@ -3,12 +3,11 @@ from packaging import version
 import pytest
 
 
-class TestCloudResourceType:
+class TestCloudApp:
     @pytest.fixture
-    def skipif_version(self, nb_client):
+    def skipif_version(self, nb_status):
         """Retrieve the current Nautobot version and skip the test if less than 2.3."""
-        status = nb_client.status()
-        nautobot_version = status.get("nautobot-version")
+        nautobot_version = nb_status["nautobot-version"]
         if version.parse(nautobot_version) < version.parse("2.3"):
             pytest.skip("Cloud resources are only in Nautobot 2.3+")
 
