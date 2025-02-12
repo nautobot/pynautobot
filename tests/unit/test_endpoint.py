@@ -285,14 +285,14 @@ class JobEndPointTestCase(unittest.TestCase):
 
     @patch("pynautobot.core.query.Request.get", return_value=Mock())
     @patch("pynautobot.core.query.Request.post", return_value=Mock())
-    def test_run_and_wait_no_complete(self, mock_post, mock_get):
+    def test_run_and_wait_invalid_input(self, mock_post, mock_get):
         api = Mock(base_url="http://localhost:8000/api", api_version="1.3")
         app = Mock(name="test")
         test_obj = JobsEndpoint(api, app, "test")
         mock_post.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
         mock_get.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
         with self.assertRaises(ValueError):
-            test_obj.run_and_wait(job_id="test", interval=1, max_rechecks=2)
+            test_obj.run_and_wait(job_id="test", interval=0, max_rechecks=0)
 
 
 class GraphqlEndPointTestCase(unittest.TestCase):
