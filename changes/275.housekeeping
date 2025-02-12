@@ -1,7 +1,0 @@
-Added support for the `invoke.yml` configuration file.
-Updated `invoke tests` to clean up after itself to be able to run idempotently.
-Changed the CI matrix to only test the latest stable version of Nautobot for normal PRs.
-Disabled CI from running on branch push.
-Added a CI workflow to be able to run tests on a branch manually.
-Changed the tests to clone the nautobot devicetype-library instead of netbox.
-Changed the clone directory of the devicetype-library to use a temporary directory when running in docker.

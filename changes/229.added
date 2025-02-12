@@ -1,1 +1,0 @@
-Added a `run_and_wait` method to run a Job and wait for it to complete.
