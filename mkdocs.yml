@@ -137,6 +137,7 @@ nav:
           - Update: "user/advanced/update.md"
   - Administrator Guide:
       - Install and Configure: "admin/install.md"
+      - Compatibility Matrix: "admin/compatibility_matrix.md"
       - Upgrade: "admin/upgrade.md"
       - Uninstall: "admin/uninstall.md"
       - Release Notes:
