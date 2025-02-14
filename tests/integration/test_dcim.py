@@ -203,3 +203,10 @@ class TestSimpleServerRackingAndConnecting:
         assert vc1.member_count == 2
         assert vc1.master.name == dev1.name
         assert vc1.master.id == dev1.id
+
+
+def test_platform_napalm_args(nb_client):
+    """Validate napalm_args are properly returned for a platform (Issue #287)."""
+    nb_client.dcim.platforms.create(name="Arista", napalm_args={"key": "value"})
+    arista = nb_client.dcim.platforms.get(name="Arista")
+    assert arista.napalm_args == {"key": "value"}
