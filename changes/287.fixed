@@ -1,0 +1,1 @@
+Fixed napalm_args not being parsed correctly for platforms.
