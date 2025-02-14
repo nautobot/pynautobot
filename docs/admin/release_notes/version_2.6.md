@@ -4,6 +4,20 @@ This document describes all new features and changes in the release. The format 
 Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic
 Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.6.1 (2025-02-14)](https://github.com/nautobot/pynautobot/releases/tag/v2.6.1)
+
+### Fixed
+
+- [#287](https://github.com/nautobot/pynautobot/issues/287) - Fixed napalm_args not being parsed correctly for platforms.
+
+### Documentation
+
+- [#285](https://github.com/nautobot/pynautobot/issues/285) - Added compatibility matrix for support with Nautobot.
+
+### Housekeeping
+
+- [#283](https://github.com/nautobot/pynautobot/issues/283) - Fixed the release workflow.
+
 ## [v2.6.0 (2025-02-12)](https://github.com/nautobot/pynautobot/releases/tag/v2.6.0)
 
 ### Added
