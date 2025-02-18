@@ -250,3 +250,6 @@ fabric.properties
 ### vscode ###
 .vscode/*
 *.code-workspace
+
+# Rando
+creds.env

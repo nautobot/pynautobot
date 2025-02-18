@@ -1,3 +1,4 @@
+"""App tests."""
 from packaging import version
 import pytest
 
@@ -17,6 +18,7 @@ class BaseAppTest:
 
         return nautobot_version
 
+    # pylint: disable=protected-access
     def test_app_get_api_endpoints(self, skipif_version, nb_client):
         """Validate the _get_api_endpoints method."""
         assert skipif_version
@@ -26,6 +28,7 @@ class BaseAppTest:
 
         assert [f"/api/{self.app_name}/" in endpoint_url for endpoint_url in api_endpoints.values()]
 
+    # pylint: disable=protected-access
     def test_app_dir(self, skipif_version, nb_client):
         """Validate the __dir__ method."""
         assert skipif_version

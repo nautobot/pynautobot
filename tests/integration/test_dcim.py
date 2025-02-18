@@ -1,3 +1,4 @@
+"""DCIM tests."""
 import pytest
 
 
@@ -99,6 +100,7 @@ class TestSimpleServerRackingAndConnecting:
 
         return device
 
+    # pylint: disable=too-many-arguments, too-many-locals, too-many-positional-arguments
     def test_racking_server(self, nb_client, server, data_leafs, mgmt_leaf, rack):
         """Verify we can rack the server."""
         assert server.update({"rack": rack.id, "face": "front", "position": rack.u_height - 4})

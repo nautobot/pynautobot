@@ -1,3 +1,4 @@
+"""DCIM tests."""
 import unittest
 from unittest.mock import patch
 
@@ -8,11 +9,12 @@ from .util import Response
 
 
 class DeviceTestCase(Generic.Tests):
+    """Device test."""
     app = "dcim"
     name = "devices"
 
     @patch("requests.sessions.Session.get", return_value=Response(fixture="dcim/device.json"))
-    def test_get(self, mock):
+    def test_get(self, mock):  # pylint: disable=arguments-differ
         ret = self.endpoint.get(self.uuid)
         self.assertIsInstance(ret, self.ret)
         self.assertIsInstance(ret.primary_ip, pynautobot.core.response.Record)
@@ -48,7 +50,7 @@ class DeviceTestCase(Generic.Tests):
         ret.serial = "123123123123"
         ret_serialized = ret.serialize()
         self.assertTrue(ret_serialized)
-        self.assertEqual(ret._diff(), {"serial"})
+        self.assertEqual(ret._diff(), {"serial"})  # pylint: disable=protected-access
         self.assertEqual(ret_serialized["serial"], "123123123123")
 
     @patch("requests.sessions.Session.post", return_value=Response(fixture="dcim/device.json"))
@@ -110,6 +112,7 @@ class DeviceTestCase(Generic.Tests):
 
 
 class SiteTestCase(Generic.Tests):
+    """Site test."""
     app = "dcim"
     name = "sites"
 
@@ -118,7 +121,7 @@ class SiteTestCase(Generic.Tests):
         """Test modifying a custom field."""
         ret = self.endpoint.get(self.uuid)
         ret.custom_fields["test_custom"] = "Testing"
-        self.assertEqual(ret._diff(), {"custom_fields"})
+        self.assertEqual(ret._diff(), {"custom_fields"})  # pylint: disable=protected-access
         self.assertTrue(ret.serialize())
         self.assertEqual(ret.custom_fields["test_custom"], "Testing")
 
@@ -139,6 +142,7 @@ class SiteTestCase(Generic.Tests):
 
 
 class InterfaceTestCase(Generic.Tests):
+    """Interface test."""
     app = "dcim"
     name = "interfaces"
 
@@ -154,11 +158,11 @@ class InterfaceTestCase(Generic.Tests):
     @patch(
         "requests.sessions.Session.get",
         side_effect=[
-            Response(fixture="dcim/{}.json".format(name + "_1")),
-            Response(fixture="dcim/{}.json".format(name + "_2")),
+            Response(fixture=f"dcim/{name}_1.json"),
+            Response(fixture=f"dcim/{name}_2.json"),
         ],
     )
-    def test_get_all(self, mock):
+    def test_get_all(self, mock):  # pylint: disable=arguments-differ
         ret = self.endpoint.all(limit=50)
         next_url = "http://localhost:8000/api/dcim/interfaces/?limit=50&offset=50"
         self.assertTrue(ret)
@@ -170,8 +174,8 @@ class InterfaceTestCase(Generic.Tests):
     @patch(
         "requests.sessions.Session.get",
         side_effect=[
-            Response(fixture="dcim/{}.json".format(name + "_1")),
-            Response(fixture="dcim/{}.json".format(name + "_2")),
+            Response(fixture=f"dcim/{name}_1.json"),
+            Response(fixture=f"dcim/{name}_2.json"),
         ],
     )
     def test_get_chunk(self, mock):
@@ -186,7 +190,7 @@ class InterfaceTestCase(Generic.Tests):
         "requests.sessions.Session.get",
         side_effect=[Response(fixture="dcim/interface.json"), Response(fixture="dcim/interface_trace.json")],
     )
-    def test_trace(self, mock):
+    def test_trace(self):
         ret = self.endpoint.get(self.uuid)
         trace = ret.trace()
         self.assertEqual(len(trace), 3)
@@ -195,6 +199,7 @@ class InterfaceTestCase(Generic.Tests):
 
 
 class RackTestCase(Generic.Tests):
+    """Rack test."""
     app = "dcim"
     name = "racks"
 
@@ -222,125 +227,149 @@ class RackTestCase(Generic.Tests):
 
 
 class RackRoleTestCase(Generic.Tests):
+    """RackRole test."""
     app = "dcim"
     name = "rack_roles"
 
 
 class RegionTestCase(Generic.Tests):
+    """Region test."""
     app = "dcim"
     name = "regions"
 
 
 class RackGroupsTestCase(Generic.Tests):
+    """RackGroups test."""
     app = "dcim"
     name = "rack_groups"
 
 
 class RackReservationsTestCase(Generic.Tests):
+    "RackReservations test."
     app = "dcim"
     name = "rack_reservations"
 
 
 class ManufacturersTestCase(Generic.Tests):
+    """Manufacturers test."""
     app = "dcim"
     name = "manufacturers"
 
 
 class DeviceTypeTestCase(Generic.Tests):
+    """DeviceType test."""
     app = "dcim"
     name = "device_types"
 
 
 class ConsolePortTemplateTestCase(Generic.Tests):
+    """ConsolePortTemplate test."""
     app = "dcim"
     name = "console_port_templates"
 
 
 class ConsoleServerPortTemplateTestCase(Generic.Tests):
+    """ConsoleServerPortTemplate test."""
     app = "dcim"
     name = "console_server_port_templates"
 
 
 class PowerPortTemplateTestCase(Generic.Tests):
+    """PowerPortTemplate test."""
     app = "dcim"
     name = "power_port_templates"
 
 
 class PowerOutletTemplateTestCase(Generic.Tests):
+    """PowerOutletTemplate test."""
     app = "dcim"
     name = "power_outlet_templates"
 
 
 class InterfaceTemplateTestCase(Generic.Tests):
+    """InterfaceTemplate test."""
     app = "dcim"
     name = "interface_templates"
 
 
 class DeviceBayTemplateTestCase(Generic.Tests):
+    """DeviceBayTemplate test."""
     app = "dcim"
     name = "device_bay_templates"
 
 
 class DeviceRolesTestCase(Generic.Tests):
+    """DeviceRoles test."""
     app = "dcim"
     name = "device_roles"
 
 
 class PlatformsTestCase(Generic.Tests):
+    """Platforms test."""
     app = "dcim"
     name = "platforms"
 
 
 class ConsolePortsTestCase(Generic.Tests):
+    """ConsolePorts test."""
     app = "dcim"
     name = "console_ports"
 
 
 class ConsoleServerPortsTestCase(Generic.Tests):
+    """ConsoleServerPorts test."""
     app = "dcim"
     name = "console_server_ports"
 
 
 class PowerPortsTestCase(Generic.Tests):
+    """PowerPorts test."""
     app = "dcim"
     name = "power_ports"
 
 
 class PowerOutletsTestCase(Generic.Tests):
+    """PowerOutlets test."""
     app = "dcim"
     name = "power_outlets"
 
 
 class DeviceBaysTestCase(Generic.Tests):
+    """DeviceBays test."""
     app = "dcim"
     name = "device_bays"
 
 
 # class InventoryItemsTestCase(Generic.Tests):
+# """InventoryItems test."""
 #     app = "dcim"
 #     name = "inventory_items"
 
 
 class InterfaceConnectionsTestCase(Generic.Tests):
+    """InterfaceConnections test."""
     app = "dcim"
     name = "interface_connections"
 
 
 # class ConnectedDevicesTestCase(Generic.Tests):
+# """ConnectedDevices test."""
 #     app = "dcim"
 #     name = "connected_device"
 
 
 class VirtualChassisTestCase(Generic.Tests):
+    """VirtualChassis test."""
     app = "dcim"
     name = "virtual_chassis_devices"
 
 
 class Choices(unittest.TestCase):
+    """Choices test."""
     def test_get(self):
         with patch(
             "requests.sessions.Session.get",
-            return_value=Response(fixture="{}/{}.json".format("dcim", "choices")),
+            return_value=Response(fixture="dcim/choices.json"),
         ) as mock:
             ret = api.dcim.choices()
             self.assertTrue(ret)
@@ -353,6 +382,7 @@ class Choices(unittest.TestCase):
 
 
 class CablesTestCase(Generic.Tests):
+    """Cables test."""
     app = "dcim"
     name = "cables"
 

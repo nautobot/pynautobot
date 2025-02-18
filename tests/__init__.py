@@ -1,3 +1,4 @@
+"""Test initialization file."""
 import unittest
 from unittest.mock import patch
 
@@ -22,8 +23,10 @@ POST_HEADERS = {
 }
 
 
-class Generic:
+class Generic:  # pylint: disable=too-few-public-methods
+    """Generic test class."""
     class Tests(unittest.TestCase):
+        """Generic tests."""
         ret = pynautobot.core.response.Record
 
         app = ""  # to be set by subclasses
@@ -33,10 +36,12 @@ class Generic:
 
         @property
         def bulk_uri(self):
+            """Return the URI for the bulk endpoint."""
             return f"http://localhost:8000/api/{self.app}/{self.name.replace('_', '-')}/"
 
         @property
         def detail_uri(self):
+            """Return the URI for the detail endpoint."""
             return f"http://localhost:8000/api/{self.app}/{self.name.replace('_', '-')}/{self.uuid}/"
 
         def setUp(self):
@@ -98,10 +103,10 @@ class Generic:
                 "requests.sessions.Session.patch",
                 return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
             ) as mock:
-                UPDATE_DATA = {"field1": "value1"}
-                ret = self.endpoint.update(id=self.uuid, data=UPDATE_DATA)
+                update_data = {"field1": "value1"}
+                ret = self.endpoint.update(id=self.uuid, data=update_data)
                 self.assertTrue(ret)
-                mock.assert_called_with(self.detail_uri, params={}, json=UPDATE_DATA, headers=HEADERS)
+                mock.assert_called_with(self.detail_uri, params={}, json=update_data, headers=HEADERS)
 
         def test_diff(self):
             with patch(
@@ -110,7 +115,7 @@ class Generic:
             ):
                 ret = self.endpoint.get(self.uuid)
                 self.assertTrue(ret)
-                self.assertEqual(ret._diff(), set())
+                self.assertEqual(ret._diff(), set())  # pylint: disable=protected-access
 
         def test_serialize(self):
             with patch(

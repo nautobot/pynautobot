@@ -1,3 +1,4 @@
+"""API version tests."""
 import unittest
 from unittest.mock import patch, Mock
 
@@ -6,6 +7,7 @@ from pynautobot.core.endpoint import Endpoint
 
 @patch("pynautobot.core.endpoint.response_loader")
 class APIVersionTestCase(unittest.TestCase):
+    """Test API versioning."""
     def setUp(self):
         self.api = Mock(base_url="http://localhost:8000/api", api_version="1.3", name="API-Mock")
         self.api.token = 1234
@@ -13,7 +15,7 @@ class APIVersionTestCase(unittest.TestCase):
         app.name = "test"
         self.test_obj = Endpoint(self.api, app, "test")
 
-    def test_api_versioning_at_api_level(self, ResponseLoader):
+    def test_api_versioning_at_api_level(self):
         # Test get request includes version=1.3 in its headers
         self.test_obj.get(1)
         self.api.http_session.get.assert_called_with(
@@ -51,7 +53,7 @@ class APIVersionTestCase(unittest.TestCase):
             json=None,
         )
 
-    def test_api_versioning_at_per_request_level(self, ResponseLoader):
+    def test_api_versioning_at_per_request_level(self):
         # Test get request overrides Api level versioning
         self.test_obj.get(1, api_version=1.2)
         self.api.http_session.get.assert_called_with(
