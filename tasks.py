@@ -34,10 +34,9 @@ def is_truthy(arg):
     val = str(arg).lower()
     if val in ("y", "yes", "t", "true", "on", "1"):
         return True
-    elif val in ("n", "no", "f", "false", "off", "0"):
+    if val in ("n", "no", "f", "false", "off", "0"):
         return False
-    else:
-        raise ValueError(f"Invalid truthy value: `{arg}`")
+    raise ValueError(f"Invalid truthy value: `{arg}`")
 
 
 def _get_image_name_and_tag():
@@ -74,23 +73,27 @@ _DOCKER_COMPOSE_ENV = {
 
 @task
 def start(context):
+    """Start Nautobot in detached mode."""
     print("Starting Nautobot in detached mode...")
     return context.run("docker compose up -d", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task
 def stop(context):
+    """Stop Nautobot."""
     print("Stopping Nautobot...")
     return context.run("docker compose stop", env=_DOCKER_COMPOSE_ENV, pty=True)
 
 
 @task
 def destroy(context):
+    """Remove Nautobot containers and volumes."""
     down(context, remove=True)
 
 
 @task
 def down(context, remove=False):
+    """Stop Nautobot and remove resources."""
     print("Stopping Nautobot and removing resources...")
     command = [
         "docker compose",
@@ -123,6 +126,7 @@ def logs(context, service="", follow=False, tail=None):
 
 @task
 def debug(context, service=_DEFAULT_SERVICE):
+    """Start Nautobot in debug mode."""
     print("Starting Nautobot in debug mode...")
     return context.run(f"docker compose up -- {service}", env=_DOCKER_COMPOSE_ENV, pty=True)
 
@@ -257,7 +261,8 @@ def pylint(context, local=INVOKE_LOCAL):
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    exec_cmd = 'find . -name "*.py" | xargs pylint'
+    # exec_cmd = 'find . -name "*.py" | xargs pylint'
+    exec_cmd = 'find . -name "*.py" -not -path "./.venv/*" | xargs pylint'
     run_cmd(context, exec_cmd, local)
 
 
@@ -351,5 +356,5 @@ def docs(context, local=INVOKE_LOCAL):
 
 
 @task
-def check_migrations(context):
+def check_migrations(context): # pylint: disable=unused-argument
     """Upstream CI test runs check-migration test, but pynautobot has no migration to be tested; Hence including to pass CI test"""

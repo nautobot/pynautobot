@@ -14,6 +14,8 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
+"""Defines classes and functions for making HTTP requests to the Nautobot API."""
+
 try:
     import concurrent.futures as cf
 except ImportError:
@@ -46,18 +48,18 @@ class RequestError(Exception):
         req = message
 
         if req.status_code == 404:
-            message = "The requested url: {} could not be found.".format(req.url)
+            message = f"The requested url: {req.url} could not be found."
         else:
             try:
-                message = "The request failed with code {} {}: {}".format(req.status_code, req.reason, req.json())
+                message = f"The request failed with code {req.status_code} {req.reason}: {req.json()}"
             except ValueError:
                 message = (
-                    "The request failed with code {} {} but more specific "
+                    f"The request failed with code {req.status_code} {req.reason} but more specific "
                     "details were not returned in json. Check the Nautobot Logs "
-                    "or investigate this exception's error attribute.".format(req.status_code, req.reason)
+                    "or investigate this exception's error attribute."
                 )
 
-        super(RequestError, self).__init__(message)
+        super().__init__(message)
         self.req = req
         self.request_body = req.request.body
         self.base = req.url
@@ -80,7 +82,7 @@ class AllocationError(Exception):
 
         message = "The requested allocation could not be fulfilled."
 
-        super(AllocationError, self).__init__(message)
+        super().__init__(message)
         self.req = req
         self.request_body = req.request.body
         self.base = req.url
@@ -98,16 +100,16 @@ class ContentError(Exception):
     def __init__(self, message):
         req = message
 
-        message = "The server returned invalid (non-json) data. Maybe not " "a Nautobot server?"
+        message = "The server returned invalid (non-json) data. Maybe not a Nautobot server?"
 
-        super(ContentError, self).__init__(message)
+        super().__init__(message)
         self.req = req
         self.request_body = req.request.body
         self.base = req.url
         self.error = message
 
-
-class Request(object):
+# pylint: disable=too-many-instance-attributes
+class Request:
     """Creates requests to the Nautobot API.
 
     Responsible for building the URL and making the HTTP(S) requests to
@@ -123,6 +125,7 @@ class Request(object):
             and ``.filter()`` requests.
     """
 
+    # pylint: disable=too-many-positional-arguments, too-many-arguments
     def __init__(
         self,
         base,
@@ -152,7 +155,7 @@ class Request(object):
         self.key = key
         self.token = token
         self.http_session = http_session
-        self.url = self.base if not key else "{}{}/".format(self.base, key)
+        self.url = f"{self.base}{key}/" if key else self.base
         self.threading = threading
         self.max_workers = max_workers
         self.api_version = api_version
@@ -171,7 +174,7 @@ class Request(object):
 
         try:
             req = self.http_session.get(
-                "{}docs/?format=openapi".format(self.normalize_url(self.base)),
+                f"{self.normalize_url(self.base)}docs/?format=openapi",
                 headers=headers,
             )
         except requests.exceptions.RetryError as error:
@@ -179,8 +182,7 @@ class Request(object):
 
         if req.ok:
             return req.json()
-        else:
-            raise RequestError(req)
+        raise RequestError(req)
 
     def get_version(self):
         """Gets the API version of Nautobot.
@@ -211,8 +213,7 @@ class Request(object):
 
         if req.ok:
             return req.headers.get("API-Version", "")
-        else:
-            raise RequestError(req)
+        raise RequestError(req)
 
     def get_status(self):
         """Gets the status from /api/status/ endpoint in Nautobot.
@@ -229,14 +230,14 @@ class Request(object):
             "Authorization": f"Token {self.token}",
         }
         if self.token:
-            headers["authorization"] = "Token {}".format(self.token)
+            headers["authorization"] = f"Token {self.token}"
 
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
 
         try:
             req = self.http_session.get(
-                "{}status/".format(self.normalize_url(self.base)),
+                f"{self.normalize_url(self.base)}status/",
                 headers=headers,
             )
         except requests.exceptions.RetryError as error:
@@ -244,16 +245,16 @@ class Request(object):
 
         if req.ok:
             return req.json()
-        else:
-            raise RequestError(req)
+        raise RequestError(req)
 
     def normalize_url(self, url):
         """Builds a url for POST actions."""
         if url[-1] != "/":
-            return "{}/".format(url)
+            return f"{url}/"
 
         return url
 
+    # pylint: disable=too-many-branches
     def _make_call(self, verb="get", url_override=None, add_params=None, data=None):
         if verb in ("post", "put") or (verb in ("delete") and data):
             headers = {"Content-Type": "application/json;"}
@@ -261,7 +262,7 @@ class Request(object):
             headers = {"accept": "application/json;"}
 
         if self.token:
-            headers["authorization"] = "Token {}".format(self.token)
+            headers["authorization"] = f"Token {self.token}"
 
         if self.api_version:
             headers["accept"] = f"application/json; version={self.api_version}"
@@ -283,17 +284,17 @@ class Request(object):
         if verb == "delete":
             if req.ok:
                 return True
-            else:
-                raise RequestError(req)
-        elif req.ok:
+            raise RequestError(req)
+        if req.ok:
             try:
                 return req.json()
-            except json.JSONDecodeError:
-                raise ContentError(req)
+            except json.JSONDecodeError as exc:
+                raise ContentError(req) from exc
         else:
             raise RequestError(req)
 
     def concurrent_get(self, ret, page_size, page_offsets):
+        """Conccurently get paginated results."""
         futures_to_results = []
         with cf.ThreadPoolExecutor(max_workers=self.max_workers) as pool:
             for offset in page_offsets:
@@ -331,13 +332,11 @@ class Request(object):
                 while req["next"] and self.offset is None:
                     if not add_params and first_run:
                         req = self._make_call(add_params={"limit": req["count"], "offset": len(req["results"])})
-                    else:
-                        req = self._make_call(url_override=req["next"])
+                    req = self._make_call(url_override=req["next"])
                     first_run = False
                     ret.extend(req["results"])
                 return ret
-            else:
-                return req
+            return req
 
         def req_all_threaded(add_params):
             if add_params is None:
@@ -353,12 +352,10 @@ class Request(object):
                     if pages == 1:
                         req = self._make_call(url_override=req.get("next"))
                         ret.extend(req["results"])
-                    else:
-                        self.concurrent_get(ret, page_size, page_offsets)
+                    self.concurrent_get(ret, page_size, page_offsets)
 
                 return ret
-            else:
-                return req
+            return req
 
         if self.threading:
             return req_all_threaded(add_params)
@@ -449,7 +446,7 @@ class Request(object):
 
         return self._make_call(verb="options")
 
-    def get_count(self, *args, **kwargs) -> int:
+    def get_count(self, *args, **kwargs) -> int: #pylint: disable=unused-argument
         """Retrieves the number of objects matching a query in the Nautobot API.
 
         Makes a GET request to the specified endpoint with a limited response

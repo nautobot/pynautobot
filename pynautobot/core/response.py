@@ -1,3 +1,5 @@
+"""Provides classes and functions to handle responses from the Nautobot API."""
+
 # (c) 2017 DigitalOcean
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +19,8 @@
 import copy
 from collections import OrderedDict
 
-import pynautobot.core.app
 from requests.utils import urlparse
+import pynautobot.core.app
 import pynautobot.core.endpoint
 from pynautobot.core.query import Request
 from pynautobot.core.util import Hashabledict
@@ -48,27 +50,25 @@ def get_return(lookup, return_fields=None):
     for i in return_fields or ["id", "value", "nested_return"]:
         if isinstance(lookup, dict) and lookup.get(i):
             return lookup[i]
-        else:
-            if hasattr(lookup, i):
-                # check if this is a "choices" field record
-                # from a Nautobot 2.7 server.
-                if sorted(dict(lookup)) == sorted(["id", "value", "label"]):
-                    return getattr(lookup, "value")
-                return getattr(lookup, i)
+        if hasattr(lookup, i):
+            # check if this is a "choices" field record
+            # from a Nautobot 2.7 server.
+            if sorted(dict(lookup)) == sorted(["id", "value", "label"]):
+                return getattr(lookup, "value")
+            return getattr(lookup, i)
 
     if isinstance(lookup, Record):
         return str(lookup)
-    else:
-        return lookup
+    return lookup
 
-
-class JsonField(object):
+# pylint: disable=too-few-public-methods
+class JsonField:
     """Explicit field type for values that are not to be converted to a Record object."""
 
     _json_field = True
 
 
-class Record(object):
+class Record:
     """Create Python objects from Nautobot API responses.
 
     Creates an object from a Nautobot response passed as `values`.
@@ -184,7 +184,7 @@ class Record(object):
                     if ret or hasattr(self, k):
                         return ret
 
-        raise AttributeError('object has no attribute "{}"'.format(k))
+        raise AttributeError(f'object has no attribute "{k}"')
 
     def __iter__(self):
         for i in dict(self._init_cache):
@@ -203,7 +203,7 @@ class Record(object):
         return str(getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or "")
 
     def __repr__(self):
-        return "<{}.{} ('{}') at {}>".format(self.__class__.__module__, self.__class__.__name__, self, hex(id(self)))
+        return f"<{self.__class__.__module__}.{self.__class__.__name__} ('{self}') at {hex(id(self))}>"
 
     def __getstate__(self):
         return self.__dict__
@@ -214,8 +214,7 @@ class Record(object):
     def __key__(self):
         if hasattr(self, "id"):
             return (self.endpoint.name, self.id)
-        else:
-            return self.endpoint.name
+        return self.endpoint.name
 
     def __hash__(self):
         return hash(self.__key__())
@@ -336,7 +335,7 @@ class Record(object):
 
         ret = {}
         for i in dict(self):
-            current_val = getattr(self, i) if not init else init_vals.get(i)
+            current_val = getattr(self, i) if not init else init_vals.get(i) # pylint: disable=possibly-used-before-assignment
             if i in ["custom_fields", "constraints"]:  # just pass constraints as it is (a JSON string)
                 ret[i] = current_val
 
@@ -347,7 +346,7 @@ class Record(object):
                 if isinstance(current_val, list):
                     current_val = [v.id if isinstance(v, Record) else v for v in current_val]
                     if i in LIST_AS_SET and (
-                        all([isinstance(v, str) for v in current_val]) or all([isinstance(v, int) for v in current_val])
+                        all(isinstance(v, str) for v in current_val) or all(isinstance(v, int) for v in current_val)
                     ):
                         current_val = list(OrderedDict.fromkeys(current_val))
                 ret[i] = current_val
@@ -363,7 +362,7 @@ class Record(object):
 
         current = Hashabledict({fmt_dict(k, v) for k, v in self.serialize().items()})
         init = Hashabledict({fmt_dict(k, v) for k, v in self.serialize(init=True).items()})
-        return set([i[0] for i in set(current.items()) ^ set(init.items())])
+        return {i[0] for i in set(current.items()) ^ set(init.items())}
 
     def updates(self):
         """Compiles changes for an existing object into a dictionary.
@@ -468,7 +467,7 @@ class Record(object):
             http_session=self.api.http_session,
             api_version=self.api.api_version,
         )
-        return True if req.delete() else False
+        return bool(req.delete())
 
     @property
     def notes(self):

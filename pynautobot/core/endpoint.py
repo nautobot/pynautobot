@@ -1,5 +1,6 @@
+"""Provides classes and functions for interacting with the Nautobot API endpoints."""
+
 # (c) 2017 DigitalOcean
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -23,12 +24,13 @@ RESERVED_KWARGS = ("pk",)
 
 
 def response_loader(req, return_obj, endpoint):
+    """Loads the response from the API into an object."""
     if isinstance(req, list):
         return [return_obj(i, endpoint.api, endpoint) for i in req]
     return return_obj(req, endpoint.api, endpoint)
 
 
-class Endpoint(object):
+class Endpoint:
     """Represent actions available on endpoints in the Nautobot API.
 
     Takes `name` and `app` passed from `App()` and builds the correct
@@ -54,11 +56,7 @@ class Endpoint(object):
         self.api = api
         self.base_url = api.base_url
         self.token = api.token
-        self.url = "{base_url}/{app}/{endpoint}".format(
-            base_url=self.base_url,
-            app=app.name,
-            endpoint=self.name,
-        )
+        self.url = f"{self.base_url}/{app.name}/{self.name}"
         self._choices = None
 
     def _lookup_ret_obj(self, name, model):
@@ -146,8 +144,7 @@ class Endpoint(object):
                         "Check that the kwarg(s) passed are valid for this "
                         "endpoint or use filter() or all() instead."
                     )
-                else:
-                    return filter_lookup[0]
+                return filter_lookup[0]
             return None
 
         req = Request(
@@ -163,8 +160,7 @@ class Endpoint(object):
         except RequestError as e:
             if e.req.status_code == 404:
                 return None
-            else:
-                raise e
+            raise e
 
         return response_loader(resp, self.return_obj, self)
 
@@ -209,7 +205,7 @@ class Endpoint(object):
             kwargs.update({"q": args[0]})
 
         if any(i in RESERVED_KWARGS for i in kwargs):
-            raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
+            raise ValueError(f"A reserved {RESERVED_KWARGS} kwarg was passed. Please remove it and try again.")
         limit = kwargs.pop("limit") if "limit" in kwargs else None
         offset = kwargs.pop("offset") if "offset" in kwargs else None
         if not limit and offset is not None:
@@ -550,7 +546,7 @@ class Endpoint(object):
             kwargs.update({"q": args[0]})
 
         if any(i in RESERVED_KWARGS for i in kwargs):
-            raise ValueError("A reserved {} kwarg was passed. Please remove it " "try again.".format(RESERVED_KWARGS))
+            raise ValueError(f"A reserved {RESERVED_KWARGS} kwarg was passed. Please remove it and try again.")
 
         api_version = api_version or self.api.api_version
 
@@ -561,7 +557,7 @@ class Endpoint(object):
         return ret.get_count()
 
 
-class DetailEndpoint(object):
+class DetailEndpoint:
     """Enables read/write Operations on detail endpoints.
 
     Endpoints like ``available-ips`` that are detail routes off
@@ -571,13 +567,13 @@ class DetailEndpoint(object):
     def __init__(self, parent_obj, name, custom_return=None):
         self.parent_obj = parent_obj
         self.custom_return = custom_return
-        self.url = "{}/{}/{}/".format(parent_obj.endpoint.url, parent_obj.id, name)
+        self.url = f"{parent_obj.endpoint.url}/{parent_obj.id}/{name}/"
 
-        self.request_kwargs = dict(
-            base=self.url,
-            token=parent_obj.api.token,
-            http_session=parent_obj.api.http_session,
-        )
+        self.request_kwargs = {
+            "base": self.url,
+            "token": parent_obj.api.token,
+            "http_session": parent_obj.api.http_session,
+        }
 
     def list(self, api_version=None, **kwargs):
         """The view operation for a detail endpoint.
@@ -628,6 +624,7 @@ class DetailEndpoint(object):
 
 
 class RODetailEndpoint(DetailEndpoint):
+    """Enables read-only Operations on detail endpoints."""
     def create(self, data=None, api_version=None):
         raise NotImplementedError("Writes are not supported for this endpoint.")
 
