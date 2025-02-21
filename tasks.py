@@ -285,8 +285,7 @@ def tests(context):
     """
     black(context)
     flake8(context)
-    # Too much to deal with atm.
-    # pylint(context)
+    pylint(context)
     yamllint(context)
     # Skipping due to using different doc strings atm.
     # pydocstyle(context)
