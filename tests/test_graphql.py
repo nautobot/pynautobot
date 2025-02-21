@@ -1,4 +1,5 @@
 """GraphQL tests."""
+
 from os import path
 
 import pytest

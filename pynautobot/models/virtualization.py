@@ -1,4 +1,5 @@
 """Virtual Machines Object."""
+
 # (c) 2017 DigitalOcean
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,4 +21,5 @@ from pynautobot.core.response import Record, JsonField
 
 class VirtualMachines(Record):
     """Virtual Machines."""
+
     config_context = JsonField

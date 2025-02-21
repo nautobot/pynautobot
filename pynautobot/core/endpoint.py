@@ -625,6 +625,7 @@ class DetailEndpoint:
 
 class RODetailEndpoint(DetailEndpoint):
     """Enables read-only Operations on detail endpoints."""
+
     def create(self, data=None, api_version=None):
         raise NotImplementedError("Writes are not supported for this endpoint.")
 

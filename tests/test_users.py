@@ -1,4 +1,5 @@
 """Users tests. """
+
 from unittest.mock import patch
 
 from . import Generic
@@ -7,6 +8,7 @@ from .util import Response
 
 class UsersTestCase(Generic.Tests):
     """Users test."""
+
     app = "users"
     name = "users"
 
@@ -18,12 +20,13 @@ class UsersTestCase(Generic.Tests):
 
 class GroupsTestCase(Generic.Tests):
     """Groups test."""
+
     app = "users"
     name = "groups"
 
 
 class PermissionsTestCase(Generic.Tests):
-    """Permissions test.
-    """
+    """Permissions test."""
+
     app = "users"
     name = "permissions"

@@ -8,6 +8,7 @@ from .util import Response
 
 class DynamicGroupTestCase(Generic.Tests):
     """DynamicGroup test."""
+
     name = "dynamic_groups"
     name_singular = "dynamic_group"
 

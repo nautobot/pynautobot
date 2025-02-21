@@ -1,4 +1,5 @@
 """App tests."""
+
 from packaging import version
 import pytest
 

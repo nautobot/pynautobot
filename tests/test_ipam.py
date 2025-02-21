@@ -1,4 +1,5 @@
 """IPAM tests."""
+
 from unittest.mock import patch
 
 import pynautobot
@@ -6,9 +7,11 @@ import pynautobot
 from . import Generic, api, HEADERS, POST_HEADERS
 from .util import Response
 
+
 # pylint: disable=protected-access
 class PrefixTestCase(Generic.Tests):
     """Prefix test case."""
+
     app = "ipam"
     name = "prefixes"
     name_singular = "prefix"
@@ -98,6 +101,7 @@ class PrefixTestCase(Generic.Tests):
 
 class IPAddressTestCase(Generic.Tests):
     """IP Address test case."""
+
     app = "ipam"
     name = "ip_addresses"
     name_singular = "ip_address"
@@ -115,18 +119,21 @@ class IPAddressTestCase(Generic.Tests):
 
 class RoleTestCase(Generic.Tests):
     """Role test case."""
+
     app = "ipam"
     name = "roles"
 
 
 class RIRTestCase(Generic.Tests):
     """RIR test case."""
+
     app = "ipam"
     name = "rirs"
 
 
 class AggregatesTestCase(Generic.Tests):
     """Aggregates test case."""
+
     app = "ipam"
     name = "aggregates"
 
@@ -143,6 +150,7 @@ class AggregatesTestCase(Generic.Tests):
 
 class VlanTestCase(Generic.Tests):
     """Vlan test case."""
+
     app = "ipam"
     name = "vlans"
 
@@ -166,12 +174,14 @@ class VlanTestCase(Generic.Tests):
 
 class VlanGroupsTestCase(Generic.Tests):
     """Vlan Groups test case."""
+
     app = "ipam"
     name = "vlan_groups"
 
 
 class VRFTestCase(Generic.Tests):
     """VRF test case."""
+
     app = "ipam"
     name = "vrfs"
 
@@ -194,6 +204,7 @@ class VRFTestCase(Generic.Tests):
 
 class NameSpaceTestCase(Generic.Tests):
     """Namespace test case."""
+
     app = "ipam"
     name = "namespaces"
     name_singular = "namespace"

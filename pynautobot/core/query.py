@@ -108,6 +108,7 @@ class ContentError(Exception):
         self.base = req.url
         self.error = message
 
+
 # pylint: disable=too-many-instance-attributes
 class Request:
     """Creates requests to the Nautobot API.
@@ -446,7 +447,7 @@ class Request:
 
         return self._make_call(verb="options")
 
-    def get_count(self, *args, **kwargs) -> int: #pylint: disable=unused-argument
+    def get_count(self, *args, **kwargs) -> int:  # pylint: disable=unused-argument
         """Retrieves the number of objects matching a query in the Nautobot API.
 
         Makes a GET request to the specified endpoint with a limited response

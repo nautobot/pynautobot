@@ -1,4 +1,5 @@
 """API version tests."""
+
 import unittest
 from unittest.mock import patch, Mock
 
@@ -8,6 +9,7 @@ from pynautobot.core.endpoint import Endpoint
 @patch("pynautobot.core.endpoint.response_loader")
 class APIVersionTestCase(unittest.TestCase):
     """Test API versioning."""
+
     def setUp(self):
         self.api = Mock(base_url="http://localhost:8000/api", api_version="1.3", name="API-Mock")
         self.api.token = 1234

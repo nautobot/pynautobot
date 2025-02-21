@@ -1,4 +1,5 @@
 """Extras tests"""
+
 import pytest
 
 

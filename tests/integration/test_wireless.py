@@ -1,4 +1,5 @@
 """Wireless tests."""
+
 from packaging import version
 
 import pytest
@@ -6,6 +7,7 @@ import pytest
 
 class TestWirelessApp:
     """Wireless test."""
+
     @pytest.fixture
     def skipif_version(self, nb_status):
         """Skip the test if the Nautobot version is less than 2.4."""

@@ -1,12 +1,15 @@
 """Response tests."""
+
 import unittest
 from unittest.mock import Mock, patch, PropertyMock
 
 from pynautobot.core.response import Record
 
+
 # pylint: disable=too-many-public-methods, protected-access
 class RecordTestCase(unittest.TestCase):
     """Record test case."""
+
     def test_attribute_access(self):
         test_values = {
             "id": 123,
@@ -22,8 +25,6 @@ class RecordTestCase(unittest.TestCase):
         self.assertEqual(test_obj.int_list[1], 321)
         with self.assertRaises(AttributeError):
             _ = test_obj.nothing
-
-
 
     def test_dict_access(self):
         test_values = {

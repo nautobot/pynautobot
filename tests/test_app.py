@@ -1,4 +1,5 @@
 """App tests."""
+
 import unittest
 from unittest.mock import patch
 
@@ -15,6 +16,7 @@ def_kwargs = {
 
 class AppCustomFieldsTestCase(unittest.TestCase):
     """App custom fields test."""
+
     @patch(
         "requests.sessions.Session.get",
         return_value=Response(fixture="extras/custom_fields.json"),
@@ -42,6 +44,7 @@ class AppCustomFieldsTestCase(unittest.TestCase):
 
 class AppCustomFieldChoicesTestCase(unittest.TestCase):
     """App custom field choices test."""
+
     @patch(
         "requests.sessions.Session.get",
         return_value=Response(fixture="extras/custom_field_choices.json"),
@@ -68,6 +71,7 @@ class AppCustomFieldChoicesTestCase(unittest.TestCase):
 
 class AppConfigTestCase(unittest.TestCase):
     """App config test."""
+
     @patch(
         "pynautobot.core.query.Request.get",
         return_value={"tables": {"DeviceTable": {"columns": ["name", "status", "tenant", "tags"]}}},
@@ -85,6 +89,7 @@ class AppConfigTestCase(unittest.TestCase):
 
 class PluginAppCustomChoicesTestCase(unittest.TestCase):
     """Plugin app custom choices test."""
+
     @patch(
         "pynautobot.core.query.Request.get",
         return_value={"Testfield1": {"TF1_1": 1, "TF1_2": 2}, "Testfield2": {"TF2_1": 3, "TF2_2": 4}},

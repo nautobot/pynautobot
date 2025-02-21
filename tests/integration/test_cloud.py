@@ -1,4 +1,5 @@
 """Cloud tests."""
+
 from packaging import version
 
 import pytest
@@ -6,6 +7,7 @@ import pytest
 
 class TestCloudApp:
     """Cloud test."""
+
     @pytest.fixture
     def skipif_version(self, nb_status):
         """Retrieve the current Nautobot version and skip the test if less than 2.3."""

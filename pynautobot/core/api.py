@@ -1,4 +1,5 @@
 """API module for pynautobot."""
+
 # (c) 2017 DigitalOcean
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,6 +24,7 @@ from urllib3 import Retry
 from pynautobot.core.query import Request
 from pynautobot.core.app import App, PluginsApp
 from pynautobot.core.graphql import GraphQLQuery
+
 
 # pylint: disable=too-many-instance-attributes, too-many-instance-attributes, too-many-arguments, too-many-positional-arguments
 class Api:
@@ -80,7 +82,7 @@ class Api:
         retries=0,
         verify=True,
     ):
-        from pynautobot import __version__ # pylint: disable=import-outside-toplevel
+        from pynautobot import __version__  # pylint: disable=import-outside-toplevel
 
         base_url = f"{url.rstrip('/')}/api"
         self.token = token

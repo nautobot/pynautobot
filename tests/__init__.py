@@ -1,4 +1,5 @@
 """Test initialization file."""
+
 import unittest
 from unittest.mock import patch
 
@@ -25,8 +26,10 @@ POST_HEADERS = {
 
 class Generic:  # pylint: disable=too-few-public-methods
     """Generic test class."""
+
     class Tests(unittest.TestCase):
         """Generic tests."""
+
         ret = pynautobot.core.response.Record
 
         app = ""  # to be set by subclasses

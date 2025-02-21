@@ -1,4 +1,5 @@
 """Common fixtures for integration tests."""
+
 import os
 import subprocess as subp
 
@@ -6,8 +7,6 @@ import requests
 import yaml
 import pytest
 import pynautobot
-
-
 
 
 DOCKER_PROJECT_PREFIX = "pytest_pynautobot"
@@ -51,6 +50,7 @@ def git_toplevel():
     """
     return subp.check_output(["git", "rev-parse", "--show-toplevel"]).decode("utf-8").splitlines()[0]
 
+
 # pylint: disable=redefined-outer-name
 @pytest.fixture(scope="session")
 def devicetype_library_repo_dirpath(git_toplevel):
@@ -88,6 +88,7 @@ def nautobot_is_responsive(url):
         return response.status_code == 200
     except ConnectionError:
         return False
+
 
 # pylint: disable=too-many-locals, too-many-branches
 def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):

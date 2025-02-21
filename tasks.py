@@ -322,8 +322,7 @@ def tests(context, local=INVOKE_LOCAL):
     """
     black(context, local)
     flake8(context, local)
-    # Too much to deal with atm.
-    # pylint(context, local)
+    pylint(context, local)
     yamllint(context, local)
     # Skipping due to using different doc strings atm.
     # pydocstyle(context, local)

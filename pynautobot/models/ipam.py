@@ -1,4 +1,5 @@
 """IPAM Object."""
+
 # (c) 2017 DigitalOcean
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +22,7 @@ from pynautobot.core.endpoint import DetailEndpoint
 
 class IpAddresses(Record):
     """IP Address Object."""
+
     def __str__(self):
         parent_record_string = super().__str__()
         return parent_record_string or str(self.address)
@@ -28,6 +30,7 @@ class IpAddresses(Record):
 
 class Prefixes(Record):
     """Prefix Object."""
+
     def __str__(self):
         parent_record_string = super().__str__()
         return parent_record_string or str(self.prefix)

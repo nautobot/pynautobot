@@ -1,4 +1,5 @@
 """Defines various classes representing different components in DCIM."""
+
 # (c) 2017 DigitalOcean
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,6 +26,7 @@ from pynautobot.models.circuits import Circuits
 
 class TraceableRecord(Record):
     """Traceable record in the DCIM (Data Center Infrastructure Management) module."""
+
     def _get_app_endpoint(self, hop_item_data):
         if "url" not in hop_item_data:
             return ""
@@ -70,6 +72,7 @@ class TraceableRecord(Record):
 
 class DeviceTypes(Record):
     """DeviceTypes Object"""
+
     def __str__(self):
         return self.model
 
@@ -115,55 +118,65 @@ class Devices(Record):
 
 class InterfaceConnections(Record):
     """InterfaceConnections Object"""
+
     def __str__(self):
         return self.interface_a.name
 
 
 class InterfaceConnection(Record):
     """InterfaceConnection Object"""
+
     def __str__(self):
         return self.interface.name
 
 
 class ConnectedEndpoint(Record):
     """ConnectedEndpoint Object"""
+
     device = Devices
 
 
 class Interfaces(TraceableRecord):
     """Interfaces Object"""
+
     interface_connection = InterfaceConnection
     connected_endpoint = ConnectedEndpoint
 
 
 class PowerOutlets(TraceableRecord):
     """PowerOutlets Object"""
+
     device = Devices
 
 
 class PowerPorts(TraceableRecord):
     """PowerPorts Object"""
+
     device = Devices
 
 
 class ConsolePorts(TraceableRecord):
     """ConsolePorts Object"""
+
     device = Devices
 
 
 class ConsoleServerPorts(TraceableRecord):
     """ConsoleServerPorts Object"""
+
     device = Devices
 
 
 class RackReservations(Record):
     """RackReservations Object"""
+
     def __str__(self):
         return self.description
 
 
 class VirtualChassis(Record):
     """VirtualChassis Object"""
+
     def __str__(self):
         if self.master is not None:
             return self.master.display
@@ -172,21 +185,25 @@ class VirtualChassis(Record):
 
 class RUs(Record):
     """RUs Object"""
+
     device = Devices
 
 
 class FrontPorts(Record):
     """FrontPorts Object"""
+
     device = Devices
 
 
 class RearPorts(Record):
     """RearPorts Object"""
+
     device = Devices
 
 
 class Racks(Record):
     """Racks Object"""
+
     @property
     def units(self):
         """Represents the ``units`` detail endpoint.
@@ -227,6 +244,7 @@ class Racks(Record):
 
 class Termination(Record):
     """Termination Object"""
+
     def __str__(self):
         return self.display
 
@@ -236,6 +254,7 @@ class Termination(Record):
 
 class Cables(Record):
     """Cables Object"""
+
     def __str__(self):
         if all(isinstance(i, Termination) for i in (self.termination_a, self.termination_b)):
             return f"{self.termination_a} <> {self.termination_b}"

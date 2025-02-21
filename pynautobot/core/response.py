@@ -61,6 +61,7 @@ def get_return(lookup, return_fields=None):
         return str(lookup)
     return lookup
 
+
 # pylint: disable=too-few-public-methods
 class JsonField:
     """Explicit field type for values that are not to be converted to a Record object."""
@@ -309,6 +310,7 @@ class Record:
             return True
         return False
 
+    # pylint: disable=possibly-used-before-assignment
     def serialize(self, nested=False, init=False):
         """Serializes the object.
 
@@ -335,7 +337,9 @@ class Record:
 
         ret = {}
         for i in dict(self):
-            current_val = getattr(self, i) if not init else init_vals.get(i) # pylint: disable=possibly-used-before-assignment
+            current_val = (
+                getattr(self, i) if not init else init_vals.get(i)
+            )
             if i in ["custom_fields", "constraints"]:  # just pass constraints as it is (a JSON string)
                 ret[i] = current_val
 

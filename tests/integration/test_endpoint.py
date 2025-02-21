@@ -1,4 +1,6 @@
 """Endpoint tests."""
+
+
 class TestEndpoint:
     """Verify different methods on an endpoint."""
 

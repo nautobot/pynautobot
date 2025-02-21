@@ -1,4 +1,5 @@
 """DCIM tests."""
+
 import unittest
 from unittest.mock import patch
 
@@ -10,6 +11,7 @@ from .util import Response
 
 class DeviceTestCase(Generic.Tests):
     """Device test."""
+
     app = "dcim"
     name = "devices"
 
@@ -113,6 +115,7 @@ class DeviceTestCase(Generic.Tests):
 
 class SiteTestCase(Generic.Tests):
     """Site test."""
+
     app = "dcim"
     name = "sites"
 
@@ -143,6 +146,7 @@ class SiteTestCase(Generic.Tests):
 
 class InterfaceTestCase(Generic.Tests):
     """Interface test."""
+
     app = "dcim"
     name = "interfaces"
 
@@ -200,6 +204,7 @@ class InterfaceTestCase(Generic.Tests):
 
 class RackTestCase(Generic.Tests):
     """Rack test."""
+
     app = "dcim"
     name = "racks"
 
@@ -228,18 +233,21 @@ class RackTestCase(Generic.Tests):
 
 class RackRoleTestCase(Generic.Tests):
     """RackRole test."""
+
     app = "dcim"
     name = "rack_roles"
 
 
 class RegionTestCase(Generic.Tests):
     """Region test."""
+
     app = "dcim"
     name = "regions"
 
 
 class RackGroupsTestCase(Generic.Tests):
     """RackGroups test."""
+
     app = "dcim"
     name = "rack_groups"
 
@@ -252,90 +260,105 @@ class RackReservationsTestCase(Generic.Tests):
 
 class ManufacturersTestCase(Generic.Tests):
     """Manufacturers test."""
+
     app = "dcim"
     name = "manufacturers"
 
 
 class DeviceTypeTestCase(Generic.Tests):
     """DeviceType test."""
+
     app = "dcim"
     name = "device_types"
 
 
 class ConsolePortTemplateTestCase(Generic.Tests):
     """ConsolePortTemplate test."""
+
     app = "dcim"
     name = "console_port_templates"
 
 
 class ConsoleServerPortTemplateTestCase(Generic.Tests):
     """ConsoleServerPortTemplate test."""
+
     app = "dcim"
     name = "console_server_port_templates"
 
 
 class PowerPortTemplateTestCase(Generic.Tests):
     """PowerPortTemplate test."""
+
     app = "dcim"
     name = "power_port_templates"
 
 
 class PowerOutletTemplateTestCase(Generic.Tests):
     """PowerOutletTemplate test."""
+
     app = "dcim"
     name = "power_outlet_templates"
 
 
 class InterfaceTemplateTestCase(Generic.Tests):
     """InterfaceTemplate test."""
+
     app = "dcim"
     name = "interface_templates"
 
 
 class DeviceBayTemplateTestCase(Generic.Tests):
     """DeviceBayTemplate test."""
+
     app = "dcim"
     name = "device_bay_templates"
 
 
 class DeviceRolesTestCase(Generic.Tests):
     """DeviceRoles test."""
+
     app = "dcim"
     name = "device_roles"
 
 
 class PlatformsTestCase(Generic.Tests):
     """Platforms test."""
+
     app = "dcim"
     name = "platforms"
 
 
 class ConsolePortsTestCase(Generic.Tests):
     """ConsolePorts test."""
+
     app = "dcim"
     name = "console_ports"
 
 
 class ConsoleServerPortsTestCase(Generic.Tests):
     """ConsoleServerPorts test."""
+
     app = "dcim"
     name = "console_server_ports"
 
 
 class PowerPortsTestCase(Generic.Tests):
     """PowerPorts test."""
+
     app = "dcim"
     name = "power_ports"
 
 
 class PowerOutletsTestCase(Generic.Tests):
     """PowerOutlets test."""
+
     app = "dcim"
     name = "power_outlets"
 
 
 class DeviceBaysTestCase(Generic.Tests):
     """DeviceBays test."""
+
     app = "dcim"
     name = "device_bays"
 
@@ -348,6 +371,7 @@ class DeviceBaysTestCase(Generic.Tests):
 
 class InterfaceConnectionsTestCase(Generic.Tests):
     """InterfaceConnections test."""
+
     app = "dcim"
     name = "interface_connections"
 
@@ -360,12 +384,14 @@ class InterfaceConnectionsTestCase(Generic.Tests):
 
 class VirtualChassisTestCase(Generic.Tests):
     """VirtualChassis test."""
+
     app = "dcim"
     name = "virtual_chassis_devices"
 
 
 class Choices(unittest.TestCase):
     """Choices test."""
+
     def test_get(self):
         with patch(
             "requests.sessions.Session.get",
@@ -383,6 +409,7 @@ class Choices(unittest.TestCase):
 
 class CablesTestCase(Generic.Tests):
     """Cables test."""
+
     app = "dcim"
     name = "cables"
 

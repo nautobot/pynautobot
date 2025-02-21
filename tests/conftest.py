@@ -1,4 +1,5 @@
 """Pytest configuration file for tests."""
+
 import pytest
 from packaging import version
 

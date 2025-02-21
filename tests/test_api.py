@@ -1,4 +1,5 @@
 """API tests."""
+
 import unittest
 from unittest.mock import patch
 
@@ -23,6 +24,7 @@ endpoints = {
 
 class ApiTestCase(unittest.TestCase):
     """API test."""
+
     @patch(
         "requests.sessions.Session.post",
     )
@@ -60,8 +62,10 @@ class ApiTestCase(unittest.TestCase):
 
 class ApiVersionTestCase(unittest.TestCase):
     """API version test."""
+
     class ResponseHeadersWithVersion:  # pylint: disable=too-few-public-methods
         """Response headers with version."""
+
         headers = {"API-Version": "1.999"}
         ok = True
 
@@ -78,6 +82,7 @@ class ApiVersionTestCase(unittest.TestCase):
 
     class ResponseHeadersWithoutVersion:  # pylint: disable=too-few-public-methods
         """Response headers without version."""
+
         headers = {}
         ok = True
 
@@ -93,6 +98,7 @@ class ApiVersionTestCase(unittest.TestCase):
 
     class ResponseHeadersWithVersion2:  # pylint: disable=too-few-public-methods
         """Response headers with version 2."""
+
         headers = {"API-Version": "2.0"}
         ok = True
 
@@ -109,8 +115,10 @@ class ApiVersionTestCase(unittest.TestCase):
 
 class ApiStatusTestCase(unittest.TestCase):
     """API status test."""
+
     class ResponseWithStatus:  # pylint: disable=too-few-public-methods
         """Response with status."""
+
         ok = True
 
         def json(self):
@@ -133,6 +141,7 @@ class ApiStatusTestCase(unittest.TestCase):
 
 class ApiRetryTestCase(unittest.TestCase):
     """API retry test."""
+
     def test_api_retry(self):
         with patch("pynautobot.api.version", "2.0"):
             api = pynautobot.api(

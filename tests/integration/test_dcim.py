@@ -1,4 +1,5 @@
 """DCIM tests."""
+
 import pytest
 
 

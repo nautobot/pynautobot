@@ -1,4 +1,5 @@
 """Request tests."""
+
 import unittest
 from unittest.mock import Mock, call
 
@@ -7,6 +8,7 @@ from pynautobot.core.query import Request
 
 class RequestTestCase(unittest.TestCase):
     """Request test cases."""
+
     def test_get_count(self):
         test_obj = Request(
             http_session=Mock(),
