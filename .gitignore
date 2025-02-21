@@ -251,5 +251,8 @@ fabric.properties
 .vscode/*
 *.code-workspace
 
+# Invoke
+invoke.yml
+
 # Rando
 creds.env

@@ -2,7 +2,7 @@
 
 [tool.poetry]
 name = "pynautobot"
-version = "2.5.0"
+version = "2.6.1"
 description = "Nautobot API client library"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 readme = "README.md"
@@ -49,6 +49,7 @@ flake8 = "^7.0.0"
 attrs = "^23.2.0"
 black = "^24.4.2"
 bandit = "^1.7.8"
+towncrier = "^24.8.0"
 
 [tool.black]
 line-length = 120
@@ -98,3 +99,56 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = "tests/"
 addopts = "-vv"
+
+[tool.towncrier]
+package = "pynautobot"
+directory = "changes"
+filename = "docs/admin/release_notes/version_2.6.md"
+template = "development/towncrier_template.j2"
+start_string = "<!-- towncrier release notes start -->"
+issue_format = "[#{issue}](https://github.com/nautobot/pynautobot/issues/{issue})"
+
+[[tool.towncrier.type]]
+directory = "security"
+name = "Security"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecated"
+name = "Deprecated"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "dependencies"
+name = "Dependencies"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "documentation"
+name = "Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "housekeeping"
+name = "Housekeeping"
+showcontent = true

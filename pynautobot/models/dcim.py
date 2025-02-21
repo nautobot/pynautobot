@@ -262,3 +262,11 @@ class Cables(Record):
 
     termination_a = Termination
     termination_b = Termination
+
+
+class Platforms(Record):
+    """
+    Platform object
+    """
+
+    napalm_args = JsonField
