@@ -337,9 +337,7 @@ class Record:
 
         ret = {}
         for i in dict(self):
-            current_val = (
-                getattr(self, i) if not init else init_vals.get(i)
-            )
+            current_val = getattr(self, i) if not init else init_vals.get(i)
             if i in ["custom_fields", "constraints"]:  # just pass constraints as it is (a JSON string)
                 ret[i] = current_val
 

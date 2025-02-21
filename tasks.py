@@ -45,6 +45,7 @@ namespace.configure(
     }
 )
 
+
 # pylint: disable=keyword-arg-before-vararg
 def task(function=None, *args, **kwargs):
     """Task decorator to override the default Invoke task decorator and add each task to the invoke namespace."""
