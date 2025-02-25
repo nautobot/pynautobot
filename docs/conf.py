@@ -64,7 +64,7 @@ MASTER_DOC = "index"
 
 # General information about the project.
 PROJECT = "pynautobot"
-COPYRIGHT = "TBD"  # "2017, DigitalOcean" # pylint: disable=W0622
+COPYRIGHT = "TBD"  # "2017, DigitalOcean"
 AUTHOR = "Network to Code"  # "Zach Moody"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -182,7 +182,7 @@ def setup(app):
     Args:
         app (Sphinx): The Sphinx application object.
     """
-    from sphinx.ext.autodoc import cut_lines  # pylint: disable=E0401,C0415
+    from sphinx.ext.autodoc import cut_lines  # pylint: disable=import-error, import-outside-toplevel
 
     # skip the copyright lines in every module docstring
     app.connect("autodoc-process-docstring", cut_lines(pre=17, what=["module"]))

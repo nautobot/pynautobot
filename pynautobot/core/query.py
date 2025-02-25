@@ -295,7 +295,7 @@ class Request:
             raise RequestError(req)
 
     def concurrent_get(self, ret, page_size, page_offsets):
-        """Conccurently get paginated results."""
+        """Concurrently get paginated results."""
         futures_to_results = []
         with cf.ThreadPoolExecutor(max_workers=self.max_workers) as pool:
             for offset in page_offsets:
