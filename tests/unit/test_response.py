@@ -20,7 +20,6 @@ class RecordTestCase(unittest.TestCase):
         test_obj = Record(test_values, None, None)
         self.assertEqual(test_obj.id, 123)
         self.assertEqual(test_obj.units, 12)
-        # Unsure about this one here.
         self.assertEqual(test_obj.nested_dict.name, "bar")  # pylint: disable=no-member
         self.assertEqual(test_obj.int_list[1], 321)
         with self.assertRaises(AttributeError):
