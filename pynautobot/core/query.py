@@ -333,7 +333,8 @@ class Request:
                 while req["next"] and self.offset is None:
                     if not add_params and first_run:
                         req = self._make_call(add_params={"limit": req["count"], "offset": len(req["results"])})
-                    req = self._make_call(url_override=req["next"])
+                    else:
+                        req = self._make_call(url_override=req["next"])
                     first_run = False
                     ret.extend(req["results"])
                 return ret
@@ -352,6 +353,7 @@ class Request:
                     page_offsets = [increment * page_size for increment in range(1, pages)]
                     if pages == 1:
                         req = self._make_call(url_override=req.get("next"))
+                    else:
                         ret.extend(req["results"])
                     self.concurrent_get(ret, page_size, page_offsets)
 
