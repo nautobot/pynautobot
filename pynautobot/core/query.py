@@ -353,9 +353,9 @@ class Request:
                     page_offsets = [increment * page_size for increment in range(1, pages)]
                     if pages == 1:
                         req = self._make_call(url_override=req.get("next"))
-                    else:
                         ret.extend(req["results"])
-                    self.concurrent_get(ret, page_size, page_offsets)
+                    else:
+                        self.concurrent_get(ret, page_size, page_offsets)
 
                 return ret
             return req

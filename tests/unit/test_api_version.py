@@ -17,7 +17,7 @@ class APIVersionTestCase(unittest.TestCase):
         app.name = "test"
         self.test_obj = Endpoint(self.api, app, "test")
 
-    def test_api_versioning_at_api_level(self):
+    def test_api_versioning_at_api_level(self, response_loader): #pylint: disable=unused-argument
         # Test get request includes version=1.3 in its headers
         self.test_obj.get(1)
         self.api.http_session.get.assert_called_with(
@@ -55,7 +55,7 @@ class APIVersionTestCase(unittest.TestCase):
             json=None,
         )
 
-    def test_api_versioning_at_per_request_level(self):
+    def test_api_versioning_at_per_request_level(self, response_loader): #pylint: disable=unused-argument
         # Test get request overrides Api level versioning
         self.test_obj.get(1, api_version=1.2)
         self.api.http_session.get.assert_called_with(

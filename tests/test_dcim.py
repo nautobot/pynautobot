@@ -194,7 +194,7 @@ class InterfaceTestCase(Generic.Tests):
         "requests.sessions.Session.get",
         side_effect=[Response(fixture="dcim/interface.json"), Response(fixture="dcim/interface_trace.json")],
     )
-    def test_trace(self):
+    def test_trace(self, mock): # pylint: disable=unused-argument
         ret = self.endpoint.get(self.uuid)
         trace = ret.trace()
         self.assertEqual(len(trace), 3)
