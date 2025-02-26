@@ -1,3 +1,5 @@
+"""Users Object"""
+
 # (c) 2017 DigitalOcean
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,5 +20,7 @@ from pynautobot.core.response import Record
 
 
 class Users(Record):
+    """Users"""
+
     def __str__(self):
         return self.username

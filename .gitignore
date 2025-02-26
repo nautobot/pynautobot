@@ -253,3 +253,6 @@ fabric.properties
 
 # Invoke
 invoke.yml
+
+# Rando
+creds.env

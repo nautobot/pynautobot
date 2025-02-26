@@ -1,3 +1,5 @@
+"""Endpoint tests"""
+
 import unittest
 from unittest.mock import Mock, patch
 
@@ -5,7 +7,10 @@ from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
 from pynautobot.core.response import Record
 
 
+# pylint: disable=too-many-public-methods
 class EndPointTestCase(unittest.TestCase):
+    """Endpoint Test Case"""
+
     def test_filter(self):
         with patch("pynautobot.core.query.Request.get", return_value=Mock()) as mock:
             api = Mock(base_url="http://localhost:8000/api")
@@ -222,6 +227,8 @@ class EndPointTestCase(unittest.TestCase):
 
 
 class JobEndPointTestCase(unittest.TestCase):
+    """Job Endpoint Test Case"""
+
     def test_invalid_arg_less_v1_3(self):
         with self.assertRaises(
             ValueError, msg='Keyword Argument "class_path" is required to run a job in Nautobot APIv1.2 and older.'
@@ -296,6 +303,8 @@ class JobEndPointTestCase(unittest.TestCase):
 
 
 class GraphqlEndPointTestCase(unittest.TestCase):
+    """Graphql Endpoint Test Case"""
+
     def test_invalid_arg(self):
         with self.assertRaises(
             TypeError, msg="GraphqlEndpoint.run() missing 1 required positional argument: 'query_id'"
@@ -303,4 +312,4 @@ class GraphqlEndPointTestCase(unittest.TestCase):
             api = Mock(base_url="http://localhost:8000/api")
             app = Mock(name="test")
             test_obj = GraphqlEndpoint(api, app, "test")
-            test_obj.run()
+            test_obj.run()  # pylint: disable=no-value-for-parameter

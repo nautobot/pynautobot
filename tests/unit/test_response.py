@@ -1,10 +1,15 @@
+"""Response tests."""
+
 import unittest
 from unittest.mock import Mock, patch, PropertyMock
 
 from pynautobot.core.response import Record
 
 
+# pylint: disable=too-many-public-methods, protected-access
 class RecordTestCase(unittest.TestCase):
+    """Record test case."""
+
     def test_attribute_access(self):
         test_values = {
             "id": 123,
@@ -15,10 +20,10 @@ class RecordTestCase(unittest.TestCase):
         test_obj = Record(test_values, None, None)
         self.assertEqual(test_obj.id, 123)
         self.assertEqual(test_obj.units, 12)
-        self.assertEqual(test_obj.nested_dict.name, "bar")
+        self.assertEqual(test_obj.nested_dict.name, "bar")  # pylint: disable=no-member
         self.assertEqual(test_obj.int_list[1], 321)
-        with self.assertRaises(AttributeError) as _:
-            test_obj.nothing
+        with self.assertRaises(AttributeError):
+            _ = test_obj.nothing
 
     def test_dict_access(self):
         test_values = {
@@ -32,8 +37,8 @@ class RecordTestCase(unittest.TestCase):
         self.assertEqual(test_obj["units"], 12)
         self.assertEqual(test_obj["nested_dict"]["name"], "bar")
         self.assertEqual(test_obj["int_list"][1], 321)
-        with self.assertRaises(KeyError) as _:
-            test_obj["nothing"]
+        with self.assertRaises(KeyError):
+            _ = test_obj["nothing"]
 
     def test_serialize_list_of_records(self):
         test_values = {

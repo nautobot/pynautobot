@@ -1,11 +1,13 @@
+"""Common fixtures for integration tests."""
+
 import os
 import tempfile
+import subprocess as subp
 import yaml
 
-import subprocess as subp
-import pynautobot
-import pytest
 import requests
+import pytest
+import pynautobot
 
 
 DOCKER_PROJECT_PREFIX = "pytest_pynautobot"
@@ -53,6 +55,7 @@ def git_toplevel():
     return subp.check_output(["git", "rev-parse", "--show-toplevel"]).decode("utf-8").splitlines()[0]
 
 
+# pylint: disable=redefined-outer-name
 @pytest.fixture(scope="session")
 def devicetype_library_repo_dirpath(git_toplevel):
     """Get the path to the devicetype-library repo we will use.
@@ -85,13 +88,13 @@ def devicetype_library_repo_dirpath(git_toplevel):
 def nautobot_is_responsive(url):
     """Chack if the HTTP service is up and responsive."""
     try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            return True
+        response = requests.get(url, timeout=5)
+        return response.status_code == 200
     except ConnectionError:
         return False
 
 
+# pylint: disable=too-many-locals, too-many-branches
 def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):
     """Load some object types in to a fresh instance of nautobot.
 
@@ -100,18 +103,10 @@ def populate_nautobot_object_types(nb_api, devicetype_library_repo_dirpath):
     # collect and load the configs for each of the requested object models
     device_type_models = []
     for object_model_relfpath in DEVICETYPE_LIBRARY_OBJECTS:
-        device_type_models.append(
-            yaml.safe_load(
-                open(
-                    os.path.join(
-                        devicetype_library_repo_dirpath,
-                        "device-types",
-                        object_model_relfpath,
-                    ),
-                    "r",
-                ).read()
-            )
-        )
+        file_path = os.path.join(devicetype_library_repo_dirpath, "device-types", object_model_relfpath)
+
+        with open(file_path, "r", encoding="utf-8") as file:
+            device_type_models.append(yaml.safe_load(file))
 
     # create the manufacturers
     manufacturer_names = {model["manufacturer"] for model in device_type_models}

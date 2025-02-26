@@ -1,3 +1,5 @@
+"""Pytest configuration file for tests."""
+
 import pytest
 from packaging import version
 
@@ -17,8 +19,8 @@ def pytest_addoption(parser):
         action="store",
         default=DEFAULT_NETBOX_VERSIONS,
         help=(
-            "The versions of netbox to run integration tests against, as a"
-            " comma-separated list. Default: %s" % DEFAULT_NETBOX_VERSIONS
+            f"The versions of netbox to run integration tests against, as a "
+            f"comma-separated list. Default: {DEFAULT_NETBOX_VERSIONS}"
         ),
     )
 
@@ -53,7 +55,7 @@ def pynautobot_api(monkeypatch):
 
 
 @pytest.fixture
-def graphql_test_class(pynautobot_api):
+def graphql_test_class(pynautobot_api):  # pylint: disable=redefined-outer-name
     """Factory to create test class to be used as base."""
     test_class = GraphQLQuery(pynautobot_api)
     return test_class

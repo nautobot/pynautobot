@@ -1,3 +1,5 @@
+"""API module for pynautobot."""
+
 # (c) 2017 DigitalOcean
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +26,8 @@ from pynautobot.core.app import App, PluginsApp
 from pynautobot.core.graphql import GraphQLQuery
 
 
-class Api(object):
+# pylint: disable=too-many-instance-attributes, too-many-instance-attributes, too-many-arguments, too-many-positional-arguments
+class Api:
     """The `Api` object is the primary entry point for interacting with a Nautobot
     instance using pynautobot.
 
@@ -79,9 +82,9 @@ class Api(object):
         retries=0,
         verify=True,
     ):
-        from pynautobot import __version__
+        from pynautobot import __version__  # pylint: disable=import-outside-toplevel
 
-        base_url = "{}/api".format(url if url[-1] != "/" else url[:-1])
+        base_url = f"{url.rstrip('/')}/api"
         self.token = token
         self.headers = {"Authorization": f"Token {self.token}"}
         self.base_url = base_url

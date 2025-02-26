@@ -4,6 +4,8 @@ from typing import Optional, Dict, Any
 
 
 class GraphQLException(Exception):
+    """GraphQL Exception class for handling errors from the GraphQL endpoint."""
+
     def __init__(self, graph_err):
         """GraphQL Exception handling.
 
@@ -22,6 +24,8 @@ class GraphQLException(Exception):
 
 
 class GraphQLRecord:
+    """GraphQL Record class for handling the response from the GraphQL endpoint."""
+
     def __init__(self, json: Dict[str, Any], status_code: int):
         """Initialization of class.
 
@@ -40,6 +44,9 @@ class GraphQLRecord:
 
 
 class GraphQLQuery:
+    """GraphQL Query class for making queries to the Nautobot GraphQL endpoint."""
+
+    # pylint: disable=too-few-public-methods
     def __init__(self, api):
         """Initialization of class.
 
@@ -48,7 +55,7 @@ class GraphQLQuery:
         """
         self.api = api
         # Add on top of the base_url the endpoint /graphql/ which will be the url used
-        self.url = self.api.base_url + "/graphql/"
+        self.url = f"{self.api.base_url}/graphql/"
 
     def query(self, query: str, variables: Optional[Dict[str, Any]] = None) -> GraphQLRecord:
         """Runs query against Nautobot Graphql endpoint.
@@ -128,10 +135,9 @@ class GraphQLQuery:
         # Don't create an object with an error, raise an exception
         try:
             response.raise_for_status()
-        except Exception as graph_err:
+        except Exception as graph_err:  # pylint: disable=broad-exception-caught
             if response.status_code == 400:
-                raise GraphQLException(graph_err)
-            else:
-                raise graph_err
+                raise GraphQLException(graph_err) from graph_err
+            raise graph_err
 
         return GraphQLRecord(json=response.json(), status_code=response.status_code)

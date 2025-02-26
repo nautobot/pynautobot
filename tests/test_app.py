@@ -1,3 +1,5 @@
+"""App tests."""
+
 import unittest
 from unittest.mock import patch
 
@@ -5,7 +7,7 @@ import pynautobot
 
 from .util import Response
 
-host = "http://localhost:8000"
+HOST = "http://localhost:8000"
 
 def_kwargs = {
     "token": "abc123",
@@ -13,13 +15,15 @@ def_kwargs = {
 
 
 class AppCustomFieldsTestCase(unittest.TestCase):
+    """App custom fields test."""
+
     @patch(
         "requests.sessions.Session.get",
         return_value=Response(fixture="extras/custom_fields.json"),
     )
     @patch("pynautobot.api.version", "2.0")
     def test_custom_fields(self, session_get_mock):
-        api = pynautobot.api(host, **def_kwargs)
+        api = pynautobot.api(HOST, **def_kwargs)
         cfs = api.extras.get_custom_fields()
 
         session_get_mock.assert_called_once()
@@ -39,13 +43,15 @@ class AppCustomFieldsTestCase(unittest.TestCase):
 
 
 class AppCustomFieldChoicesTestCase(unittest.TestCase):
+    """App custom field choices test."""
+
     @patch(
         "requests.sessions.Session.get",
         return_value=Response(fixture="extras/custom_field_choices.json"),
     )
     @patch("pynautobot.api.version", "2.0")
     def test_custom_field_choices(self, session_get_mock):
-        api = pynautobot.api(host, **def_kwargs)
+        api = pynautobot.api(HOST, **def_kwargs)
         choices = api.extras.get_custom_field_choices()
 
         session_get_mock.assert_called_once()
@@ -64,13 +70,15 @@ class AppCustomFieldChoicesTestCase(unittest.TestCase):
 
 
 class AppConfigTestCase(unittest.TestCase):
+    """App config test."""
+
     @patch(
         "pynautobot.core.query.Request.get",
         return_value={"tables": {"DeviceTable": {"columns": ["name", "status", "tenant", "tags"]}}},
     )
     @patch("pynautobot.api.version", "2.0")
     def test_config(self, *_):
-        api = pynautobot.api(host, **def_kwargs)
+        api = pynautobot.api(HOST, **def_kwargs)
         config = api.users.config()
         self.assertEqual(sorted(config.keys()), ["tables"])
         self.assertEqual(
@@ -80,13 +88,15 @@ class AppConfigTestCase(unittest.TestCase):
 
 
 class PluginAppCustomChoicesTestCase(unittest.TestCase):
+    """Plugin app custom choices test."""
+
     @patch(
         "pynautobot.core.query.Request.get",
         return_value={"Testfield1": {"TF1_1": 1, "TF1_2": 2}, "Testfield2": {"TF2_1": 3, "TF2_2": 4}},
     )
     @patch("pynautobot.api.version", "2.0")
     def test_custom_fields(self, *_):
-        api = pynautobot.api(host, **def_kwargs)
+        api = pynautobot.api(HOST, **def_kwargs)
         custom_fields = api.plugins.test_plugin.get_custom_fields()
         self.assertEqual(len(custom_fields), 2)
         self.assertEqual(sorted(custom_fields.keys()), ["Testfield1", "Testfield2"])
@@ -97,7 +107,7 @@ class PluginAppCustomChoicesTestCase(unittest.TestCase):
     )
     @patch("pynautobot.api.version", "2.0")
     def test_installed_plugins(self, *_):
-        api = pynautobot.api(host, **def_kwargs)
+        api = pynautobot.api(HOST, **def_kwargs)
         plugins = api.plugins.installed_plugins()
         self.assertEqual(len(plugins), 1)
         self.assertEqual(plugins[0]["name"], "test_plugin")
