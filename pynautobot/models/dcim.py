@@ -16,7 +16,7 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from requests.utils import urlparse
+from urllib.parse import urlparse
 
 from pynautobot.core.query import Request
 from pynautobot.core.response import Record, JsonField

@@ -18,8 +18,8 @@
 
 import copy
 from collections import OrderedDict
+from urllib.parse import urlparse
 
-from requests.utils import urlparse
 import pynautobot.core.app
 import pynautobot.core.endpoint
 from pynautobot.core.query import Request
