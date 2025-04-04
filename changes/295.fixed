@@ -1,0 +1,1 @@
+Fixed `parameters` not being parsed correctly for secrets.

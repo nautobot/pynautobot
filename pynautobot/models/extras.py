@@ -97,3 +97,9 @@ class DynamicGroups(Record):
         [<pynautobot.models.extras.DynamicGroups ('192.168.10.200/32') at 0x7f3e6a980040>...]
         """
         return DetailEndpoint(self, "members", custom_return=DynamicGroups)
+
+
+class Secrets(Record):
+    """Secrets."""
+
+    parameters = JsonField
