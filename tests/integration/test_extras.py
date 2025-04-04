@@ -119,3 +119,14 @@ class TestDynamicGroup:  # pylint: disable=too-few-public-methods
 
         # Assert filter field is returned
         assert dynamic_group.filter == obj_filter
+
+
+def test_secret_parameters(nb_client):
+    """Validate parameters are properly returned for secrets (Issue #295)."""
+    nb_client.extras.secrets.create(
+        name="test_secret",
+        provider="environment-variable",
+        parameters={"variable": "NAUTOBOT_NAPALM_PASSWORD"},
+    )
+    secret = nb_client.extras.secrets.get(name="test_secret")
+    assert secret.parameters == {"variable": "NAUTOBOT_NAPALM_PASSWORD"}
