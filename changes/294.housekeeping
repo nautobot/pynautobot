@@ -1,1 +1,0 @@
-Use direct import from stdlib instead of requests re-export.
