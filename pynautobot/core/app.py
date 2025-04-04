@@ -14,6 +14,11 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
+"""
+This module defines the `App` and `PluginsApp` classes for interacting with
+Nautobot applications and plugins.
+"""
+
 import logging
 
 from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
@@ -23,7 +28,7 @@ from pynautobot.models import circuits, cloud, dcim, extras, ipam, users, virtua
 logger = logging.getLogger(__name__)
 
 
-class App(object):
+class App:
     """Represents apps in Nautobot.
 
     Calls to attributes are returned as Endpoint objects.
@@ -64,7 +69,7 @@ class App(object):
     def __getattr__(self, name):
         if name == "jobs":
             return JobsEndpoint(self.api, self, name, model=self.model)
-        elif name == "graphql_queries":
+        if name == "graphql_queries":
             return GraphqlEndpoint(self.api, self, name, model=self.model)
         return Endpoint(self.api, self, name, model=self.model)
 
@@ -84,7 +89,7 @@ class App(object):
             return self._choices
 
         self._choices = Request(
-            base="{}/{}/_choices/".format(self.api.base_url, self.name),
+            base=f"{self.api.base_url}/{self.name}/_choices/",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
@@ -188,10 +193,7 @@ class App(object):
         """
 
         config = Request(
-            base="{}/{}/config/".format(
-                self.api.base_url,
-                self.name,
-            ),
+            base=f"{self.api.base_url}/{self.name}/config/",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
@@ -200,16 +202,13 @@ class App(object):
     def _get_api_endpoints(self):
         """Returns the API endpoints available for the app."""
         return Request(
-            base="{}/{}/".format(
-                self.api.base_url,
-                self.name,
-            ),
+            base=f"{self.api.base_url}/{self.name}/",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
 
 
-class PluginsApp(object):
+class PluginsApp:
     """Add plugins to the URL path.
 
     Basically, valid plugins API could be handled by the same App class,
@@ -248,9 +247,7 @@ class PluginsApp(object):
             }]
         """
         installed_plugins = Request(
-            base="{}/plugins/installed-plugins".format(
-                self.api.base_url,
-            ),
+            base=f"{self.api.base_url}/plugins/installed-plugins",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()
@@ -259,9 +256,7 @@ class PluginsApp(object):
     def _get_api_endpoints(self):
         """Returns any plugin API endpoints available."""
         return Request(
-            base="{}/plugins/".format(
-                self.api.base_url,
-            ),
+            base=f"{self.api.base_url}/plugins/",
             token=self.api.token,
             http_session=self.api.http_session,
         ).get()

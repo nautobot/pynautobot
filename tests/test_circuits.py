@@ -1,3 +1,5 @@
+"""Circuits tests."""
+
 from unittest.mock import patch
 
 from . import Generic
@@ -5,6 +7,8 @@ from .util import Response
 
 
 class CircuitsTestCase(Generic.Tests):
+    """Circuits test."""
+
     app = "circuits"
     name = "circuits"
 
@@ -15,16 +19,22 @@ class CircuitsTestCase(Generic.Tests):
 
 
 class ProviderTestCase(Generic.Tests):
+    """Provider test."""
+
     app = "circuits"
     name = "providers"
 
 
 class CircuitTypeTestCase(Generic.Tests):
+    """CircuitType test."""
+
     app = "circuits"
     name = "circuit_types"
 
 
 class CircuitTerminationsTestCase(Generic.Tests):
+    """CircuitTerminations test."""
+
     app = "circuits"
     name = "circuit_terminations"
 

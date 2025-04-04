@@ -1,3 +1,5 @@
+"""GraphQL tests."""
+
 from os import path
 
 import pytest
@@ -9,8 +11,9 @@ HERE = path.abspath(path.dirname(__file__))
 
 
 def load_api_calls(mock, api_calls):
+    """Load API calls."""
     for api_call in api_calls:
-        with open(api_call["fixture_path"], "r") as f:
+        with open(api_call["fixture_path"], "r", encoding="utf-8") as f:
             api_call["text"] = f.read()
 
         mock.request(
@@ -98,6 +101,7 @@ query {
 
 
 # Test if query is not a string that it fails
+# pylint: disable=expression-not-assigned
 def test_get_invalid_query_data(graphql_test_class):
     query_str = ["hello"]
     api_calls = [

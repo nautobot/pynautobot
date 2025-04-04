@@ -22,10 +22,9 @@ def is_truthy(arg):
     val = str(arg).lower()
     if val in ("y", "yes", "t", "true", "on", "1"):
         return True
-    elif val in ("n", "no", "f", "false", "off", "0"):
+    if val in ("n", "no", "f", "false", "off", "0"):
         return False
-    else:
-        raise ValueError(f"Invalid truthy value: `{arg}`")
+    raise ValueError(f"Invalid truthy value: `{arg}`")
 
 
 # Use pyinvoke configuration for default values, see http://docs.pyinvoke.org/en/stable/concepts/configuration.html
@@ -47,6 +46,7 @@ namespace.configure(
 )
 
 
+# pylint: disable=keyword-arg-before-vararg
 def task(function=None, *args, **kwargs):
     """Task decorator to override the default Invoke task decorator and add each task to the invoke namespace."""
 
@@ -286,8 +286,7 @@ def tests(context):
     """
     black(context)
     flake8(context)
-    # Too much to deal with atm.
-    # pylint(context)
+    pylint(context)
     yamllint(context)
     # Skipping due to using different doc strings atm.
     # pydocstyle(context)

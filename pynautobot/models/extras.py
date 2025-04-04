@@ -1,3 +1,5 @@
+"""Extras Object"""
+
 # (c) 2017 DigitalOcean
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,10 +21,14 @@ from pynautobot.core.response import JsonField, Record
 
 
 class ConfigContexts(Record):
+    """ConfigContext object."""
+
     data = JsonField
 
 
 class ObjectChanges(Record):
+    """ObjectChanges."""
+
     object_data = JsonField
 
     def __str__(self):
@@ -30,27 +36,37 @@ class ObjectChanges(Record):
 
 
 class CustomFieldChoices(Record):
+    """CustomFieldChoices."""
+
     def __str__(self):
         return self.value
 
 
 class JobResults(Record):
+    """JobResults."""
+
     data = JsonField
 
 
 class Jobs(Record):
+    """Jobs."""
+
     def run(self, **kwargs):
         """Run a job from within a job instance."""
         return JobsEndpoint(self.api, self.api.extras, "jobs").run(class_path=self.id, **kwargs)
 
 
 class GraphqlQueries(Record):
+    """GraphqlQueries."""
+
     def run(self, *args, **kwargs):
         """Run a graphql query from a saved graphql instance."""
         return GraphqlEndpoint(self.api, self.api.extras, "graphql_queries").run(self.id, *args, **kwargs)
 
 
 class DynamicGroups(Record):
+    """DynamicGroups."""
+
     filter = JsonField
 
     def __str__(self):
@@ -81,3 +97,9 @@ class DynamicGroups(Record):
         [<pynautobot.models.extras.DynamicGroups ('192.168.10.200/32') at 0x7f3e6a980040>...]
         """
         return DetailEndpoint(self, "members", custom_return=DynamicGroups)
+
+
+class Secrets(Record):
+    """Secrets."""
+
+    parameters = JsonField

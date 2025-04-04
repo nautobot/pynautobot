@@ -2,7 +2,7 @@
 
 [tool.poetry]
 name = "pynautobot"
-version = "2.6.1"
+version = "2.6.2"
 description = "Nautobot API client library"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 readme = "README.md"
@@ -35,6 +35,7 @@ mkdocs = "^1.6.0"
 watchdog = "^4.0.0"
 mkdocs-material = "9.5.32"
 mkdocstrings = "0.25.2"
+mkdocs-autorefs = "1.3.1"
 mkdocstrings-python = "1.10.8"
 griffe = "1.1.1"
 markdown-data-tables = "^1.0.0"
@@ -83,7 +84,8 @@ no-docstring-rgx = "^(_|test_|Meta$)"
 # Pylint and Black disagree about how to format multi-line arrays; Black wins.
 disable = """,
     line-too-long,
-    bad-continuation,
+    duplicate-code,
+    cyclic-import,
     """
 
 [tool.pylint.miscellaneous]

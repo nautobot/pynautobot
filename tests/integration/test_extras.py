@@ -1,3 +1,5 @@
+"""Extras tests"""
+
 import pytest
 
 
@@ -6,6 +8,7 @@ class TestCustomField:
 
     @pytest.fixture(scope="session")
     def create_custom_field(self, nb_client):
+        """Custom field fixture."""
         data = {
             "label": "test_cf",
             "key": "test_cf",
@@ -18,6 +21,7 @@ class TestCustomField:
 
     @pytest.fixture(scope="session")
     def create_custom_field_choices(self, nb_client, create_custom_field):
+        """Custom field choices fixture."""
         data = {
             "value": "A",
             "custom_field": create_custom_field["id"],
@@ -40,6 +44,7 @@ class TestNotes:
 
     @pytest.fixture(scope="session")
     def create_test_object(self, nb_client):
+        """Note object fixture."""
         return nb_client.dcim.manufacturers.create(name="test_manufacturer")
 
     def test_create_object_note(self, create_test_object):
@@ -63,6 +68,7 @@ class TestGraphqlQueries:
 
     @pytest.fixture(scope="session")
     def create_graphql_query(self, nb_client):
+        """GraphQL query fixture."""
         query = """
             query Example($devicename: [String] = "server.networktocode.com"){
                 devices(name: $devicename) {
@@ -87,7 +93,7 @@ class TestGraphqlQueries:
         assert data.get("data", {}).get("devices")[0].get("name") == "dev-1"
 
 
-class TestDynamicGroup:
+class TestDynamicGroup:  # pylint: disable=too-few-public-methods
     """Dynamic group tests."""
 
     def test_dynamic_group_filter_field(self, nb_client):
@@ -113,3 +119,14 @@ class TestDynamicGroup:
 
         # Assert filter field is returned
         assert dynamic_group.filter == obj_filter
+
+
+def test_secret_parameters(nb_client):
+    """Validate parameters are properly returned for secrets (Issue #295)."""
+    nb_client.extras.secrets.create(
+        name="test_secret",
+        provider="environment-variable",
+        parameters={"variable": "NAUTOBOT_NAPALM_PASSWORD"},
+    )
+    secret = nb_client.extras.secrets.get(name="test_secret")
+    assert secret.parameters == {"variable": "NAUTOBOT_NAPALM_PASSWORD"}

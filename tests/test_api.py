@@ -1,9 +1,11 @@
+"""API tests."""
+
 import unittest
 from unittest.mock import patch
 
 import pynautobot
 
-host = "http://localhost:8000"
+HOST = "http://localhost:8000"
 
 def_kwargs = {
     "token": "abc123",
@@ -21,12 +23,14 @@ endpoints = {
 
 
 class ApiTestCase(unittest.TestCase):
+    """API test."""
+
     @patch(
         "requests.sessions.Session.post",
     )
     @patch("pynautobot.api.version", "2.0")
     def test_get(self, *_):
-        api = pynautobot.api(host, **def_kwargs)
+        api = pynautobot.api(HOST, **def_kwargs)
         self.assertTrue(api)
 
     @patch(
@@ -57,7 +61,11 @@ class ApiTestCase(unittest.TestCase):
 
 
 class ApiVersionTestCase(unittest.TestCase):
-    class ResponseHeadersWithVersion:
+    """API version test."""
+
+    class ResponseHeadersWithVersion:  # pylint: disable=too-few-public-methods
+        """Response headers with version."""
+
         headers = {"API-Version": "1.999"}
         ok = True
 
@@ -67,12 +75,14 @@ class ApiVersionTestCase(unittest.TestCase):
     )
     def test_api_version(self, *_):
         with self.assertRaises(ValueError) as error:
-            pynautobot.api(host)
+            pynautobot.api(HOST)
         self.assertEqual(
             str(error.exception), "Nautobot version 1 detected, please downgrade pynautobot to version 1.x"
         )
 
-    class ResponseHeadersWithoutVersion:
+    class ResponseHeadersWithoutVersion:  # pylint: disable=too-few-public-methods
+        """Response headers without version."""
+
         headers = {}
         ok = True
 
@@ -82,11 +92,13 @@ class ApiVersionTestCase(unittest.TestCase):
     )
     def test_api_version_not_found(self, *_):
         api = pynautobot.api(
-            host,
+            HOST,
         )
         self.assertEqual(api.version, "")
 
-    class ResponseHeadersWithVersion2:
+    class ResponseHeadersWithVersion2:  # pylint: disable=too-few-public-methods
+        """Response headers with version 2."""
+
         headers = {"API-Version": "2.0"}
         ok = True
 
@@ -96,16 +108,21 @@ class ApiVersionTestCase(unittest.TestCase):
     )
     def test_api_version_2(self, *_):
         api = pynautobot.api(
-            host,
+            HOST,
         )
         self.assertEqual(api.version, "2.0")
 
 
 class ApiStatusTestCase(unittest.TestCase):
-    class ResponseWithStatus:
+    """API status test."""
+
+    class ResponseWithStatus:  # pylint: disable=too-few-public-methods
+        """Response with status."""
+
         ok = True
 
         def json(self):
+            """Return JSON."""
             return {
                 "nautobot-version": "1.3.2",
             }
@@ -117,12 +134,14 @@ class ApiStatusTestCase(unittest.TestCase):
     @patch("pynautobot.api.version", "2.0")
     def test_api_status(self, *_):
         api = pynautobot.api(
-            host,
+            HOST,
         )
         self.assertEqual(api.status()["nautobot-version"], "1.3.2")
 
 
 class ApiRetryTestCase(unittest.TestCase):
+    """API retry test."""
+
     def test_api_retry(self):
         with patch("pynautobot.api.version", "2.0"):
             api = pynautobot.api(
