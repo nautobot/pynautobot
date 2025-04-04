@@ -4,6 +4,18 @@ This document describes all new features and changes in the release. The format 
 Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic
 Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.6.2 (2025-04-04)](https://github.com/nautobot/pynautobot/releases/tag/v2.6.2)
+
+### Fixed
+
+- [#295](https://github.com/nautobot/pynautobot/issues/295) - Fixed `parameters` not being parsed correctly for secrets.
+
+### Housekeeping
+
+- [#276](https://github.com/nautobot/pynautobot/issues/276) - Fixed and enabled pylint.
+- [#292](https://github.com/nautobot/pynautobot/issues/292) - Fixed mkdocs auto build for CI.
+- [#294](https://github.com/nautobot/pynautobot/issues/294) - Use direct import from stdlib instead of requests re-export.
+
 ## [v2.6.1 (2025-02-14)](https://github.com/nautobot/pynautobot/releases/tag/v2.6.1)
 
 ### Fixed
