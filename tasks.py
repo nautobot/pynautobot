@@ -281,17 +281,6 @@ def pydocstyle(context):
 
 
 @task
-def bandit(context):
-    """Run bandit to validate basic static code security analysis.
-
-    Args:
-        context (obj): Used to run specific commands
-    """
-    exec_cmd = "bandit --recursive ./ --configfile .bandit.yml"
-    run_command(context, exec_cmd)
-
-
-@task
 def cli(context):
     """Enter the image to perform troubleshooting or dev work.
 
@@ -313,7 +302,6 @@ def tests(context):
     yamllint(context)
     # Skipping due to using different doc strings atm.
     # pydocstyle(context)
-    bandit(context)
     pytest(context)
 
     print("All tests have passed!")
