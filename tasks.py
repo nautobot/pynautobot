@@ -300,8 +300,6 @@ def tests(context):
     ruff(context)
     pylint(context)
     yamllint(context)
-    # Skipping due to using different doc strings atm.
-    # pydocstyle(context)
     pytest(context)
 
     print("All tests have passed!")
