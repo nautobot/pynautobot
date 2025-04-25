@@ -270,17 +270,6 @@ def yamllint(context):
 
 
 @task
-def pydocstyle(context):
-    """Run pydocstyle to validate docstring formatting adheres to NTC defined standards.
-
-    Args:
-        context (obj): Used to run specific commands
-    """
-    exec_cmd = "pydocstyle ."
-    run_command(context, exec_cmd)
-
-
-@task
 def cli(context):
     """Enter the image to perform troubleshooting or dev work.
 
