@@ -1,7 +1,7 @@
 """API version tests."""
 
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
 from pynautobot.core.endpoint import Endpoint
 

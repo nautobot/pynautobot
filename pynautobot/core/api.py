@@ -16,14 +16,14 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from packaging import version
 import requests
+from packaging import version
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
-from pynautobot.core.query import Request
 from pynautobot.core.app import App, PluginsApp
 from pynautobot.core.graphql import GraphQLQuery
+from pynautobot.core.query import Request
 
 
 # pylint: disable=too-many-instance-attributes, too-many-instance-attributes, too-many-arguments, too-many-positional-arguments
@@ -148,7 +148,6 @@ class Api:
             >>> nb.version
             '1.0'
         """
-
         return Request(
             base=self.base_url,
             http_session=self.http_session,
@@ -180,7 +179,6 @@ class Api:
             >>> nb.openapi()
             {...}
         """
-
         return Request(
             base=self.base_url,
             http_session=self.http_session,

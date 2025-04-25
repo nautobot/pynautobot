@@ -1,8 +1,7 @@
 """Cloud tests."""
 
-from packaging import version
-
 import pytest
+from packaging import version
 
 
 class TestCloudApp:

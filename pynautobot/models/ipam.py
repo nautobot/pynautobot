@@ -16,8 +16,8 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from pynautobot.core.response import Record
 from pynautobot.core.endpoint import DetailEndpoint
+from pynautobot.core.response import Record
 
 
 class IpAddresses(Record):
@@ -71,7 +71,6 @@ class Prefixes(Record):
             >>> len(create)
             2
         """
-
         return DetailEndpoint(self, "available-ips", custom_return=IpAddresses)
 
     @property

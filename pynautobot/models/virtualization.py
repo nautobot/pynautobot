@@ -16,7 +16,7 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from pynautobot.core.response import Record, JsonField
+from pynautobot.core.response import JsonField, Record
 
 
 class VirtualMachines(Record):

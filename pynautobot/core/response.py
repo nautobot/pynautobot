@@ -25,7 +25,6 @@ import pynautobot.core.endpoint
 from pynautobot.core.query import Request
 from pynautobot.core.util import Hashabledict
 
-
 # List of fields that are lists but should be treated as sets.
 LIST_AS_SET = ("tags", "tagged_vlans", "nat_outside")
 
@@ -46,7 +45,6 @@ def get_return(lookup, return_fields=None):
         so simply return a string. Order is important due to nested_return
         being self-referential.
     """
-
     for i in return_fields or ["id", "value", "nested_return"]:
         if isinstance(lookup, dict) and lookup.get(i):
             return lookup[i]
@@ -446,7 +444,6 @@ class Record:
             ... })
             True
         """
-
         for k, v in data.items():
             setattr(self, k, v)
         return self.save()

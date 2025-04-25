@@ -16,7 +16,7 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from pynautobot.core.endpoint import JobsEndpoint, DetailEndpoint, GraphqlEndpoint
+from pynautobot.core.endpoint import DetailEndpoint, GraphqlEndpoint, JobsEndpoint
 from pynautobot.core.response import JsonField, Record
 
 

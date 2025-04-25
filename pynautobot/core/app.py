@@ -21,7 +21,7 @@ Nautobot applications and plugins.
 
 import logging
 
-from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
+from pynautobot.core.endpoint import Endpoint, GraphqlEndpoint, JobsEndpoint
 from pynautobot.core.query import Request
 from pynautobot.models import circuits, cloud, dcim, extras, ipam, users, virtualization
 
@@ -191,7 +191,6 @@ class App:
                                                     'primary_ip',
                                                     'tags']}}}
         """
-
         config = Request(
             base=f"{self.api.base_url}/{self.name}/config/",
             token=self.api.token,

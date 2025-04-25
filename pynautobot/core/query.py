@@ -21,6 +21,7 @@ try:
 except ImportError:
     pass
 import json
+
 import requests
 
 
@@ -225,7 +226,6 @@ class Request:
         Raises:
             RequestError: If request is not successful.
         """
-
         headers = {
             "Content-Type": "application/json;",
             "Authorization": f"Token {self.token}",
@@ -446,7 +446,6 @@ class Request:
             (dict): The deserialized JSON response from the Nautobot API,
                 containing information about allowed methods.
         """
-
         return self._make_call(verb="options")
 
     def get_count(self, *args, **kwargs) -> int:  # pylint: disable=unused-argument
@@ -470,5 +469,4 @@ class Request:
         Returns:
             (int): The total number of objects that would match the provided query.
         """
-
         return self._make_call(add_params={"limit": 1})["count"]
