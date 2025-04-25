@@ -1,4 +1,8 @@
-"""Cloud Object"""
+"""Overrides for models in the Cloud app.
+
+Classes, attributes and methods only need to be defined here if they need to
+override the default behavior.
+"""
 
 # (c) 2017 DigitalOcean
 #
@@ -20,26 +24,20 @@ from pynautobot.core.response import JsonField, Record
 
 
 class CloudResourceTypes(Record):
-    """
-    CloudResourceType object
-    """
+    """CloudResourceType object."""
 
     config_schema = JsonField
 
 
 class CloudServices(Record):
-    """
-    CloudService object
-    """
+    """CloudService object."""
 
     extra_config = JsonField
     cloud_resource_type = CloudResourceTypes
 
 
 class CloudNetworks(Record):
-    """
-    CloudNetwork object
-    """
+    """CloudNetwork object."""
 
     extra_config = JsonField
     cloud_resource_type = CloudResourceTypes

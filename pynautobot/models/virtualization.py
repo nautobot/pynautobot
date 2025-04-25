@@ -1,4 +1,8 @@
-"""Virtual Machines Object."""
+"""Overrides for models in the Virtualization app.
+
+Classes, attributes and methods only need to be defined here if they need to
+override the default behavior.
+"""
 
 # (c) 2017 DigitalOcean
 #

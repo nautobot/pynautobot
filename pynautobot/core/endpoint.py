@@ -53,6 +53,7 @@ class Endpoint:
     """
 
     def __init__(self, api, app, name, model=None):
+        """Initialize the Endpoint object."""
         self.return_obj = self._lookup_ret_obj(name, model)
         self.name = name.replace("_", "-")
         self.api = api
@@ -354,8 +355,7 @@ class Endpoint:
         return False
 
     def bulk_update(self, objects: List[Dict[str, Any]]):
-        """This method is called from the update() method if a bulk
-        update is detected.
+        """This method is called from the update() method if a bulk update is detected.
 
         Allows for bulk updating of existing objects on an endpoint.
         Objects is a list which contain either JSON/dicts or Record
@@ -562,6 +562,7 @@ class DetailEndpoint:
     """
 
     def __init__(self, parent_obj, name, custom_return=None):
+        """Initialize the DetailEndpoint object."""
         self.parent_obj = parent_obj
         self.custom_return = custom_return
         self.url = f"{parent_obj.endpoint.url}/{parent_obj.id}/{name}/"
@@ -623,6 +624,7 @@ class RODetailEndpoint(DetailEndpoint):
     """Enables read-only Operations on detail endpoints."""
 
     def create(self, data=None, api_version=None):
+        """Raises a NotImplementedError for read-only endpoints."""
         raise NotImplementedError("Writes are not supported for this endpoint.")
 
 
