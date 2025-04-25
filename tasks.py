@@ -200,27 +200,49 @@ def pytest(context, label="", failfast=False, keepdb=False, stdout=False):
     destroy(context)
 
 
-@task
-def black(context, autoformat=False):
-    """Run black to check that Python files adherence to black standards.
-
-    Args:
-        context (obj): Used to run specific commands
-        autoformat (bool): Autoformat the code
-    """
-    exec_cmd = "black ." if autoformat else "black --check --diff ."
-    run_command(context, exec_cmd)
+@task(aliases=("a",))
+def autoformat(context):
+    """Run code autoformatting."""
+    ruff(context, action=["format"], fix=True)
 
 
-@task
-def flake8(context):
-    """Run flake8 for the specified name and Python version.
+@task(
+    help={
+        "action": "Available values are `['lint', 'format']`. Can be used multiple times. (default: `['lint', 'format']`)",
+        "target": "File or directory to inspect, repeatable (default: all files in the project will be inspected)",
+        "fix": "Automatically fix selected actions. May not be able to fix all issues found. (default: False)",
+        "output_format": "See https://docs.astral.sh/ruff/settings/#output-format for details. (default: `concise`)",
+    },
+    iterable=["action", "target"],
+)
+def ruff(context, action=None, target=None, fix=False, output_format="concise"):
+    """Run ruff to perform code formatting and/or linting."""
+    if not action:
+        action = ["lint", "format"]
+    if not target:
+        target = ["."]
 
-    Args:
-        context (obj): Used to run specific commands
-    """
-    exec_cmd = "flake8 ."
-    run_command(context, exec_cmd)
+    exit_code = 0
+
+    if "format" in action:
+        command = "ruff format "
+        if not fix:
+            command += "--check "
+        command += " ".join(target)
+        if not context.run(command, warn=True):
+            exit_code = 1
+
+    if "lint" in action:
+        command = "ruff check "
+        if fix:
+            command += "--fix "
+        command += f"--output-format {output_format} "
+        command += " ".join(target)
+        if not context.run(command, warn=True):
+            exit_code = 1
+
+    if exit_code != 0:
+        raise Exit(code=exit_code)
 
 
 @task
@@ -284,8 +306,7 @@ def tests(context):
     Args:
         context (obj): Used to run specific commands
     """
-    black(context)
-    flake8(context)
+    ruff(context)
     pylint(context)
     yamllint(context)
     # Skipping due to using different doc strings atm.
