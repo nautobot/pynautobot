@@ -14,10 +14,7 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-"""
-This module defines the `App` and `PluginsApp` classes for interacting with
-Nautobot applications and plugins.
-"""
+"""This module defines the `App` and `PluginsApp` classes for interacting with Nautobot applications and plugins."""
 
 import logging
 
@@ -51,6 +48,7 @@ class App:
     }
 
     def __init__(self, api, name):
+        """Initialize the App object."""
         self.api = api
         self.name = name
         self._choices = None
@@ -60,13 +58,16 @@ class App:
         self.model = App.models[self.name] if self.name in App.models else None
 
     def __getstate__(self):
+        """Get the state of the App object."""
         return {"api": self.api, "name": self.name, "_choices": self._choices}
 
     def __setstate__(self, d):
+        """Set the state of the App object."""
         self.__dict__.update(d)
         self._setmodel()
 
     def __getattr__(self, name):
+        """Get an attribute from the App object."""
         if name == "jobs":
             return JobsEndpoint(self.api, self, name, model=self.model)
         if name == "graphql_queries":
@@ -74,6 +75,7 @@ class App:
         return Endpoint(self.api, self, name, model=self.model)
 
     def __dir__(self):
+        """Get the directory of the App object."""
         endpoints = self._get_api_endpoints()
         # We replace all hyphens with underscores so they can be used as attributes
         endpoint_attrs = [e.replace("-", "_") for e in endpoints.keys()]
@@ -218,12 +220,15 @@ class PluginsApp:
     """
 
     def __init__(self, api):
+        """Initialize the PluginsApp object."""
         self.api = api
 
     def __getattr__(self, name):
+        """Get an attribute from the PluginsApp object."""
         return App(self.api, f"plugins/{name.replace('_', '-')}")
 
     def __dir__(self):
+        """Get the directory of the PluginsApp object."""
         endpoints = self._get_api_endpoints()
         # We replace all hyphens with underscores so they can be used as attributes
         endpoint_attrs = [e.replace("-", "_") for e in endpoints.keys()]

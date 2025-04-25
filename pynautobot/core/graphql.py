@@ -20,6 +20,7 @@ class GraphQLException(Exception):
         self.reason = graph_err.response.reason
 
     def __str__(self):
+        """Return the error message."""
         return str(self.errors)
 
 
@@ -37,9 +38,11 @@ class GraphQLRecord:
         self.status_code = status_code
 
     def __repr__(self):
+        """Return the representation of the GraphQLRecord object."""
         return f"GraphQLRecord(json={self.json}, status_code={self.status_code})"
 
     def __str__(self):
+        """Return the string representation of the GraphQLRecord object."""
         return str(self.json)
 
 

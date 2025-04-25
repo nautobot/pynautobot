@@ -1,4 +1,8 @@
-"""Defines various classes representing different components in DCIM."""
+"""Overrides for models in the DCIM app.
+
+Classes, attributes and methods only need to be defined here if they need to
+override the default behavior.
+"""
 
 # (c) 2017 DigitalOcean
 #
@@ -71,14 +75,15 @@ class TraceableRecord(Record):
 
 
 class DeviceTypes(Record):
-    """DeviceTypes Object"""
+    """DeviceTypes Object."""
 
     def __str__(self):
+        """Return the string representation of the DeviceTypes object."""
         return self.model
 
 
 class Devices(Record):
-    """Devices Object
+    """Devices Object.
 
     Represents a device response from nautobot.
 
@@ -117,92 +122,96 @@ class Devices(Record):
 
 
 class InterfaceConnections(Record):
-    """InterfaceConnections Object"""
+    """InterfaceConnections Object."""
 
     def __str__(self):
+        """Return the string representation of the InterfaceConnections object."""
         return self.interface_a.name
 
 
 class InterfaceConnection(Record):
-    """InterfaceConnection Object"""
+    """InterfaceConnection Object."""
 
     def __str__(self):
+        """Return the string representation of the InterfaceConnection object."""
         return self.interface.name
 
 
 class ConnectedEndpoint(Record):
-    """ConnectedEndpoint Object"""
+    """ConnectedEndpoint Object."""
 
     device = Devices
 
 
 class Interfaces(TraceableRecord):
-    """Interfaces Object"""
+    """Interfaces Object."""
 
     interface_connection = InterfaceConnection
     connected_endpoint = ConnectedEndpoint
 
 
 class PowerOutlets(TraceableRecord):
-    """PowerOutlets Object"""
+    """PowerOutlets Object."""
 
     device = Devices
 
 
 class PowerPorts(TraceableRecord):
-    """PowerPorts Object"""
+    """PowerPorts Object."""
 
     device = Devices
 
 
 class ConsolePorts(TraceableRecord):
-    """ConsolePorts Object"""
+    """ConsolePorts Object."""
 
     device = Devices
 
 
 class ConsoleServerPorts(TraceableRecord):
-    """ConsoleServerPorts Object"""
+    """ConsoleServerPorts Object."""
 
     device = Devices
 
 
 class RackReservations(Record):
-    """RackReservations Object"""
+    """RackReservations Object."""
 
     def __str__(self):
+        """Return the string representation of the RackReservations object."""
         return self.description
 
 
 class VirtualChassis(Record):
-    """VirtualChassis Object"""
+    """VirtualChassis Object."""
 
     def __str__(self):
+        """Return the string representation of the VirtualChassis object."""
         if self.master is not None:
             return self.master.display
         return self.display
 
 
 class RUs(Record):
-    """RUs Object"""
+    """RUs Object."""
 
     device = Devices
 
 
 class FrontPorts(Record):
-    """FrontPorts Object"""
+    """FrontPorts Object."""
 
     device = Devices
 
 
 class RearPorts(Record):
-    """RearPorts Object"""
+    """RearPorts Object."""
 
     device = Devices
 
 
 class Racks(Record):
-    """Racks Object"""
+    """Racks Object."""
 
     @property
     def units(self):
@@ -243,9 +252,10 @@ class Racks(Record):
 
 
 class Termination(Record):
-    """Termination Object"""
+    """Termination Object."""
 
     def __str__(self):
+        """Return the string representation of the Termination object."""
         return self.display
 
     device = Devices
@@ -253,9 +263,10 @@ class Termination(Record):
 
 
 class Cables(Record):
-    """Cables Object"""
+    """Cables Object."""
 
     def __str__(self):
+        """Return the string representation of the Cables object."""
         if all(isinstance(i, Termination) for i in (self.termination_a, self.termination_b)):
             return f"{self.termination_a} <> {self.termination_b}"
         return f"Cable #{self.id}"
@@ -265,8 +276,6 @@ class Cables(Record):
 
 
 class Platforms(Record):
-    """
-    Platform object
-    """
+    """Platform object."""
 
     napalm_args = JsonField

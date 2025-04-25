@@ -328,7 +328,7 @@ def docs(context):
 
 @task
 def check_migrations(_):
-    """Upstream CI test runs check-migration test, but pynautobot has no migration to be tested; Hence including to pass CI test"""
+    """Upstream CI test runs check-migration test, but pynautobot has no migration to be tested; Hence including to pass CI test."""
 
 
 @task(

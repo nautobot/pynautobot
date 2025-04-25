@@ -31,7 +31,7 @@ def calc_pages(limit, count):
 
 
 class RequestError(Exception):
-    """Basic Request Exception
+    """Basic Request Exception.
 
     More detailed exception that returns the original requests object
     for inspection. Along with some attributes with specific details
@@ -46,6 +46,7 @@ class RequestError(Exception):
     """
 
     def __init__(self, message):
+        """Initialize the RequestError object."""
         req = message
 
         if req.status_code == 404:
@@ -72,13 +73,14 @@ class RequestErrorFromException(Exception):
 
 
 class AllocationError(Exception):
-    """Allocation Exception
+    """Allocation Exception.
 
     Used with available-ips/available-prefixes when there is no
     room for allocation and Nautobot returns 204 No Content.
     """
 
     def __init__(self, message):
+        """Initialize the AllocationError object."""
         req = message
 
         message = "The requested allocation could not be fulfilled."
@@ -91,7 +93,7 @@ class AllocationError(Exception):
 
 
 class ContentError(Exception):
-    """Content Exception
+    """Content Exception.
 
     If the API URL does not point to a valid Nautobot API, the server may
     return a valid response code, but the content is not json. This
@@ -99,6 +101,7 @@ class ContentError(Exception):
     """
 
     def __init__(self, message):
+        """Initialize the ContentError object."""
         req = message
 
         message = "The server returned invalid (non-json) data. Maybe not a Nautobot server?"
@@ -141,15 +144,21 @@ class Request:
         max_workers=4,
         api_version=None,
     ):
-        """Instantiates a new Request object
+        """Instantiates a new Request object.
 
         Args:
             base (string): Base URL passed in api() instantiation.
+            http_session (requests.Session): The HTTP session to use for the request.
             filters (dict, optional): contains key/value pairs that
                 correlate to the filters a given endpoint accepts.
                 In (e.g. /api/dcim/devices/?name='test') 'name': 'test'
                 would be in the filters dict.
+            limit (int, optional): The pagination limit of the request.
+            offset (int, optional): The pagination offset of the request.
             key (int, optional): database id of the item being queried.
+            token (str, optional): The token to use for the request.
+            threading (bool, optional): Whether to use threading for the request.
+            max_workers (int, optional): The maximum number of workers for the request.
             api_version (str, optional): Set to override the default Nautobot REST API Version.
         """
         self.base = self.normalize_url(base)
@@ -165,7 +174,7 @@ class Request:
         self.offset = offset
 
     def get_openapi(self):
-        """Gets the OpenAPI Spec"""
+        """Gets the OpenAPI Specification."""
         headers = {
             "Content-Type": "application/json;",
             "Authorization": f"Token {self.token}",
