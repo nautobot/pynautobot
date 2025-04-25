@@ -18,9 +18,9 @@
 
 from urllib.parse import urlparse
 
-from pynautobot.core.query import Request
-from pynautobot.core.response import Record, JsonField
 from pynautobot.core.endpoint import RODetailEndpoint
+from pynautobot.core.query import Request
+from pynautobot.core.response import JsonField, Record
 from pynautobot.models.circuits import Circuits
 
 

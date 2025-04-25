@@ -1,14 +1,14 @@
 """Common fixtures for integration tests."""
 
 import os
-import tempfile
 import subprocess as subp
+import tempfile
+
+import pytest
+import requests
 import yaml
 
-import requests
-import pytest
 import pynautobot
-
 
 DOCKER_PROJECT_PREFIX = "pytest_pynautobot"
 DEVICETYPE_LIBRARY_OBJECTS = [

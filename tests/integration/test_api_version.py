@@ -1,8 +1,8 @@
 """API versioning tests."""
 
+import pytest
 from packaging import version
 
-import pytest
 import pynautobot
 
 

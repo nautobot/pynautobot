@@ -3,7 +3,7 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
+from pynautobot.core.endpoint import Endpoint, GraphqlEndpoint, JobsEndpoint
 from pynautobot.core.response import Record
 
 

@@ -1,6 +1,6 @@
 """GraphQL endpoint for making queries to the Nautobot GraphQL endpoint."""
 
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
 
 
 class GraphQLException(Exception):
