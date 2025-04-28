@@ -16,7 +16,7 @@
 # This file has been modified by NetworktoCode, LLC.
 
 from time import sleep
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union, overload
 from uuid import UUID
 
 from pynautobot.core.query import Request, RequestError
@@ -286,7 +286,13 @@ class Endpoint:
 
         return response_loader(req, self.return_obj, self)
 
-    def update(self, *args, **kwargs):
+    @overload
+    def update(self, id: str, data: dict) -> bool: ...
+
+    @overload
+    def update(self, id: list[Union[Record, dict]]) -> list[Record]: ...
+
+    def update(self, id, data=None):
         """Update a single resource with a dictionary or bulk update a list of objects.
 
         Allows for bulk updating of existing objects on an endpoint.
@@ -296,31 +302,33 @@ class Endpoint:
         included.
 
         Args:
-            *args (list, optional): A list of dicts or a list of Record.
-            **kwargs (str, optional): See Below.
-
-        Keyword Arguments:
-            id (string): Identifier of the object being updated.
-            data (dict): Key/value pairs to update the record object with.
+            id (string, list): Identifier of the object being updated OR list
+                of JSON/dicts or Record objects containing updates to apply.
+            data (dict): Key/value pairs to update the record object with, ignored
+                in the case of a list to id.
 
         Returns:
-            (Union[Record, List[Record]]): A list or single :py:class:`.Record` object depending
-                on whether a bulk update was requested.
+            (Union[bool, List[Record]]): A list of :py:class:`.Record` objects
+                or a boolean depending on whether a bulk update was requested.
 
         Examples:
             Accepts the id of the object that needs to be updated as well as a
             dictionary of k/v pairs used to update an object.
-            >>> nb.dcim.devices.update(id="0238a4e3-66f2-455a-831f-5f177215de0f", data={
+            >>> ret = nb.dcim.devices.update(id="0238a4e3-66f2-455a-831f-5f177215de0f", data={
             ...     "name": "test",
             ...     "serial": "1234",
             ...     "location": "9b1f53c7-89fa-4fb2-a89a-b97364fef50c",
             ... })
+            >>> ret
+            True
 
             Use bulk update by passing a list of dicts:
             >>> devices = nb.dcim.devices.update([
             ...    {'id': "db8770c4-61e5-4999-8372-e7fa576a4f65", 'name': 'test'},
             ...    {'id': "e9b5f2e0-4f20-41ad-9179-90a4987f743e", 'name': 'test2'},
             ... ])
+            >>> devices
+            [test, test2]
 
             Use bulk update by passing a list of Records:
             >>> devices = list(nb.dcim.devices.filter())
@@ -329,22 +337,18 @@ class Endpoint:
             >>> for d in devices:
             ...     d.name = d.name+'-test'
             ...
-            >>> nb.dcim.devices.update(devices)
+            >>> devices = nb.dcim.devices.update(devices)
+            >>> devices
+            [Device1-test, Device2-test, Device3-test]
         """
-        if not args and not kwargs:
-            raise ValueError("You must provide either a UUID and data dict or a list of objects to update")
-        uuid = kwargs.get("id", "")
-        data = kwargs.get("data", {})
-        if data and not uuid:
-            uuid = args[0]
-        if len(args) == 2:
-            uuid, data = args
+        if isinstance(id, list):
+            return self.bulk_update(id)
 
-        if not any([uuid, data]):
-            return self.bulk_update(args[0])
+        if data is None or not id:
+            raise ValueError("You must provide either a UUID and data dict or a list of objects to update")
 
         req = Request(
-            key=uuid,
+            key=id,
             base=self.url,
             token=self.api.token,
             http_session=self.api.http_session,
