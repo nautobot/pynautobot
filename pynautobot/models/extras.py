@@ -1,4 +1,8 @@
-"""Extras Object"""
+"""Overrides for models in the Extras app.
+
+Classes, attributes and methods only need to be defined here if they need to
+override the default behavior.
+"""
 
 # (c) 2017 DigitalOcean
 #
@@ -16,7 +20,7 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from pynautobot.core.endpoint import JobsEndpoint, DetailEndpoint, GraphqlEndpoint
+from pynautobot.core.endpoint import DetailEndpoint, GraphqlEndpoint, JobsEndpoint
 from pynautobot.core.response import JsonField, Record
 
 
@@ -32,6 +36,7 @@ class ObjectChanges(Record):
     object_data = JsonField
 
     def __str__(self):
+        """Return the string representation of the ObjectChanges object."""
         return self.request_id
 
 
@@ -39,6 +44,7 @@ class CustomFieldChoices(Record):
     """CustomFieldChoices."""
 
     def __str__(self):
+        """Return the string representation of the CustomFieldChoices object."""
         return self.value
 
 
@@ -70,6 +76,7 @@ class DynamicGroups(Record):
     filter = JsonField
 
     def __str__(self):
+        """Return the string representation of the DynamicGroups object."""
         parent_record_string = super().__str__()
         return parent_record_string or str(self.id)
 

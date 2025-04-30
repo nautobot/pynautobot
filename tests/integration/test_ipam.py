@@ -1,6 +1,7 @@
 """IPAM tests."""
 
 import pytest
+
 from pynautobot.core.response import Record
 
 

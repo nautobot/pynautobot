@@ -1,7 +1,7 @@
 """Response tests."""
 
 import unittest
-from unittest.mock import Mock, patch, PropertyMock
+from unittest.mock import Mock, PropertyMock, patch
 
 from pynautobot.core.response import Record
 

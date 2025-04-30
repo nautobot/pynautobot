@@ -25,7 +25,6 @@ import pynautobot.core.endpoint
 from pynautobot.core.query import Request
 from pynautobot.core.util import Hashabledict
 
-
 # List of fields that are lists but should be treated as sets.
 LIST_AS_SET = ("tags", "tagged_vlans", "nat_outside")
 
@@ -46,7 +45,6 @@ def get_return(lookup, return_fields=None):
         so simply return a string. Order is important due to nested_return
         being self-referential.
     """
-
     for i in return_fields or ["id", "value", "nested_return"]:
         if isinstance(lookup, dict) and lookup.get(i):
             return lookup[i]
@@ -149,6 +147,7 @@ class Record:
     url = None
 
     def __init__(self, values, api, endpoint):
+        """Initialize the Record object."""
         self.has_details = False
         self._full_cache = []
         self._init_cache = []
@@ -188,6 +187,7 @@ class Record:
         raise AttributeError(f'object has no attribute "{k}"')
 
     def __iter__(self):
+        """Iterate over the Record object."""
         for i in dict(self._init_cache):
             cur_attr = getattr(self, i)
             if isinstance(cur_attr, Record):
@@ -198,34 +198,43 @@ class Record:
                 yield i, cur_attr
 
     def __getitem__(self, k):
+        """Get an item from the Record object."""
         return dict(self)[k]
 
     def __str__(self):
+        """Return the string representation of the Record object."""
         return str(getattr(self, "display", None) or getattr(self, "name", None) or getattr(self, "label", None) or "")
 
     def __repr__(self):
+        """Return the representation of the Record object."""
         return f"<{self.__class__.__module__}.{self.__class__.__name__} ('{self}') at {hex(id(self))}>"
 
     def __getstate__(self):
+        """Get the state of the Record object."""
         return self.__dict__
 
     def __setstate__(self, d):
+        """Set the state of the Record object."""
         self.__dict__.update(d)
 
     def __key__(self):
+        """Get the key of the Record object."""
         if hasattr(self, "id"):
             return (self.endpoint.name, self.id)
         return self.endpoint.name
 
     def __hash__(self):
+        """Hash the Record object."""
         return hash(self.__key__())
 
     def __eq__(self, other):
+        """Check if the Record object is equal to another object."""
         if isinstance(other, Record):
             return self.__key__() == other.__key__()
         return NotImplemented
 
     def _add_cache(self, item):
+        """Add an item to the cache of the Record object."""
         key, value = item
         if key == "local_context_data":
             self._init_cache.append((key, copy.deepcopy(value)))
@@ -446,7 +455,6 @@ class Record:
             ... })
             True
         """
-
         for k, v in data.items():
             setattr(self, k, v)
         return self.save()

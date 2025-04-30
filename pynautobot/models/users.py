@@ -1,4 +1,8 @@
-"""Users Object"""
+"""Overrides for models in the Users app.
+
+Classes, attributes and methods only need to be defined here if they need to
+override the default behavior.
+"""
 
 # (c) 2017 DigitalOcean
 #
@@ -20,7 +24,8 @@ from pynautobot.core.response import Record
 
 
 class Users(Record):
-    """Users"""
+    """Users."""
 
     def __str__(self):
+        """Return the string representation of the Users object."""
         return self.username

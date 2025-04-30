@@ -2,12 +2,13 @@
 
 import os
 
-from invoke.collection import Collection
-from invoke.tasks import task as invoke_task
+from invoke import Collection, Exit
+from invoke import task as invoke_task
 
 
 def is_truthy(arg):
     """Convert "truthy" strings into Booleans.
+
     Examples
     --------
         >>> is_truthy('yes')
@@ -68,6 +69,7 @@ def task(function=None, *args, **kwargs):
 
 def docker_compose(context, command, **kwargs):
     """Helper function for running a specific docker compose command with all appropriate parameters and environment.
+
     Args:
         context (obj): Used to run specific commands
         command (str): Command string to append to the "docker compose ..." command, such as "build", "up", etc.
@@ -200,27 +202,49 @@ def pytest(context, label="", failfast=False, keepdb=False, stdout=False):
     destroy(context)
 
 
-@task
-def black(context, autoformat=False):
-    """Run black to check that Python files adherence to black standards.
-
-    Args:
-        context (obj): Used to run specific commands
-        autoformat (bool): Autoformat the code
-    """
-    exec_cmd = "black ." if autoformat else "black --check --diff ."
-    run_command(context, exec_cmd)
+@task(aliases=("a",))
+def autoformat(context):
+    """Run code autoformatting."""
+    ruff(context, action=["format"], fix=True)
 
 
-@task
-def flake8(context):
-    """Run flake8 for the specified name and Python version.
+@task(
+    help={
+        "action": "Available values are `['lint', 'format']`. Can be used multiple times. (default: `['lint', 'format']`)",
+        "target": "File or directory to inspect, repeatable (default: all files in the project will be inspected)",
+        "fix": "Automatically fix selected actions. May not be able to fix all issues found. (default: False)",
+        "output_format": "See https://docs.astral.sh/ruff/settings/#output-format for details. (default: `concise`)",
+    },
+    iterable=["action", "target"],
+)
+def ruff(context, action=None, target=None, fix=False, output_format="concise"):
+    """Run ruff to perform code formatting and/or linting."""
+    if not action:
+        action = ["lint", "format"]
+    if not target:
+        target = ["."]
 
-    Args:
-        context (obj): Used to run specific commands
-    """
-    exec_cmd = "flake8 ."
-    run_command(context, exec_cmd)
+    exit_code = 0
+
+    if "format" in action:
+        command = "ruff format "
+        if not fix:
+            command += "--check "
+        command += " ".join(target)
+        if not context.run(command, warn=True):
+            exit_code = 1
+
+    if "lint" in action:
+        command = "ruff check "
+        if fix:
+            command += "--fix "
+        command += f"--output-format {output_format} "
+        command += " ".join(target)
+        if not context.run(command, warn=True):
+            exit_code = 1
+
+    if exit_code != 0:
+        raise Exit(code=exit_code)
 
 
 @task
@@ -246,28 +270,6 @@ def yamllint(context):
 
 
 @task
-def pydocstyle(context):
-    """Run pydocstyle to validate docstring formatting adheres to NTC defined standards.
-
-    Args:
-        context (obj): Used to run specific commands
-    """
-    exec_cmd = "pydocstyle ."
-    run_command(context, exec_cmd)
-
-
-@task
-def bandit(context):
-    """Run bandit to validate basic static code security analysis.
-
-    Args:
-        context (obj): Used to run specific commands
-    """
-    exec_cmd = "bandit --recursive ./ --configfile .bandit.yml"
-    run_command(context, exec_cmd)
-
-
-@task
 def cli(context):
     """Enter the image to perform troubleshooting or dev work.
 
@@ -284,13 +286,9 @@ def tests(context):
     Args:
         context (obj): Used to run specific commands
     """
-    black(context)
-    flake8(context)
+    ruff(context)
     pylint(context)
     yamllint(context)
-    # Skipping due to using different doc strings atm.
-    # pydocstyle(context)
-    bandit(context)
     pytest(context)
 
     print("All tests have passed!")
@@ -305,7 +303,7 @@ def docs(context):
 
 @task
 def check_migrations(_):
-    """Upstream CI test runs check-migration test, but pynautobot has no migration to be tested; Hence including to pass CI test"""
+    """Upstream CI test runs check-migration test, but pynautobot has no migration to be tested; Hence including to pass CI test."""
 
 
 @task(

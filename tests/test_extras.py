@@ -1,8 +1,8 @@
-"""Extras tests. """
+"""Extras tests."""
 
 from unittest.mock import patch
 
-from . import Generic, HEADERS
+from . import HEADERS, Generic
 from .util import Response
 
 

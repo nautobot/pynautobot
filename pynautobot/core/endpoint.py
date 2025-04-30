@@ -16,9 +16,9 @@
 # This file has been modified by NetworktoCode, LLC.
 
 from time import sleep
-
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 from uuid import UUID
+
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
 
@@ -53,6 +53,7 @@ class Endpoint:
     """
 
     def __init__(self, api, app, name, model=None):
+        """Initialize the Endpoint object."""
         self.return_obj = self._lookup_ret_obj(name, model)
         self.name = name.replace("_", "-")
         self.api = api
@@ -94,6 +95,7 @@ class Endpoint:
                 be returned with each query to the Netbox server.  The queries
                 will be made as you iterate through the result set.
             offset (int, optional): Overrides the offset on paginated returns.
+
         Returns:
             (list): List of :py:class:`.Record` objects.
 
@@ -128,7 +130,6 @@ class Endpoint:
             >>> nb.dcim.devices.get(1)
             test1-edge1
         """
-
         try:
             key = args[0]
         except IndexError:
@@ -202,7 +203,6 @@ class Endpoint:
             >>> nb.dcim.devices.filter(role=['leaf-switch', 'spine-switch'])
             [test1-a3-spine1, test1-a3-spine2, test1-a3-leaf1]
         """
-
         if args:
             kwargs.update({"q": args[0]})
 
@@ -275,7 +275,6 @@ class Endpoint:
             ...     }
             ... ])
         """
-
         api_version = api_version or self.api.api_version
 
         req = Request(
@@ -356,8 +355,7 @@ class Endpoint:
         return False
 
     def bulk_update(self, objects: List[Dict[str, Any]]):
-        """This method is called from the update() method if a bulk
-        update is detected.
+        """This method is called from the update() method if a bulk update is detected.
 
         Allows for bulk updating of existing objects on an endpoint.
         Objects is a list which contain either JSON/dicts or Record
@@ -368,7 +366,6 @@ class Endpoint:
         Args:
             objects (list): A list of dicts or a list of Record.
         """
-
         if not isinstance(objects, list):
             raise ValueError("objects must be a list[dict()|Record] not " + str(type(objects)))
 
@@ -426,7 +423,6 @@ class Endpoint:
             ...     if d.custom_fields.get("field", False)
             ... ])
         """
-
         ids = []
         if not isinstance(objects, list):
             raise ValueError("objects must be a list[str(id)|Record] not " + str(type(objects)))
@@ -543,7 +539,6 @@ class Endpoint:
             >>> nb.dcim.devices.count()
             87382
         """
-
         if args:
             kwargs.update({"q": args[0]})
 
@@ -567,6 +562,7 @@ class DetailEndpoint:
     """
 
     def __init__(self, parent_obj, name, custom_return=None):
+        """Initialize the DetailEndpoint object."""
         self.parent_obj = parent_obj
         self.custom_return = custom_return
         self.url = f"{parent_obj.endpoint.url}/{parent_obj.id}/{name}/"
@@ -590,7 +586,6 @@ class DetailEndpoint:
         Returns:
             (Union[Dict, List[Dict]]): A dictionary or list of dictionaries retrieved from Nautobot.
         """
-
         api_version = api_version or self.parent_obj.api.api_version
 
         req = Request(api_version=api_version, **self.request_kwargs).get(add_params=kwargs)
@@ -629,6 +624,7 @@ class RODetailEndpoint(DetailEndpoint):
     """Enables read-only Operations on detail endpoints."""
 
     def create(self, data=None, api_version=None):
+        """Raises a NotImplementedError for read-only endpoints."""
         raise NotImplementedError("Writes are not supported for this endpoint.")
 
 
@@ -684,6 +680,7 @@ class JobsEndpoint(Endpoint):
 
     def run_and_wait(self, *args, api_version=None, interval=5, max_rechecks=50, **kwargs):
         """Runs a job and waits for the response.
+
         Args:
             *args (str, optional): Freeform search string that's
                 accepted on given endpoint.
@@ -695,8 +692,10 @@ class JobsEndpoint(Endpoint):
                 checking job results.
             max_rechecks (int, optional): Number of times to check job result
                 before exiting the method.
+
         Returns:
             obj (str): Job details: job_result object uuid found at `obj.result.id`.
+
         Examples:
             To run a job for verifying hostnames:
             >>> response = nb.extras.jobs.run_and_wait(

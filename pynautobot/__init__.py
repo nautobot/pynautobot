@@ -1,6 +1,4 @@
-"""
-This file has been modified by NetworktoCode, LLC.
-"""
+"""This file has been modified by NetworktoCode, LLC."""
 
 from importlib.metadata import PackageNotFoundError, version
 

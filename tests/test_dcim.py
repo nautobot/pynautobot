@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import pynautobot
 
-from . import api, Generic, HEADERS, POST_HEADERS
+from . import HEADERS, POST_HEADERS, Generic, api
 from .util import Response
 
 
@@ -254,6 +254,7 @@ class RackGroupsTestCase(Generic.Tests):
 
 class RackReservationsTestCase(Generic.Tests):
     "RackReservations test."
+
     app = "dcim"
     name = "rack_reservations"
 

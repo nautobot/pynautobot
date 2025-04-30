@@ -16,20 +16,19 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from packaging import version
 import requests
+from packaging import version
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
-from pynautobot.core.query import Request
 from pynautobot.core.app import App, PluginsApp
 from pynautobot.core.graphql import GraphQLQuery
+from pynautobot.core.query import Request
 
 
 # pylint: disable=too-many-instance-attributes, too-many-instance-attributes, too-many-arguments, too-many-positional-arguments
 class Api:
-    """The `Api` object is the primary entry point for interacting with a Nautobot
-    instance using pynautobot.
+    """The `Api` object is the primary entry point for interacting with a Nautobot instance using pynautobot.
 
     Args:
         url (str): The base URL of the Nautobot instance you want to connect to.
@@ -82,6 +81,7 @@ class Api:
         retries=0,
         verify=True,
     ):
+        """Initialize the Api object."""
         from pynautobot import __version__  # pylint: disable=import-outside-toplevel
 
         base_url = f"{url.rstrip('/')}/api"
@@ -148,7 +148,6 @@ class Api:
             >>> nb.version
             '1.0'
         """
-
         return Request(
             base=self.base_url,
             http_session=self.http_session,
@@ -180,7 +179,6 @@ class Api:
             >>> nb.openapi()
             {...}
         """
-
         return Request(
             base=self.base_url,
             http_session=self.http_session,
