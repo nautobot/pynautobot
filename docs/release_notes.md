@@ -5,6 +5,23 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v2.6.3](https://github.com/nautobot/pynautobot/releases/tag/v2.6.3)
+
+### Fixed
+
+- [#302](https://github.com/nautobot/pynautobot/issues/302) - Fixed poetry failing to install pynautobot in the development docker image.
+- [#307](https://github.com/nautobot/pynautobot/issues/307) - Fixed documentation for the update() method on Endpoint and added type enforcement.
+- [#309](https://github.com/nautobot/pynautobot/issues/309) - Fixed JobsEndpoint.run_and_wait() to properly compare the job status as a string to determine if the job is complete.
+
+### Documentation
+
+- Updated the copyright documentation footer.
+
+### Housekeeping
+
+- [#301](https://github.com/nautobot/pynautobot/issues/301) - Replaced black, bandit, flake8 and pydocstyle with ruff.
+- [#303](https://github.com/nautobot/pynautobot/issues/303) - Added Python 3.13 to the CI test matrix.
+- Consolidated all release notes into a single page for easier searchability and a more streamlined release process.
 
 ## [v2.6.2](https://github.com/nautobot/pynautobot/releases/tag/v2.6.2)
 

@@ -1,1 +1,0 @@
-Fixed JobsEndpoint.run_and_wait() to properly compare the job status as a string to determine if the job is complete.
