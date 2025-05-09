@@ -4,8 +4,9 @@ from os import path
 
 import pytest
 import requests_mock
+
 from pynautobot.core.api import Api
-from pynautobot.core.graphql import GraphQLRecord, GraphQLException
+from pynautobot.core.graphql import GraphQLException, GraphQLRecord
 
 HERE = path.abspath(path.dirname(__file__))
 

@@ -3,7 +3,7 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from pynautobot.core.endpoint import Endpoint, JobsEndpoint, GraphqlEndpoint
+from pynautobot.core.endpoint import Endpoint, GraphqlEndpoint, JobsEndpoint
 from pynautobot.core.response import Record
 
 
@@ -134,16 +134,6 @@ class EndPointTestCase(unittest.TestCase):
             mock.assert_called_with(verb="patch", data=[{"id": i, "name": "new_" + str(i)} for i in ids])
             self.assertTrue(test)
 
-    def test_update_with_invalid_input(self):
-        api = Mock(base_url="http://localhost:8000/api")
-        app = Mock(name="test")
-        test_obj = Endpoint(api, app, "test")
-        with self.assertRaises(ValueError) as exc:
-            test_obj.update()
-        self.assertEqual(
-            str(exc.exception), "You must provide either a UUID and data dict or a list of objects to update"
-        )
-
     def test_update_with_invalid_objects_type(self):
         objects = {"id": "db8770c4-61e5-4999-8372-e7fa576a4f65", "name": "test"}
         api = Mock(base_url="http://localhost:8000/api")
@@ -151,7 +141,9 @@ class EndPointTestCase(unittest.TestCase):
         test_obj = Endpoint(api, app, "test")
         with self.assertRaises(ValueError) as exc:
             test_obj.update(objects)
-        self.assertEqual(str(exc.exception), "objects must be a list[dict()|Record] not <class 'dict'>")
+        self.assertEqual(
+            str(exc.exception), "You must provide either a UUID and data dict or a list of objects to update"
+        )
 
     def test_update_with_invalid_type_in_objects(self):
         objects = [[{"id": "db8770c4-61e5-4999-8372-e7fa576a4f65", "name": "test"}]]

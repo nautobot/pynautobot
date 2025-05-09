@@ -1,4 +1,4 @@
-"""Users tests. """
+"""Users tests."""
 
 from unittest.mock import patch
 

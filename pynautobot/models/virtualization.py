@@ -1,4 +1,8 @@
-"""Virtual Machines Object."""
+"""Overrides for models in the Virtualization app.
+
+Classes, attributes and methods only need to be defined here if they need to
+override the default behavior.
+"""
 
 # (c) 2017 DigitalOcean
 #
@@ -16,7 +20,7 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from pynautobot.core.response import Record, JsonField
+from pynautobot.core.response import JsonField, Record
 
 
 class VirtualMachines(Record):

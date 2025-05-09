@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pynautobot
 
-from . import Generic, api, HEADERS, POST_HEADERS
+from . import HEADERS, POST_HEADERS, Generic, api
 from .util import Response
 
 

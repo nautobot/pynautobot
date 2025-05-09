@@ -1,4 +1,8 @@
-"""IPAM Object."""
+"""Overrides for models in the IPAM app.
+
+Classes, attributes and methods only need to be defined here if they need to
+override the default behavior.
+"""
 
 # (c) 2017 DigitalOcean
 #
@@ -16,14 +20,15 @@
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from pynautobot.core.response import Record
 from pynautobot.core.endpoint import DetailEndpoint
+from pynautobot.core.response import Record
 
 
 class IpAddresses(Record):
     """IP Address Object."""
 
     def __str__(self):
+        """Return the string representation of the IpAddresses object."""
         parent_record_string = super().__str__()
         return parent_record_string or str(self.address)
 
@@ -32,6 +37,7 @@ class Prefixes(Record):
     """Prefix Object."""
 
     def __str__(self):
+        """Return the string representation of the Prefixes object."""
         parent_record_string = super().__str__()
         return parent_record_string or str(self.prefix)
 
@@ -71,7 +77,6 @@ class Prefixes(Record):
             >>> len(create)
             2
         """
-
         return DetailEndpoint(self, "available-ips", custom_return=IpAddresses)
 
     @property

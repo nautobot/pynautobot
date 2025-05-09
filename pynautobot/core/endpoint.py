@@ -16,9 +16,9 @@
 # This file has been modified by NetworktoCode, LLC.
 
 from time import sleep
-
-from typing import List, Dict, Any
+from typing import Any, Dict, List, Union, overload
 from uuid import UUID
+
 from pynautobot.core.query import Request, RequestError
 from pynautobot.core.response import Record
 
@@ -53,6 +53,7 @@ class Endpoint:
     """
 
     def __init__(self, api, app, name, model=None):
+        """Initialize the Endpoint object."""
         self.return_obj = self._lookup_ret_obj(name, model)
         self.name = name.replace("_", "-")
         self.api = api
@@ -94,6 +95,7 @@ class Endpoint:
                 be returned with each query to the Netbox server.  The queries
                 will be made as you iterate through the result set.
             offset (int, optional): Overrides the offset on paginated returns.
+
         Returns:
             (list): List of :py:class:`.Record` objects.
 
@@ -128,7 +130,6 @@ class Endpoint:
             >>> nb.dcim.devices.get(1)
             test1-edge1
         """
-
         try:
             key = args[0]
         except IndexError:
@@ -202,7 +203,6 @@ class Endpoint:
             >>> nb.dcim.devices.filter(role=['leaf-switch', 'spine-switch'])
             [test1-a3-spine1, test1-a3-spine2, test1-a3-leaf1]
         """
-
         if args:
             kwargs.update({"q": args[0]})
 
@@ -275,7 +275,6 @@ class Endpoint:
             ...     }
             ... ])
         """
-
         api_version = api_version or self.api.api_version
 
         req = Request(
@@ -287,7 +286,13 @@ class Endpoint:
 
         return response_loader(req, self.return_obj, self)
 
-    def update(self, *args, **kwargs):
+    @overload
+    def update(self, id: str, data: dict) -> bool: ...
+
+    @overload
+    def update(self, id: list[Union[Record, dict]]) -> list[Record]: ...
+
+    def update(self, id, data=None):
         """Update a single resource with a dictionary or bulk update a list of objects.
 
         Allows for bulk updating of existing objects on an endpoint.
@@ -297,31 +302,33 @@ class Endpoint:
         included.
 
         Args:
-            *args (list, optional): A list of dicts or a list of Record.
-            **kwargs (str, optional): See Below.
-
-        Keyword Arguments:
-            id (string): Identifier of the object being updated.
-            data (dict): Key/value pairs to update the record object with.
+            id (string, list): Identifier of the object being updated OR list
+                of JSON/dicts or Record objects containing updates to apply.
+            data (dict): Key/value pairs to update the record object with, ignored
+                in the case of a list to id.
 
         Returns:
-            (Union[Record, List[Record]]): A list or single :py:class:`.Record` object depending
-                on whether a bulk update was requested.
+            (Union[bool, List[Record]]): A list of :py:class:`.Record` objects
+                or a boolean depending on whether a bulk update was requested.
 
         Examples:
             Accepts the id of the object that needs to be updated as well as a
             dictionary of k/v pairs used to update an object.
-            >>> nb.dcim.devices.update(id="0238a4e3-66f2-455a-831f-5f177215de0f", data={
+            >>> ret = nb.dcim.devices.update(id="0238a4e3-66f2-455a-831f-5f177215de0f", data={
             ...     "name": "test",
             ...     "serial": "1234",
             ...     "location": "9b1f53c7-89fa-4fb2-a89a-b97364fef50c",
             ... })
+            >>> ret
+            True
 
             Use bulk update by passing a list of dicts:
             >>> devices = nb.dcim.devices.update([
             ...    {'id': "db8770c4-61e5-4999-8372-e7fa576a4f65", 'name': 'test'},
             ...    {'id': "e9b5f2e0-4f20-41ad-9179-90a4987f743e", 'name': 'test2'},
             ... ])
+            >>> devices
+            [test, test2]
 
             Use bulk update by passing a list of Records:
             >>> devices = list(nb.dcim.devices.filter())
@@ -330,22 +337,18 @@ class Endpoint:
             >>> for d in devices:
             ...     d.name = d.name+'-test'
             ...
-            >>> nb.dcim.devices.update(devices)
+            >>> devices = nb.dcim.devices.update(devices)
+            >>> devices
+            [Device1-test, Device2-test, Device3-test]
         """
-        if not args and not kwargs:
-            raise ValueError("You must provide either a UUID and data dict or a list of objects to update")
-        uuid = kwargs.get("id", "")
-        data = kwargs.get("data", {})
-        if data and not uuid:
-            uuid = args[0]
-        if len(args) == 2:
-            uuid, data = args
+        if isinstance(id, list):
+            return self.bulk_update(id)
 
-        if not any([uuid, data]):
-            return self.bulk_update(args[0])
+        if data is None or not id:
+            raise ValueError("You must provide either a UUID and data dict or a list of objects to update")
 
         req = Request(
-            key=uuid,
+            key=id,
             base=self.url,
             token=self.api.token,
             http_session=self.api.http_session,
@@ -356,8 +359,7 @@ class Endpoint:
         return False
 
     def bulk_update(self, objects: List[Dict[str, Any]]):
-        """This method is called from the update() method if a bulk
-        update is detected.
+        """This method is called from the update() method if a bulk update is detected.
 
         Allows for bulk updating of existing objects on an endpoint.
         Objects is a list which contain either JSON/dicts or Record
@@ -368,7 +370,6 @@ class Endpoint:
         Args:
             objects (list): A list of dicts or a list of Record.
         """
-
         if not isinstance(objects, list):
             raise ValueError("objects must be a list[dict()|Record] not " + str(type(objects)))
 
@@ -426,7 +427,6 @@ class Endpoint:
             ...     if d.custom_fields.get("field", False)
             ... ])
         """
-
         ids = []
         if not isinstance(objects, list):
             raise ValueError("objects must be a list[str(id)|Record] not " + str(type(objects)))
@@ -543,7 +543,6 @@ class Endpoint:
             >>> nb.dcim.devices.count()
             87382
         """
-
         if args:
             kwargs.update({"q": args[0]})
 
@@ -567,6 +566,7 @@ class DetailEndpoint:
     """
 
     def __init__(self, parent_obj, name, custom_return=None):
+        """Initialize the DetailEndpoint object."""
         self.parent_obj = parent_obj
         self.custom_return = custom_return
         self.url = f"{parent_obj.endpoint.url}/{parent_obj.id}/{name}/"
@@ -590,7 +590,6 @@ class DetailEndpoint:
         Returns:
             (Union[Dict, List[Dict]]): A dictionary or list of dictionaries retrieved from Nautobot.
         """
-
         api_version = api_version or self.parent_obj.api.api_version
 
         req = Request(api_version=api_version, **self.request_kwargs).get(add_params=kwargs)
@@ -629,6 +628,7 @@ class RODetailEndpoint(DetailEndpoint):
     """Enables read-only Operations on detail endpoints."""
 
     def create(self, data=None, api_version=None):
+        """Raises a NotImplementedError for read-only endpoints."""
         raise NotImplementedError("Writes are not supported for this endpoint.")
 
 
@@ -684,6 +684,7 @@ class JobsEndpoint(Endpoint):
 
     def run_and_wait(self, *args, api_version=None, interval=5, max_rechecks=50, **kwargs):
         """Runs a job and waits for the response.
+
         Args:
             *args (str, optional): Freeform search string that's
                 accepted on given endpoint.
@@ -695,8 +696,10 @@ class JobsEndpoint(Endpoint):
                 checking job results.
             max_rechecks (int, optional): Number of times to check job result
                 before exiting the method.
+
         Returns:
             obj (str): Job details: job_result object uuid found at `obj.result.id`.
+
         Examples:
             To run a job for verifying hostnames:
             >>> response = nb.extras.jobs.run_and_wait(
@@ -732,7 +735,7 @@ class JobsEndpoint(Endpoint):
             interval_counter += 1
 
             job_result.full_details()
-            if job_result.status not in active_job_statuses:
+            if str(job_result.status) not in active_job_statuses:
                 return job_obj
 
         raise ValueError("Did not receieve completed job result for job.")

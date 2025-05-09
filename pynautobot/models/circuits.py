@@ -1,4 +1,8 @@
-"""Circuits Object"""
+"""Overrides for models in the Circuits app.
+
+Classes, attributes and methods only need to be defined here if they need to
+override the default behavior.
+"""
 
 # (c) 2017 DigitalOcean
 #
@@ -23,6 +27,7 @@ class Circuits(Record):
     """Circuits."""
 
     def __str__(self):
+        """Return the string representation of the Circuits object."""
         return self.cid
 
 
@@ -30,4 +35,5 @@ class CircuitTerminations(Record):
     """Circuit Terminations."""
 
     def __str__(self):
+        """Return the string representation of the CircuitTerminations object."""
         return self.circuit.cid
