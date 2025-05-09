@@ -735,7 +735,7 @@ class JobsEndpoint(Endpoint):
             interval_counter += 1
 
             job_result.full_details()
-            if job_result.status not in active_job_statuses:
+            if str(job_result.status) not in active_job_statuses:
                 return job_obj
 
         raise ValueError("Did not receieve completed job result for job.")
