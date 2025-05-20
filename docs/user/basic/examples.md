@@ -1,6 +1,6 @@
-# Accessing Nautobot Apps
+# Examples
 
-Nautobot allows for the expansion of the core application with the support of additional applications to be installed on top of Nautobot. To that, the SDK should support this capability. A couple of examples include accessing job results or the applications.
+This page provides for examples of how to use pynautobot from the community. What are some of the common use cases? Well here are just a few, including the support of additional applications to be installed on top of Nautobot.
 
 === "Accessing Job Results"
 
