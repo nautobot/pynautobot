@@ -135,7 +135,7 @@ nav:
       - Basic:
           - "user/basic/index.md"
           - API Basic: "user/basic/api.md"
-          - Nautobot App Access: "user/basic/nautobot_apps.md"
+          - Examples: "user/basic/examples.md"
           - CRUD Operations:
               - "user/basic/crud/index.md"
               - Create: "user/basic/crud/create.md"
