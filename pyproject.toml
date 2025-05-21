@@ -12,7 +12,6 @@ classifiers = [
   "Intended Audience :: Developers",
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -23,7 +22,7 @@ homepage = "https://nautobot.com"
 documentation = "https://pynautobot.readthedocs.io"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 requests = "^2.30.0"
 urllib3 = "^2.2.3"
 packaging = "^23.2"
