@@ -51,6 +51,7 @@ The core Apps are:
 -   virtualization
 -   users
 -   wireless
+-   data_validation
 ``` python
 >>> nautobot = api(url=url, token=token)
 >>>

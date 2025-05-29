@@ -106,3 +106,11 @@ class TestWirelessApp(BaseAppTest):
 
     app_name = "wireless"
     min_version = "2.4"
+
+
+class TestDataValidationApp(BaseAppTest):
+    """Test the data validation app."""
+
+    app_name = "data_validation"
+    # TODO: Uncomment this when Nautobot 3.0 is released
+    # min_version = "3.0"
