@@ -53,6 +53,7 @@ class Api:
         virtualization: An instance of the `App` class providing access to Virtualization endpoints.
         users: An instance of the `App` class providing access to User endpoints.
         wireless: An instance of the `App` class providing access to Wireless endpoints.
+        data_validation: An instance of the `App` class providing access to Data Validation endpoints.
         http_session (requests.Session): The underlying HTTP session object used for
             making requests to Nautobot. You can override the default session with your
             own to control HTTP behavior such as SSL verification, custom headers,
@@ -115,6 +116,7 @@ class Api:
         self.virtualization = App(self, "virtualization")
         self.users = App(self, "users")
         self.wireless = App(self, "wireless")
+        self.data_validation = App(self, "data-validation")
         self.plugins = PluginsApp(self)
         self.graphql = GraphQLQuery(self)
         self._validate_version()
