@@ -668,9 +668,7 @@ class JobsEndpoint(Endpoint):
 
         job = kwargs.get("job_name") or kwargs.get("job_id")
         if not job:
-            raise ValueError(
-                'Keyword Argument "job_id" or "job_name" is required to run a job.'
-            )
+            raise ValueError('Keyword Argument "job_id" or "job_name" is required to run a job.')
         job_run_url = f"{self.url}/{job}/run/"
 
         req = Request(
