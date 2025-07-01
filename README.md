@@ -76,25 +76,34 @@ This extends the `Endpoint` class by adding the `run` method so pynautobot can b
 1. Run from an instance of a job.
 
 ```python
->>> gc_backup_job = nautobot.extras.jobs.all()[14]
+>>> gc_backup_job = nautobot.extras.jobs.get(name="Backup Configurations")
 >>> job_result = gc_backup_job.run()
->>> job_result.result.id
+>>> job_result.job_result.id
 '1838f8bd-440f-434e-9f29-82b46549a31d' # <-- Job Result ID.
 ```
 
 2. Run with Job Inputs
 
 ```python
-job = nautobot.extras.jobs.all()[7]
+job = nautobot.extras.jobs.get(name="Verify Hostnames")
 job.run(data={"hostname_regex": ".*"})
 ```
 
 3. Run by providing the job id
 
 ```python
->>> gc_backup_job = nautobot.extras.jobs.run(class_path=nautobot.extras.jobs.all()[14].id)
->>> gc_backup_job.result.id
+>>> my_job_id = nautobot.extras.jobs.get(name="Backup Configurations").id
+>>> gc_backup_job = nautobot.extras.jobs.run(job_id=my_job_id)
+>>> gc_backup_job.job_result.id
 '548832dc-e586-4c65-a7c1-a4e799398a3b' # <-- Job Result ID.
+```
+
+4. Run by providing the job name
+
+```python
+>>> gc_backup_job = nautobot.extras.jobs.run(job_name="Backup Configurations")
+>>> gc_backup_job.job_result.id
+'29e82353-c0ef-4187-9211-92fb40a74923' # <-- Job Result ID.
 ```
 
 ## Queries
