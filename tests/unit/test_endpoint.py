@@ -221,40 +221,13 @@ class EndPointTestCase(unittest.TestCase):
 class JobEndPointTestCase(unittest.TestCase):
     """Job Endpoint Test Case"""
 
-    def test_invalid_arg_less_v1_3(self):
-        with self.assertRaises(
-            ValueError, msg='Keyword Argument "class_path" is required to run a job in Nautobot APIv1.2 and older.'
-        ):
-            api = Mock(base_url="http://localhost:8000/api", api_version="1.2")
-            app = Mock(name="test")
-            test_obj = JobsEndpoint(api, app, "test")
-            test_obj.run(job_id="test")
-
-    def test_run_less_v1_3(self):
+    def test_run_job_name(self):
         with patch("pynautobot.core.query.Request.post", return_value=Mock()) as mock:
-            api = Mock(base_url="http://localhost:8000/api", api_version="1.2")
+            api = Mock(base_url="http://localhost:8000/api", api_version="2.4")
             app = Mock(name="test")
             mock.return_value = [{"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "foo"}}}]
             test_obj = JobsEndpoint(api, app, "test")
-            test = test_obj.run(class_path="test")
-            self.assertEqual(len(test), 1)
-
-    def test_invalid_arg_greater_v1_3(self):
-        with self.assertRaises(
-            ValueError, msg='Keyword Argument "job_id" is required to run a job in Nautobot APIv1.3 and newer.'
-        ):
-            api = Mock(base_url="http://localhost:8000/api", api_version="1.3")
-            app = Mock(name="test")
-            test_obj = JobsEndpoint(api, app, "test")
-            test_obj.run(class_path="test")
-
-    def test_run_greater_v1_3(self):
-        with patch("pynautobot.core.query.Request.post", return_value=Mock()) as mock:
-            api = Mock(base_url="http://localhost:8000/api", api_version="1.3")
-            app = Mock(name="test")
-            mock.return_value = [{"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "foo"}}}]
-            test_obj = JobsEndpoint(api, app, "test")
-            test = test_obj.run(job_id="test")
+            test = test_obj.run(job_name="test")
             self.assertEqual(len(test), 1)
 
     # Run and Wait Tests
@@ -262,19 +235,8 @@ class JobEndPointTestCase(unittest.TestCase):
 
     @patch("pynautobot.core.query.Request.get", return_value=Mock())
     @patch("pynautobot.core.query.Request.post", return_value=Mock())
-    def test_run_and_wait_less_v1_3(self, mock_post, mock_get):
-        api = Mock(base_url="http://localhost:8000/api", api_version="1.2")
-        app = Mock(name="test")
-        test_obj = JobsEndpoint(api, app, "test")
-        mock_post.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
-        mock_get.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "SUCCESS"}}}
-        test = test_obj.run_and_wait(class_path="test", interval=1, max_rechecks=5)
-        self.assertEqual(test.job_result.id, 123)
-
-    @patch("pynautobot.core.query.Request.get", return_value=Mock())
-    @patch("pynautobot.core.query.Request.post", return_value=Mock())
     def test_run_and_wait_greater_v1_3(self, mock_post, mock_get):
-        api = Mock(base_url="http://localhost:8000/api", api_version="1.3")
+        api = Mock(base_url="http://localhost:8000/api")
         app = Mock(name="test")
         test_obj = JobsEndpoint(api, app, "test")
         mock_post.return_value = {"schedule": {"id": 123}, "job_result": {"id": 123, "status": {"value": "PENDING"}}}
