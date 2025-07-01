@@ -666,12 +666,10 @@ class JobsEndpoint(Endpoint):
         """
         api_version = api_version or self.api.api_version or self.api.version
 
-        # Check Nautobot Version as API version can be `None`.  Job run endpoints changed in 1.3.
-
         job = kwargs.get("job_name") or kwargs.get("job_id")
         if not job:
             raise ValueError(
-                'Keyword Argument "job_id" or "job_name" is required to run a job in Nautobot APIv1.3 and newer.'
+                'Keyword Argument "job_id" or "job_name" is required to run a job.'
             )
         job_run_url = f"{self.url}/{job}/run/"
 
