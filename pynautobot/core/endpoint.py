@@ -509,7 +509,12 @@ class Endpoint:
         elif req.get("actions", {}).get("POST") is not None:
             # Nautobot 2.4+
             post_data = req["actions"]["POST"]
-            self._choices = {prop: post_data[prop]["choices"] for prop in post_data if "choices" in post_data[prop]}
+            self._choices = {}
+            for prop in post_data:
+                if "choices" in post_data[prop]:
+                    self._choices[prop] = post_data[prop]["choices"]
+                elif post_data[prop]["type"] == "list" and "choices" in post_data[prop].get("child", {}):
+                    self._choices[prop] = post_data[prop]["child"]["choices"]
         else:
             raise ValueError(f"Unexpected format in the OPTIONS response at {self.url}")
         return self._choices
