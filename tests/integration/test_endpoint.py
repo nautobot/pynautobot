@@ -1,5 +1,8 @@
 """Endpoint tests."""
 
+import pytest
+from packaging import version
+
 
 class TestEndpoint:
     """Verify different methods on an endpoint."""
@@ -21,6 +24,16 @@ class TestEndpoint:
         # Not testing that we get specific choices back, just in case of changes in the API
         assert isinstance(choices, dict)
         assert len(choices) > 0
+
+    def test_child_choices(self, nb_client, nb_status):
+        nautobot_version = nb_status["nautobot-version"]
+        if version.parse(nautobot_version) < version.parse("2.4"):
+            pytest.skip("Child choices are only in Nautobot 2.4+")
+
+        # Some endpoints have fields that is a list of choices (Issue 322)
+        choices = nb_client.dcim.controllers.choices()
+        assert isinstance(choices, dict)
+        assert "capabilities" in choices
 
 
 class TestPagination:
