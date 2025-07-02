@@ -50,7 +50,6 @@ def get_return(lookup, return_fields=None):
             return lookup[i]
         if hasattr(lookup, i):
             # check if this is a "choices" field record
-            # from a Nautobot 2.7 server.
             if sorted(dict(lookup)) == sorted(["id", "value", "label"]):
                 return getattr(lookup, "value")
             return getattr(lookup, i)
@@ -255,7 +254,7 @@ class Record:
         """
 
         def list_parser(list_item):
-            if isinstance(list_item, dict) and list_item.get("id"):
+            if isinstance(list_item, dict):
                 return self.default_ret(list_item, self.api, self.endpoint)
             return list_item
 
@@ -355,7 +354,8 @@ class Record:
                     current_val = getattr(current_val, "serialize")(nested=True)
 
                 if isinstance(current_val, list):
-                    current_val = [v.id if isinstance(v, Record) else v for v in current_val]
+                    # If the list contains a Record, get the id of a related object or the value of a choice field
+                    current_val = [get_return(v) if isinstance(v, Record) else v for v in current_val]
                     if i in LIST_AS_SET and (
                         all(isinstance(v, str) for v in current_val) or all(isinstance(v, int) for v in current_val)
                     ):
