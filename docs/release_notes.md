@@ -5,6 +5,21 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v2.6.4](https://github.com/nautobot/pynautobot/releases/tag/v2.6.4)
+
+### Added
+
+- [#304](https://github.com/nautobot/pynautobot/issues/304) - Added job_name kwarg when calling Job.run().
+
+### Fixed
+
+- [#322](https://github.com/nautobot/pynautobot/issues/322) - Fixed parsing choices for fields that are a list of choices.
+
+### Documentation
+
+- [#304](https://github.com/nautobot/pynautobot/issues/304) - Updated documention on Jobs with new examples and v2 syntax.
+- [#313](https://github.com/nautobot/pynautobot/issues/313) - Added example to documentation showing how to assign an IP address to an interface.
+
 ## [v2.6.3](https://github.com/nautobot/pynautobot/releases/tag/v2.6.3)
 
 ### Fixed
