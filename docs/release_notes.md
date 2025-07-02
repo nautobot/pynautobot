@@ -5,6 +5,12 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v2.6.5](https://github.com/nautobot/pynautobot/releases/tag/v2.6.5)
+
+### Fixed
+
+- [#322](https://github.com/nautobot/pynautobot/issues/322) - Fixed the serialization of model fields that are lists of choices to return just the values.
+
 ## [v2.6.4](https://github.com/nautobot/pynautobot/releases/tag/v2.6.4)
 
 ### Added
