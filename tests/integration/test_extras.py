@@ -2,7 +2,6 @@ import pytest
 
 
 class TestCustomField:
-
     """Verify we can create, custom field, and custom field choices."""
 
     @pytest.fixture(scope="session")

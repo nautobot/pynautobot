@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.5
+
+- (#330) Updated urlib3 and requests dependencies because of reported CVEs.
+
 ## v1.5.4
 
 - (#219) Replaced `pkg_resources` with `importlib.metadata` to enable Python 3.12 support.
