@@ -19,7 +19,7 @@ homepage = "https://nautobot.com"
 documentation = "https://pynautobot.readthedocs.io"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"
+python = "^3.9"
 requests = "^2.32.4"
 urllib3 = "^2.5.0"
 
