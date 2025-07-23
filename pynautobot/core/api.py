@@ -17,7 +17,6 @@
 # This file has been modified by NetworktoCode, LLC.
 
 import requests
-from packaging import version
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
@@ -119,13 +118,6 @@ class Api:
         self.data_validation = App(self, "data-validation")
         self.plugins = PluginsApp(self)
         self.graphql = GraphQLQuery(self)
-        self._validate_version()
-
-    def _validate_version(self):
-        """Validate API version if eq or ge than 2.0 raise an error."""
-        api_version = self.version
-        if api_version.replace(".", "").isnumeric() and version.parse(api_version) < version.parse("2.0"):
-            raise ValueError("Nautobot version 1 detected, please downgrade pynautobot to version 1.x")
 
     @property
     def version(self):
