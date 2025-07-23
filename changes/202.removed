@@ -1,0 +1,1 @@
+Removed the Nautobot version 2 validation check from the API instantiation.

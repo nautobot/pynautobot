@@ -69,17 +69,6 @@ class ApiVersionTestCase(unittest.TestCase):
         headers = {"API-Version": "1.999"}
         ok = True
 
-    @patch(
-        "requests.sessions.Session.get",
-        return_value=ResponseHeadersWithVersion(),
-    )
-    def test_api_version(self, *_):
-        with self.assertRaises(ValueError) as error:
-            pynautobot.api(HOST)
-        self.assertEqual(
-            str(error.exception), "Nautobot version 1 detected, please downgrade pynautobot to version 1.x"
-        )
-
     class ResponseHeadersWithoutVersion:  # pylint: disable=too-few-public-methods
         """Response headers without version."""
 
