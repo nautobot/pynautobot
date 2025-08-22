@@ -509,7 +509,12 @@ class Endpoint:
         elif req.get("actions", {}).get("POST") is not None:
             # Nautobot 2.4+
             post_data = req["actions"]["POST"]
-            self._choices = {prop: post_data[prop]["choices"] for prop in post_data if "choices" in post_data[prop]}
+            self._choices = {}
+            for prop in post_data:
+                if "choices" in post_data[prop]:
+                    self._choices[prop] = post_data[prop]["choices"]
+                elif post_data[prop]["type"] == "list" and "choices" in post_data[prop].get("child", {}):
+                    self._choices[prop] = post_data[prop]["child"]["choices"]
         else:
             raise ValueError(f"Unexpected format in the OPTIONS response at {self.url}")
         return self._choices
@@ -638,7 +643,7 @@ class JobsEndpoint(Endpoint):
     def run(self, *args, api_version=None, **kwargs):
         """Runs a job based on the class_path provided to the job.
 
-        Takes a kwarg of `class_path` or `job_id` to specify the job that should be run.
+        Takes a kwarg of `job_id`, or 'job_name' to specify the job that should be run.
 
         Args:
             *args (str, optional): Freeform search string that's
@@ -654,24 +659,22 @@ class JobsEndpoint(Endpoint):
         Examples:
             To run a job for verifying hostnames:
             >>> nb.extras.jobs.run(
-                    class_path="local/data_quality/VerifyHostnames",
+                    job_id="b22fc1e6-fd30-401f-9ef5-385fc16f5237",
                     data={"hostname_regex": ".*"},
                     commit=True,
+                )
+            >>> nb.extras.jobs.run(
+                job_name="Verify Hostname",
+                data={"hostname_regex": ".*"},
+                commit=True,
                 )
         """
         api_version = api_version or self.api.api_version or self.api.version
 
-        # Check Nautobot Version as API version can be `None`.  Job run endpoints changed in 1.3.
-        if float(api_version) < 1.3:
-            if not kwargs.get("class_path"):
-                raise ValueError(
-                    'Keyword Argument "class_path" is required to run a job in Nautobot APIv1.2 and older.'
-                )
-            job_run_url = f"{self.url}/{kwargs['class_path']}/run/"
-        else:
-            if not kwargs.get("job_id"):
-                raise ValueError('Keyword Argument "job_id" is required to run a job in Nautobot APIv1.3 and newer.')
-            job_run_url = f"{self.url}/{kwargs['job_id']}/run/"
+        job = kwargs.get("job_name") or kwargs.get("job_id")
+        if not job:
+            raise ValueError('Keyword Argument "job_id" or "job_name" is required to run a job.')
+        job_run_url = f"{self.url}/{job}/run/"
 
         req = Request(
             base=job_run_url,

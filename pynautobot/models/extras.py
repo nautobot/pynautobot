@@ -59,7 +59,7 @@ class Jobs(Record):
 
     def run(self, **kwargs):
         """Run a job from within a job instance."""
-        return JobsEndpoint(self.api, self.api.extras, "jobs").run(class_path=self.id, **kwargs)
+        return JobsEndpoint(self.api, self.api.extras, "jobs").run(job_id=self.id, **kwargs)
 
 
 class GraphqlQueries(Record):
