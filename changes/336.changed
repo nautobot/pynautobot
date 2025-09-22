@@ -1,1 +1,0 @@
-Changed multiple model fields to properly parse as JSON instead of a separate Record object.
