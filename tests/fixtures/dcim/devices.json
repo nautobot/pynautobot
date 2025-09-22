@@ -70,7 +70,12 @@
             },
             "primary_ip6": null,
             "comments": "",
-            "custom_fields": {}
+            "custom_fields": {},
+            "local_config_context_data": {
+                "updates": {
+                    "regression_test": "Testing Issue #335"
+                }
+            }
         },
         {
             "id": 8,
@@ -139,7 +144,14 @@
             },
             "primary_ip6": null,
             "comments": "",
-            "custom_fields": {}
+            "custom_fields": {},
+            "local_config_context_data": [
+                {
+                    "updates": {
+                        "regression_test": "Testing Issue #335"
+                    }
+                }
+            ]
         },
         {
             "id": 1,

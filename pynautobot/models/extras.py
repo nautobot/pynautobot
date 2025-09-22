@@ -34,10 +34,17 @@ class ObjectChanges(Record):
     """ObjectChanges."""
 
     object_data = JsonField
+    object_data_v2 = JsonField
 
     def __str__(self):
         """Return the string representation of the ObjectChanges object."""
         return self.request_id
+
+
+class CustomFields(Record):
+    """CustomFields."""
+
+    default = JsonField
 
 
 class CustomFieldChoices(Record):
@@ -52,6 +59,11 @@ class JobResults(Record):
     """JobResults."""
 
     data = JsonField
+    result = JsonField
+    task_args = JsonField
+    task_kwargs = JsonField
+    celery_kwargs = JsonField
+    meta = JsonField
 
 
 class Jobs(Record):
@@ -64,6 +76,8 @@ class Jobs(Record):
 
 class GraphqlQueries(Record):
     """GraphqlQueries."""
+
+    variables = JsonField
 
     def run(self, *args, **kwargs):
         """Run a graphql query from a saved graphql instance."""
@@ -110,3 +124,29 @@ class Secrets(Record):
     """Secrets."""
 
     parameters = JsonField
+
+
+class GitRepositories(Record):
+    """GitRepositories."""
+
+    provided_contents = JsonField
+
+
+class ExternalIntegrations(Record):
+    """ExternalIntegrations."""
+
+    extra_config = JsonField
+    headers = JsonField
+
+
+class SavedViews(Record):
+    """SavedViews."""
+
+    config = JsonField
+
+
+class Relationships(Record):
+    """Relationships."""
+
+    source_filter = JsonField
+    destination_filter = JsonField
