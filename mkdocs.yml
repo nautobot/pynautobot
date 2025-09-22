@@ -157,6 +157,7 @@ nav:
       - Upgrade: "admin/upgrade.md"
       - Uninstall: "admin/uninstall.md"
   - Developer Guide:
+      - Testing Locally: "dev/testing_locally.md"
       - Code Reference:
           - Core:
               - API: "dev/code_reference/core/api.md"

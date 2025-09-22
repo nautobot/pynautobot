@@ -92,14 +92,14 @@ class RecordTestCase(unittest.TestCase):
             "nested_dict": {"id": 222, "name": "bar"},
             "tags": ["foo", "bar"],
             "int_list": [123, 321, 231],
-            "local_context_data": {"data": ["one"]},
+            "local_config_context_data": {"data": ["one"]},
         }
         test = Record(test_values, None, None)
         test.tags.append("baz")
         test.nested_dict = 1
         test.string_field = "foobaz"
-        test.local_context_data["data"].append("two")
-        self.assertEqual(test._diff(), {"tags", "nested_dict", "string_field", "local_context_data"})
+        test.local_config_context_data["data"].append("two")
+        self.assertEqual(test._diff(), {"tags", "nested_dict", "string_field", "local_config_context_data"})
 
     def test_updates_with_changes(self):
         test_values = {
@@ -110,12 +110,14 @@ class RecordTestCase(unittest.TestCase):
             "nested_dict": {"id": 222, "name": "bar"},
             "tags": ["foo", "bar"],
             "int_list": [123, 321, 231],
-            "local_context_data": {"data": ["one"]},
+            "local_config_context_data": {"data": ["one"]},
         }
         test = Record(test_values, None, None)
         test.string_field = "foobaz"
-        test.local_context_data["data"].append("two")
-        self.assertEqual(test.updates(), {"local_context_data": {"data": ["one", "two"]}, "string_field": "foobaz"})
+        test.local_config_context_data["data"].append("two")
+        self.assertEqual(
+            test.updates(), {"local_config_context_data": {"data": ["one", "two"]}, "string_field": "foobaz"}
+        )
 
     def test_updates_with_no_changes(self):
         test_values = {
@@ -126,7 +128,7 @@ class RecordTestCase(unittest.TestCase):
             "nested_dict": {"id": 222, "name": "bar"},
             "tags": ["foo", "bar"],
             "int_list": [123, 321, 231],
-            "local_context_data": {"data": ["one"]},
+            "local_config_context_data": {"data": ["one"]},
         }
         test = Record(test_values, None, None)
         self.assertEqual(test.updates(), {})
