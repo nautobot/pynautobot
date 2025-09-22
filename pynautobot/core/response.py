@@ -235,7 +235,7 @@ class Record:
     def _add_cache(self, item):
         """Add an item to the cache of the Record object."""
         key, value = item
-        if key == "local_context_data":
+        if key == "local_config_context_data":
             self._init_cache.append((key, copy.deepcopy(value)))
         else:
             self._init_cache.append((key, get_return(value)))
@@ -259,9 +259,9 @@ class Record:
             return list_item
 
         for k, v in values.items():
+            lookup = getattr(self.__class__, k, None)
             if isinstance(v, dict):
-                lookup = getattr(self.__class__, k, None)
-                if k in ["custom_fields", "local_context_data"] or hasattr(lookup, "_json_field"):
+                if k in ["custom_fields", "local_config_context_data"] or hasattr(lookup, "_json_field"):
                     self._add_cache((k, v.copy()))
                     setattr(self, k, v)
                     continue
@@ -272,6 +272,10 @@ class Record:
                 self._add_cache((k, v))
 
             elif isinstance(v, list):
+                if lookup and hasattr(lookup, "_json_field"):
+                    self._add_cache((k, v[:]))
+                    setattr(self, k, v)
+                    continue
                 v = [list_parser(i) for i in v]
                 to_cache = list(v)
                 self._add_cache((k, to_cache))

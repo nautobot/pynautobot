@@ -99,7 +99,7 @@ class Devices(Record):
 
     has_details = True
     device_type = DeviceTypes
-    local_context_data = JsonField
+    local_config_context_data = JsonField
     config_context = JsonField
 
     @property
@@ -279,3 +279,15 @@ class Platforms(Record):
     """Platform object."""
 
     napalm_args = JsonField
+
+
+class Controllers(Record):
+    """Controllers Object."""
+
+    capabilities = JsonField
+
+
+class ControllerManagedDeviceGroups(Record):
+    """ControllerManagedDeviceGroups Object."""
+
+    capabilities = JsonField
