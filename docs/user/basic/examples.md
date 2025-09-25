@@ -120,3 +120,35 @@ This page provides for examples of how to use pynautobot from the community. Wha
         interface = nb_interface.id
     )
     ```
+
+=== "Access Config Context Data"
+
+    In this example we will gather config context data from the Demo instance of Nautobot.
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a")
+
+    context_data = nautobot.dcim.devices.get(name="ams01-asw-01", include="config_context").config_context
+    
+    print(context_data)
+    ```
+
+    ???+ example "Example output of context data"
+        ```json
+        {'cdp': True,
+        'ntp': [{'ip': '10.1.1.1', 'prefer': False},
+        {'ip': '10.2.2.2', 'prefer': True}],
+        'lldp': True,
+        'snmp': {'host': [{'ip': '10.1.1.1',
+            'version': '2c',
+            'community': 'networktocode'}],
+        'contact': 'John Smith',
+        'location': 'Network to Code - NYC | NY',
+        'community': [{'name': 'ntc-public', 'role': 'RO'},
+        {'name': 'ntc-private', 'role': 'RW'},
+        {'name': 'networktocode', 'role': 'RO'},
+        {'name': 'secure', 'role': 'RW'}]},
+        'aaa-new-model': False}
+        ```
