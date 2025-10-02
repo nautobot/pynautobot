@@ -7,6 +7,7 @@ import tempfile
 import pytest
 import requests
 import yaml
+from packaging import version
 
 import pynautobot
 
@@ -158,7 +159,19 @@ def nb_client(devicetype_library_repo_dirpath):
     """Setup the nb_client and import necessary data."""
 
     nb_api = pynautobot.api(_NAUTOBOT_URL, token="0123456789abcdef0123456789abcdef01234567")
+    nb_status = nb_api.status()
+    if version.parse(nb_status.get("nautobot-version")) >= version.parse("2.4"):
+        nb_api.default_filters["exclude_m2m"] = False
+
     populate_nautobot_object_types(nb_api=nb_api, devicetype_library_repo_dirpath=devicetype_library_repo_dirpath)
+
+    return nb_api
+
+
+@pytest.fixture(scope="session")
+def nb_client_exclude_m2m():
+    """Setup the nb_client and import necessary data."""
+    nb_api = pynautobot.api(_NAUTOBOT_URL, token="0123456789abcdef0123456789abcdef01234567", exclude_m2m=True)
 
     return nb_api
 

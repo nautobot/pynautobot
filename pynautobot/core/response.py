@@ -316,6 +316,7 @@ class Record:
                 token=self.api.token,
                 http_session=self.api.http_session,
                 api_version=self.api.api_version,
+                filters=self.api.default_filters,
             )
             self._parse_values(req.get())
             self.has_details = True
@@ -431,6 +432,7 @@ class Record:
                     token=self.api.token,
                     http_session=self.api.http_session,
                     api_version=self.api.api_version,
+                    filters=self.api.default_filters,
                 )
                 if req.patch({i: serialized[i] for i in diff}):
                     return True
