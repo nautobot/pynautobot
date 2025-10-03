@@ -67,3 +67,60 @@ class TestExcludeM2M:
         """Test that even if exclude_m2m is set, we can override it for a single filter request."""
         prefixes = nb_client.ipam.prefixes.filter(prefix="192.0.0.0/8", exclude_m2m=True)
         assert "locations" not in prefixes[0].serialize()
+
+
+class TestIncludeFilters:
+    """Testing include filters."""
+
+    def test_device_exclude_config_context_get(self, nb_client):
+        devices = nb_client.dcim.devices.get(name="dev-1")
+        assert "config_context" not in devices.serialize()
+
+    def test_device_exclude_config_context_all(self, nb_client):
+        devices = nb_client.dcim.devices.all()
+        assert "config_context" not in devices[0].serialize()
+
+    def test_device_exclude_config_context_filter(self, nb_client):
+        devices = nb_client.dcim.devices.filter(name="dev-1")
+        assert "config_context" not in devices[0].serialize()
+
+    def test_device_include_config_context_get(self, nb_client_include_config_context):
+        devices = nb_client_include_config_context.dcim.devices.get(name="dev-1")
+        assert "config_context" in devices.serialize()
+
+    def test_device_include_config_context_all(self, nb_client_include_config_context):
+        nb_client_include_config_context.default_filters["include"] = "config_context,computed_fields"
+        devices = nb_client_include_config_context.dcim.devices.all()
+        assert "config_context" in devices[0].serialize()
+        assert "computed_fields" in devices[0].serialize()
+
+    def test_device_include_config_context_filter(self, nb_client_include_config_context):
+        devices = nb_client_include_config_context.dcim.devices.filter(name="dev-1")
+        assert "config_context" in devices[0].serialize()
+
+    def test_device_include_config_context_override_false_get(self, nb_client_include_config_context):
+        devices = nb_client_include_config_context.dcim.devices.get(name="dev-1", include="")
+        assert "config_context" not in devices.serialize()
+
+    def test_device_include_config_context_override_false_all(self, nb_client_include_config_context):
+        nb_client_include_config_context.default_filters["include"] = "config_context,computed_fields"
+        devices = nb_client_include_config_context.dcim.devices.all(include="")
+        assert "config_context" not in devices[0].serialize()
+        assert "computed_fields" not in devices[0].serialize()
+
+    def test_device_include_config_context_override_false_filter(self, nb_client_include_config_context):
+        devices = nb_client_include_config_context.dcim.devices.filter(name="dev-1", include="")
+        assert "config_context" not in devices[0].serialize()
+
+    def test_device_include_config_context_override_true_get(self, nb_client):
+        devices = nb_client.dcim.devices.get(name="dev-1", include="config_context")
+        assert "config_context" in devices.serialize()
+
+    def test_device_include_config_context_override_true_all(self, nb_client):
+        devices = nb_client.dcim.devices.all(include="config_context,computed_fields")
+        assert "config_context" in devices[0].serialize()
+        assert "computed_fields" in devices[0].serialize()
+
+    def test_device_include_config_context_override_true_filter(self, nb_client):
+        devices = nb_client.dcim.devices.filter(name="dev-1", include="config_context")
+        assert "config_context" in devices[0].serialize()

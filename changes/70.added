@@ -1,0 +1,1 @@
+Added the ability to include additional fields by default in all retrieve operations (e.g., `all()`, `filter()`, `get()`) by setting the `include_default` parameter when instantiating the `Api` object.

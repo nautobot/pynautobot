@@ -177,6 +177,16 @@ def nb_client_exclude_m2m():
 
 
 @pytest.fixture(scope="session")
+def nb_client_include_config_context():
+    """Create a nb_client with the include_default filter set to config_context."""
+    nb_api = pynautobot.api(
+        _NAUTOBOT_URL, token="0123456789abcdef0123456789abcdef01234567", include_default="config_context"
+    )
+
+    return nb_api
+
+
+@pytest.fixture(scope="session")
 def nb_status(nb_client):
     """Cache the status of the Nautobot instance as fixture so we don't have to call it repeatedly."""
     status = nb_client.status()
