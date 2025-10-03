@@ -170,7 +170,7 @@ def nb_client(devicetype_library_repo_dirpath):
 
 @pytest.fixture(scope="session")
 def nb_client_exclude_m2m():
-    """Setup the nb_client and import necessary data."""
+    """Create a nb_client with the exclude_m2m filter set to True."""
     nb_api = pynautobot.api(_NAUTOBOT_URL, token="0123456789abcdef0123456789abcdef01234567", exclude_m2m=True)
 
     return nb_api
