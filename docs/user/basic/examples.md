@@ -152,3 +152,29 @@ This page provides for examples of how to use pynautobot from the community. Wha
         {'name': 'secure', 'role': 'RW'}]},
         'aaa-new-model': False}
         ```
+
+=== "Including/Excluding Many-to-Many Fields"
+
+    When you instantiate the `Api` object, you can set `exclude_m2m` to either True or False to automatically include the parameter for all subsequent retrieve operations (e.g., `all()`, `filter()`, `get()`).
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a", exclude_m2m=False)
+
+    ```
+
+    You can also include the `exclude_m2m` parameter in individual `all()`, `filter()`, or `get()` method calls to override the default setting.
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a", exclude_m2m=True)
+    
+    # Retrieve all devices with many-to-many fields included
+    devices = nautobot.dcim.devices.all(exclude_m2m=False)
+
+    # Retrieve a single device with many-to-many fields included
+    device = nautobot.dcim.devices.get(name="sample-rtr-01", exclude_m2m=False)
+
+    ```
