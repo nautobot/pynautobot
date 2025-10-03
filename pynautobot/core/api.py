@@ -42,6 +42,12 @@ class Api:
         retries (int, optional): The number of retries for HTTP status codes
             429, 500, 502, 503, and 504. Defaults to 0 (no retries).
         verify (bool, optional): Whether to verify SSL certificates. Defaults to `True`.
+        exclude_m2m (bool, optional): (Nautobot 2.4+) Whether to exclude/include
+            many-to-many relationships for get/filter/all requests. Defaults to `None`.
+        include_default (str, optional): A comma-separated list of items to include
+            by default for get/filter/all requests. Defaults to `None`.
+            For example, `include_default="config_context,computed_fields"` will include
+            the `config_context` and `computed_fields` for all get/filter/all responses.
 
     Attributes:
         dcim: An instance of the `App` class providing access to DCIM endpoints.
@@ -80,6 +86,8 @@ class Api:
         api_version=None,
         retries=0,
         verify=True,
+        exclude_m2m=None,
+        include_default=None,
     ):
         """Initialize the Api object."""
         from pynautobot import __version__  # pylint: disable=import-outside-toplevel
@@ -105,6 +113,11 @@ class Api:
         self.threading = threading
         self.max_workers = max_workers
         self.api_version = api_version
+        self.default_filters = {}
+        if exclude_m2m is not None:
+            self.default_filters["exclude_m2m"] = exclude_m2m
+        if include_default is not None:
+            self.default_filters["include"] = include_default
 
         self.dcim = App(self, "dcim")
         self.ipam = App(self, "ipam")

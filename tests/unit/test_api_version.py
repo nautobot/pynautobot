@@ -11,7 +11,7 @@ class APIVersionTestCase(unittest.TestCase):
     """Test API versioning."""
 
     def setUp(self):
-        self.api = Mock(base_url="http://localhost:8000/api", api_version="1.3", name="API-Mock")
+        self.api = Mock(base_url="http://localhost:8000/api", api_version="1.3", name="API-Mock", default_filters={})
         self.api.token = 1234
         app = Mock(name="test")
         app.name = "test"

@@ -1,0 +1,1 @@
+Added `exclude_m2m` parameter to `api` constructor to allow for automatic exclusion/inclusion of many-to-many relationships for get/filter/all requests.
