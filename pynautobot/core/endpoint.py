@@ -134,12 +134,14 @@ class Endpoint:
             key = args[0]
         except IndexError:
             key = None
+        filters = self.api.default_filters.copy()
+        filters.update(kwargs)
 
-        is_api_version = kwargs.pop("api_version") if kwargs.get("api_version") else None
+        is_api_version = filters.pop("api_version", None)
         api_version = is_api_version or self.api.api_version
 
         if not key:
-            filter_lookup = self.filter(**kwargs)
+            filter_lookup = self.filter(**filters)
             if filter_lookup:
                 if len(filter_lookup) > 1:
                     raise ValueError(
@@ -156,6 +158,7 @@ class Endpoint:
             token=self.token,
             http_session=self.api.http_session,
             api_version=api_version,
+            filters=filters,
         )
 
         try:
@@ -203,18 +206,20 @@ class Endpoint:
             >>> nb.dcim.devices.filter(role=['leaf-switch', 'spine-switch'])
             [test1-a3-spine1, test1-a3-spine2, test1-a3-leaf1]
         """
+        filters = self.api.default_filters.copy()
+        filters.update(kwargs)
         if args:
-            kwargs.update({"q": args[0]})
+            filters.update({"q": args[0]})
 
-        if any(i in RESERVED_KWARGS for i in kwargs):
+        if any(i in RESERVED_KWARGS for i in filters):
             raise ValueError(f"A reserved {RESERVED_KWARGS} kwarg was passed. Please remove it and try again.")
-        limit = kwargs.pop("limit") if "limit" in kwargs else None
-        offset = kwargs.pop("offset") if "offset" in kwargs else None
+        limit = filters.pop("limit", None)
+        offset = filters.pop("offset", None)
         if not limit and offset is not None:
             raise ValueError("offset requires a positive limit value")
         api_version = api_version or self.api.api_version
         req = Request(
-            filters=kwargs,
+            filters=filters,
             base=self.url,
             token=self.token,
             http_session=self.api.http_session,

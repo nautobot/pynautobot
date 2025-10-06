@@ -242,6 +242,7 @@ class RecordTestCase(unittest.TestCase):
         app = Mock()
         app.token = "abc123"
         app.base_url = "http://localhost:8080/api"
+        app.default_filters = {}
         endpoint = Mock()
         endpoint.name = "test-endpoint"
         endpoint.return_obj = Record
@@ -269,6 +270,7 @@ class RecordTestCase(unittest.TestCase):
         app = Mock()
         app.token = "abc123"
         app.base_url = "http://localhost:8080/testing/api"
+        app.default_filters = {}
         endpoint = Mock()
         endpoint.name = "test-endpoint"
         endpoint.return_obj = Record
