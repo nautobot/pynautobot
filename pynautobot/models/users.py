@@ -20,12 +20,20 @@ override the default behavior.
 #
 # This file has been modified by NetworktoCode, LLC.
 
-from pynautobot.core.response import Record
+from pynautobot.core.response import JsonField, Record
 
 
 class Users(Record):
     """Users."""
 
+    config_data = JsonField
+
     def __str__(self):
         """Return the string representation of the Users object."""
         return self.username
+
+
+class Permissions(Record):
+    """Permissions."""
+
+    constraints = JsonField

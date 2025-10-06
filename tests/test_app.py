@@ -87,6 +87,44 @@ class AppConfigTestCase(unittest.TestCase):
         )
 
 
+class AppExcludeM2MTestCase(unittest.TestCase):
+    """App exclude m2m test."""
+
+    @patch("pynautobot.api.version", "2.4")
+    def test_exclude_m2m_true(self, *_):
+        api = pynautobot.api(HOST, **def_kwargs, exclude_m2m=True)
+        self.assertEqual(api.default_filters["exclude_m2m"], True)
+
+    @patch("pynautobot.api.version", "2.4")
+    def test_exclude_m2m_false(self, *_):
+        api = pynautobot.api(HOST, **def_kwargs, exclude_m2m=False)
+        self.assertEqual(api.default_filters["exclude_m2m"], False)
+
+    @patch("pynautobot.api.version", "2.4")
+    def test_exclude_m2m_none(self, *_):
+        api = pynautobot.api(HOST, **def_kwargs)
+        self.assertNotIn("exclude_m2m", api.default_filters.keys())
+
+
+class AppIncludeFiltersTestCase(unittest.TestCase):
+    """App include filters test."""
+
+    @patch("pynautobot.api.version", "2.0")
+    def test_include_none(self, *_):
+        api = pynautobot.api(HOST, **def_kwargs)
+        self.assertNotIn("include", api.default_filters.keys())
+
+    @patch("pynautobot.api.version", "2.0")
+    def test_include_config_context(self, *_):
+        api = pynautobot.api(HOST, **def_kwargs, include_default="config_context")
+        self.assertEqual(api.default_filters["include"], "config_context")
+
+    @patch("pynautobot.api.version", "2.0")
+    def test_include_multiple(self, *_):
+        api = pynautobot.api(HOST, **def_kwargs, include_default="config_context,computed_fields")
+        self.assertEqual(api.default_filters["include"], "config_context,computed_fields")
+
+
 class PluginAppCustomChoicesTestCase(unittest.TestCase):
     """Plugin app custom choices test."""
 

@@ -120,3 +120,94 @@ This page provides for examples of how to use pynautobot from the community. Wha
         interface = nb_interface.id
     )
     ```
+
+=== "Access Config Context Data"
+
+    In this example we will gather config context data from the Demo instance of Nautobot.
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a")
+
+    context_data = nautobot.dcim.devices.get(name="ams01-asw-01", include="config_context").config_context
+    
+    print(context_data)
+    ```
+
+    ???+ example "Example output of context data"
+        ```json
+        {'cdp': True,
+        'ntp': [{'ip': '10.1.1.1', 'prefer': False},
+        {'ip': '10.2.2.2', 'prefer': True}],
+        'lldp': True,
+        'snmp': {'host': [{'ip': '10.1.1.1',
+            'version': '2c',
+            'community': 'networktocode'}],
+        'contact': 'John Smith',
+        'location': 'Network to Code - NYC | NY',
+        'community': [{'name': 'ntc-public', 'role': 'RO'},
+        {'name': 'ntc-private', 'role': 'RW'},
+        {'name': 'networktocode', 'role': 'RO'},
+        {'name': 'secure', 'role': 'RW'}]},
+        'aaa-new-model': False}
+        ```
+
+=== "Including Additional Fields"
+
+    When you instantiate the `Api` object, you can set `include_default` to a comma-separated list of fields that you want to include by default in all retrieve operations (e.g., `all()`, `filter()`, `get()`). This allows you to automatically include fields that are not included in the default response.
+
+    Examples include:
+
+    - Config Context
+    - Computed Fields
+    - Relationships
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a", include_default="config_context,computed_fields")
+    ```
+
+    You can also use the `include` parameter in individual `all()`, `filter()`, or `get()` method calls to override the default setting.
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a")
+
+    # Retrieve all devices with config context and computed fields included
+    devices = nautobot.dcim.devices.all(include="config_context,computed_fields")
+
+    # Retrieve a single device with computed fields included
+    device = nautobot.dcim.devices.get(name="sample-rtr-01", include="computed_fields")
+
+    # Retrieve devices with relationships included
+    devices = nautobot.dcim.devices.filter(include="relationships")
+    ```
+
+=== "Including/Excluding Many-to-Many Fields"
+
+    When you instantiate the `Api` object, you can set `exclude_m2m` to either True or False to automatically include the parameter for all subsequent retrieve operations (e.g., `all()`, `filter()`, `get()`).
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a", exclude_m2m=False)
+
+    ```
+
+    You can also include the `exclude_m2m` parameter in individual `all()`, `filter()`, or `get()` method calls to override the default setting.
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a", exclude_m2m=True)
+    
+    # Retrieve all devices with many-to-many fields included
+    devices = nautobot.dcim.devices.all(exclude_m2m=False)
+
+    # Retrieve a single device with many-to-many fields included
+    device = nautobot.dcim.devices.get(name="sample-rtr-01", exclude_m2m=False)
+
+    ```
