@@ -5,6 +5,17 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v2.7.0](https://github.com/nautobot/pynautobot/releases/tag/v2.7.0)
+
+### Added
+
+- [#70](https://github.com/nautobot/pynautobot/issues/70) - Added the ability to include additional fields by default in all retrieve operations (e.g., `all()`, `filter()`, `get()`) by setting the `include_default` parameter when instantiating the `Api` object.
+- [#343](https://github.com/nautobot/pynautobot/issues/343) - Added `exclude_m2m` parameter to `api` constructor to allow for automatic exclusion/inclusion of many-to-many relationships for get/filter/all requests.
+
+### Documentation
+
+- [#340](https://github.com/nautobot/pynautobot/issues/340) - Added example to documentation showing how to gather config context data.
+
 ## [v2.6.6](https://github.com/nautobot/pynautobot/releases/tag/v2.6.6)
 
 ### Changed
