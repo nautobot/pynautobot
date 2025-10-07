@@ -287,6 +287,7 @@ class Endpoint:
             token=self.token,
             http_session=self.api.http_session,
             api_version=api_version,
+            filters=self.api.default_filters,
         ).post(args[0] if args else kwargs)
 
         return response_loader(req, self.return_obj, self)
@@ -400,6 +401,7 @@ class Endpoint:
             token=self.api.token,
             http_session=self.api.http_session,
             api_version=self.api.api_version,
+            filters=self.api.default_filters,
         ).patch(bulk_data)
         return response_loader(req, self.return_obj, self)
 
@@ -602,7 +604,11 @@ class DetailEndpoint:
         """
         api_version = api_version or self.parent_obj.api.api_version
 
-        req = Request(api_version=api_version, **self.request_kwargs).get(add_params=kwargs)
+        req = Request(
+            api_version=api_version,
+            filters=self.parent_obj.api.default_filters,
+            **self.request_kwargs,
+        ).get(add_params=kwargs)
 
         if self.custom_return:
             return response_loader(req, self.custom_return, self.parent_obj.endpoint)
@@ -628,7 +634,11 @@ class DetailEndpoint:
         data = data or {}
         api_version = api_version or self.parent_obj.api.api_version
 
-        req = Request(api_version=api_version, **self.request_kwargs).post(data)
+        req = Request(
+            api_version=api_version,
+            filters=self.parent_obj.api.default_filters,
+            **self.request_kwargs,
+        ).post(data)
         if self.custom_return:
             return response_loader(req, self.custom_return, self.parent_obj.endpoint)
         return req
@@ -685,6 +695,7 @@ class JobsEndpoint(Endpoint):
             base=job_run_url,
             token=self.token,
             http_session=self.api.http_session,
+            filters=self.api.default_filters,
             api_version=api_version,
         ).post(args[0] if args else kwargs)
 
