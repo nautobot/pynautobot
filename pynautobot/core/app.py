@@ -98,8 +98,12 @@ class App:
 
         return self._choices
 
-    def get_custom_fields(self):
+    def get_custom_fields(self, filters=None):
         """Returns custom-fields response from app.
+
+        Args:
+            filters (dict, optional): Contains key/value pairs that
+                correlate to the filters a given endpoint accepts.
 
         Returns:
             (List[Response]): Raw response from Nautobot's custom-fields endpoint.
@@ -133,14 +137,21 @@ class App:
                 },
             ]
         """
+        filters = self.api.default_filters.copy()
+        filters.update(filters)
         return Request(
             base=f"{self.api.base_url}/{self.name}/custom-fields/",
             token=self.api.token,
             http_session=self.api.http_session,
+            filters=filters,
         ).get()
 
-    def get_custom_field_choices(self):
+    def get_custom_field_choices(self, filters=None):
         """Returns custom-field-choices response from app.
+
+        Args:
+            filters (dict, optional): Contains key/value pairs that
+                correlate to the filters a given endpoint accepts.
 
         Returns:
             (List[Response]): Raw response from Nautobot's custom-field-choices endpoint.
@@ -168,10 +179,13 @@ class App:
                 },
             ]
         """
+        filters = self.api.default_filters.copy()
+        filters.update(filters)
         return Request(
             base=f"{self.api.base_url}/{self.name}/custom-field-choices/",
             token=self.api.token,
             http_session=self.api.http_session,
+            filters=filters,
         ).get()
 
     def config(self):
