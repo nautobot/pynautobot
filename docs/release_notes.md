@@ -5,6 +5,12 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v2.7.1](https://github.com/nautobot/pynautobot/releases/tag/v2.7.1)
+
+### Added
+
+- [#348](https://github.com/nautobot/pynautobot/issues/348) - Added sending the default filter params to create and update endpoints so that the returned objects include any applicable requested fields.
+
 ## [v2.7.0](https://github.com/nautobot/pynautobot/releases/tag/v2.7.0)
 
 ### Added

@@ -68,6 +68,30 @@ class TestExcludeM2M:
         prefixes = nb_client.ipam.prefixes.filter(prefix="192.0.0.0/8", exclude_m2m=True)
         assert "locations" not in prefixes[0].serialize()
 
+    def test_permission_include_m2m_create(self, nb_client):
+        permissions = nb_client.users.permissions.create(
+            name="Testing Exclude M2M Create 1", actions=["view"], object_types=["dcim.device"]
+        )
+        assert "object_types" in permissions.serialize()
+
+    def test_permission_exclude_m2m_create(self, nb_client_exclude_m2m):
+        permissions = nb_client_exclude_m2m.users.permissions.create(
+            name="Testing Exclude M2M Create 2", actions=["view"], object_types=["dcim.device"]
+        )
+        assert "object_types" not in permissions.serialize()
+
+    def test_permission_include_m2m_bulk_update(self, nb_client):
+        permissions = list(nb_client.users.permissions.filter(name="Testing Exclude M2M Create 1"))
+        permissions[0].description = "Testing Exclude M2M Bulk Update 1"
+        permissions_updated = nb_client.users.permissions.update(permissions)
+        assert "object_types" in permissions_updated[0].serialize()
+
+    def test_permission_exclude_m2m_bulk_update(self, nb_client_exclude_m2m):
+        permissions = list(nb_client_exclude_m2m.users.permissions.filter(name="Testing Exclude M2M Create 2"))
+        permissions[0].description = "Testing Exclude M2M Bulk Update 2"
+        permissions_updated = nb_client_exclude_m2m.users.permissions.update(permissions)
+        assert "object_types" not in permissions_updated[0].serialize()
+
 
 class TestIncludeFilters:
     """Testing include filters."""
