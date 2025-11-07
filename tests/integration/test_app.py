@@ -65,6 +65,14 @@ class TestCloudApp(BaseAppTest):
     min_version = "2.3"
 
 
+class TestDataValidationApp(BaseAppTest):
+    """Test the data validation app."""
+
+    app_name = "data_validation"
+    # TODO: Uncomment this when Nautobot 3.0 is released
+    # min_version = "3.0"
+
+
 class TestDcimApp(BaseAppTest):
     """Test the dcim app."""
 
@@ -81,6 +89,14 @@ class TestIpamApp(BaseAppTest):
     """Test the ipam app."""
 
     app_name = "ipam"
+
+
+class TestLoadBalancersApp(BaseAppTest):
+    """Test the load balancers app."""
+
+    app_name = "load_balancers"
+    # TODO: Uncomment this when Nautobot 3.0 is released
+    # min_version = "3.0"
 
 
 class TestTenancyApp(BaseAppTest):
@@ -101,16 +117,16 @@ class TestVirtualizationApp(BaseAppTest):
     app_name = "virtualization"
 
 
+class TestVpnApp(BaseAppTest):
+    """Test the vpn app."""
+
+    app_name = "vpn"
+    # TODO: Uncomment this when Nautobot 3.0 is released
+    # min_version = "3.0"
+
+
 class TestWirelessApp(BaseAppTest):
     """Test the wireless app."""
 
     app_name = "wireless"
     min_version = "2.4"
-
-
-class TestDataValidationApp(BaseAppTest):
-    """Test the data validation app."""
-
-    app_name = "data_validation"
-    # TODO: Uncomment this when Nautobot 3.0 is released
-    # min_version = "3.0"
