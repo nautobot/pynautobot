@@ -49,16 +49,18 @@ class Api:
             the `config_context` and `computed_fields` for all get/filter/all responses.
 
     Attributes:
-        dcim: An instance of the `App` class providing access to DCIM endpoints.
-        cloud: An instance of the `App` class providing access to Cloud endpoints.
-        ipam: An instance of the `App` class providing access to IPAM endpoints.
         circuits: An instance of the `App` class providing access to Circuits endpoints.
-        tenancy: An instance of the `App` class providing access to Tenancy endpoints.
-        extras: An instance of the `App` class providing access to Extras endpoints.
-        virtualization: An instance of the `App` class providing access to Virtualization endpoints.
-        users: An instance of the `App` class providing access to User endpoints.
-        wireless: An instance of the `App` class providing access to Wireless endpoints.
+        cloud: An instance of the `App` class providing access to Cloud endpoints.
         data_validation: An instance of the `App` class providing access to Data Validation endpoints.
+        dcim: An instance of the `App` class providing access to DCIM endpoints.
+        extras: An instance of the `App` class providing access to Extras endpoints.
+        ipam: An instance of the `App` class providing access to IPAM endpoints.
+        load_balancers: An instance of the `App` class providing access to Load Balancers endpoints.
+        tenancy: An instance of the `App` class providing access to Tenancy endpoints.
+        users: An instance of the `App` class providing access to User endpoints.
+        virtualization: An instance of the `App` class providing access to Virtualization endpoints.
+        vpn: An instance of the `App` class providing access to VPN endpoints.
+        wireless: An instance of the `App` class providing access to Wireless endpoints.
         http_session (requests.Session): The underlying HTTP session object used for
             making requests to Nautobot. You can override the default session with your
             own to control HTTP behavior such as SSL verification, custom headers,
@@ -119,16 +121,18 @@ class Api:
         if include_default is not None:
             self.default_filters["include"] = include_default
 
-        self.dcim = App(self, "dcim")
-        self.ipam = App(self, "ipam")
-        self.cloud = App(self, "cloud")
         self.circuits = App(self, "circuits")
-        self.tenancy = App(self, "tenancy")
-        self.extras = App(self, "extras")
-        self.virtualization = App(self, "virtualization")
-        self.users = App(self, "users")
-        self.wireless = App(self, "wireless")
+        self.cloud = App(self, "cloud")
         self.data_validation = App(self, "data-validation")
+        self.dcim = App(self, "dcim")
+        self.extras = App(self, "extras")
+        self.ipam = App(self, "ipam")
+        self.load_balancers = App(self, "load-balancers")
+        self.tenancy = App(self, "tenancy")
+        self.users = App(self, "users")
+        self.virtualization = App(self, "virtualization")
+        self.vpn = App(self, "vpn")
+        self.wireless = App(self, "wireless")
         self.plugins = PluginsApp(self)
         self.graphql = GraphQLQuery(self)
 

@@ -10,10 +10,8 @@ class TestDataValidationApp:
     @pytest.fixture
     def skipif_version(self, nb_status):
         """Skip the test if the Nautobot version is less than 3.0."""
-        return True  # TODO: Remove this when Nautobot 3.0 is released
-        # pylint: disable=unreachable
         nautobot_version = nb_status.get("nautobot-version")
-        if version.parse(nautobot_version) < version.parse("3.0"):
+        if version.parse(nautobot_version) < version.parse("3.0.0a0"):
             pytest.skip("Data validation app is only in Nautobot 3.0+")
 
         return nautobot_version
