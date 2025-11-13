@@ -2,7 +2,7 @@
 
 [tool.poetry]
 name = "pynautobot"
-version = "2.7.1"
+version = "2.7.2"
 description = "Nautobot API client library"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 readme = "README.md"
@@ -25,7 +25,7 @@ documentation = "https://pynautobot.readthedocs.io"
 [tool.poetry.dependencies]
 python = "^3.9"
 requests = "^2.30.0"
-urllib3 = "^2.2.3"
+urllib3 = ">=1.21.1,<3"
 packaging = ">=23.2"
 
 [tool.poetry.group.dev.dependencies]

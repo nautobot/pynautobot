@@ -5,6 +5,12 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v2.7.2](https://github.com/nautobot/pynautobot/releases/tag/v2.7.2)
+
+### Changed
+
+- [#356](https://github.com/nautobot/pynautobot/issues/356) - Added back compatibility with urllib3 1.x versions.
+
 ## [v2.7.1](https://github.com/nautobot/pynautobot/releases/tag/v2.7.1)
 
 ### Added
