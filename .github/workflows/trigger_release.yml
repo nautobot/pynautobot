@@ -18,7 +18,9 @@ jobs:
         nautobot-version:
           - "2.4"
           - "stable"
-          - "3.0"
+          # TODO: Change this back to 3.0 when Nautobot 3.0 is released
+          # - "3.0"
+          - "develop"
     env:
       PYTHON_VER: "${{ matrix.python-version }}"
       NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
