@@ -44,9 +44,7 @@ jobs:
         python-version:
           - "3.12"
         nautobot-version:
-          # TODO: Change this back to 3.0 when Nautobot 3.0 is released
-          # - "3.0"
-          - "develop"
+          - "3.0"
     with:
       runs-on: "${{ inputs.runs-on }}"
       python-version: "${{ matrix.python-version }}"
@@ -66,9 +64,7 @@ jobs:
         nautobot-version:
           - "2.4"
           - "stable"
-          # TODO: Change this back to 3.0 when Nautobot 3.0 is released
-          # - "3.0"
-          - "develop"
+          - "3.0"
     with:
       runs-on: "${{ inputs.runs-on }}"
       python-version: "${{ matrix.python-version }}"
