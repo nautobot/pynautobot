@@ -1,7 +1,7 @@
 ---
 # Copy this file to invoke.yml and update the variables to override the defaults from tasks.py
 # pynautobot:
-#   nautobot_ver: "2.4"
+#   nautobot_ver: "3.0"
 #   project_name: "pynautobot"
 #   python_ver: "3.11"
 #   local: False

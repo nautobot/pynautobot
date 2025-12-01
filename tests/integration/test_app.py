@@ -65,6 +65,13 @@ class TestCloudApp(BaseAppTest):
     min_version = "2.3"
 
 
+class TestDataValidationApp(BaseAppTest):
+    """Test the data validation app."""
+
+    app_name = "data_validation"
+    min_version = "3.0.0a1"
+
+
 class TestDcimApp(BaseAppTest):
     """Test the dcim app."""
 
@@ -83,6 +90,13 @@ class TestIpamApp(BaseAppTest):
     app_name = "ipam"
 
 
+class TestLoadBalancersApp(BaseAppTest):
+    """Test the load balancers app."""
+
+    app_name = "load_balancers"
+    min_version = "3.0.0a1"
+
+
 class TestTenancyApp(BaseAppTest):
     """Test the tenancy app."""
 
@@ -99,6 +113,13 @@ class TestVirtualizationApp(BaseAppTest):
     """Test the virtualization app."""
 
     app_name = "virtualization"
+
+
+class TestVpnApp(BaseAppTest):
+    """Test the vpn app."""
+
+    app_name = "vpn"
+    min_version = "3.0.0a1"
 
 
 class TestWirelessApp(BaseAppTest):

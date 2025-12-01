@@ -42,15 +42,19 @@ information about the Nautobot system, and the core
 
 The core Apps are:
 
--   dcim
--   ipam
--   cloud
 -   circuits
--   tenancy
+-   cloud
+-   data_validation
+-   dcim
 -   extras
--   virtualization
+-   ipam
+-   load_balancers
+-   tenancy
 -   users
+-   virtualization
+-   vpn
 -   wireless
+
 ``` python
 >>> nautobot = api(url=url, token=token)
 >>>

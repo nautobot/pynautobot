@@ -5,6 +5,26 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v3.0.0](https://github.com/nautobot/pynautobot/releases/tag/v3.0.0)
+
+### Release Overview
+
+This is the initial v3 release for pynautobot to support Nautobot v3.0.0. This release should not include any breaking changes and is mostly backwards compatible with Nautobot v2. The major version bump is primarily ceremonial to help delineate between the currently supported version of this library and the v2 LTM that will only support security patches and bug fixes.
+
+### Added
+
+- [#318](https://github.com/nautobot/pynautobot/issues/318) - Added support for `data-validation` API endpoints.
+- [#353](https://github.com/nautobot/pynautobot/issues/353) - Added compatibility for the `vpn` app.
+- [#353](https://github.com/nautobot/pynautobot/issues/353) - Added compatibility for the `load-balancers` app.
+
+### Changed
+
+- [#316](https://github.com/nautobot/pynautobot/issues/316) - Changed the minimum supported Python version to 3.10.
+
+### Removed
+
+- [#202](https://github.com/nautobot/pynautobot/issues/202) - Removed the Nautobot version 2 validation check from the API instantiation.
+
 ## [v2.7.2](https://github.com/nautobot/pynautobot/releases/tag/v2.7.2)
 
 ### Changed
