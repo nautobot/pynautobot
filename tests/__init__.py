@@ -90,10 +90,13 @@ class Generic:  # pylint: disable=too-few-public-methods
                 mock.assert_called_with(self.detail_uri, params={}, json=None, headers=HEADERS)
 
         def test_delete(self):
-            with patch(
-                "requests.sessions.Session.get",
-                return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
-            ) as mock, patch("requests.sessions.Session.delete") as delete:
+            with (
+                patch(
+                    "requests.sessions.Session.get",
+                    return_value=Response(fixture=f"{self.app}/{self.name_singular}.json"),
+                ) as mock,
+                patch("requests.sessions.Session.delete") as delete,
+            ):
                 ret = self.endpoint.get(self.uuid)
                 # get() was already tested more thoroughly above, not repeated here
                 self.assertTrue(ret.delete())
