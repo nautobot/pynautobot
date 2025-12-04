@@ -19,7 +19,7 @@ classifiers = [
 ]
 repository = "https://github.com/nautobot/pynautobot"
 homepage = "https://nautobot.com"
-documentation = "https://pynautobot.readthedocs.io"
+documentation = "https://docs.nautobot.com/projects/pynautobot/"
 
 [tool.poetry.dependencies]
 python = "^3.10"
