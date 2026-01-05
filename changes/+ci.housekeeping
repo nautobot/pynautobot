@@ -1,1 +1,4 @@
 Updated CI matrix to test Nautobot 3.0 instead of the develop branch.
+Removed unit tests as a requirement for the release workflow.
+Updated the changelog CI branch name requirements.
+Updated CI to use `ubuntu-latest` as the default OS.
