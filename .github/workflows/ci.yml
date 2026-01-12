@@ -22,6 +22,7 @@ jobs:
     # Disable for Next branches
     # Disable for Release branches
     # Disable for manual CI runs
+    # Disable for scheduled CI runs
     if: >
       (github.head_ref != 'develop')
       && (github.head_ref != 'main')
@@ -29,6 +30,7 @@ jobs:
       && (!startsWith(github.head_ref, 'next'))
       && (!startsWith(github.head_ref, 'release'))
       && (github.event_name != 'workflow_dispatch')
+      && (github.event_name != 'schedule')
     runs-on: "${{ inputs.runs-on }}"
     steps:
       - name: "Check out repository code"
