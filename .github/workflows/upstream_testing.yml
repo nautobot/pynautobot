@@ -4,7 +4,7 @@ name: "Nautobot Upstream Monitor"
 on:  # yamllint disable-line rule:truthy rule:comments
   schedule:
     - cron: "0 4 */2 * *"  # every other day at 4 AM
-  workflow_dispatch:
+  workflow_dispatch:  # yamllint disable-line rule:empty-values
 
 jobs:
   upstream-test:
