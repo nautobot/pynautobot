@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/nautobot/pynautobot/develop/docs/nautobot_logo.png" class="logo" height="200px">
   <br>
   <a href="https://github.com/nautobot/pynautobot/actions"><img src="https://github.com/nautobot/pynautobot/actions/workflows/ci.yml/badge.svg?branch=main"></a>
-  <a href="https://pynautobot.readthedocs.io/en/latest"><img src="https://readthedocs.org/projects/pynautobot/badge/"></a>
+  <a href="https://docs.nautobot.com/projects/pynautobot"><img src="https://readthedocs.org/projects/pynautobot/badge/"></a>
   <a href="https://pypi.org/project/pynautobot/"><img src="https://img.shields.io/pypi/v/pynautobot"></a>
   <a href="https://pypi.org/project/pynautobot/"><img src="https://img.shields.io/pypi/dm/pynautobot"></a>
   <br>
@@ -15,7 +15,7 @@ Python API client library for [Nautobot](https://github.com/nautobot/nautobot).
 > pynautobot was initially developed as a fork of [pynetbox](https://github.com/digitalocean/pynetbox/).
 > pynetbox was originally developed by Zach Moody at DigitalOcean and the NetBox Community.
 
-The complete documentation for pynautobot can be found at [Read the Docs](https://pynautobot.readthedocs.io/en/stable/).
+The complete documentation for pynautobot can be found on our [docs page](https://docs.nautobot.com/projects/pynautobot/).
 
 Questions? Comments? Join us in the **#nautobot** Slack channel on [Network to Code](https://networktocode.slack.com)!
 
@@ -45,7 +45,7 @@ $ poetry install
 
 ## Quick Start
 
-A short introduction is provided here; the full documention for pynautobot is at [Read the Docs](http://pynautobot.readthedocs.io/).
+A short introduction is provided here; the full documentation for pynautobot is on our [docs page](https://docs.nautobot.com/projects/pynautobot/).
 
 To begin, import pynautobot and instantiate an `Api` object, passing the `url` and `token`.
 

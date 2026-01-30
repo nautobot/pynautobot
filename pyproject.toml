@@ -16,10 +16,11 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 repository = "https://github.com/nautobot/pynautobot"
 homepage = "https://nautobot.com"
-documentation = "https://pynautobot.readthedocs.io"
+documentation = "https://docs.nautobot.com/projects/pynautobot/"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -52,7 +53,7 @@ ruff = "*"
 
 [tool.ruff]
 line-length = 120
-target-version = "py38"
+target-version = "py312"
 
 [tool.ruff.lint]
 select = [
@@ -110,7 +111,7 @@ notes = """,
     """
 
 [build-system]
-requires = ["poetry_core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]

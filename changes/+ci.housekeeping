@@ -1,1 +1,6 @@
 Updated CI matrix to test Nautobot 3.0 instead of the develop branch.
+Removed unit tests as a requirement for the release workflow.
+Updated CI to use `ubuntu-latest` as the default OS.
+Updated the changelog CI branch name requirements.
+Updated the upstream testing workflow to use the latest matrix from the Nautobot repository.
+Updated the version of PostgreSQL used in for testing to 17-alpine.
