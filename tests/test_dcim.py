@@ -463,3 +463,63 @@ class CablesTestCase(Generic.Tests):
             self.assertIsInstance(str(ret), str)
             self.assertIsInstance(dict(ret), dict)
             mock.assert_called_with(self.detail_uri, headers=HEADERS, params={}, json=None)
+
+    def test_termination_nested_attr_without_full_details(self):
+        """Test that accessing a nested attr on a shallow termination triggers full_details.
+
+        Regression test for https://github.com/nautobot/pynautobot/issues/223.
+        When the API returns a cable with shallow termination data (no 'device' key),
+        accessing cable.termination_a.device should trigger a full_details() call
+        instead of returning the Devices class.
+        """
+        # Shallow cable response: termination_a has no 'device' key
+        shallow_response = Response(
+            content={
+                "id": self.uuid,
+                "termination_a_type": "dcim.consoleport",
+                "termination_a_id": 1,
+                "termination_a": {
+                    "id": 1,
+                    "url": "http://localhost:8000/api/dcim/console-ports/1/",
+                    "name": "Console",
+                    "display": "Console",
+                },
+                "termination_b_type": "dcim.consoleserverport",
+                "termination_b_id": 2,
+                "termination_b": {
+                    "id": 2,
+                    "url": "http://localhost:8000/api/dcim/console-server-ports/2/",
+                    "name": "Port 10",
+                    "display": "Port 10",
+                },
+                "type": None,
+                "status": {"value": True, "label": "Connected"},
+                "label": "",
+                "color": "",
+                "length": None,
+                "length_unit": None,
+            }
+        )
+        # Full termination response returned by full_details()
+        full_termination_response = Response(
+            content={
+                "id": 1,
+                "url": "http://localhost:8000/api/dcim/console-ports/1/",
+                "device": {
+                    "id": 1,
+                    "url": "http://localhost:8000/api/dcim/devices/1/",
+                    "name": "lhr01-edge-01",
+                    "display_name": "lhr01-edge-01",
+                },
+                "name": "Console",
+                "display": "Console",
+            }
+        )
+        with patch(
+            "requests.sessions.Session.get",
+            side_effect=[shallow_response, full_termination_response],
+        ):
+            cable = self.endpoint.get(self.uuid)
+            device = cable.termination_a.device
+            self.assertIsInstance(device, pynautobot.core.response.Record)
+            self.assertEqual(device.name, "lhr01-edge-01")
