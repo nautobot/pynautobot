@@ -5,6 +5,25 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v3.1.0](https://github.com/nautobot/pynautobot/releases/tag/v3.1.0)
+
+### Added
+
+- [#223](https://github.com/nautobot/pynautobot/issues/223) - Added the ability to access nested attributes for related objects without the need to call `print()` or `full_details()` on the related object first.
+
+### Housekeeping
+
+- [#344](https://github.com/nautobot/pynautobot/issues/344) - Updated all documentation links to use the new docs page.
+- [#351](https://github.com/nautobot/pynautobot/issues/351) - Added Python 3.14 to the CI test matrix.
+- [#366](https://github.com/nautobot/pynautobot/issues/366) - Updated CI to use Poetry v2.
+- [#375](https://github.com/nautobot/pynautobot/issues/375) - Added a favicon to the docs.
+- Updated CI matrix to test Nautobot 3.0 instead of the develop branch.
+- Removed unit tests as a requirement for the release workflow.
+- Updated CI to use `ubuntu-latest` as the default OS.
+- Updated the changelog CI branch name requirements.
+- Updated the upstream testing workflow to use the latest matrix from the Nautobot repository.
+- Updated the version of PostgreSQL used in for testing to 17-alpine.
+
 ## [v3.0.0](https://github.com/nautobot/pynautobot/releases/tag/v3.0.0)
 
 ### Release Overview
