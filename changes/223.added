@@ -1,1 +1,0 @@
-Added the ability to access nested attributes for related objects without the need to call `print()` or `full_details()` on the related object first.
