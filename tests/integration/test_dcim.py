@@ -208,6 +208,52 @@ class TestSimpleServerRackingAndConnecting:
         assert vc1.master.id == dev1.id
 
 
+def test_cable_termination_nested_device_access(nb_client):
+    """Validate accessing cable.termination_a.device.name works without print() workaround.
+
+    Regression test for https://github.com/nautobot/pynautobot/issues/223.
+    Previously, accessing nested attributes on cable terminations would return
+    the Record class instead of an instance when the API response was shallow.
+    """
+    location = nb_client.dcim.locations.get(name="MSP")
+    device_a = nb_client.dcim.devices.create(
+        name="cable-term-test-a",
+        device_type={"model": "DCS-7050TX3-48C8"},
+        role={"name": "Leaf Switch"},
+        location=location.id,
+        status={"name": "Active"},
+    )
+    device_b = nb_client.dcim.devices.create(
+        name="cable-term-test-b",
+        device_type={"model": "DCS-7050TX3-48C8"},
+        role={"name": "Leaf Switch"},
+        location=location.id,
+        status={"name": "Active"},
+    )
+    iface_a = nb_client.dcim.interfaces.filter(device_id=device_a.id, has_cable=False)[0]
+    iface_b = nb_client.dcim.interfaces.filter(device_id=device_b.id, has_cable=False)[0]
+    cable = nb_client.dcim.cables.create(
+        termination_a_type="dcim.interface",
+        termination_a_id=iface_a.id,
+        termination_b_type="dcim.interface",
+        termination_b_id=iface_b.id,
+        status={"name": "Connected"},
+    )
+
+    # Re-fetch the cable to get a fresh object (not the create response)
+    cable = nb_client.dcim.cables.get(cable.id)
+
+    # This is the exact pattern from Issue #223 that previously failed
+    # without calling print() or str() on the termination first
+    assert cable.termination_a.device.name in ("cable-term-test-a", "cable-term-test-b")
+    assert cable.termination_b.device.name in ("cable-term-test-a", "cable-term-test-b")
+
+    # Clean up to avoid affecting other tests that assert device counts
+    cable.delete()
+    device_a.delete()
+    device_b.delete()
+
+
 def test_platform_napalm_args(nb_client):
     """Validate napalm_args are properly returned for a platform (Issue #287)."""
     nb_client.dcim.platforms.create(name="Arista", napalm_args={"key": "value"})

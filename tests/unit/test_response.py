@@ -3,7 +3,7 @@
 import unittest
 from unittest.mock import Mock, PropertyMock, patch
 
-from pynautobot.core.response import Record
+from pynautobot.core.response import JsonField, Record
 
 
 # pylint: disable=too-many-public-methods, protected-access
@@ -379,3 +379,87 @@ class RecordTestCase(unittest.TestCase):
     def test_notes_property_exists(self, mock):
         """Add test to ensure notes property exist"""
         self.assertEqual(mock.return_value, ["test"])
+
+
+class LookupMapTestCase(unittest.TestCase):
+    """Tests for the _lookup_map mechanism that moves Record-subclass class attributes."""
+
+    def test_lookup_map_populated_for_record_subclass_attrs(self):
+        """Record-subclass class attributes should be moved into _lookup_map."""
+
+        class Parent(Record):  # pylint: disable=missing-class-docstring
+            pass
+
+        class Child(Record):  # pylint: disable=missing-class-docstring
+            parent = Parent
+
+        self.assertIn("parent", Child._lookup_map)  # pylint: disable=protected-access
+        self.assertIs(Child._lookup_map["parent"], Parent)  # pylint: disable=protected-access
+        self.assertFalse(hasattr(Child, "parent"))
+
+    def test_lookup_map_not_populated_for_non_record_attrs(self):
+        """Non-Record class attributes like JsonField should NOT be moved."""
+
+        class MyRecord(Record):  # pylint: disable=missing-class-docstring
+            json_data = JsonField
+
+        self.assertNotIn("json_data", MyRecord._lookup_map)  # pylint: disable=protected-access
+        self.assertTrue(hasattr(MyRecord, "json_data"))
+
+    def test_lookup_map_inherits_from_parent(self):
+        """Subclasses should inherit parent's _lookup_map entries."""
+
+        class TypeA(Record):  # pylint: disable=missing-class-docstring
+            pass
+
+        class TypeB(Record):  # pylint: disable=missing-class-docstring
+            pass
+
+        class Parent(Record):  # pylint: disable=missing-class-docstring
+            type_a = TypeA
+
+        class Child(Parent):  # pylint: disable=missing-class-docstring
+            type_b = TypeB
+
+        self.assertIn("type_a", Child._lookup_map)  # pylint: disable=protected-access
+        self.assertIn("type_b", Child._lookup_map)  # pylint: disable=protected-access
+
+    def test_missing_nested_attr_triggers_full_details(self):
+        """Accessing a missing nested attribute should trigger full_details(), not return the class."""
+        api = Mock()
+        api.threading = False
+        api.http_session = Mock()
+        api.token = "test-token"
+        api.api_version = None
+        api.default_filters = {}
+        api.base_url = "http://localhost:8000/api"
+
+        class Nested(Record):  # pylint: disable=missing-class-docstring
+            pass
+
+        class MyRecord(Record):  # pylint: disable=missing-class-docstring
+            nested = Nested
+
+        # Create a record with shallow data (missing 'nested' key)
+        test_obj = MyRecord(
+            {"id": 1, "url": "http://localhost:8000/api/test/1/"},
+            api,
+            None,
+        )
+
+        # Mock full_details to populate the nested attribute
+        def fake_full_details():
+            test_obj._parse_values(
+                {
+                    "id": 1,
+                    "url": "http://localhost:8000/api/test/1/",
+                    "nested": {"id": 2, "url": "http://localhost:8000/api/nested/2/", "name": "found"},
+                }
+            )
+            test_obj.has_details = True
+            return True
+
+        with patch.object(test_obj, "full_details", side_effect=fake_full_details):
+            result = test_obj.nested
+            self.assertIsInstance(result, Nested)
+            self.assertEqual(result.name, "found")
