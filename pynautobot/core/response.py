@@ -144,6 +144,7 @@ class Record:
     """
 
     url = None
+    _lookup_map = {}
 
     def __init__(self, values, api, endpoint):
         """Initialize the Record object."""
@@ -156,6 +157,29 @@ class Record:
 
         if values:
             self._parse_values(values)
+
+    def __init_subclass__(cls, **kwargs):
+        """Move Record-subclass class attributes into _lookup_map.
+
+        Class-level attributes that reference Record subclasses (e.g., device = Devices)
+        are used by _parse_values as type hints for constructing nested objects. However,
+        if the API returns a shallow response that omits a key, these class attributes
+        shadow __getattr__ and prevent automatic full_details() calls. Moving them to
+        _lookup_map removes the shadowing so missing attributes correctly trigger lazy loading.
+        """
+        super().__init_subclass__(**kwargs)
+        lookup_map = {}
+        to_remove = []
+        for attr_name, attr_value in vars(cls).items():
+            if isinstance(attr_value, type) and issubclass(attr_value, Record):
+                lookup_map[attr_name] = attr_value
+                to_remove.append(attr_name)
+        if lookup_map:
+            cls._lookup_map = {**getattr(cls, "_lookup_map", {}), **lookup_map}
+            for name in to_remove:
+                delattr(cls, name)
+        elif "_lookup_map" not in vars(cls):
+            cls._lookup_map = {**getattr(cls, "_lookup_map", {})}
 
     def __getattr__(self, k):
         """Default behavior for missing attributes.
@@ -259,7 +283,7 @@ class Record:
             return list_item
 
         for k, v in values.items():
-            lookup = getattr(self.__class__, k, None)
+            lookup = self.__class__._lookup_map.get(k) or getattr(self.__class__, k, None)  # pylint: disable=protected-access
             if isinstance(v, dict):
                 if k in ["custom_fields", "local_config_context_data"] or hasattr(lookup, "_json_field"):
                     self._add_cache((k, v.copy()))
