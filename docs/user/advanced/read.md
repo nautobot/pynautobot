@@ -127,7 +127,7 @@ devices located in either *Location* `HQ` or `DC`.
 ### Filtering based on a Custom Field
 
 Nautobot provides [Custom
-Fields](https://nautobot.readthedocs.io/en/latest/additional-features/custom-fields/)
+Fields](https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/customfield/)
 as a way of extending a `Model's <Terminology>`{.interpreted-text
 role="ref"} fields. These fields can be referenced in the API by
 appending [cf\_]{.title-ref} to the field\'s name. The below example has
@@ -148,7 +148,7 @@ passing the `cf_owner` keyword argument.
 ### Filtering with Lookup Expressions
 
 The Nautobot API uses [Lookup
-Expressions](https://nautobot.readthedocs.io/en/latest/rest-api/filtering/#lookup-expressions)
+Expressions](https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/rest-api/filtering/)
 to filter using something other than the exact matches that have been
 used so far. There are several expressions that can be used; they
 generally cover things like:
