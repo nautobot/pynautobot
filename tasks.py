@@ -34,7 +34,7 @@ namespace = Collection("pynautobot")
 namespace.configure(
     {
         "pynautobot": {
-            "nautobot_ver": "stable",
+            "nautobot_ver": "2.4",
             "project_name": "pynautobot",
             "python_ver": "3.12",
             "local": False,
