@@ -1,0 +1,3 @@
+Added testing for Python 3.14.
+Capped Nautobot version for CI testing to 2.4.
+Updated development postgres image to 17-alpine.

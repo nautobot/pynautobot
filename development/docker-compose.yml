@@ -43,7 +43,7 @@ services:
         - "CMD-SHELL"
         - "curl --fail http://localhost:8000/health/ || exit 1"
   postgres:
-    image: "postgres:13"
+    image: "postgres:17-alpine"
     env_file:
       - "./dev.env"
   redis:
