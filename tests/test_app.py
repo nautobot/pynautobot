@@ -41,6 +41,18 @@ class AppCustomFieldsTestCase(unittest.TestCase):
             self.assertIsInstance(field.get("slug"), str)
             self.assertIn("type", field)
 
+    @patch(
+        "requests.sessions.Session.get",
+        return_value=Response(fixture="extras/custom_fields.json"),
+    )
+    @patch("pynautobot.api.version", "2.0")
+    def test_custom_fields_passes_filters(self, session_get_mock):
+        api = pynautobot.api(HOST, **def_kwargs)
+        api.extras.get_custom_fields(filters={"content_types": "dcim.device"})
+
+        params = session_get_mock.call_args[1].get("params", {})
+        self.assertEqual(params.get("content_types"), "dcim.device")
+
 
 class AppCustomFieldChoicesTestCase(unittest.TestCase):
     """App custom field choices test."""
@@ -67,6 +79,18 @@ class AppCustomFieldChoicesTestCase(unittest.TestCase):
             self.assertIsInstance(choice.get("field"), dict)
             self.assertIsInstance(choice.get("value"), str)
             self.assertIn(choice.get("value"), ("First option", "Second option", "Third option"))
+
+    @patch(
+        "requests.sessions.Session.get",
+        return_value=Response(fixture="extras/custom_field_choices.json"),
+    )
+    @patch("pynautobot.api.version", "2.0")
+    def test_custom_field_choices_passes_filters(self, session_get_mock):
+        api = pynautobot.api(HOST, **def_kwargs)
+        api.extras.get_custom_field_choices(filters={"field": "test_custom_field_2"})
+
+        params = session_get_mock.call_args[1].get("params", {})
+        self.assertEqual(params.get("field"), "test_custom_field_2")
 
 
 class AppConfigTestCase(unittest.TestCase):
