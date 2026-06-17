@@ -143,14 +143,14 @@ class App:
             >>> nb.extras.get_custom_fields(filters={"content_types": "dcim.device"})
             [...]
         """
-        request_filters = self.api.default_filters.copy()
+        default_filters = self.api.default_filters.copy()
         if filters:
-            request_filters.update(filters)
+            default_filters.update(filters)
         return Request(
             base=f"{self.api.base_url}/{self.name}/custom-fields/",
             token=self.api.token,
             http_session=self.api.http_session,
-            filters=request_filters,
+            filters=default_filters,
         ).get()
 
     def get_custom_field_choices(self, filters=None):
@@ -192,14 +192,14 @@ class App:
             >>> nb.extras.get_custom_field_choices(filters={"field": "test_custom_field_2"})
             [...]
         """
-        request_filters = self.api.default_filters.copy()
+        default_filters = self.api.default_filters.copy()
         if filters:
-            request_filters.update(filters)
+            default_filters.update(filters)
         return Request(
             base=f"{self.api.base_url}/{self.name}/custom-field-choices/",
             token=self.api.token,
             http_session=self.api.http_session,
-            filters=request_filters,
+            filters=default_filters,
         ).get()
 
     def config(self):
