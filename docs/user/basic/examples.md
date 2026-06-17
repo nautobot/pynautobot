@@ -211,3 +211,28 @@ This page provides for examples of how to use pynautobot from the community. Wha
     device = nautobot.dcim.devices.get(name="sample-rtr-01", exclude_m2m=False)
 
     ```
+
+=== "Add a VLAN ID to a VLAN Group"
+
+    A VLAN Group's `range` is stored as a plain comma-separated string of individual IDs and ranges (e.g. `1-3,5,10-20`). To add a new VLAN ID, append it to the existing string and call `save()`. Nautobot re-serializes the value on save, collapsing adjacent IDs back into compact ranges.
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a")
+
+    # Get the VLAN Group and view its current range
+    vlan_group = nautobot.ipam.vlan_groups.get(name="Test")
+    vlan_group.range
+    # '1-3,5,10-20'
+
+    # Append the new VLAN ID and save
+    vlan_group.range += ",6"
+    vlan_group.save()
+    # True
+
+    # Re-fetch to see Nautobot's re-serialized range
+    vlan_group = nautobot.ipam.vlan_groups.get(name="Test")
+    vlan_group.range
+    # '1-3,5-6,10-20'
+    ```
