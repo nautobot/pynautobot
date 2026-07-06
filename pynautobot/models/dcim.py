@@ -274,6 +274,7 @@ class Cables(Record):
 
     termination_a = Termination
     termination_b = Termination
+    terminations = JsonField
 
 
 class Platforms(Record):
