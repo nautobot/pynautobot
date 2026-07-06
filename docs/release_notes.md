@@ -5,6 +5,23 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v3.1.1](https://github.com/nautobot/pynautobot/releases/tag/v3.1.1)
+
+### Fixed
+
+- [#381](https://github.com/nautobot/pynautobot/issues/381) - Fixed broken links in the documentation.
+- [#389](https://github.com/nautobot/pynautobot/issues/389) - Fixed `get_custom_fields()` and `get_custom_field_choices()` ignoring the `filters` argument.
+- [#394](https://github.com/nautobot/pynautobot/issues/394) - Fixed cable terminations serialization for Nautobot v3.2.
+
+### Documentation
+
+- [#392](https://github.com/nautobot/pynautobot/issues/392) - Added an example showing how to add a VLAN ID to a VLAN Group's range.
+
+### Housekeeping
+
+- Added Nautobot v3.1 explicitly to the CI test matrix.
+- Fixed rack integration tests to properly handle new interface ordering in Nautobot v3.2.
+
 ## [v3.1.0](https://github.com/nautobot/pynautobot/releases/tag/v3.1.0)
 
 ### Added
