@@ -1,0 +1,1 @@
+Fixed `get_custom_fields()` and `get_custom_field_choices()` ignoring the `filters` argument.

@@ -136,14 +136,21 @@ class App:
                     "notes_url": "http://localhost:8000/api/extras/custom-fields/5b39ba88-e5ab-4be2-89f5-5a016473b53c/notes/",
                 },
             ]
+
+            Scope the results by passing a ``filters`` dict, whose key/value
+            pairs are sent as query parameters to the endpoint:
+
+            >>> nb.extras.get_custom_fields(filters={"content_types": "dcim.device"})
+            [...]
         """
-        filters = self.api.default_filters.copy()
-        filters.update(filters)
+        default_filters = self.api.default_filters.copy()
+        if filters:
+            default_filters.update(filters)
         return Request(
             base=f"{self.api.base_url}/{self.name}/custom-fields/",
             token=self.api.token,
             http_session=self.api.http_session,
-            filters=filters,
+            filters=default_filters,
         ).get()
 
     def get_custom_field_choices(self, filters=None):
@@ -178,14 +185,21 @@ class App:
                     "last_updated": "2023-04-15T18:11:57.163237Z"
                 },
             ]
+
+            Scope the results by passing a ``filters`` dict, whose key/value
+            pairs are sent as query parameters to the endpoint:
+
+            >>> nb.extras.get_custom_field_choices(filters={"field": "test_custom_field_2"})
+            [...]
         """
-        filters = self.api.default_filters.copy()
-        filters.update(filters)
+        default_filters = self.api.default_filters.copy()
+        if filters:
+            default_filters.update(filters)
         return Request(
             base=f"{self.api.base_url}/{self.name}/custom-field-choices/",
             token=self.api.token,
             http_session=self.api.http_session,
-            filters=filters,
+            filters=default_filters,
         ).get()
 
     def config(self):
