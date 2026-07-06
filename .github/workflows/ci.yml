@@ -53,7 +53,7 @@ jobs:
         python-version:
           - "3.12"
         nautobot-version:
-          - "3.0"
+          - "stable"
     with:
       runs-on: "${{ inputs.runs-on }}"
       python-version: "${{ matrix.python-version }}"
@@ -73,8 +73,9 @@ jobs:
           - "3.14"
         nautobot-version:
           - "2.4"
-          - "stable"
           - "3.0"
+          - "3.1"
+          - "stable"
     with:
       runs-on: "${{ inputs.runs-on }}"
       python-version: "${{ matrix.python-version }}"
