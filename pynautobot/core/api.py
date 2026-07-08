@@ -20,7 +20,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
-from pynautobot.core.app import App, PluginsApp
+from pynautobot.core.app import App, CoreApp, PluginsApp, UiApp
 from pynautobot.core.graphql import GraphQLQuery
 from pynautobot.core.query import Request
 
@@ -51,12 +51,14 @@ class Api:
     Attributes:
         circuits: An instance of the `App` class providing access to Circuits endpoints.
         cloud: An instance of the `App` class providing access to Cloud endpoints.
+        core: An instance of the `App` class providing access to Core endpoints.
         data_validation: An instance of the `App` class providing access to Data Validation endpoints.
         dcim: An instance of the `App` class providing access to DCIM endpoints.
         extras: An instance of the `App` class providing access to Extras endpoints.
         ipam: An instance of the `App` class providing access to IPAM endpoints.
         load_balancers: An instance of the `App` class providing access to Load Balancers endpoints.
         tenancy: An instance of the `App` class providing access to Tenancy endpoints.
+        ui: An instance of the `App` class providing access to UI endpoints.
         users: An instance of the `App` class providing access to User endpoints.
         virtualization: An instance of the `App` class providing access to Virtualization endpoints.
         vpn: An instance of the `App` class providing access to VPN endpoints.
@@ -123,12 +125,14 @@ class Api:
 
         self.circuits = App(self, "circuits")
         self.cloud = App(self, "cloud")
+        self.core = CoreApp(self, "core")
         self.data_validation = App(self, "data-validation")
         self.dcim = App(self, "dcim")
         self.extras = App(self, "extras")
         self.ipam = App(self, "ipam")
         self.load_balancers = App(self, "load-balancers")
         self.tenancy = App(self, "tenancy")
+        self.ui = UiApp(self, "ui")
         self.users = App(self, "users")
         self.virtualization = App(self, "virtualization")
         self.vpn = App(self, "vpn")

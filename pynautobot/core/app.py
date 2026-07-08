@@ -237,6 +237,68 @@ class App:
         ).get()
 
 
+class CoreApp(App):
+    """Represents the Nautobot ``core`` app.
+
+    In addition to the generic `App` endpoint access, this exposes a dedicated
+    helper for the ``render-jinja-template`` endpoint.
+    """
+
+    def render_jinja_template(self, template_code, context=None, api_version=None):
+        """Render a Jinja template server-side via Nautobot.
+
+        Args:
+            template_code (str): The Jinja template to render.
+            context (dict, optional): Context variables for the template. Defaults to ``{}``.
+            api_version (str, optional): Override the default or globally-set Nautobot REST API
+                version for this single request.
+
+        Returns:
+            (dict): Raw response containing ``rendered_template``, ``rendered_template_lines``,
+                ``template_code``, and ``context``.
+
+        Raises:
+            RequestError: If the template fails to render.
+
+        Examples:
+            >>> nb.core.render_jinja_template(
+            ...     template_code="Hello {{ name }}",
+            ...     context={"name": "world"},
+            ... )
+            {'rendered_template': 'Hello world',
+             'rendered_template_lines': ['Hello world'],
+             'template_code': 'Hello {{ name }}',
+             'context': {'name': 'world'}}
+        """
+        api_version = api_version or self.api.api_version
+        return Request(
+            base=f"{self.api.base_url}/{self.name}/render-jinja-template/",
+            token=self.api.token,
+            http_session=self.api.http_session,
+            api_version=api_version,
+        ).post({"template_code": template_code, "context": context or {}})
+
+
+class UiApp(App):
+    """Represents the Nautobot ``ui`` app."""
+
+    @property
+    def core(self):
+        """Access ``core`` endpoints nested under ``ui`` (e.g. render-jinja-template).
+
+        Returns:
+            (CoreApp): A `CoreApp` bound to the ``ui/core`` path.
+
+        Examples:
+            >>> nb.ui.core.render_jinja_template(
+            ...     template_code="Hello {{ name }}",
+            ...     context={"name": "world"},
+            ... )
+            {'rendered_template': 'Hello world', ...}
+        """
+        return CoreApp(self.api, "ui/core")
+
+
 class PluginsApp:
     """Add plugins to the URL path.
 

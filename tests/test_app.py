@@ -149,6 +149,67 @@ class AppIncludeFiltersTestCase(unittest.TestCase):
         self.assertEqual(api.default_filters["include"], "config_context,computed_fields")
 
 
+class RenderJinjaTemplateTestCase(unittest.TestCase):
+    """Render Jinja template test for the core and ui apps."""
+
+    template_code = "Hello {{ name }}"
+    context = {"name": "world"}
+
+    @patch(
+        "requests.sessions.Session.post",
+        return_value=Response(fixture="core/render_jinja_template.json"),
+    )
+    @patch("pynautobot.api.version", "2.0")
+    def test_core_render_jinja_template(self, session_post_mock):
+        api = pynautobot.api(HOST, **def_kwargs)
+        result = api.core.render_jinja_template(template_code=self.template_code, context=self.context)
+
+        session_post_mock.assert_called_once()
+        expect_url = f"{api.base_url}/core/render-jinja-template/"
+        url_passed_in_args = expect_url in session_post_mock.call_args[0]
+        url_passed_in_kwargs = expect_url == session_post_mock.call_args[1].get("url")
+        self.assertTrue(url_passed_in_args or url_passed_in_kwargs)
+
+        body = session_post_mock.call_args[1].get("json")
+        self.assertEqual(body, {"template_code": self.template_code, "context": self.context})
+
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result["rendered_template"], "Hello world")
+
+    @patch(
+        "requests.sessions.Session.post",
+        return_value=Response(fixture="core/render_jinja_template.json"),
+    )
+    @patch("pynautobot.api.version", "2.0")
+    def test_ui_render_jinja_template(self, session_post_mock):
+        api = pynautobot.api(HOST, **def_kwargs)
+        result = api.ui.core.render_jinja_template(template_code=self.template_code, context=self.context)
+
+        session_post_mock.assert_called_once()
+        expect_url = f"{api.base_url}/ui/core/render-jinja-template/"
+        url_passed_in_args = expect_url in session_post_mock.call_args[0]
+        url_passed_in_kwargs = expect_url == session_post_mock.call_args[1].get("url")
+        self.assertTrue(url_passed_in_args or url_passed_in_kwargs)
+
+        body = session_post_mock.call_args[1].get("json")
+        self.assertEqual(body, {"template_code": self.template_code, "context": self.context})
+
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result["rendered_template"], "Hello world")
+
+    @patch(
+        "requests.sessions.Session.post",
+        return_value=Response(fixture="core/render_jinja_template.json"),
+    )
+    @patch("pynautobot.api.version", "2.0")
+    def test_render_jinja_template_defaults_empty_context(self, session_post_mock):
+        api = pynautobot.api(HOST, **def_kwargs)
+        api.core.render_jinja_template(template_code=self.template_code)
+
+        body = session_post_mock.call_args[1].get("json")
+        self.assertEqual(body, {"template_code": self.template_code, "context": {}})
+
+
 class PluginAppCustomChoicesTestCase(unittest.TestCase):
     """Plugin app custom choices test."""
 

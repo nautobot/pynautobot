@@ -149,6 +149,7 @@ nav:
           - GraphQL: "user/advanced/graphql.md"
           - Read: "user/advanced/read.md"
           - Record: "user/advanced/record.md"
+          - Render Jinja Template: "user/advanced/render_jinja_template.md"
           - Session: "user/advanced/session.md"
           - Update: "user/advanced/update.md"
   - Administrator Guide:
