@@ -75,6 +75,7 @@ jobs:
           - "2.4"
           - "3.0"
           - "3.1"
+          - "3.2"
           - "stable"
     with:
       runs-on: "${{ inputs.runs-on }}"
