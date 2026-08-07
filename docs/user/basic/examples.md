@@ -236,3 +236,22 @@ This page provides for examples of how to use pynautobot from the community. Wha
     vlan_group.range
     # '1-3,5-6,10-20'
     ```
+
+=== "Reading and Creating Notes"
+
+    Notes are exposed as a detail endpoint on records that support them. Use `list()` to read existing notes and `create()` to add a new one.
+
+    ```python
+    import pynautobot
+
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a")
+
+    device = nautobot.dcim.devices.get(name="ams01-asw-01")
+
+    # Read notes attached to the device
+    notes = device.notes.list()
+    print(notes)
+
+    # Create a note on the device
+    device.notes.create({"note": "Reviewed during the maintenance window."})
+    ```
