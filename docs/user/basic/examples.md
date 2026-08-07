@@ -153,6 +153,27 @@ This page provides for examples of how to use pynautobot from the community. Wha
         'aaa-new-model': False}
         ```
 
+=== "Reading and Creating Notes"
+
+    Notes are exposed through a `notes` detail endpoint on supported records.
+
+    ```python
+    import pynautobot
+
+    nb = pynautobot.api(url="http://localhost:8000", token="d6f4e314a5b5fefd164995169f28ae32d987704f")
+
+    # List notes associated to a device object
+    device = nb.dcim.devices.get(name="test")
+    device.notes.list()
+
+    # List notes associated to a controller object
+    controller = nb.dcim.controllers.get(name="test")
+    controller.notes.list()
+
+    # Create a new note on a device object
+    device.notes.create({"note": "foo bar"})
+    ```
+
 === "Including Additional Fields"
 
     When you instantiate the `Api` object, you can set `include_default` to a comma-separated list of fields that you want to include by default in all retrieve operations (e.g., `all()`, `filter()`, `get()`). This allows you to automatically include fields that are not included in the default response.
