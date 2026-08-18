@@ -1,11 +1,9 @@
 # Deleting Multiple Objects
 
-The `Deleting Records`{.interpreted-text role="ref"} section shows how
-to use the `~pynautobot.core.response.Record.delete`{.interpreted-text
-role="py:meth"} method to delete a single record. Another way to
+The [Deleting Records](../basic/crud/delete.md) section shows how
+to use the [`delete()`][pynautobot.core.response.Record.delete] method to delete a single record. Another way to
 accomplish this for multiple records at once is to use the
-`~pynautobot.core.endpoint.Endpoint.delete`{.interpreted-text
-role="py:meth"} method.
+[`delete()`][pynautobot.core.endpoint.Endpoint.delete] method.
 
 ```python
 >>> import os

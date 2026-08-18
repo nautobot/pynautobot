@@ -211,7 +211,7 @@ class App:
         Raises:
             RequestError: If called for an invalid endpoint.
 
-        Example:
+        Examples:
             >>> pprint.pprint(nb.users.config())
             {'tables': {'DeviceTable': {'columns': ['name',
                                                     'status',

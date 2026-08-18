@@ -97,7 +97,7 @@ class Endpoint:
             offset (int, optional): Overrides the offset on paginated returns.
 
         Returns:
-            (list): List of :py:class:`.Record` objects.
+            (list): List of [`Record`][pynautobot.core.response.Record] objects.
 
         Examples:
             >>> nb.dcim.devices.all()
@@ -116,7 +116,7 @@ class Endpoint:
                 version for this single request.
 
         Returns:
-            (Union[Record, None]): A single :py:class:`.Record` object or None.
+            (Union[Record, None]): A single [`Record`][pynautobot.core.response.Record] object or None.
 
         Raises:
             ValueError: If kwarg search returns more than one value.
@@ -186,7 +186,7 @@ class Endpoint:
                 Nautobot REST API version for this single request.
 
         Returns:
-            (list): A list of :py:class:`.Record` objects.
+            (list): A list of [`Record`][pynautobot.core.response.Record] objects.
 
         Examples:
             To return a list of objects matching a named argument filter.
@@ -251,7 +251,7 @@ class Endpoint:
                 Nautobot REST API version for this single request.
 
         Returns:
-            (Union[Record, List[Record]]): A list or single :py:class:`.Record` object depending
+            (Union[Record, List[Record]]): A list or single [`Record`][pynautobot.core.response.Record] object depending
                 on whether a bulk creation was requested.
 
         Examples:
@@ -314,7 +314,7 @@ class Endpoint:
                 in the case of a list to id.
 
         Returns:
-            (Union[bool, List[Record]]): A list of :py:class:`.Record` objects
+            (Union[bool, List[Record]]): A list of [`Record`][pynautobot.core.response.Record] objects
                 or a boolean depending on whether a bulk update was requested.
 
         Examples:
@@ -476,18 +476,20 @@ class Endpoint:
         Returns:
             (dict): Dict containing the available choices.
 
-        Example (from Nautobot 2.8.x):
+        Examples:
+            The output below is from Nautobot 2.8.x.
+
             >>> from pprint import pprint
             >>> pprint(nb.ipam.ip_addresses.choices())
             {'role': [{'display_name': 'Loopback', 'value': 'loopback'},
-                    {'display_name': 'Secondary', 'value': 'secondary'},
-                    {'display_name': 'Anycast', 'value': 'anycast'},
-                    {'display_name': 'VIP', 'value': 'vip'},
-                    {'display_name': 'VRRP', 'value': 'vrrp'},
-                    {'display_name': 'HSRP', 'value': 'hsrp'},
-                    {'display_name': 'GLBP', 'value': 'glbp'},
-                    {'display_name': 'CARP', 'value': 'carp'}],
-            'status': [{'display_name': 'Active', 'value': 'active'},
+                      {'display_name': 'Secondary', 'value': 'secondary'},
+                      {'display_name': 'Anycast', 'value': 'anycast'},
+                      {'display_name': 'VIP', 'value': 'vip'},
+                      {'display_name': 'VRRP', 'value': 'vrrp'},
+                      {'display_name': 'HSRP', 'value': 'hsrp'},
+                      {'display_name': 'GLBP', 'value': 'glbp'},
+                      {'display_name': 'CARP', 'value': 'carp'}],
+             'status': [{'display_name': 'Active', 'value': 'active'},
                         {'display_name': 'Reserved', 'value': 'reserved'},
                         {'display_name': 'Deprecated', 'value': 'deprecated'},
                         {'display_name': 'DHCP', 'value': 'dhcp'}]}

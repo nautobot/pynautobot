@@ -1,16 +1,16 @@
 # Creating Records
 
-The `Creating a Record`{.interpreted-text role="ref"} section provides
+The [Creating a Record](../basic/crud/create.md) section provides
 an example of creating a single
-`~pynautobot.core.response.Record`{.interpreted-text role="py:class"}
-for a `Model <Terminology>`{.interpreted-text role="ref"} without any
+[`Record`][pynautobot.core.response.Record]
+for a [Model](../basic/index.md#terminology) without any
 foreign key relationships. Additionally, some
-`fields <Terminology>`{.interpreted-text role="ref"} are an enum type,
-which limits the acceptable values to a set of [choices]{.title-ref}.
+[fields](../basic/index.md#terminology) are an enum type,
+which limits the acceptable values to a set of `choices`.
 
 This section demonstrates workflows for:
 
-1.  Creating `Records <Terminology>`{.interpreted-text role="ref"} with
+1.  Creating [Records](../basic/index.md#terminology) with
     enum fields and foreign key relationships.
 2.  Creating multiple Records with a single method call.
 
@@ -20,8 +20,7 @@ raised by these errors.
 ## Obtaining Choices
 
 For fields that are enum type, Endpoint objects have a
-`~pynautobot.core.endpoint.Endpoint.choices`{.interpreted-text
-role="py:meth"} method to provide a mapping of enum fields to their list
+[`choices()`][pynautobot.core.endpoint.Endpoint.choices] method to provide a mapping of enum fields to their list
 of acceptable choices.
 
 ```python
@@ -114,7 +113,7 @@ of acceptable choices.
 ## Creating Objects with Foreign Key Relationships
 
 Creating a Device in Nautobot requires the following
-`fields <Terminology>`{.interpreted-text role="ref"} to specify a
+[fields](../basic/index.md#terminology) to specify a
 foreign key relationship:
 
 > -   Role
@@ -127,8 +126,7 @@ unique.
 
 The first example provides a workflow for obtaining the IDs of the
 foreign key relationships by using the
-`~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-role="py:meth"} method from the Endpoint object, and then referencing
+[`get()`][pynautobot.core.endpoint.Endpoint.get] method from the Endpoint object, and then referencing
 the `id` of those objects to create a new *Device*.
 
 ```python
@@ -155,8 +153,7 @@ the `id` of those objects to create a new *Device*.
 ```
 
 The above works, but it requires three
-`~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-role="py:meth"} calls. The next example demonstrates a simpler interface
+[`get()`][pynautobot.core.endpoint.Endpoint.get] calls. The next example demonstrates a simpler interface
 for creating a device by passing dictionary objects instead of using the
 Primary Key. The dictionaries passed for these fields use key/value
 pairs to lookup the Record with matching field/value pairs in the
@@ -189,10 +186,8 @@ Record. `name` is not unique for *Location*.
 ## Creating Multiple Objects
 
 It is also possible to create multiple
-`Records <pynautobot.core.response.Record>`{.interpreted-text
-role="py:class"} of the same Model in a single
-`~pynautobot.core.endpoint.Endpoint.create`{.interpreted-text
-role="py:meth"} call. This is done by passing a list of dictionaries
+[Records][pynautobot.core.response.Record] of the same Model in a single
+[`create()`][pynautobot.core.endpoint.Endpoint.create] call. This is done by passing a list of dictionaries
 instead of keyword arguments.
 
 ```python
@@ -237,15 +232,12 @@ instead of keyword arguments.
 ## Common Errors
 
 When creating new
-`Records <pynautobot.core.response.Record>`{.interpreted-text
-role="py:class"} with pynautobot, there are three common types of
+[Records][pynautobot.core.response.Record] with pynautobot, there are three common types of
 errors:
 
--   `Missing a Required Field`{.interpreted-text role="ref"}
--   `Unable to Resolve a Reference to a Foreign Key Relationship`{.interpreted-text
-    role="ref"}
--   `The Data Sent Does Not Adhere to the Database Schema`{.interpreted-text
-    role="ref"}
+-   [Missing a Required Field](#missing-a-required-field)
+-   [Unable to Resolve a Reference to a Foreign Key Relationship](#unable-to-resolve-a-reference-to-a-foreign-key-relationship)
+-   [The Data Sent Does Not Adhere to the Database Schema](#the-data-sent-does-not-adhere-to-the-database-schema)
 
 !!! Note
 
@@ -255,10 +247,9 @@ errors:
 
 ### Missing a Required Field
 
-A `~pynautobot.core.query.RequestError`{.interpreted-text role="py:exc"}
+A [`RequestError`][pynautobot.core.query.RequestError]
 is raised when a required field is not passed to the
-`~pynautobot.core.endpoint.Endpoint.create`{.interpreted-text
-role="py:meth"} method. Creating a new *Device* requires passing the
+[`create()`][pynautobot.core.endpoint.Endpoint.create] method. Creating a new *Device* requires passing the
 `name`, `device_type`, `role`, `location`, and `status` fields. The
 below example demonstrates passing only `name` and `status` when
 creating a *Device*; as expected, an Exception is raised indicating that
@@ -283,7 +274,7 @@ The request failed with code 400 Bad Request:
 ### Unable to Resolve a Reference to a Foreign Key Relationship
 
 Another reason that a
-`~pynautobot.core.query.RequestError`{.interpreted-text role="py:exc"}
+[`RequestError`][pynautobot.core.query.RequestError]
 could be raised is for passing in foreign key fields that cannot be
 resolved. There are two reasons that can cause a foreign key to not be
 found:

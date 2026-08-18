@@ -2,19 +2,18 @@
 
 Pynautobot uses a
 [requests.Session](https://requests.readthedocs.io/en/stable/user/advanced/#session-objects)
-object to make HTTP requests to Nautobot. This is stored as
-`~pynautobot.core.api.Api.http_response`{.interpreted-text
-role="py:attr"}, and can be updated as supported by `requests`. A few
-examples are provided below:
+object to make HTTP requests to Nautobot. This is stored as the
+`http_session` attribute on the [`Api`][pynautobot.core.api.Api] object, and can be
+updated as supported by `requests`. A few examples are provided below:
 
--   `Headers`{.interpreted-text role="ref"}
--   `SSL Verification`{.interpreted-text role="ref"}
--   `Timeouts`{.interpreted-text role="ref"}
+-   [Headers](#headers)
+-   [SSL Verification](#ssl-verification)
+-   [Timeouts](#timeouts)
 
 ## Headers
 
 Adding or updating headers is done by updating the `headers` dictionary
-on the `http_response` object. The example below shows how to update a
+on the `http_session` object. The example below shows how to update a
 Token if it has been cycled.
 
 ```python

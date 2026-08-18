@@ -1,10 +1,10 @@
 # Creating a Pynautobot Instance
 
 To start using pynautobot, instantiate an
-`~pynautobot.core.api.Api`{.interpreted-text role="py:class"} object,
+[`Api`][pynautobot.core.api.Api] object,
 passing in the proper URL and a valid Token. The code sample below
 assumes that the token has been stored as an environment variable, and
-uses the builtin `os`{.interpreted-text role="py:mod"} module to
+uses the builtin [`os`](https://docs.python.org/3/library/os.html) module to
 retrieve it.
 
 !!! Note
@@ -37,8 +37,8 @@ retrieve it.
 The nautobot object returned above is the main entrypoint to interact
 with the Nautobot REST API. This object provides access to general
 information about the Nautobot system, and the core
-`Apps <Terminology>`{.interpreted-text role="ref"} and
-`Plugins <Terminology>`{.interpreted-text role="ref"}.
+[Apps](index.md#terminology) and
+[Plugins](index.md#terminology).
 
 The core Apps are:
 
@@ -114,23 +114,19 @@ The core Apps are:
 <pynautobot.core.app.App object at ...>
 ```
 
-The main purpose of `~pynautobot.core.app.App`{.interpreted-text
-role="py:class"} objects is to provide access to
-`Models <Terminology>`{.interpreted-text role="ref"} and their data.
+The main purpose of [`App`][pynautobot.core.app.App] objects is to provide access to
+[Models](index.md#terminology) and their data.
 
 # Models
 
-Pynautobot `~pynautobot.core.app.App`{.interpreted-text role="py:class"}
+Pynautobot [`App`][pynautobot.core.app.App]
 objects will treat all unknown attributes as
-`Endpoints <pynautobot.core.endpoint.Endpoint>`{.interpreted-text
-role="py:class"}. The
-`~pynautobot.core.endpoint.Endpoint`{.interpreted-text role="py:class"}
+[Endpoints][pynautobot.core.endpoint.Endpoint]. The
+[`Endpoint`][pynautobot.core.endpoint.Endpoint]
 class is used to represent Models in Nautobot. For example, the Nautobot
 DCIM App contains Models, such as: *Devices*, *Platforms*, and *Roles*.
-The pynautobot `dcim` `~pynautobot.core.app.App`{.interpreted-text
-role="py:class"} does not provide attributes to represent these Models,
-however, `~pynautobot.core.endpoint.Endpoint`{.interpreted-text
-role="py:class"} objects are created upon attribute access.
+The pynautobot `dcim` [`App`][pynautobot.core.app.App] does not provide attributes to represent these Models,
+however, [`Endpoint`][pynautobot.core.endpoint.Endpoint] objects are created upon attribute access.
 
 The code sample below shows that Models do not exist in the
 `nautobot.dcim` attribute dictionary, but the `devices` Model is still
@@ -178,4 +174,4 @@ the Nautobot API endpoint.
 !!! Note
     Attributes are not checked against the Nautobot API, so misspelled or non-existent Models will not raise an Exception until a CRUD operation is attempted on the returned object.
 
-    For example, calling `nautobot.dcim.device` (missing the trailing **s**) will return an `~pynautobot.core.endpoint.Endpoint`{.interpreted-text role="py:class"} object. However, the URL assigned to the Endpoint will not be a valid Nautobot API endpoint, and performing any CRUD operations against that URL will result in an Exception being raised.
+    For example, calling `nautobot.dcim.device` (missing the trailing **s**) will return an [`Endpoint`][pynautobot.core.endpoint.Endpoint] object. However, the URL assigned to the Endpoint will not be a valid Nautobot API endpoint, and performing any CRUD operations against that URL will result in an Exception being raised.

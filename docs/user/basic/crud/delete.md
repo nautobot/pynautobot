@@ -1,8 +1,7 @@
 # Deleting Records
 
 Lastly, deleting a Record from the Nautobot database is done by calling
-the `~pynautobot.core.response.Record.delete`{.interpreted-text
-role="py:meth"} method on a Record object. This method will return a
+the [`delete()`][pynautobot.core.response.Record.delete] method on a Record object. This method will return a
 boolean to indicate whether or not the Record was successfully deleted.
 
 ``` python

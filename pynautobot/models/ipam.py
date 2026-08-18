@@ -87,7 +87,7 @@ class Prefixes(Record):
         Returns a DetailEndpoint object that is the interface for
         viewing and creating prefixes inside a parent prefix.
 
-        Very similar to :py:meth:`~pynautobot.ipam.Prefixes.available_ips`,
+        Very similar to [`available_ips`][pynautobot.models.ipam.Prefixes.available_ips],
         except that the dict (or list of dicts) passed to ``.create()``
         needs to have a ``prefix_length`` key/value specified.
 
