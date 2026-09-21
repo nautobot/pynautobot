@@ -2,7 +2,7 @@
 
 Using pynautobot to make GraphQL queries against Nautobot has the same
 initial setup as detailed in
-`Creating a pynautobot Instance`{.interpreted-text role="ref"}.
+[Creating a pynautobot Instance](../basic/api.md).
 
 ```python
 import os
@@ -17,24 +17,20 @@ token = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 nautobot = api(url=url, token=token)
 ```
 
-An instance of `~pynautobot.core.graphql.GraphQLQuery`{.interpreted-text
-role="py:class"} is assigned to the above `nautobot` object upon
+An instance of [`GraphQLQuery`][pynautobot.core.graphql.GraphQLQuery] is assigned to the above `nautobot` object upon
 initialization. The
-`~pynautobot.core.graphql.GraphQLQuery.query`{.interpreted-text
-role="py:meth"} method is used to perform queries against Nautobot\'s
+[`query()`][pynautobot.core.graphql.GraphQLQuery.query] method is used to perform queries against Nautobot's
 GraphQL endpoint.
 
 ## Making a GraphQL Query
 
-The `~pynautobot.core.graphql.GraphQLQuery.query`{.interpreted-text
-role="py:meth"} method requires that a query string is passed into it.
+The [`query()`][pynautobot.core.graphql.GraphQLQuery.query] method requires that a query string is passed into it.
 The method retuns a
-`~pynautobot.core.graphql.GraphQLRecord`{.interpreted-text
-role="py:class"} object as discussed in
-`The GraphQLRecord Object`{.interpreted-text role="ref"} section.
+[`GraphQLRecord`][pynautobot.core.graphql.GraphQLRecord] object as discussed in
+[The GraphQLRecord Object](#the-graphqlrecord-object) section.
 
-This example demonstrates how to fetch the [id]{.title-ref},
-[name]{.title-ref}, and [parent name]{.title-ref} for all *Locations*.
+This example demonstrates how to fetch the `id`,
+`name`, and `parent name` for all *Locations*.
 
 ```python
 >>> # Build a query string
@@ -81,17 +77,16 @@ GraphQLRecord(json={'data': {'locations': [{'id': ..., 'name': 'HQ', 'parent': {
 
 !!! Tip
 
-  Nautobot\'s [GraphQL documentation](https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/graphql/) provides a summary of making queries.
-  Nautobot\'s browsable API also provides a [graphiql]{.title-ref} interface to aid in developing query strings at [/graphql/]{.title-ref}
+  Nautobot's [GraphQL documentation](https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/graphql/) provides a summary of making queries.
+  Nautobot's browsable API also provides a `graphiql` interface to aid in developing query strings at `/graphql/`
 
 
 ## Making a GraphQL Query with Variables
 
-The `~pynautobot.core.graphql.GraphQLQuery.query`{.interpreted-text
-role="py:meth"} method supports using variables in the query string by
+The [`query()`][pynautobot.core.graphql.GraphQLQuery.query] method supports using variables in the query string by
 passing in an optional `variables` argument. This argument is a
-dictionary, with the [key]{.title-ref} being the variable name, and the
-[value]{.title-ref} being the value to use for the variable in the query
+dictionary, with the `key` being the variable name, and the
+`value` being the value to use for the variable in the query
 string. This example is the same as the previous one, except the
 location name is now derived using variables.
 
@@ -160,8 +155,7 @@ Now that we have a query saved with the name `Foobar`, we can execute it using p
 
 ## The GraphQLRecord Object
 
-The `~pynautobot.core.graphql.GraphQLRecord`{.interpreted-text
-role="py:class"} object that is returned from making a query provides a
+The [`GraphQLRecord`][pynautobot.core.graphql.GraphQLRecord] object that is returned from making a query provides a
 `json` attribute with the response from the API. The `json` attribute is
 a dictionary of the results from making the query. This example shows
 accessing data from the previous query.
@@ -204,7 +198,5 @@ accessing data from the previous query.
 The Nautobot GraphQL API is currently read-only. To make updates to
 objects, see:
 
--   `Updating objects without loading data`{.interpreted-text
-    role="ref"}
--   `~pynautobot.core.endpoint.Endpoint.update`{.interpreted-text
-    role="py:meth"}
+-   [Updating objects without loading data](update.md#updating-objects-without-loading-data)
+-   [`update()`][pynautobot.core.endpoint.Endpoint.update]

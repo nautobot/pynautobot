@@ -1,24 +1,19 @@
 # Retrieving Objects From Nautobot
 
-The `~pynautobot.core.endpoint.Endpoint`{.interpreted-text
-role="py:class"} class provides three methods for retrieving
-`~pynautobot.core.response.Record`{.interpreted-text role="py:class"}
+The [`Endpoint`][pynautobot.core.endpoint.Endpoint] class provides three methods for retrieving
+[`Record`][pynautobot.core.response.Record]
 objects from Nautobot.
 
--   The `~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-    role="py:meth"} method is used to get a single Record.
--   The `~pynautobot.core.endpoint.Endpoint.filter`{.interpreted-text
-    role="py:meth"} method will return a list of Records.
--   The `~pynautobot.core.endpoint.Endpoint.all`{.interpreted-text
-    role="py:meth"} method will return all Records for the Model.
+-   The [`get()`][pynautobot.core.endpoint.Endpoint.get] method is used to get a single Record.
+-   The [`filter()`][pynautobot.core.endpoint.Endpoint.filter] method will return a list of Records.
+-   The [`all()`][pynautobot.core.endpoint.Endpoint.all] method will return all Records for the Model.
 
 ## Using the Get Method
 
-The `Retrieving Records`{.interpreted-text role="ref"} sections shows
+The [Retrieving Records](../basic/crud/read.md) sections shows
 how to use the
-`~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-role="py:meth"} method by passing in keyword arguments. Another way to
-retrieve a `Record <Terminology>`{.interpreted-text role="ref"} is by
+[`get()`][pynautobot.core.endpoint.Endpoint.get] method by passing in keyword arguments. Another way to
+retrieve a [Record](../basic/index.md#terminology) is by
 passing in the value of the PK, which is the ID for most objects.
 
 ```python
@@ -39,8 +34,7 @@ c9300-48
 
 
 When using the
-`~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-role="py:meth"} method with keyword arguments, the keyword arguments
+[`get()`][pynautobot.core.endpoint.Endpoint.get] method with keyword arguments, the keyword arguments
 must match only a single Record. If multiple Records are matched, then a
 `ValueError` is raised.
 
@@ -56,26 +50,21 @@ or use filter() or all() instead.
 ## Using the Filter Method
 
 The error message from the previous example suggests to use the
-`~pynautobot.core.endpoint.Endpoint.filter`{.interpreted-text
-role="py:meth"} method. Using this method will return a list of
-`~pynautobot.core.response.Record`{.interpreted-text role="py:class"}
+[`filter()`][pynautobot.core.endpoint.Endpoint.filter] method. Using this method will return a list of
+[`Record`][pynautobot.core.response.Record]
 instances; one for each matching **record**. This method also supports:
 
--   filtering a single `field <Terminology>`{.interpreted-text
-    role="ref"} with multiple values
+-   filtering a single [field](../basic/index.md#terminology) with multiple values
 -   filtering based on custom fields
 -   filtering with lookup expressions
 
 ### Basic Usage
 
 The simplest usage of the
-`~pynautobot.core.endpoint.Endpoint.filter`{.interpreted-text
-role="py:meth"} method is to pass keyword arguments with single values.
+[`filter()`][pynautobot.core.endpoint.Endpoint.filter] method is to pass keyword arguments with single values.
 The previous example raised an exception using the
-`~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-role="py:meth"} method, but will return all matches using
-`~pynautobot.core.endpoint.Endpoint.filter`{.interpreted-text
-role="py:meth"}.
+[`get()`][pynautobot.core.endpoint.Endpoint.get] method, but will return all matches using
+[`filter()`][pynautobot.core.endpoint.Endpoint.filter].
 
 ```python
 >>> # Get all c9300-48 devices
@@ -98,8 +87,7 @@ role="py:meth"}.
 
 ### Filtering with OR logic
 
-The `~pynautobot.core.endpoint.Endpoint.filter`{.interpreted-text
-role="py:meth"} method allows using an **OR** condition by passing in a
+The [`filter()`][pynautobot.core.endpoint.Endpoint.filter] method allows using an **OR** condition by passing in a
 list of values to match against the field. The example below gets all
 devices located in either *Location* `HQ` or `DC`.
 
@@ -128,9 +116,8 @@ devices located in either *Location* `HQ` or `DC`.
 
 Nautobot provides [Custom
 Fields](https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/customfield/)
-as a way of extending a `Model's <Terminology>`{.interpreted-text
-role="ref"} fields. These fields can be referenced in the API by
-appending [cf\_]{.title-ref} to the field\'s name. The below example has
+as a way of extending a [Model's](../basic/index.md#terminology) fields. These fields can be referenced in the API by
+appending `cf_` to the field's name. The below example has
 a custom field named **owner**, which is used to filter the devices by
 passing the `cf_owner` keyword argument.
 
@@ -160,9 +147,9 @@ generally cover things like:
 -   contains
 -   case insensitivity
 
-The example below shows how use negation with *\_\_n*. From the previous
+The example below shows how use negation with `__n`. From the previous
 examples, there are 100 devices total, and 25 are located in either the
-[DC]{.title-ref} or [HQ]{.title-ref} location. Using `location__n` to
+`DC` or `HQ` location. Using `location__n` to
 get the negation of these locations returns 75 devices.
 
 ```python
@@ -177,10 +164,9 @@ get the negation of these locations returns 75 devices.
 
 ## Using the All Method
 
-The `~pynautobot.core.endpoint.Endpoint.all`{.interpreted-text
-role="py:meth"} is used to get all records of a specific endpoint. This
+The [`all()`][pynautobot.core.endpoint.Endpoint.all] is used to get all records of a specific endpoint. This
 will return a list of all
-`~pynautobot.core.response.Record`{.interpreted-text role="py:class"}
+[`Record`][pynautobot.core.response.Record]
 objects for the specific **Endpoint**.
 
 ```python
@@ -195,7 +181,7 @@ Active
 ```
 
 The following two pages cover interacting with the returned
-`~pynautobot.core.response.Record`{.interpreted-text role="py:class"}
+[`Record`][pynautobot.core.response.Record]
 objects. The next page covers additional Update operations, which is
 followed by a discussion of other features and methods.
 

@@ -516,27 +516,26 @@ class Record:
         Returns a list of DetailEndpoint objects that are
         related to the passed in object
 
-        :returns: :py:class:`.DetailEndpoint`
+        Returns:
+            (DetailEndpoint): The [`DetailEndpoint`][pynautobot.core.endpoint.DetailEndpoint] interface for the notes endpoint.
 
-        :Examples:
+        Examples:
+            Notes associated to a device object:
 
-        Notes associated to a device object:
+            >>> device = nb.dcim.devices.get(name="test")
+            >>> device.notes.list()
+            [<pynautobot.core.response.Record ('test - 2024-07-16T11:59:00.169296+00:00')...]
 
-        >>> device = nb.dcim.devices.get(name="test")
-        >>> device.notes.list()
-        [<pynautobot.core.response.Record ('test - 2024-07-16T11:59:00.169296+00:00')...]
+            Notes associated to a controller object:
 
-        Notes associated to a controller object:
+            >>> controller = nb.dcim.controllers.get(name="test")
+            >>> controller.notes.list()
+            [<pynautobot.core.response.Record ('test - 2024-07-16T11:59:00.169296+00:00')...]
 
-        >>> controller = nb.dcim.controllers.get(name="test")
-        >>> controller.notes.list()
-        [<pynautobot.core.response.Record ('test - 2024-07-16T11:59:00.169296+00:00')...]
+            Create new note on device object:
 
-        Create new note on device object:
-
-        >>> device = nb.dcim.devices.get(name="test")
-        >>> device.notes.create({"note": "foo bar"})
-        [<pynautobot.core.response.Record ('test - 2024-07-16T18:45:07.653263+00:00')...]
-
+            >>> device = nb.dcim.devices.get(name="test")
+            >>> device.notes.create({"note": "foo bar"})
+            [<pynautobot.core.response.Record ('test - 2024-07-16T18:45:07.653263+00:00')...]
         """
         return pynautobot.core.endpoint.DetailEndpoint(self, "notes", custom_return=Record)

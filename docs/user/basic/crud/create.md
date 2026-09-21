@@ -1,9 +1,8 @@
 # Creating a Record
 
-New `Records <Terminology>`{.interpreted-text role="ref"} can be created
-using an Endpoint\'s
-`~pynautobot.core.endpoint.Endpoint.create`{.interpreted-text
-role="py:meth"} method. All fields supported by the Model in Nautobot
+New [Records](../index.md#terminology) can be created
+using an Endpoint's
+[`create()`][pynautobot.core.endpoint.Endpoint.create] method. All fields supported by the Model in Nautobot
 can be passed into the method, and every required field must be passed.
 
 ``` python
@@ -20,11 +19,9 @@ can be passed into the method, and every required field must be passed.
 >>> access_role = roles.create(**access_role_config)
 ```
 
-The `~pynautobot.core.endpoint.Endpoint.create`{.interpreted-text
-role="py:meth"} method adds a new Record into the Nautobot database, and
-a representative `~pynautobot.core.response.Record`{.interpreted-text
-role="py:class"} object is returned. This record object has attributes
-for each `field <Terminology>`{.interpreted-text role="ref"} in the
+The [`create()`][pynautobot.core.endpoint.Endpoint.create] method adds a new Record into the Nautobot database, and
+a representative [`Record`][pynautobot.core.response.Record] object is returned. This record object has attributes
+for each [field](../index.md#terminology) in the
 database table. The following code block is a continuation of the
 previous one.
 

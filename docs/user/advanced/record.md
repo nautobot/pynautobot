@@ -5,7 +5,7 @@ else can we do?
 
 ## NAPALM
 
-You\'re able to run the normal NAPALM integrations as long as all the
+You're able to run the normal NAPALM integrations as long as all the
 prerequisites are taken care of.
 
 Here we can run the `get_facts` getter.
@@ -21,8 +21,7 @@ Here we can run the `get_facts` getter.
 
 Instead of accessing the device and only receiving the name, you can use
 the
-`serialize()<pynautobot.core.response.Record.serialize>`{.interpreted-text
-role="py:meth"} to view a near dictionary like structure.
+[`serialize()`][pynautobot.core.response.Record.serialize] method to view a near dictionary like structure.
 
 ```python
 >>> import json
@@ -162,7 +161,7 @@ sub keys.
 The hash of a record is made from a combination of the name of the
 endpoint and its ID. If the ID does not exist, then it will be a hash of
 **only** the endpoint name. If an ID does exist then the hash will be of
-the tuple representing [(endpoint.name, id)]{.title-ref}.
+the tuple representing `(endpoint.name, id)`.
 
 ### Equality Comparison
 
