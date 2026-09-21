@@ -8,5 +8,5 @@ exceptions will be discussed in each section. Following the discussion
 of CRUD operations, other common uses are covered.
 
 
-create read update record session graphql
+create read update record session graphql render_jinja_template
 

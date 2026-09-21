@@ -1,0 +1,6 @@
+{
+    "rendered_template": "Hello world",
+    "rendered_template_lines": ["Hello world"],
+    "template_code": "Hello {{ name }}",
+    "context": {"name": "world"}
+}
