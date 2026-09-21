@@ -20,10 +20,7 @@ Token if it has been cycled.
 import os
 from pynautobot import api
 
-nautobot = api(
-    url='http://localhost:8000',
-    token=os.environ["NAUTOBOT_TOKEN"]
-)
+nautobot = api(url="http://localhost:8000", token=os.environ["NAUTOBOT_TOKEN"])
 new_token = f"Token {os.environ['NEW_NAUTOBOT_TOKEN']}"
 
 # Update Session object with new header
@@ -37,11 +34,8 @@ The below example shows how to disable SSL verification.
 ```python
 import os
 from pynautobot import api
-nautobot = api(
-    url='https://localhost:8000',
-    token=os.environ["NAUTOBOT_TOKEN"],
-    verify=False
-)
+
+nautobot = api(url="https://localhost:8000", token=os.environ["NAUTOBOT_TOKEN"], verify=False)
 ```
 
 ## Timeouts
@@ -54,18 +48,17 @@ import os
 from requests.adapters import HTTPAdapter
 from pynautobot import api
 
+
 class TimeoutHTTPAdapter(HTTPAdapter):
     def __init__(self, *args, **kwargs):
         self.timeout = kwargs.get("timeout", 5)
         super().__init__(*args, **kwargs)
 
     def send(self, request, **kwargs):
-        kwargs['timeout'] = self.timeout
+        kwargs["timeout"] = self.timeout
         return super().send(request, **kwargs)
 
-nautobot = api(
-    url='http://localhost:8000',
-    token='d6f4e314a5b5fefd164995169f28ae32d987704f'
-)
+
+nautobot = api(url="http://localhost:8000", token="d6f4e314a5b5fefd164995169f28ae32d987704f")
 nautobot.http_session.mount(nautobot.base_url, TimeoutHTTPAdapter())
 ```
