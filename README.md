@@ -51,6 +51,7 @@ To begin, import pynautobot and instantiate an `Api` object, passing the `url` a
 
 ```python
 import pynautobot
+
 nautobot = pynautobot.api(
     url="http://localhost:8000",
     token="d6f4e314a5b5fefd164995169f28ae32d987704f",
@@ -122,9 +123,9 @@ This object provides access to the field data from Nautobot.
 
 ```python
 switch.id
-'6929b68d-8f87-4470-8377-e7fdc933a2bb'
+"6929b68d-8f87-4470-8377-e7fdc933a2bb"
 switch.name
-'hq-access-01'
+"hq-access-01"
 switch.site
 hq
 ```
@@ -149,10 +150,9 @@ Used for Nautobot Rest API versioning. Versioning can be controlled globally by 
 
 ```python
 import pynautobot
+
 nautobot = pynautobot.api(
-    url="http://localhost:8000",
-    token="d6f4e314a5b5fefd164995169f28ae32d987704f",
-    api_version="2.1"
+    url="http://localhost:8000", token="d6f4e314a5b5fefd164995169f28ae32d987704f", api_version="2.1"
 )
 ```
 
@@ -160,12 +160,16 @@ nautobot = pynautobot.api(
 
 ```python
 import pynautobot
+
 nautobot = pynautobot.api(
-  url="http://localhost:8000", token="d6f4e314a5b5fefd164995169f28ae32d987704f",
+    url="http://localhost:8000",
+    token="d6f4e314a5b5fefd164995169f28ae32d987704f",
 )
 tags = nautobot.extras.tags
 tags.create(name="Tag", api_version="2.0", content_types=["dcim.device"])
-tags.get(api_version="2.1",)
+tags.get(
+    api_version="2.1",
+)
 ```
 
 ### Retry logic
@@ -176,11 +180,8 @@ By default, the client will not retry any operation. This behavior can be adjust
 
 ```python
 import pynautobot
-nautobot = pynautobot.api(
-    url="http://localhost:8000",
-    token="d6f4e314a5b5fefd164995169f28ae32d987704f",
-    retries=3
-)
+
+nautobot = pynautobot.api(url="http://localhost:8000", token="d6f4e314a5b5fefd164995169f28ae32d987704f", retries=3)
 ```
 
 ## Related projects

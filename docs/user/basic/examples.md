@@ -115,10 +115,7 @@ This page provides for examples of how to use pynautobot from the community. Wha
     nb_interface = nb.dcim.interfaces.get(name="GigabitEthernet0/0", device=nb.dcim.devices.get(name="sample-rtr-01").id)
 
     # Assign IP to Interface
-    ip_to_interface = nb.ipam.ip_address_to_interface.create(
-        ip_address = ip_address.id,
-        interface = nb_interface.id
-    )
+    ip_to_interface = nb.ipam.ip_address_to_interface.create(ip_address=ip_address.id, interface=nb_interface.id)
     ```
 
 === "Access Config Context Data"
@@ -128,10 +125,10 @@ This page provides for examples of how to use pynautobot from the community. Wha
     ```python
     import pynautobot
 
-    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a")
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40 * "a")
 
     context_data = nautobot.dcim.devices.get(name="ams01-asw-01", include="config_context").config_context
-    
+
     print(context_data)
     ```
 
@@ -166,7 +163,9 @@ This page provides for examples of how to use pynautobot from the community. Wha
     ```python
     import pynautobot
 
-    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a", include_default="config_context,computed_fields")
+    nautobot = pynautobot.api(
+        url="https://demo.nautobot.com/", token=40 * "a", include_default="config_context,computed_fields"
+    )
     ```
 
     You can also use the `include` parameter in individual `all()`, `filter()`, or `get()` method calls to override the default setting.
@@ -174,7 +173,7 @@ This page provides for examples of how to use pynautobot from the community. Wha
     ```python
     import pynautobot
 
-    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a")
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40 * "a")
 
     # Retrieve all devices with config context and computed fields included
     devices = nautobot.dcim.devices.all(include="config_context,computed_fields")
@@ -193,8 +192,7 @@ This page provides for examples of how to use pynautobot from the community. Wha
     ```python
     import pynautobot
 
-    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a", exclude_m2m=False)
-
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40 * "a", exclude_m2m=False)
     ```
 
     You can also include the `exclude_m2m` parameter in individual `all()`, `filter()`, or `get()` method calls to override the default setting.
@@ -202,14 +200,13 @@ This page provides for examples of how to use pynautobot from the community. Wha
     ```python
     import pynautobot
 
-    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a", exclude_m2m=True)
-    
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40 * "a", exclude_m2m=True)
+
     # Retrieve all devices with many-to-many fields included
     devices = nautobot.dcim.devices.all(exclude_m2m=False)
 
     # Retrieve a single device with many-to-many fields included
     device = nautobot.dcim.devices.get(name="sample-rtr-01", exclude_m2m=False)
-
     ```
 
 === "Add a VLAN ID to a VLAN Group"
@@ -219,7 +216,7 @@ This page provides for examples of how to use pynautobot from the community. Wha
     ```python
     import pynautobot
 
-    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a")
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40 * "a")
 
     # Get the VLAN Group and view its current range
     vlan_group = nautobot.ipam.vlan_groups.get(name="Test")
@@ -244,7 +241,7 @@ This page provides for examples of how to use pynautobot from the community. Wha
     ```python
     import pynautobot
 
-    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40*"a")
+    nautobot = pynautobot.api(url="https://demo.nautobot.com/", token=40 * "a")
 
     device = nautobot.dcim.devices.get(name="ams01-asw-01")
 
