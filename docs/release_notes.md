@@ -5,6 +5,21 @@ Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Se
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- towncrier release notes start -->
+## [v3.2.0](https://github.com/nautobot/pynautobot/releases/tag/v3.2.0)
+
+### Added
+
+- [#398](https://github.com/nautobot/pynautobot/issues/398) - Added the ability to render a Jinja template via the `core` and `ui` app endpoints.
+
+### Documentation
+
+- [#402](https://github.com/nautobot/pynautobot/issues/402) - Added examples for reading and creating notes on a record.
+- Converted many legacy RST documentation references and examples to work properly with MKDocs.
+
+### Housekeeping
+
+- [#400](https://github.com/nautobot/pynautobot/issues/400) - Added Nautobot 3.2 to the CI testing matrix.
+
 ## [v3.1.1](https://github.com/nautobot/pynautobot/releases/tag/v3.1.1)
 
 ### Fixed

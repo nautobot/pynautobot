@@ -1,14 +1,11 @@
 # Retrieving Records
 
-Pynautobot\'s `<pynautobot.core.endpoint.Endpoint>`{.interpreted-text
-role="py:class"} objects also provide mechanisms to retrieve the
-`Records <pynautobot.core.response.Record>`{.interpreted-text
-role="py:class"} stored in the Nautobot database. The
-`~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-role="py:meth"} method can be used to retrieve a single
-`Record <Terminology>`{.interpreted-text role="ref"}. The most common
+Pynautobot's [`Endpoint`][pynautobot.core.endpoint.Endpoint] objects also provide mechanisms to retrieve the
+[Records][pynautobot.core.response.Record] stored in the Nautobot database. The
+[`get()`][pynautobot.core.endpoint.Endpoint.get] method can be used to retrieve a single
+[Record](../index.md#terminology). The most common
 way to use this method is to pass keyword arguments mapping the
-Record\'s `fields <Terminology>`{.interpreted-text role="ref"} with its
+Record's [fields](../index.md#terminology) with its
 value, such as `name="Access Switch"`.
 
 ``` python
@@ -22,13 +19,9 @@ value, such as `name="Access Switch"`.
 !!! Note
     Multiple keyword arguments can be supplied if needed to uniquely identify a single entry.
 
-The `~pynautobot.core.response.Record`{.interpreted-text
-role="py:class"} object returned by the
-`~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-role="py:meth"} method is the same object that was returned from the
-`~pynautobot.core.endpoint.Endpoint.create`{.interpreted-text
-role="py:meth"} method in `Creating Records`{.interpreted-text
-role="ref"}.
+The [`Record`][pynautobot.core.response.Record] object returned by the
+[`get()`][pynautobot.core.endpoint.Endpoint.get] method is the same object that was returned from the
+[`create()`][pynautobot.core.endpoint.Endpoint.create] method in [Creating Records](../../advanced/create.md).
 
 ``` python
 >>> access_role.name
@@ -40,9 +33,8 @@ role="ref"}.
 '6929b68d-8f87-4470-8377-e7fdc933a2bb'
 ```
 
-The `~pynautobot.core.endpoint.Endpoint.all`{.interpreted-text
-role="py:meth"} method is useful for retrieving all Records of the
-`Model <Terminology>`{.interpreted-text role="ref"}.
+The [`all()`][pynautobot.core.endpoint.Endpoint.all] method is useful for retrieving all Records of the
+[Model](../index.md#terminology).
 
 ``` python
 >>> nautobot = api(url=url, token=token)

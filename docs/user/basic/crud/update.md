@@ -1,17 +1,13 @@
 # Updating Records
 
-Modifying the data in a `Record <Terminology>`{.interpreted-text
-role="ref"} is accomplished by using a Record\'s
-`~pynautobot.core.response.Record.update`{.interpreted-text
-role="py:meth"} method. This method accepts a dictionary of field/value
-mappings (Ex: {\"description\": \"Provides access to end hosts\"}). A
+Modifying the data in a [Record](../index.md#terminology) is accomplished by using a Record's
+[`update()`][pynautobot.core.response.Record.update] method. This method accepts a dictionary of field/value
+mappings (Ex: `{"description": "Provides access to end hosts"}`). A
 boolean is returned to indicate whether updates were made to the Record.
 The below example shows retrieving a record using the
-`~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-role="py:meth"} method, and then updating
-`fields <Terminology>`{.interpreted-text role="ref"} in the returned
-`Record <pynautobot.core.response.Record>`{.interpreted-text
-role="py:class"} object.
+[`get()`][pynautobot.core.endpoint.Endpoint.get] method, and then updating
+[fields](../index.md#terminology) in the returned
+[Record][pynautobot.core.response.Record] object.
 
 ``` python
 >>> nautobot = api(url=url, token=token)

@@ -1,24 +1,21 @@
 # Updating Objects
 
-The `Updating Records`{.interpreted-text role="ref"} section shows how
-to use the `~pynautobot.core.response.Record.update`{.interpreted-text
-role="py:meth"} method to update
-`fields <Terminology>`{.interpreted-text role="ref"}. Another way to
+The [Updating Records](../basic/crud/update.md) section shows how
+to use the [`update()`][pynautobot.core.response.Record.update] method to update
+[fields](../basic/index.md#terminology). Another way to
 accomplish update operations is to update the
-`~pynautobot.core.response.Record`{.interpreted-text role="py:class"}
-object\'s attributes, and call the
-`~pynautobot.core.response.Record.save`{.interpreted-text
-role="py:meth"} method. The main difference with this approach is that
+[`Record`][pynautobot.core.response.Record]
+object's attributes, and call the
+[`save()`][pynautobot.core.response.Record.save] method. The main difference with this approach is that
 changes are not synced to Nautobot until the
-`~pynautobot.core.response.Record.save`{.interpreted-text
-role="py:meth"} method is called.
+[`save()`][pynautobot.core.response.Record.save] method is called.
 
 ## Modifying a Record by Attribute Updates
 
 The below example will:
 
 -   make updates to a *Device*
--   show that updates haven\'t synced to Nautobot before saving.
+-   show that updates haven't synced to Nautobot before saving.
 -   show that updates are synced after calling the save method.
 
 ``` 
@@ -51,16 +48,13 @@ The below example will:
 Since the Update operation behaves similarly to the Create operation,
 performing an update can have the some of the same errors. The two
 examples below are the same issues outlined in
-`The Data Sent Does Not Adhere to the Database Schema`{.interpreted-text
-role="ref"}.
+[The Data Sent Does Not Adhere to the Database Schema](create.md#the-data-sent-does-not-adhere-to-the-database-schema).
 
 The first example uses the
-`~pynautobot.core.response.Record.update`{.interpreted-text
-role="py:meth"} method and returns an exception immediately. The second
+[`update()`][pynautobot.core.response.Record.update] method and returns an exception immediately. The second
 example modifies the objects `position` attribute, and the exception is
 not raised until the
-`~pynautobot.core.response.Record.save`{.interpreted-text
-role="py:meth"} method is called.
+[`save()`][pynautobot.core.response.Record.save] method is called.
 
 ### Invalid Type
 
@@ -151,19 +145,16 @@ True
 In some cases it may not be necessary to load an object to update it,
 for example if the ID and updated fields are known, the call HTTP PATCH
 may be made without performing an
-`~pynautobot.core.endpoint.Endpoint.get`{.interpreted-text
-role="py:meth"} first.
+[`get()`][pynautobot.core.endpoint.Endpoint.get] first.
 
 In this case, the
-`~pynautobot.core.endpoint.Endpoint.update`{.interpreted-text
-role="py:meth"} method may be used to directly submit a PATCH to the
+[`update()`][pynautobot.core.endpoint.Endpoint.update] method may be used to directly submit a PATCH to the
 Nautobot REST API. Using this reduces the number of API calls. It can be
 particularly useful as a way to update data fetched from the GraphQL
 API.
 
 The examples updates a Device record, however this can apply to other
-API `~pynautobot.core.endpoint.Endpoint`{.interpreted-text
-role="py:class"} types.
+API [`Endpoint`][pynautobot.core.endpoint.Endpoint] types.
 
 ```python
 >>> import os
@@ -188,15 +179,14 @@ True
 
 References:
 
--   `Gathering Data from GraphQL Endpoint`{.interpreted-text role="ref"}
+-   [Gathering Data from GraphQL Endpoint](graphql.md)
 
 ## Updating Multiple Objects
 
-The `~pynautobot.core.endpoint.Endpoint.update`{.interpreted-text
-role="py:meth"} method can also be used to update multiple items with a
+The [`update()`][pynautobot.core.endpoint.Endpoint.update] method can also be used to update multiple items with a
 single call. You can pass in a list of dictionaries, each containing the
 `id` and the fields to be updated, or a list of
-`~pynautobot.core.response.Record`{.interpreted-text role="py:class"}.
+[`Record`][pynautobot.core.response.Record].
 
 ```python
 >>> import os

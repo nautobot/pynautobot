@@ -101,21 +101,21 @@ class DynamicGroups(Record):
         Returns a list of DetailEndpoint objects that are
         related to the dynamic group
 
-        :returns: :py:class:`.DetailEndpoint`
+        Returns:
+            (DetailEndpoint): The [`DetailEndpoint`][pynautobot.core.endpoint.DetailEndpoint] interface for the group members.
 
-        :Examples:
+        Examples:
+            Dynamic group of devices:
 
-        Dynamic group of devices:
+            >>> group = nb.extras.dynamic_groups.get("device-group")
+            >>> group.members.list()
+            [<pynautobot.models.extras.DynamicGroups ('testswitch') at 0x7efee4037e80>...]
 
-        >>> group = nb.extras.dynamic_groups.get("device-group")
-        >>> group.members.list()
-        [<pynautobot.models.extras.DynamicGroups ('testswitch') at 0x7efee4037e80>...]
+            Dynamic group of IPs:
 
-        Dynamic group of IPs:
-
-        >>> group = nb.extras.dynamic_groups.get("ip-group")
-        >>> group.members.list()
-        [<pynautobot.models.extras.DynamicGroups ('192.168.10.200/32') at 0x7f3e6a980040>...]
+            >>> group = nb.extras.dynamic_groups.get("ip-group")
+            >>> group.members.list()
+            [<pynautobot.models.extras.DynamicGroups ('192.168.10.200/32') at 0x7f3e6a980040>...]
         """
         return DetailEndpoint(self, "members", custom_return=DynamicGroups)
 

@@ -110,14 +110,13 @@ class Devices(Record):
         Returns a DetailEndpoint object that is the interface for
         viewing response from the napalm endpoint.
 
-        :returns: :py:class:`.DetailEndpoint`
+        Returns:
+            (DetailEndpoint): The [`DetailEndpoint`][pynautobot.core.endpoint.DetailEndpoint] interface for the napalm endpoint.
 
-        :Examples:
-
-        >>> device = nb.ipam.devices.get(123)
-        >>> device.napalm.list(method='get_facts')
-        {"get_facts": {"interface_list": ["ge-0/0/0"]}}
-
+        Examples:
+            >>> device = nb.ipam.devices.get(123)
+            >>> device.napalm.list(method='get_facts')
+            {"get_facts": {"interface_list": ["ge-0/0/0"]}}
         """
         return RODetailEndpoint(self, "napalm")
 
@@ -221,14 +220,13 @@ class Racks(Record):
         Returns a DetailEndpoint object that is the interface for
         viewing response from the units endpoint.
 
-        :returns: :py:class:`.DetailEndpoint`
+        Returns:
+            (DetailEndpoint): The [`DetailEndpoint`][pynautobot.core.endpoint.DetailEndpoint] interface for the units endpoint.
 
-        :Examples:
-
-        >>> rack = nb.dcim.racks.get(123)
-        >>> rack.units.list()
-        {"get_facts": {"interface_list": ["ge-0/0/0"]}}
-
+        Examples:
+            >>> rack = nb.dcim.racks.get(123)
+            >>> rack.units.list()
+            {"get_facts": {"interface_list": ["ge-0/0/0"]}}
         """
         return RODetailEndpoint(self, "units", custom_return=RUs)
 
@@ -240,14 +238,13 @@ class Racks(Record):
         viewing response from the elevation endpoint updated in
         Nautobot version 2.8.
 
-        :returns: :py:class:`.DetailEndpoint`
+        Returns:
+            (DetailEndpoint): The [`DetailEndpoint`][pynautobot.core.endpoint.DetailEndpoint] interface for the elevation endpoint.
 
-        :Examples:
-
-        >>> rack = nb.dcim.racks.get(123)
-        >>> rack.elevation.list()
-        {"get_facts": {"interface_list": ["ge-0/0/0"]}}
-
+        Examples:
+            >>> rack = nb.dcim.racks.get(123)
+            >>> rack.elevation.list()
+            {"get_facts": {"interface_list": ["ge-0/0/0"]}}
         """
         return RODetailEndpoint(self, "elevation", custom_return=RUs)
 
