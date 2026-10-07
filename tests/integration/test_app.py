@@ -42,6 +42,7 @@ class BaseAppTest:
         # Certain endpoints require additional parameters to be passed
         skip_endpoints = [
             ("dcim", "connected_device"),
+            ("extras", "condition_presets"),
             ("users", "config"),
         ]
 
