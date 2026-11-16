@@ -175,3 +175,32 @@ the Nautobot API endpoint.
     Attributes are not checked against the Nautobot API, so misspelled or non-existent Models will not raise an Exception until a CRUD operation is attempted on the returned object.
 
     For example, calling `nautobot.dcim.device` (missing the trailing **s**) will return an [`Endpoint`][pynautobot.core.endpoint.Endpoint] object. However, the URL assigned to the Endpoint will not be a valid Nautobot API endpoint, and performing any CRUD operations against that URL will result in an Exception being raised.
+
+# Rate Limiting
+
+Nautobot 3.3 added optional [rate limiting](https://docs.nautobot.com/projects/core/en/stable/user-guide/administration/configuration/rate-limiting/) for the REST API. When it is set to `enforce` mode, a request that exceeds the token's budget is rejected with HTTP 429 and a `Retry-After` header giving the number of seconds to wait.
+
+Set `retries` when creating the [`Api`][pynautobot.core.api.Api] object to retry automatically. On an HTTP 429 response, pynautobot waits the number of seconds given in `Retry-After` before trying again. If every retry fails, a [`RetriesExhaustedError`][pynautobot.core.query.RetriesExhaustedError] is raised. It is a [`RequestError`][pynautobot.core.query.RequestError], so existing error handling keeps working.
+
+``` python
+>>> import time
+>>> import pynautobot
+>>>
+>>> nautobot = pynautobot.api(url=url, token=token, retries=3)
+>>> try:
+...     devices = nautobot.dcim.devices.all()
+... except pynautobot.RequestError as e:
+...     if e.req.status_code == 429:
+...         time.sleep(e.rate_limit.retry_after)
+```
+
+When rate limiting is in `report` or `enforce` mode, Nautobot also reports the remaining budget on every response. The most recent values are available as a [`RateLimit`][pynautobot.core.rate_limit.RateLimit] object on `nautobot.rate_limit`. It is `None` when connected to Nautobot versions before 3.3 or when rate limiting is turned off.
+
+``` python
+>>> nautobot.dcim.devices.all()
+>>> nautobot.rate_limit
+RateLimit(policy='rest-complexity-cost', quota=1000, window=60, remaining=996, reset=60, cost=4, retry_after=None)
+```
+
+!!! Note
+    `nautobot.rate_limit` is updated by a hook on the session pynautobot creates. If you replace `http_session` with your own session, `nautobot.rate_limit` is no longer updated, but `RequestError.rate_limit` is still set on failed requests.
