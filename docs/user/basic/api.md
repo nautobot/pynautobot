@@ -180,27 +180,34 @@ the Nautobot API endpoint.
 
 Nautobot 3.3 added optional [rate limiting](https://docs.nautobot.com/projects/core/en/stable/user-guide/administration/configuration/rate-limiting/) for the REST API. When it is set to `enforce` mode, a request that exceeds the token's budget is rejected with HTTP 429 and a `Retry-After` header giving the number of seconds to wait.
 
-Set `retries` when creating the [`Api`][pynautobot.core.api.Api] object to retry automatically. On an HTTP 429 response, pynautobot waits the number of seconds given in `Retry-After` before trying again. If every retry fails, a [`RetriesExhaustedError`][pynautobot.core.query.RetriesExhaustedError] is raised. It is a [`RequestError`][pynautobot.core.query.RequestError], so existing error handling keeps working.
+By default, `retries` is `0` and pynautobot does not retry: an HTTP 429 response raises a [`RequestError`][pynautobot.core.query.RequestError] right away. Set `retries` when creating the [`Api`][pynautobot.core.api.Api] object to retry automatically. On an HTTP 429 response, pynautobot waits the number of seconds given in `Retry-After` before trying again. If every retry fails, a [`RetriesExhaustedError`][pynautobot.core.query.RetriesExhaustedError] is raised. It is a [`RequestError`][pynautobot.core.query.RequestError], so existing error handling keeps working.
+
+Once the retries are used up, waiting longer in the same process is rarely the right answer. The error's `rate_limit` attribute describes the budget that was exceeded, so you can stop cleanly and report what limit the script ran into:
 
 ``` python
->>> import time
+>>> import sys
 >>> import pynautobot
 >>>
 >>> nautobot = pynautobot.api(url=url, token=token, retries=3)
 >>> try:
 ...     devices = nautobot.dcim.devices.all()
-... except pynautobot.RequestError as e:
-...     if e.req.status_code == 429:
-...         time.sleep(e.rate_limit.retry_after)
+... except pynautobot.RetriesExhaustedError as e:
+...     limit = e.rate_limit
+...     sys.exit(f"Used the Nautobot budget of {limit.quota} per {limit.window} seconds; reduce the request load or ask for a higher budget.")
+...
+Used the Nautobot budget of 1000 per 60 seconds; reduce the request load or ask for a higher budget.
 ```
 
-When rate limiting is in `report` or `enforce` mode, Nautobot also reports the remaining budget on every response. The most recent values are available as a [`RateLimit`][pynautobot.core.rate_limit.RateLimit] object on `nautobot.rate_limit`. It is `None` when connected to Nautobot versions before 3.3 or when rate limiting is turned off.
+When rate limiting is in `report` or `enforce` mode, Nautobot also reports the remaining budget on every response. pynautobot keeps the most recent values in the [`rate_limit`][pynautobot.core.api.Api.rate_limit] property of the `Api` object returned by `pynautobot.api()` (the `nautobot` variable in these examples). It holds a [`RateLimit`][pynautobot.core.rate_limit.RateLimit] object, or `None` when connected to Nautobot versions before 3.3 or when rate limiting is turned off.
 
 ``` python
+>>> nautobot = pynautobot.api(url=url, token=token)
 >>> nautobot.dcim.devices.all()
 >>> nautobot.rate_limit
 RateLimit(policy='rest-complexity-cost', quota=1000, window=60, remaining=996, reset=60, cost=4, retry_after=None)
+>>> nautobot.rate_limit.remaining
+996
 ```
 
 !!! Note
-    `nautobot.rate_limit` is updated by a hook on the session pynautobot creates. If you replace `http_session` with your own session, `nautobot.rate_limit` is no longer updated, but `RequestError.rate_limit` is still set on failed requests.
+    `Api.rate_limit` is updated by a hook on the session pynautobot creates. If you replace the `Api` object's `http_session` with your own session, `Api.rate_limit` is no longer updated, but `RequestError.rate_limit` is still set on failed requests.
