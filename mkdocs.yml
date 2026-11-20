@@ -166,6 +166,7 @@ nav:
               - Endpoint: "dev/code_reference/core/endpoint.md"
               - GraphQL: "dev/code_reference/core/graphql.md"
               - Query: "dev/code_reference/core/query.md"
+              - Rate Limit: "dev/code_reference/core/rate_limit.md"
               - Response: "dev/code_reference/core/response.md"
               - Util: "dev/code_reference/core/util.md"
           - Models:

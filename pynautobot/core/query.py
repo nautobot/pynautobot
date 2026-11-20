@@ -23,6 +23,9 @@ except ImportError:
 import json
 
 import requests
+from urllib3 import Retry
+
+from pynautobot.core.rate_limit import RateLimit
 
 
 def calc_pages(limit, count):
@@ -37,6 +40,11 @@ class RequestError(Exception):
     for inspection. Along with some attributes with specific details
     from the requests object. If return is JSON we decode and add it
     to the message.
+
+    Attributes:
+        req (requests.Response): The response that caused the error.
+        rate_limit (RateLimit | None): Rate limit information from the response headers
+            (Nautobot 3.3+), such as `rate_limit.retry_after` on an HTTP 429 response.
 
     Examples:
         >>> try:
@@ -66,10 +74,47 @@ class RequestError(Exception):
         self.request_body = req.request.body
         self.base = req.url
         self.error = req.text
+        self.rate_limit = RateLimit.from_headers(req.headers)
 
 
 class RequestErrorFromException(Exception):
     """RequestErrorFromException is raised from exception."""
+
+
+class RetriesExhaustedError(RequestError, RequestErrorFromException):
+    """Raised when the configured `retries` are used up and the last response still failed.
+
+    It is both a `RequestError` and a `RequestErrorFromException`, so either can be caught.
+    The final response is kept, so the status code and headers such as `Retry-After`
+    remain available through `req` and `rate_limit`.
+
+    Examples:
+        >>> try:
+        ...     nb.dcim.devices.all()
+        ... except pynautobot.RetriesExhaustedError as e:
+        ...     print(e.req.status_code, e.rate_limit.retry_after)
+        429 7
+    """
+
+
+def _request_error(req):
+    """Return the exception to raise for a failed response.
+
+    Args:
+        req (requests.Response): The failed response.
+
+    Returns:
+        (RequestError): `RetriesExhaustedError` if the request was retried and the final
+            response still has a retryable status, otherwise `RequestError`.
+    """
+    retries = getattr(getattr(req, "raw", None), "retries", None)
+    if (
+        isinstance(retries, Retry)
+        and retries.history
+        and retries.is_retry(req.request.method, req.status_code, "Retry-After" in req.headers)
+    ):
+        return RetriesExhaustedError(req)
+    return RequestError(req)
 
 
 class AllocationError(Exception):
@@ -193,7 +238,7 @@ class Request:
 
         if req.ok:
             return req.json()
-        raise RequestError(req)
+        raise _request_error(req)
 
     def get_version(self):
         """Gets the API version of Nautobot.
@@ -224,7 +269,7 @@ class Request:
 
         if req.ok:
             return req.headers.get("API-Version", "")
-        raise RequestError(req)
+        raise _request_error(req)
 
     def get_status(self):
         """Gets the status from /api/status/ endpoint in Nautobot.
@@ -255,7 +300,7 @@ class Request:
 
         if req.ok:
             return req.json()
-        raise RequestError(req)
+        raise _request_error(req)
 
     def normalize_url(self, url):
         """Builds a url for POST actions."""
@@ -294,14 +339,14 @@ class Request:
         if verb == "delete":
             if req.ok:
                 return True
-            raise RequestError(req)
+            raise _request_error(req)
         if req.ok:
             try:
                 return req.json()
             except json.JSONDecodeError as exc:
                 raise ContentError(req) from exc
         else:
-            raise RequestError(req)
+            raise _request_error(req)
 
     def concurrent_get(self, ret, page_size, page_offsets):
         """Concurrently get paginated results."""

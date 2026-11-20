@@ -23,6 +23,7 @@ from urllib3 import Retry
 from pynautobot.core.app import App, CoreApp, PluginsApp, UiApp
 from pynautobot.core.graphql import GraphQLQuery
 from pynautobot.core.query import Request
+from pynautobot.core.rate_limit import RateLimit
 
 
 # pylint: disable=too-many-instance-attributes, too-many-instance-attributes, too-many-arguments, too-many-positional-arguments
@@ -39,7 +40,11 @@ class Api:
         api_version (str, optional): Override the default Nautobot REST API version
             used for all requests.
         retries (int, optional): The number of retries for HTTP status codes
-            429, 500, 502, 503, and 504. Defaults to 0 (no retries).
+            429, 500, 502, 503, and 504. Defaults to 0 (no retries). When the server
+            sends a `Retry-After` header (for example Nautobot 3.3+ rate limiting on
+            HTTP 429), pynautobot waits that many seconds before retrying; otherwise it
+            uses exponential backoff. If every retry fails, `RetriesExhaustedError` is
+            raised with the final response attached.
         verify (bool, optional): Whether to verify SSL certificates. Defaults to `True`.
         exclude_m2m (bool, optional): (Nautobot 2.4+) Whether to exclude/include
             many-to-many relationships for get/filter/all requests. Defaults to `None`.
@@ -68,6 +73,8 @@ class Api:
             own to control HTTP behavior such as SSL verification, custom headers,
             retries, and timeouts. See the documentation on custom sessions
             for more information.
+        rate_limit (RateLimit | None): Rate limit information from the most recent
+            response that reported it (Nautobot 3.3+ with rate limiting enabled).
 
     Raises:
         AttributeError: If an invalid application name is provided.
@@ -110,10 +117,13 @@ class Api:
                     backoff_factor=1,
                     allowed_methods=None,
                     status_forcelist=[429, 500, 502, 503, 504],
+                    raise_on_status=False,
                 )
             )
             self.http_session.mount("http://", _adapter)
             self.http_session.mount("https://", _adapter)
+        self._rate_limit = None
+        self.http_session.hooks["response"].append(self._record_rate_limit)
         self.threading = threading
         self.max_workers = max_workers
         self.api_version = api_version
@@ -139,6 +149,32 @@ class Api:
         self.wireless = App(self, "wireless")
         self.plugins = PluginsApp(self)
         self.graphql = GraphQLQuery(self)
+
+    def _record_rate_limit(self, response, *_args, **_kwargs):
+        """Response hook that stores the rate limit information of each response that has it."""
+        rate_limit = RateLimit.from_headers(response.headers)
+        if rate_limit is not None:
+            self._rate_limit = rate_limit
+
+    @property
+    def rate_limit(self):
+        """Rate limit information from the most recent response that reported it.
+
+        Requires Nautobot 3.3+ with rate limiting set to `report` or `enforce` mode.
+        With `threading=True`, this reflects whichever response arrived last. If you replace
+        `http_session` with your own session, this is no longer updated; use
+        `RequestError.rate_limit` on failed requests instead.
+
+        Returns:
+            (RateLimit | None): The latest rate limit information, or `None` if no response
+                has included rate limiting headers.
+
+        Examples:
+            >>> nb.dcim.devices.all()
+            >>> nb.rate_limit.remaining, nb.rate_limit.quota
+            (996, 1000)
+        """
+        return self._rate_limit
 
     @property
     def version(self):

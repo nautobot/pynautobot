@@ -3,9 +3,18 @@
 from importlib.metadata import PackageNotFoundError, version
 
 from pynautobot.core.api import Api as api
-from pynautobot.core.query import AllocationError, ContentError, RequestError
+from pynautobot.core.query import AllocationError, ContentError, RequestError, RetriesExhaustedError
+from pynautobot.core.rate_limit import RateLimit
 
-__all__ = ["RequestError", "AllocationError", "ContentError", "api", "__version__"]
+__all__ = [
+    "RequestError",
+    "RetriesExhaustedError",
+    "AllocationError",
+    "ContentError",
+    "RateLimit",
+    "api",
+    "__version__",
+]
 
 
 try:

@@ -1,0 +1,2 @@
+Added `Api.rate_limit` and `RequestError.rate_limit` to expose the Nautobot 3.3 rate limit budget, request cost, and `Retry-After` information.
+Added `RetriesExhaustedError`, raised when the configured `retries` are used up, which keeps the final response so its status code and headers can be read.

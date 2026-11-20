@@ -1,0 +1,1 @@
+Fixed the HTTP status code and headers being lost when the configured `retries` were exhausted, such as on Nautobot 3.3 rate limiting responses.
