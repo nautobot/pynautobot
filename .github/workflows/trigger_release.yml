@@ -11,9 +11,9 @@ jobs:
     if: "startsWith(github.ref, 'refs/tags/v')"
     steps:
       - name: "Check out repository code"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v7"
       - name: "Setup environment"
-        uses: "networktocode/gh-action-setup-poetry-environment@v6"
+        uses: "networktocode/gh-action-setup-poetry-environment@v7"
         with:
           python-version: "3.12"
       - name: "Run Poetry Build"
@@ -21,7 +21,7 @@ jobs:
       - name: "Check that the release tag matches the version in pyproject.toml"
         run: |
           if [ "${{ github.ref_name }}" != "v$(poetry version -s)" ]; then exit 1; fi
-      - uses: "actions/upload-artifact@v4"
+      - uses: "actions/upload-artifact@v7"
         with:
           name: "distfiles"
           path: "dist/"
@@ -37,9 +37,9 @@ jobs:
       id-token: "write"
     steps:
       - name: "Retrieve built package from cache"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "distfiles"
           path: "dist/"
       - name: "Publish package distributions to PyPI"
-        uses: "pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e"  # v1.13.0
+        uses: "pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086"  # v1.14.3
